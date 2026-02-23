@@ -141,7 +141,7 @@ export default function Dashboard() {
   })
 
   if (statsLoading || samplesLoading || vulnsLoading) {
-    return <div className="text-center text-gray-400 p-8">Loading dashboard...</div>
+    return <div className={`text-center p-8 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Loading dashboard...</div>
   }
 
   const chartData = [
@@ -152,11 +152,20 @@ export default function Dashboard() {
 
   // Get severity color
   const getSeverityColor = (severity) => {
-    switch (severity) {
-      case 'critical': return 'text-red-400 bg-red-900/20 border-red-500/50'
-      case 'high': return 'text-orange-400 bg-orange-900/20 border-orange-500/50'
-      case 'medium': return 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50'
-      default: return 'text-green-400 bg-green-900/20 border-green-500/50'
+    if (isDarkMode) {
+      switch (severity) {
+        case 'critical': return 'text-red-400 bg-red-900/20 border-red-500/50'
+        case 'high': return 'text-orange-400 bg-orange-900/20 border-orange-500/50'
+        case 'medium': return 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50'
+        default: return 'text-green-400 bg-green-900/20 border-green-500/50'
+      }
+    } else {
+      switch (severity) {
+        case 'critical': return 'text-red-700 bg-red-50 border-red-200'
+        case 'high': return 'text-orange-700 bg-orange-50 border-orange-200'
+        case 'medium': return 'text-yellow-700 bg-yellow-50 border-yellow-200'
+        default: return 'text-green-700 bg-green-50 border-green-200'
+      }
     }
   }
 
@@ -348,18 +357,18 @@ export default function Dashboard() {
                   <stop offset="100%" stopColor="#6366f1" stopOpacity={0.7} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
-              <XAxis dataKey="name" stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
-              <YAxis stroke="#9ca3af" tick={{ fill: '#9ca3af' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#e5e7eb'} vertical={false} />
+              <XAxis dataKey="name" stroke={isDarkMode ? '#9ca3af' : '#6b7280'} tick={{ fill: isDarkMode ? '#9ca3af' : '#6b7280' }} />
+              <YAxis stroke={isDarkMode ? '#9ca3af' : '#6b7280'} tick={{ fill: isDarkMode ? '#9ca3af' : '#6b7280' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: isDarkMode ? '1px solid #475569' : '1px solid #e5e7eb',
                   borderRadius: '8px',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
+                  boxShadow: isDarkMode ? '0 4px 6px -1px rgba(0, 0, 0, 0.3)' : '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                 }}
-                labelStyle={{ color: '#e2e8f0', fontWeight: 'bold' }}
-                cursor={{ fill: 'rgba(167, 139, 250, 0.1)' }}
+                labelStyle={{ color: isDarkMode ? '#e2e8f0' : '#1e293b', fontWeight: 'bold' }}
+                cursor={{ fill: isDarkMode ? 'rgba(167, 139, 250, 0.1)' : 'rgba(128, 0, 128, 0.05)' }}
               />
               <Bar dataKey="value" fill="url(#barGradient)" radius={[8, 8, 0, 0]} />
             </BarChart>
@@ -657,24 +666,24 @@ export default function Dashboard() {
                 key={threat.type}
                 className={`group relative p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02] ${getSeverityColor(threat.severity)}`}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
+                <div className={`absolute inset-0 bg-gradient-to-r from-transparent ${isDarkMode ? 'via-white/5' : 'via-black/5'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg`}></div>
                 <div className="relative">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-lg bg-slate-900/50 flex items-center justify-center">
-                        <span className="text-lg font-bold text-white">#{idx + 1}</span>
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isDarkMode ? 'bg-slate-900/50' : 'bg-white/60'}`}>
+                        <span className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>#{idx + 1}</span>
                       </div>
                       <div>
-                        <h3 className="font-bold text-white text-sm">{threat.type}</h3>
+                        <h3 className={`font-bold text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{threat.type}</h3>
                         <p className="text-xs uppercase tracking-wider mt-0.5 font-semibold">{threat.severity}</p>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-end justify-between mt-3">
-                    <span className="text-xs text-gray-400 font-medium">Detected</span>
-                    <span className="text-xl font-bold text-white">{threat.count.toLocaleString()}</span>
+                    <span className={`text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Detected</span>
+                    <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{threat.count.toLocaleString()}</span>
                   </div>
-                  <div className="mt-2 bg-slate-900/50 rounded-full h-2 overflow-hidden">
+                  <div className={`mt-2 rounded-full h-2 overflow-hidden ${isDarkMode ? 'bg-slate-900/50' : 'bg-white/40'}`}>
                     <div
                       className="h-full bg-current rounded-full transition-all duration-500"
                       style={{
@@ -713,28 +722,28 @@ export default function Dashboard() {
             const borderColor = intensity > 0.7 ? 'border-red-500/30' : intensity > 0.4 ? 'border-orange-500/30' : 'border-blue-500/30'
 
             return (
-              <div key={region.name} className={`group relative bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl border ${borderColor} hover:border-opacity-100 transition-all duration-300 hover:scale-105`}>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"></div>
+              <div key={region.name} className={`group relative backdrop-blur-sm p-5 rounded-xl border ${borderColor} hover:border-opacity-100 transition-all duration-300 hover:scale-105 ${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50/80'}`}>
+                <div className={`absolute inset-0 bg-gradient-to-br ${isDarkMode ? 'from-white/5' : 'from-black/5'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl`}></div>
                 <div className="relative">
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-slate-800/50 flex items-center justify-center border border-slate-700">
-                      <span className="text-xl font-bold text-white">#{idx + 1}</span>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${isDarkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'}`}>
+                      <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>#{idx + 1}</span>
                     </div>
                   </div>
                   <div className="mb-3">
-                    <h3 className="font-bold text-white text-lg mb-1">{region.name}</h3>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">Attack Source</p>
+                    <h3 className={`font-bold text-lg mb-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{region.name}</h3>
+                    <p className={`text-xs uppercase tracking-wide ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Attack Source</p>
                   </div>
                   <div className="flex items-baseline space-x-2 mb-3">
                     <p className={`text-3xl font-bold ${severityColor}`}>{region.threats.toLocaleString()}</p>
-                    <p className="text-xs text-gray-400">attacks</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>attacks</p>
                   </div>
                   <div className="relative">
-                    <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
+                    <div className={`flex items-center justify-between text-xs mb-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                       <span className="font-medium">Threat Level</span>
                       <span className="font-bold">{percentage}%</span>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                    <div className={`w-full rounded-full h-2.5 overflow-hidden ${isDarkMode ? 'bg-slate-800' : 'bg-gray-200'}`}>
                       <div
                         className={`h-full ${barColor} rounded-full transition-all duration-700 shadow-lg`}
                         style={{
@@ -772,20 +781,20 @@ export default function Dashboard() {
             <span className="text-xs text-red-400 font-semibold">Critical</span>
           </div>
         </div>
-        <div className="overflow-x-auto rounded-lg border border-slate-700/50">
-          <table className="min-w-full divide-y divide-slate-700/50">
-            <thead className="bg-slate-900/50">
+        <div className={`overflow-x-auto rounded-lg border ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
+          <table className={`min-w-full divide-y ${isDarkMode ? 'divide-slate-700/50' : 'divide-gray-200'}`}>
+            <thead className={isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'}>
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Sample ID</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">SHA256 Hash</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Risk Score</th>
-                <th className="px-6 py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Status</th>
+                <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Sample ID</th>
+                <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>SHA256 Hash</th>
+                <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Risk Score</th>
+                <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700/30 bg-slate-900/30">
+            <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700/30 bg-slate-900/30' : 'divide-gray-100 bg-white'}`}>
               {highRiskSamples?.slice(0, 5).map((sample, idx) => (
-                <tr key={sample.sample_id} className="hover:bg-slate-800/40 transition-colors group">
-                  <td className="px-6 py-4 text-sm font-medium text-white">
+                <tr key={sample.sample_id} className={`transition-colors group ${isDarkMode ? 'hover:bg-slate-800/40' : 'hover:bg-purple-50/30'}`}>
+                  <td className={`px-6 py-4 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     <div className="flex items-center space-x-3">
                       <div className="w-8 h-8 rounded-lg bg-brand-purple/20 flex items-center justify-center border border-brand-purple/30">
                         <span className="text-xs font-bold text-brand-purple-light">#{idx + 1}</span>
@@ -793,8 +802,8 @@ export default function Dashboard() {
                       <span>{sample.sample_id}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-400 font-mono">
-                    <div className="flex items-center space-x-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-slate-700/50 w-fit group-hover:border-slate-600/50 transition-colors">
+                  <td className={`px-6 py-4 text-sm font-mono ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <div className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg border w-fit transition-colors ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50 group-hover:border-slate-600/50' : 'bg-gray-50 border-gray-200 group-hover:border-gray-300'}`}>
                       <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                       </svg>
@@ -814,7 +823,7 @@ export default function Dashboard() {
                   <td className="px-6 py-4 text-sm">
                     <div className="flex items-center space-x-2">
                       <div className="flex-1 max-w-[100px]">
-                        <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                        <div className={`w-full rounded-full h-2 overflow-hidden ${isDarkMode ? 'bg-slate-800' : 'bg-gray-200'}`}>
                           <div
                             className="h-full bg-gradient-to-r from-red-500 to-red-600 rounded-full"
                             style={{ width: `${(sample.overall_risk_score || 0) * 100}%` }}

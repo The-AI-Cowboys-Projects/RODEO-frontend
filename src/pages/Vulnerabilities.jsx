@@ -11,16 +11,16 @@ export default function Vulnerabilities() {
   })
 
   if (isLoading) {
-    return <div className="text-center text-gray-400">Loading vulnerabilities...</div>
+    return <div className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Loading vulnerabilities...</div>
   }
 
   const getSeverityColor = (severity) => {
     switch (severity?.toLowerCase()) {
-      case 'critical': return 'bg-red-900 text-red-200'
-      case 'high': return 'bg-orange-900 text-orange-200'
-      case 'medium': return 'bg-yellow-900 text-yellow-200'
-      case 'low': return 'bg-green-900 text-green-200'
-      default: return 'bg-gray-900 text-gray-200'
+      case 'critical': return isDarkMode ? 'bg-red-900 text-red-200' : 'bg-red-50 text-red-800 border border-red-200'
+      case 'high': return isDarkMode ? 'bg-orange-900 text-orange-200' : 'bg-orange-50 text-orange-800 border border-orange-200'
+      case 'medium': return isDarkMode ? 'bg-yellow-900 text-yellow-200' : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
+      case 'low': return isDarkMode ? 'bg-green-900 text-green-200' : 'bg-green-50 text-green-800 border border-green-200'
+      default: return isDarkMode ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-700 border border-gray-200'
     }
   }
 
@@ -35,7 +35,7 @@ export default function Vulnerabilities() {
 
       <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-purple-300'} rounded-lg border overflow-hidden`}>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-700">
+          <table className={`min-w-full divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
             <thead className={`${isDarkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
               <tr>
                 <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${isDarkMode ? 'text-gray-400' : 'text-[#800080]'}`}>
@@ -79,7 +79,7 @@ export default function Vulnerabilities() {
                     {vuln.cvss_score?.toFixed(1) || 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <span className="px-2 py-1 text-xs rounded-full bg-purple-900 text-purple-200">
+                    <span className={`px-2 py-1 text-xs rounded-full ${isDarkMode ? 'bg-purple-900 text-purple-200' : 'bg-purple-50 text-purple-800 border border-purple-200'}`}>
                       {vuln.triage_label}
                     </span>
                   </td>

@@ -341,6 +341,18 @@
   border-radius: 0.375rem;
 }
 
+:root:not(.dark) .skeleton {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 0%,
+    #f1f5f9 50%,
+    #e2e8f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.375rem;
+}
+
 .loading-dots::after {
   content: '';
   animation: dots 1.5s infinite;

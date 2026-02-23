@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../api/client'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 
 // Check if running in development mode
 const isDevelopment = import.meta.env.DEV || import.meta.env.MODE === 'development'
@@ -21,6 +22,7 @@ const validatePassword = (value) => {
 
 export default function Login({ setIsAuthenticated }) {
   const { refreshUser } = useAuth()
+  const { isDarkMode } = useTheme()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -170,10 +172,11 @@ export default function Login({ setIsAuthenticated }) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-slate-900 relative overflow-hidden"
+      className={`min-h-screen flex items-center justify-center relative overflow-hidden ` + (isDarkMode ? 'bg-[#0a0e1a]' : 'bg-gradient-to-br from-gray-50 via-purple-50/20 to-white')}
       style={{
-        backgroundImage:
-          'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)',
+        backgroundImage: isDarkMode
+          ? 'linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px)'
+          : 'linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px)',
         backgroundSize: '40px 40px',
       }}
     >
@@ -184,8 +187,9 @@ export default function Login({ setIsAuthenticated }) {
           width: '520px',
           height: '520px',
           borderRadius: '50%',
-          background:
-            'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.06) 50%, transparent 70%)',
+          background: isDarkMode
+            ? 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.06) 50%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, rgba(236,72,153,0.04) 50%, transparent 70%)',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -196,8 +200,8 @@ export default function Login({ setIsAuthenticated }) {
       <div className="max-w-md w-full space-y-8 relative">
         {/* Card with gradient top border */}
         <div
-          className="bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden"
-          style={{ border: '1px solid rgba(148,163,184,0.12)' }}
+          className={isDarkMode ? 'bg-slate-800/90 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden' : 'bg-white/90 backdrop-blur-xl rounded-xl shadow-2xl shadow-purple-200/20 overflow-hidden'}
+          style={{ border: isDarkMode ? '1px solid rgba(148,163,184,0.12)' : '1px solid rgba(0,0,0,0.08)' }}
         >
           {/* Gradient top border strip */}
           <div
@@ -237,7 +241,7 @@ export default function Login({ setIsAuthenticated }) {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="username" className={`block text-sm font-medium mb-1 ` + (isDarkMode ? 'text-gray-300' : 'text-gray-700')}>
                     Username
                   </label>
                   <div className="relative">
@@ -246,12 +250,12 @@ export default function Login({ setIsAuthenticated }) {
                       name="username"
                       type="text"
                       autoComplete="username"
-                      className={`appearance-none rounded-lg relative block w-full px-3 py-2.5 border placeholder-gray-500 text-white bg-slate-700 focus:outline-none focus:ring-2 focus:z-10 sm:text-sm transition-colors ${
+                      className={`appearance-none rounded-lg relative block w-full px-3 py-2.5 border ${isDarkMode ? 'placeholder-gray-500 text-white bg-slate-700' : 'placeholder-gray-400 text-gray-900 bg-gray-50'} focus:outline-none focus:ring-2 focus:z-10 sm:text-sm transition-colors ${
                         touched.username && fieldErrors.username
                           ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
                           : touched.username && !fieldErrors.username && username
                             ? 'border-green-500 focus:ring-green-500/20 focus:border-green-500'
-                            : 'border-gray-600 focus:ring-purple-500/20 focus:border-purple-500'
+                            : `${isDarkMode ? 'border-gray-600 focus:ring-purple-500/20 focus:border-purple-500' : 'border-gray-300 focus:ring-purple-500/20 focus:border-purple-500'}`
                       }`}
                       placeholder="Enter your username"
                       value={username}
@@ -285,7 +289,7 @@ export default function Login({ setIsAuthenticated }) {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="password" className={`block text-sm font-medium mb-1 ` + (isDarkMode ? 'text-gray-300' : 'text-gray-700')}>
                     Password
                   </label>
                   <div className="relative">
@@ -294,12 +298,12 @@ export default function Login({ setIsAuthenticated }) {
                       name="password"
                       type="password"
                       autoComplete="current-password"
-                      className={`appearance-none rounded-lg relative block w-full px-3 py-2.5 border placeholder-gray-500 text-white bg-slate-700 focus:outline-none focus:ring-2 focus:z-10 sm:text-sm transition-colors ${
+                      className={`appearance-none rounded-lg relative block w-full px-3 py-2.5 border ${isDarkMode ? 'placeholder-gray-500 text-white bg-slate-700' : 'placeholder-gray-400 text-gray-900 bg-gray-50'} focus:outline-none focus:ring-2 focus:z-10 sm:text-sm transition-colors ${
                         touched.password && fieldErrors.password
                           ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
                           : touched.password && !fieldErrors.password && password
                             ? 'border-green-500 focus:ring-green-500/20 focus:border-green-500'
-                            : 'border-gray-600 focus:ring-purple-500/20 focus:border-purple-500'
+                            : `${isDarkMode ? 'border-gray-600 focus:ring-purple-500/20 focus:border-purple-500' : 'border-gray-300 focus:ring-purple-500/20 focus:border-purple-500'}`
                       }`}
                       placeholder="Enter your password"
                       value={password}
@@ -421,7 +425,7 @@ export default function Login({ setIsAuthenticated }) {
 
               {/* Only show dev credentials in development mode */}
               {isDevelopment && showDevInfo && (
-                <div className="mt-4 p-3 bg-slate-700/50 rounded-md border border-slate-600">
+                <div className={`mt-4 p-3 rounded-md border ` + (isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-100 border-gray-300')}>
                   <p className="text-xs text-center text-amber-400 font-medium mb-1">
                     Development Mode
                   </p>
@@ -438,7 +442,7 @@ export default function Login({ setIsAuthenticated }) {
             </form>
 
             {/* Version / copyright */}
-            <p className="mt-8 text-center text-xs text-slate-600 select-none">
+            <p className={`mt-8 text-center text-xs select-none ` + (isDarkMode ? 'text-slate-600' : 'text-gray-400')}>
               v2.0 &mdash; AI Cowboys
             </p>
           </div>

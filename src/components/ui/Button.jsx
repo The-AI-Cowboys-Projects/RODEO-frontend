@@ -4,6 +4,8 @@
  * Enhanced with WCAG-compliant focus states and hover effects
  */
 
+import { useTheme } from '../../context/ThemeContext'
+
 export default function Button({
   children,
   variant = 'primary',
@@ -19,16 +21,18 @@ export default function Button({
   ariaLabel,
   ...props
 }) {
+  const { isDarkMode } = useTheme()
+
   // Enhanced variants with better hover states and shadows
-  const variants = {
+  const variants = isDarkMode ? {
     primary: `
       bg-purple-600 text-white border-purple-600
       hover:bg-purple-500 hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/25
       active:bg-purple-700 active:scale-[0.98]
     `,
     secondary: `
-      bg-slate-700 text-white border-slate-600
-      hover:bg-slate-600 hover:border-slate-500 hover:shadow-md
+      bg-slate-700/80 text-white border-white/10
+      hover:bg-slate-600 hover:border-white/20 hover:shadow-md
       active:bg-slate-700 active:scale-[0.98]
     `,
     success: `
@@ -38,7 +42,7 @@ export default function Button({
     `,
     danger: `
       bg-red-600 text-white border-red-600
-      hover:bg-red-500 hover:border-red-500 hover:shadow-lg hover:shadow-red-500/25
+      hover:bg-red-500 hover:border-red-500 hover:shadow-lg hover:shadow-red-500/20
       active:bg-red-700 active:scale-[0.98]
     `,
     warning: `
@@ -47,9 +51,9 @@ export default function Button({
       active:bg-orange-700 active:scale-[0.98]
     `,
     ghost: `
-      bg-transparent text-gray-300 border-slate-700
-      hover:bg-slate-800 hover:text-white hover:border-slate-600
-      active:bg-slate-900
+      bg-transparent text-gray-300 border-transparent
+      hover:bg-white/5 hover:text-white
+      active:bg-white/10
     `,
     link: `
       bg-transparent text-purple-400 border-transparent
@@ -57,9 +61,50 @@ export default function Button({
       active:text-purple-500
     `,
     outline: `
-      bg-transparent text-purple-400 border-purple-500
-      hover:bg-purple-500/10 hover:text-purple-300
-      active:bg-purple-500/20
+      bg-transparent text-purple-400 border-white/15
+      hover:bg-white/5 hover:text-purple-300
+      active:bg-white/10
+    `,
+  } : {
+    primary: `
+      bg-purple-600 text-white border-purple-600
+      hover:bg-purple-500 hover:border-purple-500 hover:shadow-md hover:shadow-purple-300/30
+      active:bg-purple-700 active:scale-[0.98]
+    `,
+    secondary: `
+      bg-white text-gray-900 border-gray-300 shadow-sm
+      hover:bg-gray-50 hover:shadow-md hover:border-gray-400
+      active:bg-gray-100 active:scale-[0.98]
+    `,
+    success: `
+      bg-green-600 text-white border-green-600
+      hover:bg-green-500 hover:border-green-500 hover:shadow-md hover:shadow-green-300/20
+      active:bg-green-700 active:scale-[0.98]
+    `,
+    danger: `
+      bg-red-600 text-white border-red-600
+      hover:bg-red-500 hover:border-red-500 hover:shadow-md hover:shadow-red-300/20
+      active:bg-red-700 active:scale-[0.98]
+    `,
+    warning: `
+      bg-orange-600 text-white border-orange-600
+      hover:bg-orange-500 hover:border-orange-500 hover:shadow-md hover:shadow-orange-300/20
+      active:bg-orange-700 active:scale-[0.98]
+    `,
+    ghost: `
+      bg-transparent text-gray-700 border-transparent
+      hover:bg-gray-100 hover:text-gray-900
+      active:bg-gray-200
+    `,
+    link: `
+      bg-transparent text-purple-700 border-transparent
+      hover:text-purple-900 hover:underline underline-offset-4
+      active:text-purple-800
+    `,
+    outline: `
+      bg-transparent text-purple-700 border-gray-300
+      hover:bg-gray-50 hover:text-purple-800
+      active:bg-gray-100
     `,
   }
 
@@ -95,7 +140,7 @@ export default function Button({
         inline-flex items-center justify-center
         font-medium rounded-lg border
         transition-all duration-200 ease-in-out
-        focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 ${isDarkMode ? 'focus-visible:ring-offset-slate-900' : 'focus-visible:ring-offset-white'}
         disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
         ${variants[variant]}
         ${isIconOnly ? iconOnlySizes[size] : sizes[size]}

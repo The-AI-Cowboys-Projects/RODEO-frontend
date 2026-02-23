@@ -4,6 +4,8 @@
  * Enhanced with WCAG-compliant color contrast
  */
 
+import { useTheme } from '../../context/ThemeContext'
+
 export default function Badge({
   children,
   variant = 'default',
@@ -13,35 +15,53 @@ export default function Badge({
   className = '',
   ariaLabel,
 }) {
-  // Enhanced variants with better color contrast (4.5:1 minimum)
-  const variants = {
-    default: 'bg-slate-700 text-slate-100 border-slate-600',
-    primary: 'bg-purple-600 text-white border-purple-500',
-    success: 'bg-green-600 text-white border-green-500',
-    warning: 'bg-orange-500 text-white border-orange-400',
-    danger: 'bg-red-600 text-white border-red-500',
-    info: 'bg-blue-600 text-white border-blue-500',
+  const { isDarkMode } = useTheme()
 
-    // Subtle variants (for less emphasis)
+  // Enhanced variants with better color contrast (4.5:1 minimum)
+  const variants = isDarkMode ? {
+    default: 'bg-slate-700/80 text-slate-100 border-slate-600',
+    primary: 'bg-purple-600 text-white border-purple-500',
+    success: 'bg-green-500/15 text-green-300 border-green-500/30',
+    warning: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    danger: 'bg-red-500/15 text-red-300 border-red-500/30',
+    info: 'bg-blue-500/15 text-blue-300 border-blue-500/30',
     'default-subtle': 'bg-slate-800 text-slate-200 border-slate-700',
     'primary-subtle': 'bg-purple-900/50 text-purple-200 border-purple-700',
     'success-subtle': 'bg-green-900/50 text-green-200 border-green-700',
     'warning-subtle': 'bg-orange-900/50 text-orange-200 border-orange-700',
     'danger-subtle': 'bg-red-900/50 text-red-200 border-red-700',
     'info-subtle': 'bg-blue-900/50 text-blue-200 border-blue-700',
-
-    // Risk levels with high contrast
     critical: 'bg-red-600 text-white border-red-500 font-semibold',
     high: 'bg-orange-600 text-white border-orange-500',
-    medium: 'bg-yellow-500 text-gray-900 border-yellow-400', // Dark text for yellow
+    medium: 'bg-yellow-500 text-gray-900 border-yellow-400',
     low: 'bg-green-600 text-white border-green-500',
     informational: 'bg-gray-600 text-white border-gray-500',
-
-    // Outline variants
     'outline-primary': 'bg-transparent text-purple-400 border-purple-500',
     'outline-success': 'bg-transparent text-green-400 border-green-500',
     'outline-warning': 'bg-transparent text-orange-400 border-orange-500',
     'outline-danger': 'bg-transparent text-red-400 border-red-500',
+  } : {
+    default: 'bg-gray-100 text-gray-800 border-gray-200',
+    primary: 'bg-purple-600 text-white border-purple-500',
+    success: 'bg-green-50 text-green-800 border-green-200',
+    warning: 'bg-amber-50 text-amber-800 border-amber-200',
+    danger: 'bg-red-50 text-red-800 border-red-200',
+    info: 'bg-blue-50 text-blue-800 border-blue-200',
+    'default-subtle': 'bg-gray-50 text-gray-600 border-gray-200',
+    'primary-subtle': 'bg-purple-50 text-purple-700 border-purple-200',
+    'success-subtle': 'bg-green-50 text-green-700 border-green-200',
+    'warning-subtle': 'bg-amber-50 text-amber-700 border-amber-200',
+    'danger-subtle': 'bg-red-50 text-red-700 border-red-200',
+    'info-subtle': 'bg-blue-50 text-blue-700 border-blue-200',
+    critical: 'bg-red-600 text-white border-red-500 font-semibold',
+    high: 'bg-orange-600 text-white border-orange-500',
+    medium: 'bg-yellow-100 text-yellow-900 border-yellow-300',
+    low: 'bg-green-600 text-white border-green-500',
+    informational: 'bg-gray-200 text-gray-700 border-gray-300',
+    'outline-primary': 'bg-transparent text-purple-700 border-purple-400',
+    'outline-success': 'bg-transparent text-green-700 border-green-400',
+    'outline-warning': 'bg-transparent text-orange-700 border-orange-400',
+    'outline-danger': 'bg-transparent text-red-700 border-red-400',
   }
 
   const sizes = {

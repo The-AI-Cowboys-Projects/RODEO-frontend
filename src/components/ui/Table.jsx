@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react'
+import { useTheme } from '../../context/ThemeContext'
 
 export default function Table({
   columns,
@@ -15,6 +16,7 @@ export default function Table({
   compact = false,
   className = '',
 }) {
+  const { isDarkMode } = useTheme()
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
 
   const handleSort = (key) => {
@@ -60,8 +62,8 @@ export default function Table({
 
   if (loading) {
     return (
-      <div className="overflow-hidden rounded-xl border border-slate-700">
-        <div className="bg-slate-800 p-8 text-center">
+      <div className={`overflow-hidden rounded-xl border ${isDarkMode ? 'border-white/10' : 'border-gray-200'}`}>
+        <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} p-8 text-center`}>
           <div className="inline-flex items-center">
             <svg className="animate-spin h-5 w-5 text-purple-500 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -75,17 +77,17 @@ export default function Table({
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-slate-700 ${className}`}>
+    <div className={`overflow-hidden rounded-xl border ${isDarkMode ? 'border-white/10' : 'border-gray-200'} ${className}`}>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-700">
-          <thead className="bg-slate-900">
+        <table className={`min-w-full divide-y ${isDarkMode ? 'divide-white/5' : 'divide-gray-100'}`}>
+          <thead className={isDarkMode ? 'bg-slate-800/80' : 'bg-gray-50'}>
             <tr>
               {columns.map((column) => (
                 <th
                   key={column.key}
                   onClick={() => handleSort(column.key)}
                   className={`
-                    px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider
+                    px-6 py-4 text-left text-xs font-medium uppercase tracking-wider ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}
                     ${sortable ? 'cursor-pointer hover:text-purple-400 transition-color' : ''}
                     ${compact ? 'px-4 py-2' : ''}
                   `}
@@ -98,14 +100,14 @@ export default function Table({
               ))}
             </tr>
           </thead>
-          <tbody className={`bg-slate-800 divide-y divide-slate-700 ${striped ? 'divide-y-0' : ''}`}>
+          <tbody className={`${isDarkMode ? 'bg-slate-800 divide-y divide-white/5' : 'bg-white divide-y divide-gray-100'} ${striped ? 'divide-y-0' : ''}`}>
             {sortedData.map((row, rowIndex) => (
               <tr
                 key={row.id || rowIndex}
                 className={`
                   animate-fadeInUp
-                  ${hoverable ? 'hover:bg-slate-750 transition-color' : ''}
-                  ${striped && rowIndex % 2 === 1 ? 'bg-slate-800/50' : ''}
+                  ${hoverable ? `${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-purple-50/30'} transition-color` : ''}
+                  ${striped && rowIndex % 2 === 1 ? (isDarkMode ? 'bg-slate-800/50' : 'bg-gray-50/50') : ''}
                 `}
                 style={{ animationDelay: `${rowIndex * 0.02}s` }}
               >
@@ -127,7 +129,7 @@ export default function Table({
       </div>
 
       {data.length === 0 && !loading && (
-        <div className="bg-slate-800 p-12 text-center">
+        <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white'} p-12 text-center`}>
           <svg className="mx-auto h-12 w-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
           </svg>

@@ -332,7 +332,7 @@ export default function RoiCalculator() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full blur-2xl scale-125" />
 
               {/* SVG Ring */}
-              <svg className="w-72 h-72 transform -rotate-90 relative" viewBox="0 0 192 192">
+              <svg className="w-[36rem] h-[36rem] transform -rotate-90 relative" viewBox="0 0 192 192">
                 {/* Background ring */}
                 <circle
                   cx="96"
@@ -366,7 +366,7 @@ export default function RoiCalculator() {
 
               {/* Center content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[9rem] leading-none font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="text-4xl leading-none font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   {animatedRoi}%
                 </span>
                 <span className="text-gray-400 text-lg font-medium mt-1">ROI</span>

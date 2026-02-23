@@ -995,9 +995,7 @@ export const knowledge = {
     uploadDocument: async (file) => {
         const formData = new FormData();
         formData.append('file', file);
-        const response = await apiClient.post("/api/knowledge/ingest/document", formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        const response = await apiClient.post("/api/knowledge/ingest/document", formData);
         return response.data;
     },
     confirmDocument: async (data) => {

@@ -18,6 +18,10 @@ import {
   ChevronRightIcon,
   CheckCircleIcon,
   ExclamationTriangleIcon,
+  ArrowUpTrayIcon,
+  DocumentArrowUpIcon,
+  XMarkIcon,
+  SparklesIcon,
 } from '@heroicons/react/24/outline'
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -122,6 +126,14 @@ export default function KnowledgeBasePage() {
   const [ingestType, setIngestType] = useState('analyst_note')
   const [ingestForm, setIngestForm] = useState({})
   const [ingesting, setIngesting] = useState(false)
+
+  // Upload modal
+  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [uploadFile, setUploadFile] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadPreview, setUploadPreview] = useState(null)
+  const [uploadEdits, setUploadEdits] = useState({})
+  const [confirming, setConfirming] = useState(false)
 
   // ── Notification helper ───────────────────────────────────────────────────
   const showNotif = (message, type = 'success') => {
@@ -302,6 +314,74 @@ export default function KnowledgeBasePage() {
     }, 0)
   }
 
+  // ── Document Upload ───────────────────────────────────────────────────────
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) {
+      showNotif('File too large (max 5MB)', 'error')
+      return
+    }
+    setUploadFile(file)
+    setUploadPreview(null)
+    setUploadEdits({})
+  }
+
+  const handleUploadParse = async () => {
+    if (!uploadFile) return
+    setUploading(true)
+    try {
+      const result = await knowledge.uploadDocument(uploadFile)
+      setUploadPreview(result)
+      setUploadEdits({
+        title: result.title,
+        doc_type: result.doc_type,
+        tags: result.tags?.join(', ') || '',
+        source: result.source || '',
+      })
+    } catch (err) {
+      showNotif('Failed to parse document', 'error')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleUploadConfirm = async () => {
+    if (!uploadPreview) return
+    setConfirming(true)
+    try {
+      const tags = (uploadEdits.tags || '')
+        .split(',')
+        .map(t => t.trim())
+        .filter(Boolean)
+      await knowledge.confirmDocument({
+        title: uploadEdits.title || uploadPreview.title,
+        doc_type: uploadEdits.doc_type || uploadPreview.doc_type,
+        content: uploadPreview.content,
+        tags,
+        source: uploadEdits.source || uploadPreview.source,
+      })
+      showNotif('Document ingested successfully', 'success')
+      setShowUploadModal(false)
+      setUploadFile(null)
+      setUploadPreview(null)
+      setUploadEdits({})
+      fetchInitial()
+      if (activeTab === 'documents') fetchDocuments(0, docFilter)
+    } catch {
+      showNotif('Failed to ingest document', 'error')
+    } finally {
+      setConfirming(false)
+    }
+  }
+
+  const handleCloseUploadModal = () => {
+    setShowUploadModal(false)
+    setUploadFile(null)
+    setUploadPreview(null)
+    setUploadEdits({})
+  }
+
   // ── Derived stats ─────────────────────────────────────────────────────────
   const docCount = statusData?.doc_count ?? 0
   const kbInitialized = statusData?.engine_initialized === true
@@ -353,6 +433,211 @@ export default function KnowledgeBasePage() {
         </div>
       )}
 
+      {/* Upload Document Modal */}
+      {showUploadModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className={`w-full max-w-2xl mx-4 rounded-2xl border shadow-2xl max-h-[90vh] overflow-y-auto ${
+            isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
+          }`}>
+            {/* Modal header */}
+            <div className={`flex items-center justify-between px-6 py-4 border-b ${
+              isDarkMode ? 'border-slate-700' : 'border-gray-200'
+            }`}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/20">
+                  <DocumentArrowUpIcon className="w-5 h-5 text-purple-400" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold">Add Document</h2>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    Upload a file for auto-parsing and ingestion
+                  </p>
+                </div>
+              </div>
+              <button onClick={handleCloseUploadModal} className="p-1 rounded hover:bg-slate-700/50 transition-colors">
+                <XMarkIcon className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="px-6 py-5 space-y-5">
+              {/* File upload area */}
+              {!uploadPreview && (
+                <div>
+                  <label className={`flex flex-col items-center justify-center w-full h-40 rounded-xl border-2 border-dashed cursor-pointer transition-colors ${
+                    isDarkMode
+                      ? 'border-slate-600 hover:border-purple-500 bg-slate-900/50'
+                      : 'border-gray-300 hover:border-purple-400 bg-gray-50'
+                  }`}>
+                    <ArrowUpTrayIcon className="w-10 h-10 text-gray-400 mb-2" />
+                    <p className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {uploadFile ? uploadFile.name : 'Click to select a file'}
+                    </p>
+                    <p className={`text-xs mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                      .txt, .json, .csv, .log, .md, .yaml, .xml — Max 5MB
+                    </p>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept=".txt,.json,.csv,.log,.md,.yaml,.yml,.xml,.conf,.cfg,.ini,.html,.htm"
+                      onChange={handleFileSelect}
+                    />
+                  </label>
+
+                  {uploadFile && (
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <DocumentTextIcon className="w-5 h-5 text-purple-400" />
+                        <span className="text-sm font-medium">{uploadFile.name}</span>
+                        <span className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                          ({(uploadFile.size / 1024).toFixed(1)} KB)
+                        </span>
+                      </div>
+                      <Button
+                        onClick={handleUploadParse}
+                        disabled={uploading}
+                        className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white"
+                      >
+                        {uploading
+                          ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          : <SparklesIcon className="w-4 h-4" />
+                        }
+                        {uploading ? 'Parsing...' : 'Auto-Parse'}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Preview + editable fields */}
+              {uploadPreview && (
+                <div className="space-y-4">
+                  {/* Auto-detected badge */}
+                  <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                    isDarkMode ? 'bg-green-900/20 border border-green-800' : 'bg-green-50 border border-green-200'
+                  }`}>
+                    <SparklesIcon className="w-4 h-4 text-green-400" />
+                    <span className={`text-sm ${isDarkMode ? 'text-green-300' : 'text-green-700'}`}>
+                      Auto-parsed: {uploadPreview.line_count} lines, {(uploadPreview.file_size / 1024).toFixed(1)} KB
+                    </span>
+                  </div>
+
+                  {/* Editable Title */}
+                  <div>
+                    <label className={LABEL_CLS(isDarkMode)}>Title</label>
+                    <input
+                      type="text"
+                      value={uploadEdits.title || ''}
+                      onChange={e => setUploadEdits(prev => ({ ...prev, title: e.target.value }))}
+                      className={INPUT_BASE(isDarkMode)}
+                    />
+                  </div>
+
+                  {/* Editable Doc Type */}
+                  <div>
+                    <label className={LABEL_CLS(isDarkMode)}>Document Type</label>
+                    <select
+                      value={uploadEdits.doc_type || ''}
+                      onChange={e => setUploadEdits(prev => ({ ...prev, doc_type: e.target.value }))}
+                      className={INPUT_BASE(isDarkMode)}
+                    >
+                      {DOC_TYPES.map(d => (
+                        <option key={d.value} value={d.value}>{d.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Editable Tags */}
+                  <div>
+                    <label className={LABEL_CLS(isDarkMode)}>Tags (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={uploadEdits.tags || ''}
+                      onChange={e => setUploadEdits(prev => ({ ...prev, tags: e.target.value }))}
+                      className={INPUT_BASE(isDarkMode)}
+                    />
+                    {uploadPreview.tags?.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {uploadPreview.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className={`inline-flex items-center px-2 py-0.5 rounded text-xs ${
+                              isDarkMode
+                                ? 'bg-purple-900/30 text-purple-300 border border-purple-700'
+                                : 'bg-purple-50 text-purple-700 border border-purple-200'
+                            }`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Editable Source */}
+                  <div>
+                    <label className={LABEL_CLS(isDarkMode)}>Source</label>
+                    <input
+                      type="text"
+                      value={uploadEdits.source || ''}
+                      onChange={e => setUploadEdits(prev => ({ ...prev, source: e.target.value }))}
+                      className={INPUT_BASE(isDarkMode)}
+                    />
+                  </div>
+
+                  {/* Content preview (read-only) */}
+                  <div>
+                    <label className={LABEL_CLS(isDarkMode)}>Content Preview</label>
+                    <div className={`rounded-lg border p-3 max-h-48 overflow-y-auto text-xs font-mono leading-relaxed ${
+                      isDarkMode
+                        ? 'bg-slate-900 border-slate-700 text-gray-300'
+                        : 'bg-gray-50 border-gray-200 text-gray-700'
+                    }`}>
+                      {uploadPreview.content?.slice(0, 2000) || 'No content'}
+                      {(uploadPreview.content?.length || 0) > 2000 && (
+                        <span className="text-gray-500">... ({uploadPreview.content.length.toLocaleString()} chars total)</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal footer */}
+            {uploadPreview && (
+              <div className={`flex items-center justify-between px-6 py-4 border-t ${
+                isDarkMode ? 'border-slate-700' : 'border-gray-200'
+              }`}>
+                <button
+                  onClick={() => { setUploadPreview(null); setUploadFile(null); setUploadEdits({}) }}
+                  className={`text-sm ${isDarkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`}
+                >
+                  Upload different file
+                </button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    onClick={handleCloseUploadModal}
+                    className={isDarkMode ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleUploadConfirm}
+                    disabled={confirming}
+                    className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    {confirming
+                      ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      : <PlusCircleIcon className="w-4 h-4" />
+                    }
+                    {confirming ? 'Ingesting...' : 'Confirm & Ingest'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
@@ -369,10 +654,20 @@ export default function KnowledgeBasePage() {
               </p>
             </div>
           </div>
-          <Button size="sm" onClick={fetchInitial} className="flex items-center gap-2">
-            <ArrowPathIcon className="w-4 h-4" />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              onClick={() => setShowUploadModal(true)}
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white"
+            >
+              <ArrowUpTrayIcon className="w-4 h-4" />
+              Add Document
+            </Button>
+            <Button size="sm" onClick={fetchInitial} className="flex items-center gap-2">
+              <ArrowPathIcon className="w-4 h-4" />
+              Refresh
+            </Button>
+          </div>
         </div>
 
         {/* Stats Grid */}

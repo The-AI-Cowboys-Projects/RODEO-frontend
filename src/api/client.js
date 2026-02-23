@@ -992,6 +992,18 @@ export const knowledge = {
         const response = await apiClient.post("/api/knowledge/context", data);
         return response.data;
     },
+    uploadDocument: async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await apiClient.post("/api/knowledge/ingest/document", formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        return response.data;
+    },
+    confirmDocument: async (data) => {
+        const response = await apiClient.post("/api/knowledge/ingest/document/confirm", data);
+        return response.data;
+    },
 };
 
 export const threatIntel = {

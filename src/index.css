@@ -1,0 +1,308 @@
+/* Import animations - must come before @tailwind directives */
+@import './styles/animations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+code {
+  font-family: 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Focus ring - maintain accessibility while removing default outline */
+*:focus {
+  outline: none;
+}
+
+/* Visible focus ring for keyboard navigation (WCAG 2.4.7) */
+*:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Ensure focus is visible on all interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+}
+
+/* Skip to main content link for screen readers */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #a855f7;
+  color: white;
+  padding: 8px 16px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   WCAG Color Contrast Improvements
+   ========================================= */
+
+/* Improved text contrast for better readability */
+.text-contrast-high {
+  color: #f1f5f9; /* slate-100 - 15.8:1 contrast ratio on dark bg */
+}
+
+.text-contrast-medium {
+  color: #cbd5e1; /* slate-300 - 10.7:1 contrast ratio on dark bg */
+}
+
+/* Ensure placeholder text meets 4.5:1 contrast ratio */
+::placeholder {
+  color: #94a3b8; /* slate-400 */
+  opacity: 1;
+}
+
+/* =========================================
+   Enhanced Button Styles
+   ========================================= */
+
+/* Base button transition */
+.btn-base {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Primary button hover effects */
+.btn-primary {
+  @apply bg-purple-600 text-white;
+  @apply hover:bg-purple-500 hover:shadow-lg hover:shadow-purple-500/25;
+  @apply active:bg-purple-700 active:scale-[0.98];
+}
+
+/* Secondary button hover effects */
+.btn-secondary {
+  @apply bg-slate-700 text-white border border-slate-600;
+  @apply hover:bg-slate-600 hover:border-slate-500 hover:shadow-md;
+  @apply active:bg-slate-700 active:scale-[0.98];
+}
+
+/* Ghost button hover effects */
+.btn-ghost {
+  @apply bg-transparent text-gray-300 border border-transparent;
+  @apply hover:bg-slate-800 hover:text-white hover:border-slate-700;
+  @apply active:bg-slate-900;
+}
+
+/* Danger button hover effects */
+.btn-danger {
+  @apply bg-red-600 text-white;
+  @apply hover:bg-red-500 hover:shadow-lg hover:shadow-red-500/25;
+  @apply active:bg-red-700 active:scale-[0.98];
+}
+
+/* Success button hover effects */
+.btn-success {
+  @apply bg-green-600 text-white;
+  @apply hover:bg-green-500 hover:shadow-lg hover:shadow-green-500/25;
+  @apply active:bg-green-700 active:scale-[0.98];
+}
+
+/* Disabled button state */
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed pointer-events-none;
+}
+
+/* =========================================
+   Interactive Element Hover States
+   ========================================= */
+
+/* Card hover effect */
+.hover-card {
+  @apply transition-all duration-200;
+  @apply hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-0.5;
+}
+
+/* Table row hover */
+.hover-row {
+  @apply transition-colors duration-150;
+  @apply hover:bg-slate-800/50;
+}
+
+/* Link hover effect */
+.hover-link {
+  @apply transition-colors duration-150;
+  @apply hover:text-purple-400;
+  @apply underline-offset-4 hover:underline;
+}
+
+/* Icon button hover */
+.hover-icon {
+  @apply transition-all duration-150;
+  @apply hover:text-white hover:scale-110;
+}
+
+/* =========================================
+   Badge & Status Indicators
+   ========================================= */
+
+/* High contrast severity badges */
+.badge-critical {
+  @apply bg-red-600 text-white;
+}
+
+.badge-high {
+  @apply bg-orange-600 text-white;
+}
+
+.badge-medium {
+  @apply bg-yellow-500 text-gray-900; /* Dark text for contrast */
+}
+
+.badge-low {
+  @apply bg-green-600 text-white;
+}
+
+.badge-info {
+  @apply bg-blue-600 text-white;
+}
+
+/* Status dot indicators */
+.status-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.status-active {
+  @apply bg-green-500 animate-pulse;
+}
+
+.status-warning {
+  @apply bg-yellow-500;
+}
+
+.status-error {
+  @apply bg-red-500;
+}
+
+.status-inactive {
+  @apply bg-gray-500;
+}
+
+/* =========================================
+   Form Element Improvements
+   ========================================= */
+
+/* Input focus states with better contrast */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+/* Error state */
+.input-error {
+  @apply border-red-500;
+  @apply focus:border-red-400 focus:ring-red-400/20;
+}
+
+/* Success state */
+.input-success {
+  @apply border-green-500;
+  @apply focus:border-green-400 focus:ring-green-400/20;
+}
+
+/* Checkbox and radio improvements */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  @apply bg-purple-600 border-purple-600;
+}
+
+/* =========================================
+   Table Improvements
+   ========================================= */
+
+/* Table header with better contrast */
+.table-header {
+  @apply bg-slate-800 text-slate-200 font-semibold;
+}
+
+/* Alternating row colors */
+.table-row-alt:nth-child(even) {
+  @apply bg-slate-800/30;
+}
+
+/* =========================================
+   High Contrast Mode Support
+   ========================================= */
+
+@media (prefers-contrast: high) {
+  body {
+    background: #000;
+    color: #fff;
+  }
+
+  button,
+  .btn-primary,
+  .btn-secondary {
+    border: 2px solid currentColor;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  ::placeholder {
+    color: #a1a1aa;
+  }
+}

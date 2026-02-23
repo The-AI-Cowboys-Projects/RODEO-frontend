@@ -1,0 +1,919 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for dist/assets/EDRDashboard-CuqatlDI.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">dist/assets</a> EDRDashboard-CuqatlDI.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/278</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/278</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import{j as e}from"./query-vendor-Bgne-RFE.js";import{a as x}from"./react-vendor-z1mORbJf.js";import{u as ze,i as V}from"./index-B7LRZIR5.js";import{R as ie,k as Le,C as we,X as je,Y as Ne,T as ce,L as Ie,l as ke,n as Pe,o as qe,h as $e,B as Ve,j as We}from"./charts-BUYJ1XgZ.js";/**</span></span></span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const He=r=&gt;r.replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase(),Be=r=&gt;r.replace(/^([A-Z])|[\s-_]+(\w)/g,(l,i,c)=&gt;c?c.toUpperCase():i.toLowerCase()),_e=r=&gt;{const l=Be(r);return l.charAt(0).toUpperCase()+l.slice(1)},Ce=(...r)=&gt;r.filter((l,i,c)=&gt;!!l&amp;&amp;l.trim()!==""&amp;&amp;c.indexOf(l)===i).join(" ").trim(),Fe=r=&gt;{for(const l in r)if(l.startsWith("aria-")||l==="role"||l==="title")return!0};/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */var Ue={xmlns:"http://www.w3.org/2000/svg",width:24,height:24,viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:2,strokeLinecap:"round",strokeLinejoin:"round"};/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Ke=x.forwardRef(({color:r="currentColor",size:l=24,strokeWidth:i=2,absoluteStrokeWidth:c,className:a="",children:p,iconNode:s,...h},y)=&gt;x.createElement("svg",{ref:y,...Ue,width:l,height:l,stroke:r,strokeWidth:c?Number(i)*24/Number(l):i,className:Ce("lucide",a),...!p&amp;&amp;!Fe(h)&amp;&amp;{"aria-hidden":"true"},...h},[...s.map(([k,w])=&gt;x.createElement(k,w)),...Array.isArray(p)?p:[p]]));/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const u=(r,l)=&gt;{const i=x.forwardRef(({className:c,...a},p)=&gt;x.createElement(Ke,{ref:p,iconNode:l,className:Ce(`lucide-${He(_e(r))}`,`lucide-${r}`,c),...a}));return i.displayName=_e(r),i};/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Xe=[["path",{d:"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",key:"169zse"}]],ue=u("activity",Xe);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Ze=[["path",{d:"M10.268 21a2 2 0 0 0 3.464 0",key:"vwvbt9"}],["path",{d:"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326",key:"11g9vi"}]],Ye=u("bell",Ze);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Qe=[["path",{d:"M12 20v-9",key:"1qisl0"}],["path",{d:"M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z",key:"uouzyp"}],["path",{d:"M14.12 3.88 16 2",key:"qol33r"}],["path",{d:"M21 21a4 4 0 0 0-3.81-4",key:"1b0z45"}],["path",{d:"M21 5a4 4 0 0 1-3.55 3.97",key:"5cxbf6"}],["path",{d:"M22 13h-4",key:"1jl80f"}],["path",{d:"M3 21a4 4 0 0 1 3.81-4",key:"1fjd4g"}],["path",{d:"M3 5a4 4 0 0 0 3.55 3.97",key:"1d7oge"}],["path",{d:"M6 13H2",key:"82j7cp"}],["path",{d:"m8 2 1.88 1.88",key:"fmnt4t"}],["path",{d:"M9 7.13V6a3 3 0 1 1 6 0v1.13",key:"1vgav8"}]],Ge=u("bug",Qe);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Je=[["path",{d:"M3 3v16a2 2 0 0 0 2 2h16",key:"c24i48"}],["path",{d:"M18 17V9",key:"2bz60n"}],["path",{d:"M13 17V5",key:"1frdt8"}],["path",{d:"M8 17v-3",key:"17ska0"}]],ye=u("chart-column",Je);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Me=[["path",{d:"m6 9 6 6 6-6",key:"qrunsl"}]],Y=u("chevron-down",Me);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const De=[["path",{d:"m18 15-6-6-6 6",key:"153udz"}]],et=u("chevron-up",De);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const tt=[["path",{d:"M21.801 10A10 10 0 1 1 17 3.335",key:"yps3ct"}],["path",{d:"m9 11 3 3L22 4",key:"1pflzl"}]],J=u("circle-check-big",tt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const at=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["path",{d:"m15 9-6 6",key:"1uzhvr"}],["path",{d:"m9 9 6 6",key:"z0biqf"}]],de=u("circle-x",at);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const rt=[["path",{d:"M12 6v6l4 2",key:"mmk7yg"}],["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}]],he=u("clock",rt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const st=[["path",{d:"M12 20v2",key:"1lh1kg"}],["path",{d:"M12 2v2",key:"tus03m"}],["path",{d:"M17 20v2",key:"1rnc9c"}],["path",{d:"M17 2v2",key:"11trls"}],["path",{d:"M2 12h2",key:"1t8f8n"}],["path",{d:"M2 17h2",key:"7oei6x"}],["path",{d:"M2 7h2",key:"asdhe0"}],["path",{d:"M20 12h2",key:"1q8mjw"}],["path",{d:"M20 17h2",key:"1fpfkl"}],["path",{d:"M20 7h2",key:"1o8tra"}],["path",{d:"M7 20v2",key:"4gnj0m"}],["path",{d:"M7 2v2",key:"1i4yhu"}],["rect",{x:"4",y:"4",width:"16",height:"16",rx:"2",key:"1vbyd7"}],["rect",{x:"8",y:"8",width:"8",height:"8",rx:"1",key:"z9xiuo"}]],lt=u("cpu",st);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const nt=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["line",{x1:"22",x2:"18",y1:"12",y2:"12",key:"l9bcsi"}],["line",{x1:"6",x2:"2",y1:"12",y2:"12",key:"13hhkx"}],["line",{x1:"12",x2:"12",y1:"6",y2:"2",key:"10w3f3"}],["line",{x1:"12",x2:"12",y1:"22",y2:"18",key:"15g9kq"}]],ee=u("crosshair",nt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const ot=[["ellipse",{cx:"12",cy:"5",rx:"9",ry:"3",key:"msslwz"}],["path",{d:"M3 5V19A9 3 0 0 0 21 19V5",key:"1wlel7"}],["path",{d:"M3 12A9 3 0 0 0 21 12",key:"mv7ke4"}]],it=u("database",ot);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const ct=[["path",{d:"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",key:"1nclc0"}],["circle",{cx:"12",cy:"12",r:"3",key:"1v7zrd"}]],me=u("eye",ct);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const dt=[["path",{d:"M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z",key:"1oefj6"}],["path",{d:"M14 2v5a1 1 0 0 0 1 1h5",key:"wfsgrz"}],["path",{d:"M10 9H8",key:"b1mrlr"}],["path",{d:"M16 13H8",key:"t4e002"}],["path",{d:"M16 17H8",key:"z1uh3a"}]],M=u("file-text",dt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const xt=[["path",{d:"M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4",key:"1nerag"}],["path",{d:"M14 13.12c0 2.38 0 6.38-1 8.88",key:"o46ks0"}],["path",{d:"M17.29 21.02c.12-.6.43-2.3.5-3.02",key:"ptglia"}],["path",{d:"M2 12a10 10 0 0 1 18-6",key:"ydlgp0"}],["path",{d:"M2 16h.01",key:"1gqxmh"}],["path",{d:"M21.8 16c.2-2 .131-5.354 0-6",key:"drycrb"}],["path",{d:"M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2",key:"1tidbn"}],["path",{d:"M8.65 22c.21-.66.45-1.32.57-2",key:"13wd9y"}],["path",{d:"M9 6.8a6 6 0 0 1 9 5.2v2",key:"1fr1j5"}]],gt=u("fingerprint-pattern",xt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const ht=[["path",{d:"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71",key:"1cjeqo"}],["path",{d:"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71",key:"19qd67"}]],te=u("link",ht);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const mt=[["rect",{width:"18",height:"11",x:"3",y:"11",rx:"2",ry:"2",key:"1w4ew1"}],["path",{d:"M7 11V7a5 5 0 0 1 9.9-1",key:"1mm8w8"}]],xe=u("lock-open",mt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const pt=[["rect",{width:"18",height:"11",x:"3",y:"11",rx:"2",ry:"2",key:"1w4ew1"}],["path",{d:"M7 11V7a5 5 0 0 1 10 0v4",key:"fwvmzm"}]],Z=u("lock",pt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const bt=[["rect",{width:"20",height:"14",x:"2",y:"3",rx:"2",key:"48i651"}],["line",{x1:"8",x2:"16",y1:"21",y2:"21",key:"1svkeh"}],["line",{x1:"12",x2:"12",y1:"17",y2:"21",key:"vw1qmm"}]],U=u("monitor",bt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const ut=[["rect",{x:"16",y:"16",width:"6",height:"6",rx:"1",key:"4q2zg0"}],["rect",{x:"2",y:"16",width:"6",height:"6",rx:"1",key:"8cvhb9"}],["rect",{x:"9",y:"2",width:"6",height:"6",rx:"1",key:"1egb70"}],["path",{d:"M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3",key:"1jsf9p"}],["path",{d:"M12 12V8",key:"2874zd"}]],yt=u("network",ut);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const ft=[["path",{d:"M12 16h.01",key:"1drbdi"}],["path",{d:"M12 8v4",key:"1got3b"}],["path",{d:"M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z",key:"1fd625"}]],vt=u("octagon-alert",ft);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const wt=[["path",{d:"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z",key:"10ikf1"}]],jt=u("play",wt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Nt=[["path",{d:"M19.07 4.93A10 10 0 0 0 6.99 3.34",key:"z3du51"}],["path",{d:"M4 6h.01",key:"oypzma"}],["path",{d:"M2.29 9.62A10 10 0 1 0 21.31 8.35",key:"qzzz0"}],["path",{d:"M16.24 7.76A6 6 0 1 0 8.23 16.67",key:"1yjesh"}],["path",{d:"M12 18h.01",key:"mhygvu"}],["path",{d:"M17.99 11.66A6 6 0 0 1 15.77 16.67",key:"1u2y91"}],["circle",{cx:"12",cy:"12",r:"2",key:"1c9p78"}],["path",{d:"m13.41 10.59 5.66-5.66",key:"mhq4k0"}]],kt=u("radar",Nt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const $t=[["path",{d:"M16.247 7.761a6 6 0 0 1 0 8.478",key:"1fwjs5"}],["path",{d:"M19.075 4.933a10 10 0 0 1 0 14.134",key:"ehdyv1"}],["path",{d:"M4.925 19.067a10 10 0 0 1 0-14.134",key:"1q22gi"}],["path",{d:"M7.753 16.239a6 6 0 0 1 0-8.478",key:"r2q7qm"}],["circle",{cx:"12",cy:"12",r:"2",key:"1c9p78"}]],_t=u("radio",$t);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Ct=[["path",{d:"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8",key:"v9h5vc"}],["path",{d:"M21 3v5h-5",key:"1q7to0"}],["path",{d:"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16",key:"3uifl3"}],["path",{d:"M8 16H3v5",key:"1cv678"}]],le=u("refresh-cw",Ct);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const St=[["path",{d:"m21 21-4.34-4.34",key:"14j7rj"}],["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}]],ae=u("search",St);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const At=[["rect",{width:"20",height:"8",x:"2",y:"2",rx:"2",ry:"2",key:"ngkwjq"}],["rect",{width:"20",height:"8",x:"2",y:"14",rx:"2",ry:"2",key:"iecqi9"}],["line",{x1:"6",x2:"6.01",y1:"6",y2:"6",key:"16zg32"}],["line",{x1:"6",x2:"6.01",y1:"18",y2:"18",key:"nzw8ys"}]],pe=u("server",At);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Et=[["path",{d:"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",key:"oel41y"}],["path",{d:"M12 8v4",key:"1got3b"}],["path",{d:"M12 16h.01",key:"1drbdi"}]],Se=u("shield-alert",Et);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Rt=[["path",{d:"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",key:"oel41y"}],["path",{d:"m9 12 2 2 4-4",key:"dzmm74"}]],Ae=u("shield-check",Rt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Tt=[["path",{d:"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",key:"oel41y"}]],Ot=u("shield",Tt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const zt=[["circle",{cx:"12",cy:"12",r:"10",key:"1mglay"}],["circle",{cx:"12",cy:"12",r:"6",key:"1vlfrh"}],["circle",{cx:"12",cy:"12",r:"2",key:"1c9p78"}]],ne=u("target",zt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Lt=[["path",{d:"M12 19h8",key:"baeox8"}],["path",{d:"m4 17 6-6-6-6",key:"1yngyt"}]],Q=u("terminal",Lt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const It=[["path",{d:"M16 7h6v6",key:"box55l"}],["path",{d:"m22 7-8.5 8.5-5-5L2 17",key:"1t1m79"}]],Ee=u("trending-up",It);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Pt=[["path",{d:"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",key:"wmoenq"}],["path",{d:"M12 9v4",key:"juzpu7"}],["path",{d:"M12 17h.01",key:"p32p05"}]],re=u("triangle-alert",Pt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const qt=[["path",{d:"M12 20h.01",key:"zekei9"}],["path",{d:"M8.5 16.429a5 5 0 0 1 7 0",key:"1bycff"}],["path",{d:"M5 12.859a10 10 0 0 1 5.17-2.69",key:"1dl1wf"}],["path",{d:"M19 12.859a10 10 0 0 0-2.007-1.523",key:"4k23kn"}],["path",{d:"M2 8.82a15 15 0 0 1 4.177-2.643",key:"1grhjp"}],["path",{d:"M22 8.82a15 15 0 0 0-11.288-3.764",key:"z3jwby"}],["path",{d:"m2 2 20 20",key:"1ooewy"}]],Re=u("wifi-off",qt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Vt=[["path",{d:"M12 20h.01",key:"zekei9"}],["path",{d:"M2 8.82a15 15 0 0 1 20 0",key:"dnpr2z"}],["path",{d:"M5 12.859a10 10 0 0 1 14 0",key:"1x1e6c"}],["path",{d:"M8.5 16.429a5 5 0 0 1 7 0",key:"1bycff"}]],Te=u("wifi",Vt);/**</span>
+<span class="cstat-no" title="statement not covered" > * @license lucide-react v0.562.0 - ISC</span>
+<span class="cstat-no" title="statement not covered" > *</span>
+<span class="cstat-no" title="statement not covered" > * This source code is licensed under the ISC license.</span>
+<span class="cstat-no" title="statement not covered" > * See the LICENSE file in the root directory of this source tree.</span>
+<span class="cstat-no" title="statement not covered" > */const Wt=[["path",{d:"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z",key:"1xq2db"}]],Ht=u("zap",Wt),Bt="http://localhost:8001",be=document.createElement("style");be.textContent=`</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes scan {</span>
+<span class="cstat-no" title="statement not covered" >    0% { transform: translateY(-100%); opacity: 0; }</span>
+<span class="cstat-no" title="statement not covered" >    50% { opacity: 0.5; }</span>
+<span class="cstat-no" title="statement not covered" >    100% { transform: translateY(100%); opacity: 0; }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes pulse-glow {</span>
+<span class="cstat-no" title="statement not covered" >    0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }</span>
+<span class="cstat-no" title="statement not covered" >    50% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.6); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes radar-sweep {</span>
+<span class="cstat-no" title="statement not covered" >    0% { transform: rotate(0deg); }</span>
+<span class="cstat-no" title="statement not covered" >    100% { transform: rotate(360deg); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes threat-pulse {</span>
+<span class="cstat-no" title="statement not covered" >    0%, 100% { transform: scale(1); opacity: 1; }</span>
+<span class="cstat-no" title="statement not covered" >    50% { transform: scale(1.05); opacity: 0.8; }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes float {</span>
+<span class="cstat-no" title="statement not covered" >    0%, 100% { transform: translateY(0px); }</span>
+<span class="cstat-no" title="statement not covered" >    50% { transform: translateY(-10px); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes glow-ring {</span>
+<span class="cstat-no" title="statement not covered" >    0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4); }</span>
+<span class="cstat-no" title="statement not covered" >    70% { box-shadow: 0 0 0 15px rgba(236, 72, 153, 0); }</span>
+<span class="cstat-no" title="statement not covered" >    100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes cyber-grid {</span>
+<span class="cstat-no" title="statement not covered" >    0% { background-position: 0 0; }</span>
+<span class="cstat-no" title="statement not covered" >    100% { background-position: 50px 50px; }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes number-glow {</span>
+<span class="cstat-no" title="statement not covered" >    0%, 100% { text-shadow: 0 0 10px currentColor; }</span>
+<span class="cstat-no" title="statement not covered" >    50% { text-shadow: 0 0 25px currentColor, 0 0 40px currentColor; }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes border-flow {</span>
+<span class="cstat-no" title="statement not covered" >    0% { background-position: 0% 50%; }</span>
+<span class="cstat-no" title="statement not covered" >    50% { background-position: 100% 50%; }</span>
+<span class="cstat-no" title="statement not covered" >    100% { background-position: 0% 50%; }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes icon-pulse {</span>
+<span class="cstat-no" title="statement not covered" >    0%, 100% { transform: scale(1); }</span>
+<span class="cstat-no" title="statement not covered" >    50% { transform: scale(1.1); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  @keyframes slide-in {</span>
+<span class="cstat-no" title="statement not covered" >    from { opacity: 0; transform: translateY(20px); }</span>
+<span class="cstat-no" title="statement not covered" >    to { opacity: 1; transform: translateY(0); }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-scan { animation: scan 3s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-radar { animation: radar-sweep 4s linear infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-threat-pulse { animation: threat-pulse 2s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-float { animation: float 3s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-glow-ring { animation: glow-ring 1.5s infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-cyber-grid { animation: cyber-grid 20s linear infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-number-glow { animation: number-glow 2s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-border-flow {</span>
+<span class="cstat-no" title="statement not covered" >    background: linear-gradient(90deg, #ec4899, #800080, #06b6d4, #ec4899);</span>
+<span class="cstat-no" title="statement not covered" >    background-size: 300% 300%;</span>
+<span class="cstat-no" title="statement not covered" >    animation: border-flow 3s ease infinite;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-icon-pulse { animation: icon-pulse 2s ease-in-out infinite; }</span>
+<span class="cstat-no" title="statement not covered" >  .animate-slide-in { animation: slide-in 0.5s ease-out forwards; }</span>
+<span class="cstat-no" title="statement not covered" >  .cyber-grid-bg {</span>
+<span class="cstat-no" title="statement not covered" >    background-image:</span>
+<span class="cstat-no" title="statement not covered" >      linear-gradient(rgba(236, 72, 153, 0.03) 1px, transparent 1px),</span>
+<span class="cstat-no" title="statement not covered" >      linear-gradient(90deg, rgba(236, 72, 153, 0.03) 1px, transparent 1px);</span>
+<span class="cstat-no" title="statement not covered" >    background-size: 50px 50px;</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  .stat-card-glow:hover {</span>
+<span class="cstat-no" title="statement not covered" >    box-shadow: 0 0 30px rgba(236, 72, 153, 0.2), 0 0 60px rgba(139, 92, 246, 0.1);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >`;document.querySelector("#edr-animations")||(be.id="edr-animations",document.head.appendChild(be));function ge({className:r,color:l="pink"}){const i={pink:"from-pink-500/20 to-purple-500/20",cyan:"from-cyan-500/20 to-blue-500/20",orange:"from-orange-500/20 to-red-500/20",green:"from-green-500/20 to-emerald-500/20"};return e.jsx("div",{className:`absolute rounded-full blur-3xl bg-gradient-to-br ${i[l]} pointer-events-none ${r}`})}function Oe({icon:r,label:l,value:i,gradient:c,trend:a,isDarkMode:p,onClick:s,delay:h=0}){return e.jsxs("div",{onClick:s,style:{animationDelay:`${h}ms`},className:`group relative overflow-hidden rounded-2xl p-8 transition-all duration-500 hover:scale-[1.03] hover:-translate-y-1 stat-card-glow animate-slide-in ${s?"cursor-pointer":""} ${p?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border-2 border-gray-700/50 hover:border-pink-500/50":"bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border-2 border-gray-200/80 hover:border-pink-500/50 shadow-xl"}`,children:[e.jsx("div",{className:"absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-[1px]",children:e.jsx("div",{className:"absolute inset-0 rounded-3xl animate-border-flow opacity-30"})}),e.jsx("div",{className:"absolute inset-0 overflow-hidden rounded-3xl pointer-events-none",children:e.jsx("div",{className:`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity ${p?"bg-gradient-to-b from-pink-500/5 via-transparent to-transparent":"bg-gradient-to-b from-pink-500/3 via-transparent to-transparent"}`})}),e.jsxs("div",{className:"relative flex items-center gap-5",children:[e.jsxs("div",{className:`relative p-4 rounded-2xl bg-gradient-to-br ${c} shadow-lg group-hover:animate-icon-pulse`,children:[e.jsx("div",{className:"absolute inset-0 rounded-2xl bg-white/20"}),e.jsx(r,{className:"w-7 h-7 text-white relative z-10",strokeWidth:2.5}),e.jsx("div",{className:`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br ${c} blur-xl -z-10`})]}),e.jsxs("div",{className:"flex-1 min-w-0",children:[e.jsx("p",{className:`text-base font-semibold uppercase tracking-wider mb-1 ${p?"text-white/80":"text-gray-700"}`,children:l}),e.jsx("p",{className:`text-5xl font-black bg-gradient-to-r ${c} bg-clip-text text-transparent tracking-tight`,children:typeof i=="number"?i.toLocaleString():i})]}),s&amp;&amp;e.jsx("div",{className:`p-2 rounded-2xl transition-all duration-300 group-hover:translate-x-1 ${p?"bg-gray-700/50":"bg-gray-100"}`,children:e.jsx(Y,{className:`w-6 h-6 -rotate-90 ${p?"text-white/70":"text-gray-700"}`})})]}),a&amp;&amp;e.jsxs("div",{className:`mt-3 flex items-center gap-2 text-base ${a&gt;0?"text-emerald-400":a&lt;0?"text-red-400":"text-white/70"}`,children:[e.jsx(Ee,{className:`w-5 h-5 ${a&lt;0?"rotate-180":""}`}),e.jsxs("span",{className:"font-semibold",children:[Math.abs(a),"% from last hour"]})]})]})}const D={crowdstrike:{bg:"from-red-500 to-red-600",hex:"#E8283D"},sentinelone:{bg:"from-purple-500 to-purple-600",hex:"#6B4FBB"},defender:{bg:"from-blue-400 to-blue-500",hex:"#00A4EF"},carbon_black:{bg:"from-emerald-500 to-green-500",hex:"#00C389"},elastic:{bg:"from-yellow-400 to-amber-500",hex:"#FEC514"}};function X({platform:r,size:l="sm"}){const i=D[r]||{bg:"from-gray-500 to-gray-600"},c=l==="sm"?"px-3 py-1 text-sm":"px-4 py-1.5 text-base";return e.jsx("span",{className:`inline-flex items-center ${c} rounded-full font-semibold text-white bg-gradient-to-r ${i.bg} shadow-lg`,children:r.replace("_"," ")})}const se={critical:{gradient:"from-red-500 to-red-600",bg:"bg-red-100 dark:bg-red-500/20",text:"text-red-700 dark:text-red-400",glow:"shadow-red-500/30"},high:{gradient:"from-orange-500 to-orange-600",bg:"bg-orange-100 dark:bg-orange-500/20",text:"text-orange-700 dark:text-orange-400",glow:"shadow-orange-500/30"},medium:{gradient:"from-yellow-500 to-amber-500",bg:"bg-yellow-100 dark:bg-yellow-500/20",text:"text-yellow-700 dark:text-yellow-400",glow:"shadow-yellow-500/30"},low:{gradient:"from-blue-500 to-blue-600",bg:"bg-blue-100 dark:bg-blue-500/20",text:"text-blue-700 dark:text-blue-400",glow:"shadow-blue-500/30"},info:{gradient:"from-gray-500 to-gray-600",bg:"bg-gray-200 dark:bg-gray-500/20",text:"text-gray-700 dark:text-gray-400",glow:"shadow-gray-500/30"}};function fe({severity:r,animated:l=!1}){const i=se[r]||se.info;return e.jsxs("span",{className:`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold ${i.bg} ${i.text} ${l&amp;&amp;r==="critical"?"animate-threat-pulse":""} shadow-lg ${i.glow}`,children:[r==="critical"&amp;&amp;e.jsx(vt,{className:"w-4 h-4"}),r==null?void 0:r.toUpperCase()]})}const Ft=[{id:"overview",name:"Overview",icon:ye,key:"1"},{id:"endpoints",name:"Endpoints",icon:U,key:"2"},{id:"detections",name:"Detections",icon:Se,key:"3"},{id:"correlation",name:"XDR Correlation",icon:te,key:"4"},{id:"hunting",name:"Threat Hunting",icon:ee,key:"5"},{id:"mitre",name:"MITRE ATT&amp;CK",icon:ne,key:"6"}];function Ut({endpoints:r,detections:l,platforms:i,correlationStats:c,isDarkMode:a,setActiveTab:p}){const s=Object.values(r).flat().length,h=Object.values(r).flat().filter(n=&gt;n.status==="online").length,y=Object.values(l).flat().length,k=Object.values(l).flat().filter(n=&gt;n.severity==="critical").length,w=Object.entries(r).map(([n,b])=&gt;{var C;return{name:n,value:b.length,color:((C=D[n])==null?void 0:C.hex)||"#888"}}),v=["critical","high","medium","low"].map(n=&gt;({name:n.charAt(0).toUpperCase()+n.slice(1),value:Object.values(l).flat().filter(b=&gt;b.severity===n).length,color:n==="critical"?"#ef4444":n==="high"?"#f97316":n==="medium"?"#eab308":"#3b82f6"})),S=Array.from({length:24},(n,b)=&gt;({hour:`${b}:00`,detections:Math.floor(Math.random()*50)+10,correlated:Math.floor(Math.random()*20)+5})),o=[{name:"Total Endpoints",value:s,icon:U,gradient:"from-blue-400 to-cyan-500",tab:"endpoints"},{name:"Online",value:h,icon:Te,gradient:"from-green-400 to-emerald-500",tab:"endpoints",filter:"online"},{name:"Detections (24h)",value:y,icon:Se,gradient:"from-orange-400 to-amber-500",tab:"detections"},{name:"Critical Alerts",value:k,icon:re,gradient:"from-red-400 to-pink-500",tab:"detections",filter:"critical"},{name:"Correlated",value:(c==null?void 0:c.total_correlated)||0,icon:te,gradient:"from-purple-400 to-purple-600",tab:"correlation"},{name:"Platforms",value:Object.keys(i).filter(n=&gt;i[n]).length,icon:pe,gradient:"from-indigo-400 to-blue-500",scrollTo:"platform-health"}];return e.jsxs("div",{className:"space-y-8",children:[e.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5",children:o.map((n,b)=&gt;e.jsx(Oe,{icon:n.icon,label:n.name,value:n.value,gradient:n.gradient,isDarkMode:a,delay:b*100,onClick:()=&gt;{var C;n.scrollTo?(C=document.getElementById(n.scrollTo))==null||C.scrollIntoView({behavior:"smooth",block:"center"}):n.tab&amp;&amp;p(n.tab)}},n.name))}),e.jsx("div",{className:"grid grid-cols-1 gap-6",children:e.jsxs("div",{className:`group relative rounded-2xl p-8 overflow-hidden transition-all duration-300 ${a?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border-2 border-gray-700/50 hover:border-pink-500/30":"bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border-2 border-gray-200/80 shadow-xl"}`,children:[e.jsx("div",{className:"absolute inset-0 cyber-grid-bg animate-cyber-grid opacity-30 pointer-events-none"}),e.jsxs("div",{className:"relative",children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("h3",{className:`text-2xl font-bold flex items-center gap-3 ${a?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-3 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-500",children:e.jsx(ue,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent",children:"Detection Timeline"}),e.jsx("span",{className:`text-base font-normal ${a?"text-white/70":"text-gray-600"}`,children:"Last 24 hours"})]}),e.jsxs("div",{className:`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${a?"bg-green-500/20 text-green-400":"bg-green-100 text-green-600"}`,children:[e.jsx("div",{className:"w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"}),"Live"]})]}),e.jsx("div",{className:"h-96",children:e.jsx(ie,{width:"100%",height:"100%",children:e.jsxs(Le,{data:S,margin:{top:10,right:30,left:10,bottom:30},children:[e.jsxs("defs",{children:[e.jsxs("linearGradient",{id:"colorDetectionsEDR",x1:"0",y1:"0",x2:"0",y2:"1",children:[e.jsx("stop",{offset:"5%",stopColor:"#f97316",stopOpacity:.4}),e.jsx("stop",{offset:"95%",stopColor:"#f97316",stopOpacity:.05})]}),e.jsxs("linearGradient",{id:"colorCorrelatedEDR",x1:"0",y1:"0",x2:"0",y2:"1",children:[e.jsx("stop",{offset:"5%",stopColor:"#800080",stopOpacity:.4}),e.jsx("stop",{offset:"95%",stopColor:"#800080",stopOpacity:.05})]})]}),e.jsx(we,{strokeDasharray:"3 3",stroke:a?"#4b5563":"#e5e7eb",vertical:!1}),e.jsx(je,{dataKey:"hour",stroke:a?"#ffffff":"#1f2937",fontSize:20,fontWeight:700,tickLine:!1,axisLine:{stroke:a?"#6b7280":"#d1d5db",strokeWidth:2},dy:10,interval:2,height:60,label:{value:"Hour (24h)",position:"insideBottom",offset:-5,fill:a?"#ffffff":"#374151",fontSize:18,fontWeight:600}}),e.jsx(Ne,{stroke:a?"#ffffff":"#1f2937",fontSize:20,fontWeight:700,tickLine:!1,axisLine:{stroke:a?"#6b7280":"#d1d5db",strokeWidth:2},dx:-5,label:{value:"Count",angle:-90,position:"insideLeft",offset:10,fill:a?"#ffffff":"#374151",fontSize:18,fontWeight:600}}),e.jsx(ce,{contentStyle:{backgroundColor:a?"#1f2937":"#fff",border:`2px solid ${a?"#6b7280":"#d1d5db"}`,borderRadius:"16px",boxShadow:"0 10px 40px rgba(0,0,0,0.2)",padding:"16px 20px"},labelStyle:{color:a?"#ffffff":"#111827",fontWeight:700,fontSize:"16px",marginBottom:"10px"},itemStyle:{color:a?"#ffffff":"#1f2937",padding:"4px 0",fontSize:"15px",fontWeight:600},formatter:(n,b)=&gt;[n,b==="detections"?"Raw Detections":"Correlated Alerts"],labelFormatter:n=&gt;`Hour: ${n}:00`}),e.jsx(Ie,{verticalAlign:"top",height:40,formatter:n=&gt;e.jsx("span",{style:{color:a?"#ffffff":"#1f2937",fontSize:"17px",fontWeight:600},children:n==="detections"?"Raw Detections":"Correlated Alerts"})}),e.jsx(ke,{type:"monotone",dataKey:"detections",stroke:"#f97316",strokeWidth:2.5,fill:"url(#colorDetectionsEDR)",dot:!1,activeDot:{r:6,fill:"#f97316",stroke:"#fff",strokeWidth:2}}),e.jsx(ke,{type:"monotone",dataKey:"correlated",stroke:"#800080",strokeWidth:2.5,fill:"url(#colorCorrelatedEDR)",dot:!1,activeDot:{r:6,fill:"#800080",stroke:"#fff",strokeWidth:2}})]})})})]})]})}),e.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-2 gap-6",children:[e.jsxs("div",{className:`group relative rounded-2xl p-8 overflow-hidden transition-all duration-300 ${a?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border-2 border-gray-700/50 hover:border-cyan-500/30":"bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border-2 border-gray-200/80 shadow-xl"}`,children:[e.jsxs("h3",{className:`text-2xl font-bold mb-6 flex items-center gap-3 ${a?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-3 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500",children:e.jsx(it,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent",children:"Endpoints by Platform"})]}),e.jsx("div",{className:"h-64",children:e.jsx(ie,{width:"100%",height:"100%",children:e.jsxs(Pe,{children:[e.jsx(qe,{data:w,cx:"50%",cy:"50%",innerRadius:50,outerRadius:90,dataKey:"value",label:({name:n,value:b})=&gt;`${b}`,labelLine:!1,children:w.map((n,b)=&gt;e.jsx($e,{fill:n.color},`cell-${b}`))}),e.jsx(ce,{contentStyle:{backgroundColor:a?"#1f2937":"#ffffff",border:`1px solid ${a?"#374151":"#e5e7eb"}`,borderRadius:"12px",boxShadow:"0 4px 12px rgba(0, 0, 0, 0.15)",color:a?"#f3f4f6":"#1f2937"},labelStyle:{color:a?"#f3f4f6":"#1f2937",fontWeight:600},itemStyle:{color:a?"#d1d5db":"#374151"}})]})})}),e.jsx("div",{className:"flex flex-wrap gap-4 mt-6",children:w.map(n=&gt;e.jsxs("span",{className:"flex items-center gap-2 text-base",children:[e.jsx("span",{className:"w-4 h-4 rounded-full",style:{backgroundColor:n.color}}),e.jsx("span",{className:`font-semibold ${a?"text-white":"text-gray-900"}`,children:n.name}),e.jsxs("span",{className:a?"text-white/70":"text-gray-700",children:["(",n.value,")"]})]},n.name))})]}),e.jsxs("div",{id:"platform-health",className:`group relative rounded-2xl p-8 overflow-hidden transition-all duration-300 ${a?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border-2 border-gray-700/50 hover:border-green-500/30":"bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border-2 border-gray-200/80 shadow-xl"}`,children:[e.jsxs("h3",{className:`text-2xl font-bold mb-6 flex items-center gap-3 ${a?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-3 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500",children:e.jsx(yt,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent",children:"Platform Health"}),e.jsx("span",{className:`ml-auto text-sm font-semibold px-4 py-2 rounded-full ${a?"bg-green-500/20 text-green-400":"bg-green-100 text-green-600"}`,children:"All Systems Operational"})]}),e.jsx("div",{className:"space-y-3",children:Object.entries(i).map(([n,b],C)=&gt;{var $,g;return e.jsxs("div",{style:{animationDelay:`${C*50}ms`},className:`group/item flex items-center justify-between p-4 rounded-2xl transition-all duration-300 animate-slide-in hover:scale-[1.02] ${a?"bg-gray-900/50 hover:bg-gray-900/80 border border-transparent hover:border-gray-700/50":"bg-gray-50/80 hover:bg-white border border-transparent hover:border-gray-200 hover:shadow-md"}`,children:[e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx("div",{className:"w-10 h-10 rounded-xl flex items-center justify-center",style:{backgroundColor:`${($=D[n])==null?void 0:$.hex}20`||"#88888820"},children:e.jsx(pe,{className:"w-5 h-5",style:{color:((g=D[n])==null?void 0:g.hex)||"#888"}})}),e.jsxs("div",{children:[e.jsx("span",{className:`capitalize font-semibold block ${a?"text-white":"text-gray-900"}`,children:n.replace("_"," ")}),e.jsx("span",{className:`text-sm ${a?"text-white/70":"text-gray-600"}`,children:"EDR Platform"})]})]}),e.jsxs("div",{className:`flex items-center gap-2 px-4 py-2 rounded-full ${b?a?"bg-green-500/20":"bg-green-100":a?"bg-gray-700/50":"bg-gray-200"}`,children:[e.jsx("div",{className:`w-2.5 h-2.5 rounded-full ${b?"bg-green-400 animate-pulse":"bg-gray-500"}`}),e.jsx("span",{className:`text-base font-semibold ${b?"text-green-400":a?"text-white/70":"text-gray-700"}`,children:b?"Connected":"Offline"})]})]},n)})})]})]}),e.jsx("div",{className:"grid grid-cols-1 gap-6",children:e.jsxs("div",{className:`group relative rounded-2xl p-8 overflow-hidden transition-all duration-300 ${a?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-xl border-2 border-gray-700/50 hover:border-orange-500/30":"bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border-2 border-gray-200/80 shadow-xl"}`,children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("h3",{className:`text-2xl font-bold flex items-center gap-3 ${a?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-3 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500",children:e.jsx(re,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent",children:"Severity Distribution"})]}),e.jsx("div",{className:"flex items-center gap-4",children:v.map(n=&gt;e.jsxs("div",{className:"flex items-center gap-2",children:[e.jsx("div",{className:"w-4 h-4 rounded-full",style:{backgroundColor:n.color}}),e.jsxs("span",{className:`text-base font-semibold ${a?"text-white/80":"text-gray-700"}`,children:[n.name,": ",n.value]})]},n.name))})]}),e.jsx("div",{className:"h-64",children:e.jsx(ie,{width:"100%",height:"100%",children:e.jsxs(Ve,{data:v,layout:"vertical",children:[e.jsx(we,{strokeDasharray:"3 3",stroke:a?"#374151":"#e5e7eb"}),e.jsx(je,{type:"number",stroke:a?"#ffffff":"#1f2937",fontSize:20,fontWeight:700,tickMargin:12,height:50}),e.jsx(Ne,{type:"category",dataKey:"name",stroke:a?"#ffffff":"#1f2937",width:140,fontSize:20,fontWeight:700,tickMargin:15}),e.jsx(ce,{contentStyle:{backgroundColor:a?"#1f2937":"#ffffff",border:`1px solid ${a?"#374151":"#e5e7eb"}`,borderRadius:"12px",boxShadow:"0 4px 12px rgba(0, 0, 0, 0.15)",color:a?"#f3f4f6":"#1f2937"},labelStyle:{color:a?"#f3f4f6":"#1f2937",fontWeight:600},itemStyle:{color:a?"#d1d5db":"#374151"}}),e.jsx(We,{dataKey:"value",radius:[0,8,8,0],children:v.map((n,b)=&gt;e.jsx($e,{fill:n.color},`cell-${b}`))})]})})})]})})]})}function Kt({endpoints:r,onIsolate:l,onRefresh:i,loading:c,isDarkMode:a}){const[p,s]=x.useState(""),[h,y]=x.useState("all"),[k,w]=x.useState("all"),[v,S]=x.useState("all"),[o,n]=x.useState(null),[b,C]=x.useState("cards"),[$,g]=x.useState("hostname"),[T,A]=x.useState("asc"),[j,P]=x.useState(new Set),[H,F]=x.useState(!1),O=Object.entries(r).flatMap(([t,m])=&gt;m.map(d=&gt;({...d,platform:t}))),L=[...O].sort((t,m)=&gt;{let d=t[$]||"",z=m[$]||"";return $==="last_seen"&amp;&amp;(d=new Date(d||0).getTime(),z=new Date(z||0).getTime()),typeof d=="string"&amp;&amp;(d=d.toLowerCase()),typeof z=="string"&amp;&amp;(z=z.toLowerCase()),T==="asc"?d&gt;z?1:-1:d&lt;z?1:-1}).filter(t=&gt;{var K,G,ve;const m=!p||((K=t.hostname)==null?void 0:K.toLowerCase().includes(p.toLowerCase()))||((G=t.ip_address)==null?void 0:G.toLowerCase().includes(p.toLowerCase())),d=h==="all"||t.status===h,z=k==="all"||t.platform===k,B=v==="all"||((ve=t.os_type)==null?void 0:ve.toLowerCase())===v.toLowerCase();return m&amp;&amp;d&amp;&amp;z&amp;&amp;B}),f=[...new Set(Object.keys(r))],_=[...new Set(O.map(t=&gt;t.status))],R={total:O.length,online:O.filter(t=&gt;t.status==="online").length,offline:O.filter(t=&gt;t.status==="offline").length,isolated:O.filter(t=&gt;t.status==="isolated").length,byPlatform:f.reduce((t,m)=&gt;(t[m]=O.filter(d=&gt;d.platform===m).length,t),{}),byOS:O.reduce((t,m)=&gt;{const d=m.os_type||"unknown";return t[d]=(t[d]||0)+1,t},{})},q=t=&gt;{const m=new Set(j);m.has(t)?m.delete(t):m.add(t),P(m),F(m.size&gt;0)},E=()=&gt;{j.size===L.length?(P(new Set),F(!1)):(P(new Set(L.map(t=&gt;t.id))),F(!0))},W=(t,m)=&gt;!m||!t?t:t.split(new RegExp(`(${m})`,"gi")).map((z,B)=&gt;z.toLowerCase()===m.toLowerCase()?e.jsx("span",{className:"bg-yellow-400/50 text-yellow-900 dark:bg-yellow-500/30 dark:text-yellow-300 px-0.5 rounded",children:z},B):z),N=t=&gt;{if(!t)return"Never";const m=new Date(t),z=new Date-m,B=Math.floor(z/6e4),K=Math.floor(B/60),G=Math.floor(K/24);return B&lt;1?"Just now":B&lt;60?`${B}m ago`:K&lt;24?`${K}h ago`:`${G}d ago`},I=t=&gt;{switch(t==null?void 0:t.toLowerCase()){case"windows":return e.jsx("div",{className:"w-8 h-8 flex items-center justify-center",children:e.jsx("svg",{viewBox:"0 0 24 24",className:"w-6 h-6 text-cyan-400",fill:"currentColor",children:e.jsx("path",{d:"M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"})})});case"linux":return e.jsx("div",{className:"w-8 h-8 flex items-center justify-center",children:e.jsx("svg",{viewBox:"0 0 24 24",className:"w-6 h-6 text-amber-400",fill:"currentColor",children:e.jsx("path",{d:"M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02.006-.04.006-.06v.105a.086.086 0 01-.004-.021l-.004-.024a1.807 1.807 0 01-.15.706.953.953 0 01-.213.335.71.71 0 00-.088-.042c-.104-.045-.198-.064-.284-.133a1.312 1.312 0 00-.22-.066c.05-.06.146-.133.183-.198.053-.128.082-.264.088-.402v-.02a1.21 1.21 0 00-.061-.4c-.045-.134-.101-.2-.183-.333-.084-.066-.167-.132-.267-.132h-.016c-.093 0-.176.03-.262.132a.8.8 0 00-.205.334 1.18 1.18 0 00-.09.468v.02c.002.134.017.268.065.398.036.065.09.135.14.198a.134.134 0 01-.05.036c-.085.045-.178.086-.276.119a.316.316 0 01-.043.017.186.186 0 01-.164-.134 1.242 1.242 0 01-.053-.198 1.805 1.805 0 01-.053-.532v-.02c.005-.264.063-.531.166-.793.108-.199.247-.398.44-.53.19-.135.387-.2.601-.2zm-2.71.134a1.576 1.576 0 011.163.585c.134.132.24.332.313.535.063.199.1.398.1.665v.02c0 .266-.037.465-.1.665-.073.2-.18.398-.313.533a1.457 1.457 0 01-.548.403l-.003.003a1.02 1.02 0 01-.134.053.252.252 0 01-.053.015.376.376 0 01-.196-.064l-.196-.133a.395.395 0 01-.132-.202.501.501 0 01-.02-.2v-.02c0-.066.007-.133.026-.199.017-.066.044-.133.082-.199l.003-.003a.474.474 0 00.082-.134c.024-.065.04-.131.04-.2v-.019c0-.134-.023-.269-.07-.403a.8.8 0 00-.2-.334c-.085-.1-.168-.13-.261-.13h-.013c-.093 0-.175.03-.261.13a.799.799 0 00-.203.334 1.17 1.17 0 00-.07.403v.02c0 .066.013.133.04.198.024.066.059.133.1.2l.003.003c.026.045.051.095.07.132.017.065.027.132.027.199v.02c0 .065-.008.132-.024.198a.375.375 0 01-.109.2c-.049.049-.11.1-.197.132a.37.37 0 01-.196.063.252.252 0 01-.052-.014.917.917 0 01-.134-.05l-.003-.003a1.433 1.433 0 01-.55-.403 1.723 1.723 0 01-.31-.535 1.8 1.8 0 01-.104-.665v-.02c0-.267.035-.466.1-.665.073-.2.18-.403.31-.535a1.6 1.6 0 011.17-.585z"})})});case"macos":return e.jsx("div",{className:"w-8 h-8 flex items-center justify-center",children:e.jsx("svg",{viewBox:"0 0 24 24",className:"w-6 h-6 text-gray-300",fill:"currentColor",children:e.jsx("path",{d:"M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"})})});default:return e.jsx("div",{className:"w-8 h-8 flex items-center justify-center",children:e.jsx(lt,{className:"w-6 h-6 text-purple-400"})})}};return e.jsxs("div",{className:"space-y-6",children:[e.jsx("div",{className:"grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4",children:[{label:"Total",value:R.total,icon:U,gradient:"from-blue-500 to-cyan-500",glow:"shadow-blue-500/20",filterType:"none"},{label:"Online",value:R.online,icon:Te,gradient:"from-green-500 to-emerald-500",glow:"shadow-green-500/20",filterType:"status",filterValue:"online"},{label:"Offline",value:R.offline,icon:Re,gradient:"from-gray-500 to-gray-600",glow:"shadow-gray-500/20",filterType:"status",filterValue:"offline"},{label:"Isolated",value:R.isolated,icon:Z,gradient:"from-orange-500 to-amber-500",glow:"shadow-orange-500/20",filterType:"status",filterValue:"isolated"},{label:"Windows",value:R.byOS.windows||0,icon:U,gradient:"from-blue-400 to-blue-600",glow:"shadow-blue-500/20",filterType:"os",filterValue:"windows"},{label:"Linux",value:R.byOS.linux||0,icon:Q,gradient:"from-yellow-500 to-orange-500",glow:"shadow-yellow-500/20",filterType:"os",filterValue:"linux"}].map((t,m)=&gt;{const d=t.filterType==="status"&amp;&amp;h===t.filterValue||t.filterType==="os"&amp;&amp;v===t.filterValue||t.filterType==="none"&amp;&amp;h==="all"&amp;&amp;v==="all";return e.jsxs("div",{className:`relative group p-4 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 ${a?`bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-2 ${d?"border-pink-500 ring-2 ring-pink-500/30":"border-gray-700/50 hover:border-pink-500/30"}`:`bg-gradient-to-br from-white to-gray-50 border-2 shadow-lg hover:shadow-xl ${d?"border-pink-500 ring-2 ring-pink-500/30":"border-gray-200"}`}`,style:{animationDelay:`${m*50}ms`},onClick:()=&gt;{y("all"),S("all"),t.label==="Online"?y("online"):t.label==="Offline"?y("offline"):t.label==="Isolated"?y("isolated"):t.label==="Windows"?S("windows"):t.label==="Linux"&amp;&amp;S("linux")},children:[e.jsx("div",{className:`absolute inset-0 bg-gradient-to-br ${t.gradient} opacity-0 group-hover:opacity-10 transition-opacity`}),e.jsxs("div",{className:"relative flex items-center justify-between",children:[e.jsxs("div",{children:[e.jsx("p",{className:`text-xs font-semibold uppercase tracking-wider ${a?"text-white/60":"text-gray-500"}`,children:t.label}),e.jsx("p",{className:`text-2xl font-bold mt-1 bg-gradient-to-r ${t.gradient} bg-clip-text text-transparent`,children:t.value})]}),e.jsx("div",{className:`p-2 rounded-xl bg-gradient-to-br ${t.gradient} shadow-lg ${t.glow}`,children:e.jsx(t.icon,{className:"w-5 h-5 text-white"})})]})]},t.label)})}),e.jsxs("div",{className:`p-6 rounded-2xl ${a?"bg-gray-800/60 backdrop-blur-xl border-2 border-gray-700/50":"bg-white/80 backdrop-blur-xl border-2 border-gray-200 shadow-lg"}`,children:[e.jsxs("div",{className:"flex flex-wrap items-center gap-4",children:[e.jsx("div",{className:"flex-1 min-w-[250px]",children:e.jsxs("div",{className:"relative group",children:[e.jsx(ae,{className:`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors ${a?"text-white/50 group-focus-within:text-pink-400":"text-gray-400 group-focus-within:text-pink-500"}`}),e.jsx("input",{type:"text",placeholder:"Search by hostname or IP...",value:p,onChange:t=&gt;s(t.target.value),className:`w-full pl-12 pr-4 py-3 rounded-xl border-2 transition-all text-base ${a?"bg-gray-900/50 border-gray-700 text-white placeholder-white/40 focus:border-pink-500 focus:bg-gray-900/80":"bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-pink-500"} focus:outline-none focus:ring-4 focus:ring-pink-500/20`}),p&amp;&amp;e.jsx("button",{onClick:()=&gt;s(""),className:`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full ${a?"hover:bg-gray-700":"hover:bg-gray-100"}`,children:e.jsx(de,{className:"w-5 h-5 text-gray-400"})})]})}),e.jsxs("div",{className:"relative",children:[e.jsxs("select",{value:h,onChange:t=&gt;y(t.target.value),className:`appearance-none pl-4 pr-10 py-3 rounded-xl border-2 transition-all text-base font-semibold cursor-pointer ${a?"bg-gray-900/50 border-gray-700 text-white hover:border-gray-600":"bg-white border-gray-200 text-gray-900 hover:border-gray-300"} focus:outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500`,children:[e.jsx("option",{value:"all",children:"All Status"}),_.map(t=&gt;e.jsx("option",{value:t,children:(t==null?void 0:t.charAt(0).toUpperCase())+(t==null?void 0:t.slice(1))},t))]}),e.jsx(Y,{className:`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none ${a?"text-white/50":"text-gray-400"}`})]}),e.jsxs("div",{className:"relative",children:[e.jsxs("select",{value:k,onChange:t=&gt;w(t.target.value),className:`appearance-none pl-4 pr-10 py-3 rounded-xl border-2 transition-all text-base font-semibold cursor-pointer ${a?"bg-gray-900/50 border-gray-700 text-white hover:border-gray-600":"bg-white border-gray-200 text-gray-900 hover:border-gray-300"} focus:outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500`,children:[e.jsx("option",{value:"all",children:"All Platforms"}),f.map(t=&gt;e.jsx("option",{value:t,children:(t==null?void 0:t.charAt(0).toUpperCase())+(t==null?void 0:t.slice(1))},t))]}),e.jsx(Y,{className:`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none ${a?"text-white/50":"text-gray-400"}`})]}),e.jsxs("div",{className:"relative",children:[e.jsxs("select",{value:`${$}-${T}`,onChange:t=&gt;{const[m,d]=t.target.value.split("-");g(m),A(d)},className:`appearance-none pl-4 pr-10 py-3 rounded-xl border-2 transition-all text-base font-semibold cursor-pointer ${a?"bg-gray-900/50 border-gray-700 text-white hover:border-gray-600":"bg-white border-gray-200 text-gray-900 hover:border-gray-300"} focus:outline-none focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500`,children:[e.jsx("option",{value:"hostname-asc",children:"Name A-Z"}),e.jsx("option",{value:"hostname-desc",children:"Name Z-A"}),e.jsx("option",{value:"last_seen-desc",children:"Recently Active"}),e.jsx("option",{value:"last_seen-asc",children:"Least Active"}),e.jsx("option",{value:"status-asc",children:"Status"})]}),e.jsx(Y,{className:`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 pointer-events-none ${a?"text-white/50":"text-gray-400"}`})]}),e.jsxs("div",{className:`flex rounded-xl overflow-hidden border-2 ${a?"border-gray-700":"border-gray-200"}`,children:[e.jsxs("button",{onClick:()=&gt;C("cards"),className:`px-4 py-2.5 flex items-center gap-2 transition-all ${b==="cards"?"bg-gradient-to-r from-pink-500 to-purple-600 text-white":a?"bg-gray-800 text-white/60 hover:text-white":"bg-white text-gray-500 hover:text-gray-900"}`,children:[e.jsx(ye,{className:"w-4 h-4"}),"Cards"]}),e.jsxs("button",{onClick:()=&gt;C("table"),className:`px-4 py-2.5 flex items-center gap-2 transition-all ${b==="table"?"bg-gradient-to-r from-pink-500 to-purple-600 text-white":a?"bg-gray-800 text-white/60 hover:text-white":"bg-white text-gray-500 hover:text-gray-900"}`,children:[e.jsx(M,{className:"w-4 h-4"}),"Table"]})]}),(h!=="all"||v!=="all"||p)&amp;&amp;e.jsxs("button",{onClick:()=&gt;{y("all"),S("all"),s("")},className:`flex items-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all ${a?"bg-gray-700 text-white/80 hover:bg-gray-600 hover:text-white":"bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-800"}`,children:[e.jsx(de,{className:"w-5 h-5"}),"Clear Filters"]}),e.jsxs("button",{onClick:i,disabled:c,className:"flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white disabled:opacity-50 shadow-lg hover:shadow-pink-500/25 hover:scale-105 active:scale-95",children:[e.jsx(le,{className:`w-5 h-5 ${c?"animate-spin":""}`}),"Refresh"]})]}),H&amp;&amp;e.jsxs("div",{className:`mt-4 flex items-center gap-4 p-4 rounded-xl animate-slide-in ${a?"bg-pink-500/10 border border-pink-500/30":"bg-pink-50 border border-pink-200"}`,children:[e.jsxs("div",{className:`flex items-center gap-2 ${a?"text-pink-400":"text-pink-600"}`,children:[e.jsx(J,{className:"w-5 h-5"}),e.jsxs("span",{className:"font-semibold",children:[j.size," selected"]})]}),e.jsx("div",{className:"flex-1"}),e.jsxs("button",{onClick:()=&gt;{j.forEach(t=&gt;{const m=L.find(d=&gt;d.id===t);m&amp;&amp;m.status!=="isolated"&amp;&amp;l(t,m.platform,!1)})},className:"flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500/20 text-orange-400 hover:bg-orange-500/30 transition-colors",children:[e.jsx(Z,{className:"w-4 h-4"}),"Isolate Selected"]}),e.jsx("button",{onClick:()=&gt;{P(new Set),F(!1)},className:`px-4 py-2 rounded-lg transition-colors ${a?"bg-gray-700 text-white/70 hover:text-white":"bg-gray-200 text-gray-600 hover:text-gray-900"}`,children:"Cancel"})]})]}),b==="cards"&amp;&amp;e.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4",children:L.length===0?e.jsxs("div",{className:`col-span-full p-12 rounded-2xl text-center ${a?"bg-gray-800/60":"bg-white/80"}`,children:[e.jsx(U,{className:"w-16 h-16 mx-auto mb-4 opacity-30"}),e.jsx("p",{className:`text-lg ${a?"text-white/60":"text-gray-500"}`,children:c?"Loading endpoints...":"No endpoints found"})]}):L.map((t,m)=&gt;e.jsxs("div",{className:`group relative rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ${j.has(t.id)?"ring-2 ring-pink-500 ring-offset-2 "+(a?"ring-offset-gray-900":"ring-offset-white"):""} ${a?"bg-gradient-to-br from-gray-800/80 to-gray-900/80 border border-gray-700/50 hover:border-pink-500/50":"bg-gradient-to-br from-white to-gray-50 border border-gray-200 shadow-lg hover:shadow-xl"} hover:scale-[1.02]`,style:{animationDelay:`${m*30}ms`},onClick:()=&gt;n(t),children:[e.jsx("div",{className:"absolute top-3 left-3 z-10",onClick:d=&gt;{d.stopPropagation(),q(t.id)},children:e.jsx("div",{className:`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${j.has(t.id)?"bg-pink-500 border-pink-500":a?"border-gray-600 hover:border-pink-400":"border-gray-300 hover:border-pink-400"}`,children:j.has(t.id)&amp;&amp;e.jsx(J,{className:"w-4 h-4 text-white"})})}),e.jsx("div",{className:"absolute top-3 right-3",children:e.jsxs("div",{className:`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold ${t.status==="online"?"bg-green-500/20 text-green-400":t.status==="isolated"?"bg-orange-500/20 text-orange-400":"bg-gray-500/20 text-gray-400"}`,children:[e.jsx("div",{className:`w-2 h-2 rounded-full ${t.status==="online"?"bg-green-500 animate-pulse":t.status==="isolated"?"bg-orange-500":"bg-gray-500"}`}),t.status]})}),e.jsxs("div",{className:"p-5 pt-12",children:[e.jsxs("div",{className:"flex items-start gap-4 mb-4",children:[e.jsx("div",{className:`p-3 rounded-2xl ${a?"bg-gray-700/50":"bg-gray-100"}`,children:I(t.os_type)}),e.jsxs("div",{className:"flex-1 min-w-0",children:[e.jsx("h3",{className:`font-bold text-lg truncate ${a?"text-white":"text-gray-900"}`,children:W(t.hostname,p)}),e.jsx("p",{className:`font-mono text-sm ${a?"text-white/60":"text-gray-500"}`,children:W(t.ip_address||"N/A",p)})]})]}),e.jsxs("div",{className:"space-y-3",children:[e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:`text-sm ${a?"text-white/50":"text-gray-500"}`,children:"Platform"}),e.jsx(X,{platform:t.platform,size:"sm"})]}),e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:`text-sm ${a?"text-white/50":"text-gray-500"}`,children:"Last Seen"}),e.jsxs("span",{className:`text-sm font-semibold flex items-center gap-1 ${a?"text-white/80":"text-gray-700"}`,children:[e.jsx(he,{className:"w-3.5 h-3.5"}),N(t.last_seen)]})]}),e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:`text-sm ${a?"text-white/50":"text-gray-500"}`,children:"OS"}),e.jsx("span",{className:`text-sm font-semibold ${a?"text-white/80":"text-gray-700"}`,children:t.os_version||t.os_type||"Unknown"})]})]}),e.jsxs("div",{className:"flex items-center gap-2 mt-4 pt-4 border-t border-gray-700/30",children:[e.jsxs("button",{onClick:d=&gt;{d.stopPropagation(),l(t.id,t.platform,t.status==="isolated")},className:`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold transition-all ${t.status==="isolated"?"bg-green-500/20 text-green-400 hover:bg-green-500/30":"bg-orange-500/20 text-orange-400 hover:bg-orange-500/30"}`,children:[t.status==="isolated"?e.jsx(xe,{className:"w-4 h-4"}):e.jsx(Z,{className:"w-4 h-4"}),t.status==="isolated"?"Unisolate":"Isolate"]}),e.jsx("button",{onClick:d=&gt;{d.stopPropagation(),n(t)},className:`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold transition-all ${a?"bg-gray-700/50 text-white/70 hover:bg-gray-700 hover:text-white":"bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900"}`,children:e.jsx(me,{className:"w-4 h-4"})})]})]}),e.jsx("div",{className:`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${t.status==="online"?"bg-green-500/5":t.status==="isolated"?"bg-orange-500/5":"bg-gray-500/5"}`})]},`${t.platform}-${t.id}`))}),b==="table"&amp;&amp;e.jsx("div",{className:`rounded-2xl overflow-hidden ${a?"bg-gray-800/60 backdrop-blur-xl border-2 border-gray-700/50":"bg-white/80 backdrop-blur-xl border-2 border-gray-200 shadow-lg"}`,children:e.jsx("div",{className:"overflow-x-auto",children:e.jsxs("table",{className:"w-full",children:[e.jsx("thead",{className:`${a?"bg-gray-900/70":"bg-gray-50"}`,children:e.jsxs("tr",{children:[e.jsx("th",{className:"px-4 py-4 w-12",children:e.jsx("div",{onClick:E,className:`w-6 h-6 rounded-lg border-2 flex items-center justify-center cursor-pointer transition-all ${j.size===L.length&amp;&amp;L.length&gt;0?"bg-pink-500 border-pink-500":a?"border-gray-600 hover:border-pink-400":"border-gray-300 hover:border-pink-400"}`,children:j.size===L.length&amp;&amp;L.length&gt;0&amp;&amp;e.jsx(J,{className:"w-4 h-4 text-white"})})}),["Hostname","IP Address","OS","Platform","Status","Last Seen","Actions"].map((t,m)=&gt;e.jsx("th",{className:`px-6 py-4 text-left text-sm font-bold uppercase tracking-wider ${a?"text-white":"text-gray-900"}`,children:t},t))]})}),e.jsx("tbody",{className:`divide-y ${a?"divide-gray-700/50":"divide-gray-100"}`,children:L.length===0?e.jsx("tr",{children:e.jsxs("td",{colSpan:8,className:`px-6 py-12 text-center text-base ${a?"text-white":"text-gray-900"}`,children:[e.jsx(U,{className:"w-16 h-16 mx-auto mb-4 opacity-30"}),c?"Loading endpoints...":"No endpoints found"]})}):L.map((t,m)=&gt;e.jsxs("tr",{className:`transition-colors cursor-pointer group ${j.has(t.id)?a?"bg-pink-500/10":"bg-pink-50":a?"hover:bg-gray-700/30":"hover:bg-gray-50"}`,onClick:()=&gt;n(t),children:[e.jsx("td",{className:"px-4 py-4",onClick:d=&gt;d.stopPropagation(),children:e.jsx("div",{onClick:()=&gt;q(t.id),className:`w-6 h-6 rounded-lg border-2 flex items-center justify-center cursor-pointer transition-all ${j.has(t.id)?"bg-pink-500 border-pink-500":a?"border-gray-600 group-hover:border-pink-400":"border-gray-300 group-hover:border-pink-400"}`,children:j.has(t.id)&amp;&amp;e.jsx(J,{className:"w-4 h-4 text-white"})})}),e.jsx("td",{className:"px-6 py-4",children:e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx("div",{className:`p-2 rounded-xl ${a?"bg-gray-700/50":"bg-gray-100"}`,children:I(t.os_type)}),e.jsx("span",{className:`font-semibold text-base ${a?"text-white":"text-gray-900"}`,children:W(t.hostname,p)})]})}),e.jsx("td",{className:`px-6 py-4 font-mono text-base ${a?"text-white/80":"text-gray-700"}`,children:W(t.ip_address||"N/A",p)}),e.jsx("td",{className:`px-6 py-4 text-base ${a?"text-white/80":"text-gray-700"}`,children:t.os_type||"Unknown"}),e.jsx("td",{className:"px-6 py-4",children:e.jsx(X,{platform:t.platform})}),e.jsx("td",{className:"px-6 py-4",children:e.jsxs("div",{className:`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold ${t.status==="online"?"bg-green-500/20 text-green-400":t.status==="isolated"?"bg-orange-500/20 text-orange-400":"bg-gray-500/20 text-gray-400"}`,children:[e.jsx("div",{className:`w-2 h-2 rounded-full ${t.status==="online"?"bg-green-500 animate-pulse":t.status==="isolated"?"bg-orange-500":"bg-gray-500"}`}),t.status]})}),e.jsx("td",{className:`px-6 py-4 text-base ${a?"text-white/70":"text-gray-600"}`,children:e.jsxs("div",{className:"flex items-center gap-1",children:[e.jsx(he,{className:"w-4 h-4"}),N(t.last_seen)]})}),e.jsx("td",{className:"px-6 py-4",children:e.jsxs("div",{className:"flex items-center justify-end gap-2",onClick:d=&gt;d.stopPropagation(),children:[e.jsx("button",{onClick:()=&gt;l(t.id,t.platform,t.status==="isolated"),className:`p-2.5 rounded-xl transition-all ${t.status==="isolated"?"bg-green-500/20 text-green-400 hover:bg-green-500/30":"bg-orange-500/20 text-orange-400 hover:bg-orange-500/30"}`,title:t.status==="isolated"?"Unisolate":"Isolate",children:t.status==="isolated"?e.jsx(xe,{className:"w-5 h-5"}):e.jsx(Z,{className:"w-5 h-5"})}),e.jsx("button",{onClick:()=&gt;n(t),className:`p-2.5 rounded-xl transition-all ${a?"bg-gray-700/50 hover:bg-gray-700 text-white/70 hover:text-white":"bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900"}`,title:"View Details",children:e.jsx(me,{className:"w-5 h-5"})})]})})]},`${t.platform}-${t.id}`))})]})})}),e.jsxs("div",{className:`flex items-center justify-between text-sm ${a?"text-white/60":"text-gray-500"}`,children:[e.jsxs("span",{children:["Showing ",e.jsx("span",{className:"font-bold text-pink-400",children:L.length})," of"," ",e.jsx("span",{className:"font-bold",children:O.length})," endpoints"]}),j.size&gt;0&amp;&amp;e.jsxs("span",{className:"text-pink-400 font-semibold",children:[j.size," selected"]})]}),o&amp;&amp;e.jsxs("div",{className:"fixed inset-0 z-50 flex items-center justify-center p-4",onClick:()=&gt;n(null),children:[e.jsx("div",{className:"absolute inset-0 bg-black/60 backdrop-blur-sm"}),e.jsx("div",{className:"relative w-full max-w-2xl max-h-[90vh] overflow-hidden",onClick:t=&gt;t.stopPropagation(),children:e.jsxs("div",{className:`flex flex-col rounded-2xl ${a?"bg-gradient-to-b from-gray-800 to-gray-900 border-2 border-gray-700":"bg-white border-2 border-gray-200"} shadow-2xl`,children:[e.jsx("div",{className:`p-6 border-b ${a?"border-gray-700":"border-gray-200"}`,children:e.jsxs("div",{className:"flex items-start justify-between",children:[e.jsxs("div",{className:"flex items-center gap-4",children:[e.jsx("div",{className:`p-4 rounded-2xl ${a?"bg-gray-700/50":"bg-gray-100"}`,children:I(o.os_type)}),e.jsxs("div",{children:[e.jsx("h2",{className:`text-2xl font-bold ${a?"text-white":"text-gray-900"}`,children:o.hostname}),e.jsx("p",{className:`font-mono ${a?"text-white/60":"text-gray-500"}`,children:o.ip_address})]})]}),e.jsx("button",{onClick:()=&gt;n(null),className:`p-2 rounded-xl transition-colors ${a?"hover:bg-gray-700 text-white/70":"hover:bg-gray-100 text-gray-500"}`,children:e.jsx(de,{className:"w-6 h-6"})})]})}),e.jsxs("div",{className:"flex-1 overflow-y-auto p-6 space-y-6 max-h-[calc(90vh-120px)]",children:[e.jsxs("div",{className:`p-4 rounded-xl ${a?"bg-gray-700/30":"bg-gray-50"}`,children:[e.jsx("h3",{className:`text-sm font-semibold uppercase tracking-wider mb-3 ${a?"text-white/60":"text-gray-500"}`,children:"Status"}),e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx("div",{className:`w-4 h-4 rounded-full ${o.status==="online"?"bg-green-500 animate-pulse":o.status==="isolated"?"bg-orange-500":"bg-gray-500"}`}),e.jsx("span",{className:`text-lg font-bold capitalize ${a?"text-white":"text-gray-900"}`,children:o.status})]})]}),e.jsxs("div",{className:`p-4 rounded-xl ${a?"bg-gray-700/30":"bg-gray-50"}`,children:[e.jsx("h3",{className:`text-sm font-semibold uppercase tracking-wider mb-3 ${a?"text-white/60":"text-gray-500"}`,children:"Details"}),e.jsx("div",{className:"space-y-3",children:[{label:"Platform",value:o.platform,badge:!0},{label:"Operating System",value:o.os_version||o.os_type},{label:"Agent Version",value:o.agent_version||"N/A"},{label:"Last Seen",value:o.last_seen?new Date(o.last_seen).toLocaleString():"N/A"},{label:"Endpoint ID",value:o.id,mono:!0}].map(t=&gt;e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:`${a?"text-white/60":"text-gray-500"}`,children:t.label}),t.badge?e.jsx(X,{platform:t.value}):e.jsx("span",{className:`font-semibold ${t.mono?"font-mono text-sm":""} ${a?"text-white":"text-gray-900"}`,children:t.value})]},t.label))})]}),e.jsxs("div",{className:`p-4 rounded-xl ${a?"bg-gray-700/30":"bg-gray-50"}`,children:[e.jsx("h3",{className:`text-sm font-semibold uppercase tracking-wider mb-3 ${a?"text-white/60":"text-gray-500"}`,children:"Quick Actions"}),e.jsxs("div",{className:"grid grid-cols-2 gap-3",children:[e.jsxs("button",{onClick:()=&gt;l(o.id,o.platform,o.status==="isolated"),className:`flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all ${o.status==="isolated"?"bg-green-500/20 text-green-400 hover:bg-green-500/30":"bg-orange-500/20 text-orange-400 hover:bg-orange-500/30"}`,children:[o.status==="isolated"?e.jsx(xe,{className:"w-5 h-5"}):e.jsx(Z,{className:"w-5 h-5"}),o.status==="isolated"?"Unisolate":"Isolate"]}),e.jsxs("button",{className:`flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all ${a?"bg-blue-500/20 text-blue-400 hover:bg-blue-500/30":"bg-blue-100 text-blue-600 hover:bg-blue-200"}`,children:[e.jsx(ae,{className:"w-5 h-5"}),"Scan"]}),e.jsxs("button",{className:`flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all ${a?"bg-purple-500/20 text-purple-400 hover:bg-purple-500/30":"bg-purple-100 text-purple-600 hover:bg-purple-200"}`,children:[e.jsx(Q,{className:"w-5 h-5"}),"Console"]}),e.jsxs("button",{className:`flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all ${a?"bg-gray-700/50 text-white/70 hover:bg-gray-700 hover:text-white":"bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-900"}`,children:[e.jsx(ue,{className:"w-5 h-5"}),"Activity"]})]})]})]})]})})]})]})}function Xt({detections:r,onRefresh:l,loading:i,isDarkMode:c}){const[a,p]=x.useState(""),[s,h]=x.useState("all"),[y,k]=x.useState("all"),w=Object.entries(r).flatMap(([o,n])=&gt;n.map(b=&gt;({...b,platform:o}))).sort((o,n)=&gt;new Date(n.timestamp||0)-new Date(o.timestamp||0)),v=w.filter(o=&gt;{var $,g;const n=!a||(($=o.title)==null?void 0:$.toLowerCase().includes(a.toLowerCase()))||((g=o.description)==null?void 0:g.toLowerCase().includes(a.toLowerCase())),b=s==="all"||o.severity===s,C=y==="all"||o.platform===y;return n&amp;&amp;b&amp;&amp;C}),S=[...new Set(Object.keys(r))];return e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:`flex flex-wrap gap-4 p-4 rounded-2xl ${c?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsx("div",{className:"flex-1 min-w-[200px]",children:e.jsxs("div",{className:"relative",children:[e.jsx(ae,{className:`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${c?"text-gray-300":"text-gray-900"}`}),e.jsx("input",{type:"text",placeholder:"Search detections...",value:a,onChange:o=&gt;p(o.target.value),className:`w-full pl-10 pr-4 py-2.5 rounded-xl border transition-all ${c?"bg-gray-900/50 border-gray-700 text-white placeholder-gray-400 focus:border-pink-500":"bg-white border-gray-200 text-gray-900 placeholder-gray-500 focus:border-pink-500"} focus:outline-none focus:ring-2 focus:ring-pink-500/30`})]})}),e.jsxs("select",{value:s,onChange:o=&gt;h(o.target.value),className:`px-4 py-2.5 rounded-xl border transition-all ${c?"bg-gray-900/50 border-gray-700 text-white":"bg-white border-gray-200 text-gray-900"} focus:outline-none focus:ring-2 focus:ring-pink-500/30`,children:[e.jsx("option",{value:"all",children:"All Severities"}),e.jsx("option",{value:"critical",children:"Critical"}),e.jsx("option",{value:"high",children:"High"}),e.jsx("option",{value:"medium",children:"Medium"}),e.jsx("option",{value:"low",children:"Low"})]}),e.jsxs("select",{value:y,onChange:o=&gt;k(o.target.value),className:`px-4 py-2.5 rounded-xl border transition-all ${c?"bg-gray-900/50 border-gray-700 text-white":"bg-white border-gray-200 text-gray-900"} focus:outline-none focus:ring-2 focus:ring-pink-500/30`,children:[e.jsx("option",{value:"all",children:"All Platforms"}),S.map(o=&gt;e.jsx("option",{value:o,children:o},o))]}),e.jsxs("button",{onClick:l,disabled:i,className:"flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white disabled:opacity-50 shadow-lg hover:shadow-pink-500/25",children:[e.jsx(le,{className:`w-5 h-5 ${i?"animate-spin":""}`}),"Refresh"]})]}),e.jsx("div",{className:"space-y-4",children:v.length===0?e.jsxs("div",{className:`text-center py-16 rounded-2xl ${c?"bg-gray-800/60 border border-gray-700/50":"bg-white/80 border border-gray-200"}`,children:[e.jsx(Ae,{className:"w-16 h-16 mx-auto mb-4 text-green-500 opacity-50"}),e.jsx("p",{className:c?"text-gray-200":"text-gray-900",children:i?"Loading detections...":"No detections found"})]}):v.map((o,n)=&gt;{var b;return se[o.severity]||se.info,e.jsx("div",{className:`group rounded-2xl p-5 border-l-4 transition-all hover:scale-[1.01] ${c?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"} ${o.severity==="critical"?"border-l-red-500":o.severity==="high"?"border-l-orange-500":o.severity==="medium"?"border-l-yellow-500":"border-l-blue-500"}`,children:e.jsxs("div",{className:"flex items-start justify-between",children:[e.jsxs("div",{className:"flex-1",children:[e.jsxs("div",{className:"flex items-center gap-2 mb-3 flex-wrap",children:[e.jsx(fe,{severity:o.severity,animated:!0}),e.jsx(X,{platform:o.platform}),((b=o.mitre_tactics)==null?void 0:b.length)&gt;0&amp;&amp;e.jsx("span",{className:"px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400",children:o.mitre_tactics[0]})]}),e.jsx("h3",{className:`font-bold text-lg mb-2 ${c?"text-white":"text-gray-900"}`,children:o.title||o.name||"Unnamed Detection"}),e.jsx("p",{className:`text-sm mb-4 ${c?"text-cyan-300":"text-gray-900"}`,children:o.description||"No description available"}),e.jsxs("div",{className:`flex items-center gap-6 text-xs ${c?"text-gray-200":"text-gray-700"}`,children:[e.jsxs("span",{className:"flex items-center gap-1.5",children:[e.jsx(U,{className:"w-4 h-4"}),o.hostname||o.endpoint_id||"Unknown host"]}),e.jsxs("span",{className:"flex items-center gap-1.5",children:[e.jsx(he,{className:"w-4 h-4"}),o.timestamp?new Date(o.timestamp).toLocaleString():"Unknown time"]})]})]}),e.jsxs("div",{className:"flex gap-2",children:[e.jsx("button",{className:`p-2.5 rounded-xl transition-all ${c?"bg-gray-700/50 hover:bg-gray-700 text-gray-300":"bg-gray-100 hover:bg-gray-200 text-gray-600"}`,title:"View Details",children:e.jsx(me,{className:"w-5 h-5"})}),e.jsx("button",{className:"p-2.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 text-pink-400 hover:from-pink-500/30 hover:to-purple-500/30 transition-all",title:"Investigate",children:e.jsx(ee,{className:"w-5 h-5"})})]})]})},`${o.platform}-${o.id}-${n}`)})}),e.jsxs("div",{className:`text-sm ${c?"text-gray-200":"text-gray-900"}`,children:["Showing ",v.length," of ",w.length," detections"]})]})}function Zt({correlatedAlerts:r,correlationStats:l,isDarkMode:i}){const[c,a]=x.useState(null),p=[{label:"Correlated Alerts",value:(l==null?void 0:l.total_correlated)||0,icon:te,gradient:"from-purple-400 to-purple-600"},{label:"Critical Priority",value:r.filter(s=&gt;s.priority==="critical").length,icon:re,gradient:"from-red-400 to-pink-500"},{label:"Attack Chains",value:(l==null?void 0:l.attack_chains)||0,icon:Ht,gradient:"from-orange-400 to-amber-500"},{label:"Platforms Involved",value:(l==null?void 0:l.platforms_involved)||0,icon:pe,gradient:"from-blue-400 to-cyan-500"}];return e.jsxs("div",{className:"space-y-6",children:[e.jsx("div",{className:"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6",children:p.map(s=&gt;e.jsx(Oe,{icon:s.icon,label:s.label,value:s.value,gradient:s.gradient,isDarkMode:i},s.label))}),e.jsxs("div",{className:`rounded-2xl overflow-hidden ${i?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("div",{className:`px-6 py-4 border-b flex items-center justify-between ${i?"border-gray-700/50 bg-gray-900/30":"border-gray-200 bg-gray-50"}`,children:[e.jsxs("h3",{className:`font-bold text-lg flex items-center gap-2 ${i?"text-white":"text-gray-900"}`,children:[e.jsx(te,{className:"w-5 h-5 text-purple-500"}),e.jsx("span",{className:"bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent",children:"Correlated Alerts"})]}),e.jsxs("span",{className:`text-sm ${i?"text-gray-200":"text-gray-900"}`,children:[r.length," alerts"]})]}),e.jsx("div",{className:`divide-y ${i?"divide-gray-700/50":"divide-gray-200"}`,children:r.length===0?e.jsxs("div",{className:`p-12 text-center ${i?"text-gray-200":"text-gray-900"}`,children:[e.jsx(kt,{className:"w-16 h-16 mx-auto mb-4 opacity-50"}),e.jsx("p",{children:"No correlated alerts detected."}),e.jsx("p",{className:"text-sm mt-2",children:"Events are being analyzed for correlation patterns."})]}):r.map((s,h)=&gt;{var y,k,w,v,S;return e.jsx("div",{className:`p-5 transition-colors cursor-pointer ${i?"hover:bg-gray-700/30":"hover:bg-gray-50"}`,onClick:()=&gt;a(c===h?null:h),children:e.jsxs("div",{className:"flex items-start justify-between",children:[e.jsxs("div",{className:"flex-1",children:[e.jsxs("div",{className:"flex items-center gap-2 mb-3 flex-wrap",children:[e.jsx("span",{className:`px-2.5 py-1 rounded-full text-xs font-bold ${s.priority==="critical"?"bg-red-500/20 text-red-400":s.priority==="high"?"bg-orange-500/20 text-orange-400":"bg-yellow-500/20 text-yellow-400"}`,children:(y=s.priority)==null?void 0:y.toUpperCase()}),e.jsx("span",{className:"px-2.5 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400",children:s.correlation_type}),(k=s.platforms)==null?void 0:k.map((o,n)=&gt;e.jsx(X,{platform:o},n))]}),e.jsx("h4",{className:`font-bold text-lg ${i?"text-white":"text-gray-900"}`,children:s.title}),e.jsx("p",{className:`text-sm mt-2 ${i?"text-cyan-300":"text-gray-900"}`,children:s.description}),c===h&amp;&amp;e.jsxs("div",{className:`mt-5 p-4 rounded-xl ${i?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsxs("h5",{className:`text-sm font-bold mb-3 flex items-center gap-2 ${i?"text-gray-300":"text-gray-900"}`,children:[e.jsx(ue,{className:"w-4 h-4"}),"Related Events (",((w=s.related_events)==null?void 0:w.length)||0,")"]}),e.jsx("div",{className:"space-y-2",children:(v=s.related_events)==null?void 0:v.slice(0,5).map((o,n)=&gt;e.jsxs("div",{className:`text-sm flex items-center gap-2 ${i?"text-cyan-300":"text-gray-900"}`,children:[e.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-pink-500"}),o.title||o.type," - ",o.hostname]},n))}),((S=s.mitre_tactics)==null?void 0:S.length)&gt;0&amp;&amp;e.jsxs("div",{className:"mt-4",children:[e.jsxs("h5",{className:`text-sm font-bold mb-2 flex items-center gap-2 ${i?"text-gray-300":"text-gray-900"}`,children:[e.jsx(ne,{className:"w-4 h-4"}),"MITRE ATT&amp;CK Tactics"]}),e.jsx("div",{className:"flex flex-wrap gap-2",children:s.mitre_tactics.map((o,n)=&gt;e.jsx("span",{className:"px-2.5 py-1 rounded-lg text-xs bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 font-medium",children:o},n))})]})]})]}),e.jsx("button",{className:`p-2 rounded-lg transition-all ${i?"text-gray-400 hover:bg-gray-700/50":"text-gray-500 hover:bg-gray-100"}`,children:c===h?e.jsx(et,{className:"w-5 h-5"}):e.jsx(Y,{className:"w-5 h-5"})})]})},s.id||h)})})]})]})}function Yt({isDarkMode:r}){const[l,i]=x.useState("ioc"),[c,a]=x.useState(""),[p,s]=x.useState("hash"),[h,y]=x.useState(!1),[k,w]=x.useState(null),[v,S]=x.useState([]),[o,n]=x.useState([]);x.useEffect(()=&gt;{b()},[]);const b=async()=&gt;{try{const[g,T]=await Promise.all([V.getSigmaRules(),V.getHuntQueries()]);S(g.rules||[]),n(T.queries||[])}catch(g){console.error("Failed to load hunting data:",g)}},C=async()=&gt;{if(c.trim()){y(!0),w(null);try{const g=await V.huntIOC(c,p);w(g)}catch(g){console.error("Hunt failed:",g)}finally{y(!1)}}},$=[{id:"ioc",label:"IOC Hunt",icon:gt},{id:"sigma",label:"Sigma Rules",icon:M},{id:"queries",label:"Hunt Queries",icon:Q}];return e.jsxs("div",{className:"space-y-6",children:[e.jsx("div",{className:`flex gap-2 p-2 rounded-2xl ${r?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:$.map(g=&gt;e.jsxs("button",{onClick:()=&gt;i(g.id),className:`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all flex-1 justify-center ${l===g.id?"bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/25":r?"text-gray-400 hover:text-white hover:bg-gray-700/50":"text-gray-600 hover:text-gray-900 hover:bg-gray-100"}`,children:[e.jsx(g.icon,{className:"w-5 h-5"}),g.label]},g.id))}),l==="ioc"&amp;&amp;e.jsxs("div",{className:`rounded-2xl p-6 ${r?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("h3",{className:`text-xl font-bold mb-6 flex items-center gap-3 ${r?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-2 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600",children:e.jsx(ee,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent",children:"Hunt for Indicators of Compromise"})]}),e.jsxs("div",{className:"flex gap-4 mb-6",children:[e.jsxs("select",{value:p,onChange:g=&gt;s(g.target.value),className:`px-4 py-3 rounded-xl border transition-all ${r?"bg-gray-900/50 border-gray-700 text-white":"bg-white border-gray-200 text-gray-900"} focus:outline-none focus:ring-2 focus:ring-pink-500/30`,children:[e.jsx("option",{value:"hash",children:"Hash (MD5/SHA1/SHA256)"}),e.jsx("option",{value:"ip",children:"IP Address"}),e.jsx("option",{value:"domain",children:"Domain"}),e.jsx("option",{value:"filename",children:"Filename"}),e.jsx("option",{value:"email",children:"Email"})]}),e.jsx("input",{type:"text",value:c,onChange:g=&gt;a(g.target.value),placeholder:`Enter ${p}...`,className:`flex-1 px-4 py-3 rounded-xl border transition-all ${r?"bg-gray-900/50 border-gray-700 text-white placeholder-gray-400":"bg-white border-gray-200 text-gray-900 placeholder-gray-500"} focus:outline-none focus:ring-2 focus:ring-pink-500/30`}),e.jsxs("button",{onClick:C,disabled:h||!c.trim(),className:"flex items-center gap-2 px-8 py-3 rounded-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white transition-all disabled:opacity-50 shadow-lg hover:shadow-pink-500/25",children:[h?e.jsx(le,{className:"w-5 h-5 animate-spin"}):e.jsx(ee,{className:"w-5 h-5"}),"Hunt"]})]}),k&amp;&amp;e.jsxs("div",{className:`mt-6 p-5 rounded-xl ${r?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsxs("h4",{className:`font-bold mb-4 flex items-center gap-2 ${r?"text-white":"text-gray-900"}`,children:[e.jsx(ne,{className:"w-5 h-5 text-pink-500"}),"Hunt Results"]}),Object.entries(k).map(([g,T])=&gt;e.jsxs("div",{className:"mb-5",children:[e.jsxs("div",{className:"flex items-center gap-3 mb-3",children:[e.jsx(X,{platform:g,size:"md"}),e.jsxs("span",{className:`text-sm font-medium ${r?"text-cyan-300":"text-gray-900"}`,children:[T.length," match(es)"]})]}),T.length&gt;0?e.jsx("div",{className:"space-y-2",children:T.map((A,j)=&gt;e.jsxs("div",{className:`p-4 rounded-xl border-l-4 border-pink-500 ${r?"bg-gray-800/50":"bg-white"}`,children:[e.jsx("div",{className:`font-medium ${r?"text-white":"text-gray-900"}`,children:A.hostname||A.endpoint}),e.jsx("div",{className:`text-sm mt-1 ${r?"text-cyan-300":"text-gray-900"}`,children:A.details||A.path||"Match found"})]},j))}):e.jsx("p",{className:`text-sm ${r?"text-gray-200":"text-gray-700"}`,children:"No matches found"})]},g))]})]}),l==="sigma"&amp;&amp;e.jsxs("div",{className:`rounded-2xl p-6 ${r?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("h3",{className:`text-xl font-bold flex items-center gap-3 ${r?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-2 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600",children:e.jsx(M,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent",children:"Sigma Detection Rules"})]}),e.jsxs("span",{className:`px-4 py-2 rounded-xl text-sm font-medium ${r?"bg-gray-900/50 text-gray-400":"bg-gray-100 text-gray-600"}`,children:[v.length," rules loaded"]})]}),e.jsx("div",{className:"space-y-4",children:v.length===0?e.jsxs("div",{className:`p-8 text-center rounded-xl ${r?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsx(M,{className:"w-12 h-12 mx-auto mb-4 opacity-50"}),e.jsx("p",{className:r?"text-gray-200":"text-gray-900",children:"No Sigma rules configured. Add rules via the API or configuration."})]}):v.map((g,T)=&gt;{var A;return e.jsx("div",{className:`p-5 rounded-xl border transition-all hover:scale-[1.01] ${r?"border-gray-700/50 bg-gray-900/30 hover:border-cyan-500/30":"border-gray-200 bg-gray-50 hover:border-cyan-500/50"}`,children:e.jsxs("div",{className:"flex items-start justify-between",children:[e.jsxs("div",{className:"flex-1",children:[e.jsx("h4",{className:`font-bold text-lg ${r?"text-white":"text-gray-900"}`,children:g.title||g.name}),e.jsx("p",{className:`text-sm mt-2 ${r?"text-cyan-300":"text-gray-900"}`,children:g.description}),e.jsx("div",{className:"flex gap-2 mt-3 flex-wrap",children:(A=g.tags)==null?void 0:A.map((j,P)=&gt;e.jsx("span",{className:"px-2.5 py-1 rounded-lg text-xs bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400 font-medium",children:j},P))})]}),e.jsx(fe,{severity:g.level})]})},g.id||T)})})]}),l==="queries"&amp;&amp;e.jsxs("div",{className:`rounded-2xl p-6 ${r?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("h3",{className:`text-xl font-bold mb-6 flex items-center gap-3 ${r?"text-white":"text-gray-900"}`,children:[e.jsx("div",{className:"p-2 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600",children:e.jsx(Q,{className:"w-6 h-6 text-white"})}),e.jsx("span",{className:"bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent",children:"Pre-built Hunt Queries"})]}),e.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 gap-4",children:o.length===0?e.jsxs("div",{className:`col-span-2 p-8 text-center rounded-xl ${r?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsx(Q,{className:"w-12 h-12 mx-auto mb-4 opacity-50"}),e.jsx("p",{className:r?"text-gray-200":"text-gray-900",children:"No hunt queries available."})]}):o.map((g,T)=&gt;{var A;return e.jsx("div",{className:`group p-5 rounded-xl border transition-all cursor-pointer hover:scale-[1.02] ${r?"border-gray-700/50 hover:border-green-500/30 bg-gray-900/30":"border-gray-200 hover:border-green-500/50 bg-gray-50"}`,children:e.jsxs("div",{className:"flex items-start gap-4",children:[e.jsx("div",{className:"p-3 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 group-hover:from-green-500/30 group-hover:to-emerald-500/30 transition-all",children:e.jsx(ae,{className:"w-6 h-6 text-green-400"})}),e.jsxs("div",{className:"flex-1",children:[e.jsx("h4",{className:`font-bold ${r?"text-white":"text-gray-900"}`,children:g.name}),e.jsx("p",{className:`text-sm mt-1 ${r?"text-cyan-300":"text-gray-900"}`,children:g.description}),((A=g.mitre_techniques)==null?void 0:A.length)&gt;0&amp;&amp;e.jsx("div",{className:"flex gap-2 mt-3 flex-wrap",children:g.mitre_techniques.map((j,P)=&gt;e.jsx("span",{className:"px-2 py-1 rounded text-xs bg-purple-500/20 text-purple-400 font-mono",children:j},P))})]}),e.jsx(jt,{className:`w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity ${r?"text-green-400":"text-green-500"}`})]})},g.id||T)})})]})]})}function Qt({detections:r,isDarkMode:l}){const i=[{id:"reconnaissance",name:"Reconnaissance",color:"#60a5fa"},{id:"resource_development",name:"Resource Dev",color:"#34d399"},{id:"initial_access",name:"Initial Access",color:"#f472b6"},{id:"execution",name:"Execution",color:"#fb923c"},{id:"persistence",name:"Persistence",color:"#a78bfa"},{id:"privilege_escalation",name:"Priv Escalation",color:"#f87171"},{id:"defense_evasion",name:"Defense Evasion",color:"#fbbf24"},{id:"credential_access",name:"Credential Access",color:"#38bdf8"},{id:"discovery",name:"Discovery",color:"#4ade80"},{id:"lateral_movement",name:"Lateral Movement",color:"#e879f9"},{id:"collection",name:"Collection",color:"#fb7185"},{id:"command_and_control",name:"C2",color:"#94a3b8"},{id:"exfiltration",name:"Exfiltration",color:"#f472b6"},{id:"impact",name:"Impact",color:"#ef4444"}],c=Object.values(r).flat(),a=i.map(s=&gt;{const h=c.filter(y=&gt;{var k;return(k=y.mitre_tactics)==null?void 0:k.some(w=&gt;w.toLowerCase().replace(/\s+/g,"_")===s.id)}).length;return{...s,count:h}}),p=c.filter(s=&gt;{var h;return((h=s.mitre_techniques)==null?void 0:h.length)&gt;0}).map(s=&gt;{var h,y;return{tactic:((h=s.mitre_tactics)==null?void 0:h[0])||"unknown",technique:((y=s.mitre_techniques)==null?void 0:y[0])||"unknown",severity:s.severity==="critical"?4:s.severity==="high"?3:s.severity==="medium"?2:1,name:s.title}});return e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:`rounded-2xl p-6 relative overflow-hidden ${l?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsx("div",{className:"absolute inset-0 overflow-hidden pointer-events-none",children:e.jsx("div",{className:"absolute top-0 left-1/4 w-64 h-64 rounded-full bg-gradient-to-br from-red-500/10 to-orange-500/10 blur-3xl animate-float"})}),e.jsxs("div",{className:"relative flex items-center gap-4 mb-6",children:[e.jsx("div",{className:"p-4 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 shadow-lg shadow-red-500/25",children:e.jsx(ne,{className:"w-10 h-10 text-white"})}),e.jsxs("div",{children:[e.jsx("h2",{className:`text-2xl font-bold ${l?"text-white":"text-gray-900"}`,children:e.jsx("span",{className:"bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent",children:"MITRE ATT&amp;CK Coverage"})}),e.jsx("p",{className:`text-sm mt-1 ${l?"text-gray-200":"text-gray-900"}`,children:"Visualize detected techniques across the ATT&amp;CK framework"})]})]}),e.jsx("div",{className:"relative grid grid-cols-7 gap-3 mt-8",children:a.map(s=&gt;e.jsxs("div",{className:`relative p-4 rounded-xl text-center transition-all duration-300 hover:scale-105 cursor-pointer ${s.count&gt;0?"ring-2 ring-offset-2":""}`,style:{backgroundColor:s.count&gt;0?`${s.color}25`:l?"rgba(31, 41, 55, 0.5)":"rgba(243, 244, 246, 1)",ringColor:s.count&gt;0?s.color:"transparent",ringOffsetColor:l?"#111827":"#fff"},children:[s.count&gt;0&amp;&amp;e.jsx("div",{className:"absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white",style:{backgroundColor:s.color},children:s.count}),e.jsx("p",{className:`text-xs font-bold truncate ${s.count&gt;0?"text-white":l?"text-cyan-300":"text-gray-900"}`,style:{color:s.count&gt;0?s.color:void 0},children:s.name})]},s.id))})]}),e.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-2 gap-6",children:[e.jsxs("div",{className:`rounded-2xl p-6 ${l?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("h3",{className:`text-lg font-bold mb-4 flex items-center gap-2 ${l?"text-white":"text-gray-900"}`,children:[e.jsx(Ge,{className:"w-5 h-5 text-purple-500"}),e.jsx("span",{className:"bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent",children:"Recent Techniques Detected"})]}),e.jsx("div",{className:"space-y-3 max-h-80 overflow-y-auto pr-2",children:p.length===0?e.jsxs("div",{className:`p-6 text-center rounded-xl ${l?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsx(Ae,{className:"w-10 h-10 mx-auto mb-3 text-green-500 opacity-50"}),e.jsx("p",{className:l?"text-gray-200":"text-gray-900",children:"No techniques detected yet"})]}):p.slice(0,10).map((s,h)=&gt;e.jsxs("div",{className:`p-4 rounded-xl flex items-center justify-between transition-all hover:scale-[1.02] ${l?"bg-gray-900/50 hover:bg-gray-900":"bg-gray-50 hover:bg-gray-100"}`,children:[e.jsxs("div",{children:[e.jsx("span",{className:"px-2.5 py-1 rounded-lg text-xs font-mono bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-400",children:s.technique}),e.jsx("p",{className:`text-sm mt-2 font-medium ${l?"text-gray-300":"text-gray-900"}`,children:s.name})]}),e.jsx(fe,{severity:s.severity===4?"critical":s.severity===3?"high":s.severity===2?"medium":"low"})]},h))})]}),e.jsxs("div",{className:`rounded-2xl p-6 ${l?"bg-gray-800/60 backdrop-blur-xl border border-gray-700/50":"bg-white/80 backdrop-blur-xl border border-gray-200 shadow-lg"}`,children:[e.jsxs("h3",{className:`text-lg font-bold mb-4 flex items-center gap-2 ${l?"text-white":"text-gray-900"}`,children:[e.jsx(ye,{className:"w-5 h-5 text-green-500"}),e.jsx("span",{className:"bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent",children:"Coverage Summary"})]}),e.jsxs("div",{className:"space-y-5",children:[e.jsxs("div",{children:[e.jsxs("div",{className:"flex justify-between text-sm mb-2",children:[e.jsx("span",{className:l?"text-cyan-300":"text-gray-900",children:"Tactics Covered"}),e.jsxs("span",{className:`font-bold ${l?"text-white":"text-gray-900"}`,children:[a.filter(s=&gt;s.count&gt;0).length," / ",i.length]})]}),e.jsx("div",{className:`h-3 rounded-full overflow-hidden ${l?"bg-gray-700":"bg-gray-200"}`,children:e.jsx("div",{className:"h-full rounded-full bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-500",style:{width:`${a.filter(s=&gt;s.count&gt;0).length/i.length*100}%`}})})]}),e.jsx("div",{className:`p-4 rounded-xl ${l?"bg-gray-900/50":"bg-gray-100"}`,children:e.jsxs("div",{className:"flex justify-between mb-3",children:[e.jsx("span",{className:`text-sm ${l?"text-cyan-300":"text-gray-900"}`,children:"Total Detections Mapped"}),e.jsx("span",{className:"text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent",children:c.filter(s=&gt;{var h;return((h=s.mitre_tactics)==null?void 0:h.length)&gt;0}).length})]})}),e.jsxs("div",{className:`p-5 rounded-xl ${l?"bg-gray-900/50":"bg-gray-100"}`,children:[e.jsxs("h4",{className:`text-sm font-bold mb-4 flex items-center gap-2 ${l?"text-gray-300":"text-gray-900"}`,children:[e.jsx(Ee,{className:"w-4 h-4 text-orange-500"}),"Top Targeted Tactics"]}),e.jsxs("div",{className:"space-y-3",children:[a.filter(s=&gt;s.count&gt;0).sort((s,h)=&gt;h.count-s.count).slice(0,5).map((s,h)=&gt;e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx("span",{className:`text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ${l?"bg-gray-700":"bg-gray-200"}`,children:h+1}),e.jsx("div",{className:"w-3 h-3 rounded-full",style:{backgroundColor:s.color}}),e.jsx("span",{className:`text-sm flex-1 ${l?"text-gray-300":"text-gray-900"}`,children:s.name}),e.jsx("span",{className:"text-sm font-bold",style:{color:s.color},children:s.count})]},s.id)),a.filter(s=&gt;s.count&gt;0).length===0&amp;&amp;e.jsx("p",{className:`text-sm text-center py-4 ${l?"text-gray-200":"text-gray-700"}`,children:"No tactics detected"})]})]})]})]})]})]})}function ea(){const{isDarkMode:r}=ze(),[l,i]=x.useState("overview"),[c,a]=x.useState(!0),[p,s]=x.useState(null),[h,y]=x.useState({}),[k,w]=x.useState({}),[v,S]=x.useState({}),[o,n]=x.useState([]),[b,C]=x.useState({}),$=x.useRef(null),[g,T]=x.useState(!1),[A,j]=x.useState([]),P=x.useCallback(()=&gt;{const f={crowdstrike:[{id:"cs-001",hostname:"WORKSTATION-01",ip_address:"192.168.1.101",os_type:"windows",platform:"crowdstrike",status:"online",last_seen:new Date().toISOString(),agent_version:"7.10.16303"},{id:"cs-002",hostname:"WORKSTATION-02",ip_address:"192.168.1.102",os_type:"windows",platform:"crowdstrike",status:"online",last_seen:new Date().toISOString(),agent_version:"7.10.16303"},{id:"cs-003",hostname:"SERVER-DC01",ip_address:"192.168.1.10",os_type:"windows",platform:"crowdstrike",status:"online",last_seen:new Date().toISOString(),agent_version:"7.10.16303"},{id:"cs-004",hostname:"WORKSTATION-03",ip_address:"192.168.1.103",os_type:"windows",platform:"crowdstrike",status:"offline",last_seen:new Date(Date.now()-864e5).toISOString(),agent_version:"7.10.16201"}],sentinelone:[{id:"s1-001",hostname:"DEV-LINUX-01",ip_address:"192.168.1.201",os_type:"linux",platform:"sentinelone",status:"online",last_seen:new Date().toISOString(),agent_version:"23.3.1.7"},{id:"s1-002",hostname:"DEV-MAC-01",ip_address:"192.168.1.202",os_type:"macos",platform:"sentinelone",status:"online",last_seen:new Date().toISOString(),agent_version:"23.3.1.7"},{id:"s1-003",hostname:"PROD-LINUX-01",ip_address:"192.168.1.203",os_type:"linux",platform:"sentinelone",status:"isolated",last_seen:new Date().toISOString(),agent_version:"23.3.1.7"}],defender:[{id:"def-001",hostname:"AZURE-VM-01",ip_address:"10.0.0.101",os_type:"windows",platform:"defender",status:"online",last_seen:new Date().toISOString(),agent_version:"4.18.24010.12"},{id:"def-002",hostname:"AZURE-VM-02",ip_address:"10.0.0.102",os_type:"windows",platform:"defender",status:"isolated",last_seen:new Date().toISOString(),agent_version:"4.18.24010.12"},{id:"def-003",hostname:"AZURE-VM-03",ip_address:"10.0.0.103",os_type:"windows",platform:"defender",status:"offline",last_seen:new Date(Date.now()-1728e5).toISOString(),agent_version:"4.18.23090.8"}]},_={crowdstrike:[{id:"d-001",title:"Suspicious PowerShell Execution",severity:"high",platform:"crowdstrike",hostname:"WORKSTATION-01",timestamp:new Date(Date.now()-3e5).toISOString(),mitre_tactic:"Execution",mitre_technique:"T1059.001"},{id:"d-002",title:"Credential Dumping Attempt",severity:"critical",platform:"crowdstrike",hostname:"SERVER-DC01",timestamp:new Date(Date.now()-6e5).toISOString(),mitre_tactic:"Credential Access",mitre_technique:"T1003"}],sentinelone:[{id:"d-003",title:"Reverse Shell Connection",severity:"critical",platform:"sentinelone",hostname:"DEV-LINUX-01",timestamp:new Date(Date.now()-9e5).toISOString(),mitre_tactic:"Command and Control",mitre_technique:"T1059.004"},{id:"d-004",title:"Suspicious Network Scan",severity:"medium",platform:"sentinelone",hostname:"DEV-MAC-01",timestamp:new Date(Date.now()-12e5).toISOString(),mitre_tactic:"Discovery",mitre_technique:"T1046"}],defender:[{id:"d-005",title:"Ransomware Behavior Detected",severity:"critical",platform:"defender",hostname:"AZURE-VM-02",timestamp:new Date(Date.now()-15e5).toISOString(),mitre_tactic:"Impact",mitre_technique:"T1486"}]};return{platforms:{crowdstrike:!0,sentinelone:!0,defender:!0,carbon_black:!1,elastic:!1},endpoints:f,detections:_,correlationStats:{total_correlated:3,attack_chains:1,unique_techniques:8}}},[]),H=x.useCallback(async()=&gt;{a(!0),s(null);try{const[f,_,R,q]=await Promise.all([V.getStatus(),V.getEndpoints(),V.getDetections(),V.getCorrelationStats()]);y(f.platforms||{});const W=(_.endpoints||[]).reduce((t,m)=&gt;{const d=m.platform||"unknown";return t[d]||(t[d]=[]),t[d].push(m),t},{});w(W);const I=(R.detections||[]).reduce((t,m)=&gt;{const d=m.platform||"unknown";return t[d]||(t[d]=[]),t[d].push(m),t},{});S(I),n(q.alerts||[]),C(q.stats||{})}catch(f){console.warn("API unavailable, using demo data:",(f==null?void 0:f.message)||f);const _=P();y(_.platforms),w(_.endpoints),S(_.detections),C(_.correlationStats)}finally{a(!1)}},[P]),F=x.useRef(!1),O=x.useRef(null),oe=x.useCallback(()=&gt;{var _;if(((_=$.current)==null?void 0:_.readyState)===WebSocket.OPEN)return;const f=Bt.replace(/^http/,"ws")+"/api/edr/ws/alerts";try{$.current=new WebSocket(f),$.current.onopen=()=&gt;{console.log("EDR WebSocket connected"),T(!0)},$.current.onmessage=R=&gt;{var q;try{const E=JSON.parse(R.data);if(["connected","ping","pong","heartbeat","status"].includes((q=E.type)==null?void 0:q.toLowerCase()))return;switch(E.type){case"detection":j(N=&gt;[E,...N].slice(0,50)),S(N=&gt;{const I=E.platform||"unknown";return{...N,[I]:[E,...N[I]||[]].slice(0,100)}});break;case"endpoint_status":w(N=&gt;{const I=E.platform||"unknown",m=(N[I]||[]).map(d=&gt;d.id===E.endpoint_id?{...d,status:E.status,last_seen:E.timestamp}:d);return{...N,[I]:m}});break;case"correlation":n(N=&gt;[E,...N].slice(0,50)),C(N=&gt;({...N,total_correlated:(N.total_correlated||0)+1}));break;default:j(N=&gt;[E,...N].slice(0,50))}}catch(E){console.error("Failed to parse WebSocket message:",E)}},$.current.onclose=()=&gt;{console.log("EDR WebSocket disconnected"),T(!1),O.current&amp;&amp;clearTimeout(O.current),O.current=setTimeout(oe,5e3)},$.current.onerror=R=&gt;{console.error("EDR WebSocket error:",R)}}catch(R){console.error("Failed to connect WebSocket:",R)}},[]);x.useEffect(()=&gt;{if(!F.current)return F.current=!0,H(),oe(),()=&gt;{$.current&amp;&amp;$.current.close(),O.current&amp;&amp;clearTimeout(O.current)}},[]),x.useEffect(()=&gt;{const f=_=&gt;{if(!(_.target.tagName==="INPUT"||_.target.tagName==="TEXTAREA"))switch(_.key){case"1":i("overview");break;case"2":i("endpoints");break;case"3":i("detections");break;case"4":i("correlation");break;case"5":i("hunting");break;case"6":i("mitre");break;case"r":case"R":H();break}};return window.addEventListener("keydown",f),()=&gt;window.removeEventListener("keydown",f)},[H]);const L=async(f,_,R)=&gt;{try{R?await V.unisolateEndpoint(f,_):await V.isolateEndpoint(f,_);const W=((await V.getEndpoints()).endpoints||[]).reduce((N,I)=&gt;{const t=I.platform||"unknown";return N[t]||(N[t]=[]),N[t].push(I),N},{});w(W)}catch(q){console.error("Failed to isolate/unisolate endpoint:",q)}};return e.jsxs("div",{className:`min-h-screen relative overflow-hidden ${r?"bg-gray-900":"bg-gray-50"}`,children:[r&amp;&amp;e.jsxs(e.Fragment,{children:[e.jsx(ge,{className:"w-96 h-96 -top-48 -left-48 animate-float",color:"pink"}),e.jsx(ge,{className:"w-80 h-80 top-1/3 -right-40 animate-float",color:"cyan",style:{animationDelay:"-2s"}}),e.jsx(ge,{className:"w-64 h-64 bottom-20 left-1/4 animate-float",color:"orange",style:{animationDelay:"-4s"}})]}),e.jsxs("div",{className:"relative w-full px-6 py-4",children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("div",{className:"flex items-center gap-6",children:[e.jsxs("div",{className:"relative",children:[e.jsx("div",{className:"p-5 rounded-3xl bg-gradient-to-br from-pink-500 to-purple-600 shadow-2xl shadow-pink-500/30",children:e.jsx(Ot,{className:"w-14 h-14 text-white"})}),e.jsx("div",{className:"absolute inset-0 rounded-3xl animate-glow-ring"})]}),e.jsxs("div",{children:[e.jsx("h1",{className:"text-4xl lg:text-5xl font-black tracking-tight",children:e.jsx("span",{className:`bg-gradient-to-r ${r?"from-pink-400 via-purple-400 to-cyan-400":"from-pink-600 via-purple-600 to-blue-600"} bg-clip-text text-transparent drop-shadow-lg`,children:"EDR / XDR Dashboard"})}),e.jsx("p",{className:`text-lg mt-2 font-medium ${r?"text-white/90":"text-gray-700"}`,children:"Unified endpoint detection and response across all platforms"}),e.jsx("p",{className:`text-sm mt-1 ${r?"text-pink-400/80":"text-pink-600"}`,children:"Press 1-6 to switch tabs • R to refresh"})]})]}),e.jsxs("div",{className:"flex items-center gap-4",children:[e.jsx("div",{className:`flex items-center gap-2 px-4 py-2 rounded-xl ${g?"bg-green-500/20 text-green-400 border border-green-500/30":"bg-gray-500/20 text-gray-400 border border-gray-500/30"}`,children:g?e.jsxs(e.Fragment,{children:[e.jsx(_t,{className:"w-4 h-4 animate-pulse"}),e.jsx("span",{className:"text-sm font-medium",children:"Live"})]}):e.jsxs(e.Fragment,{children:[e.jsx(Re,{className:"w-4 h-4"}),e.jsx("span",{className:"text-sm font-medium",children:"Connecting..."})]})}),e.jsxs("button",{onClick:H,disabled:c,className:`flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all ${r?"bg-gray-800/80 hover:bg-gray-700 text-white border border-gray-700/50":"bg-white hover:bg-gray-100 text-gray-900 border border-gray-200 shadow-lg"} disabled:opacity-50`,children:[e.jsx(le,{className:`w-5 h-5 ${c?"animate-spin":""}`}),"Refresh"]})]})]}),A.length&gt;0&amp;&amp;e.jsx("div",{onClick:()=&gt;i("detections"),className:`mb-6 p-4 rounded-2xl border-l-4 border-red-500 transition-all animate-threat-pulse cursor-pointer hover:scale-[1.01] ${r?"bg-red-900/20 border border-red-500/30 hover:bg-red-900/30":"bg-red-50 border border-red-200 hover:bg-red-100"}`,children:e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx("div",{className:"p-2 rounded-xl bg-red-500/20",children:e.jsx(Ye,{className:"w-5 h-5 text-red-400"})}),e.jsxs("span",{className:`font-bold ${r?"text-red-400":"text-red-600"}`,children:["New Alert: ",A[0].title||A[0].type]}),e.jsx("span",{className:`text-sm ${r?"text-red-400/70":"text-red-500"}`,children:new Date(A[0].timestamp).toLocaleTimeString()}),e.jsx("span",{className:`ml-auto text-xs ${r?"text-red-400/50":"text-red-400"}`,children:"Click to view →"})]})}),p&amp;&amp;e.jsx("div",{className:`mb-6 p-4 rounded-2xl border-l-4 border-red-500 ${r?"bg-red-900/20 border border-red-500/30":"bg-red-50 border border-red-200"}`,children:e.jsxs("div",{className:"flex items-center gap-3",children:[e.jsx(re,{className:"w-5 h-5 text-red-400"}),e.jsx("span",{className:r?"text-red-400":"text-red-600",children:p})]})}),e.jsx("div",{className:`flex flex-wrap gap-2 p-2 rounded-2xl mb-8 ${r?"bg-gray-800/60 backdrop-blur-xl border-2 border-gray-700/50":"bg-white/80 backdrop-blur-xl border-2 border-gray-200 shadow-xl"}`,children:Ft.map(f=&gt;e.jsxs("button",{onClick:()=&gt;i(f.id),className:`group flex items-center gap-3 px-6 py-4 rounded-xl font-semibold text-base transition-all duration-300 ${l===f.id?"bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/25 scale-[1.02]":r?"text-gray-300 hover:text-white hover:bg-gray-700/50 hover:scale-[1.02]":"text-gray-600 hover:text-gray-900 hover:bg-gray-100 hover:scale-[1.02]"}`,children:[e.jsx("span",{className:`flex items-center justify-center w-6 h-6 rounded-lg text-xs font-bold transition-colors ${l===f.id?"bg-white/20 text-white":r?"bg-gray-700 text-gray-400 group-hover:bg-pink-500/20 group-hover:text-pink-400":"bg-gray-200 text-gray-500 group-hover:bg-pink-100 group-hover:text-pink-600"}`,children:f.key}),e.jsx(f.icon,{className:"w-5 h-5"}),e.jsx("span",{className:"hidden sm:inline",children:f.name})]},f.id))}),e.jsxs("div",{className:"relative",children:[r&amp;&amp;e.jsx("div",{className:"absolute inset-0 pointer-events-none overflow-hidden rounded-2xl",children:e.jsx("div",{className:"absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-pink-500/50 to-transparent animate-scan"})}),l==="overview"&amp;&amp;e.jsx(Ut,{endpoints:k,detections:v,platforms:h,correlationStats:b,isDarkMode:r,setActiveTab:i}),l==="endpoints"&amp;&amp;e.jsx(Kt,{endpoints:k,onIsolate:L,onRefresh:H,loading:c,isDarkMode:r}),l==="detections"&amp;&amp;e.jsx(Xt,{detections:v,onRefresh:H,loading:c,isDarkMode:r}),l==="correlation"&amp;&amp;e.jsx(Zt,{correlatedAlerts:o,correlationStats:b,isDarkMode:r}),l==="hunting"&amp;&amp;e.jsx(Yt,{isDarkMode:r}),l==="mitre"&amp;&amp;e.jsx(Qt,{detections:v,isDarkMode:r})]})]})]})}export{ea as default};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-02-09T23:34:34.128Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

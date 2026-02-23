@@ -1,0 +1,206 @@
+/**
+ * Report Generation Utility
+ *
+ * Provides functions to generate and download reports in various formats
+ * (HTML, JSON, CSV) for different data types in RODEO.
+ */
+
+/**
+ * Generate and download a report
+ * @param {Object} options - Report generation options
+ * @param {string} options.format - Report format ('html', 'json', 'csv')
+ * @param {Array|Object} options.data - Data to include in report
+ * @param {string} options.title - Report title
+ * @param {Array} options.columns - Column definitions for CSV/HTML tables
+ * @param {string} options.filename - Base filename (without extension)
+ */
+export function generateReport({ format = 'json', data, title, columns, filename }) {
+  try {
+    let content, mimeType, extension
+
+    if (format === 'json') {
+      const reportData = {
+        title,
+        generated_at: new Date().toISOString(),
+        data
+      }
+      content = JSON.stringify(reportData, null, 2)
+      mimeType = 'application/json'
+      extension = 'json'
+    } else if (format === 'csv') {
+      const dataArray = Array.isArray(data) ? data : [data]
+      const headers = columns.map(col => col.label)
+      const rows = dataArray.map(item =>
+        columns.map(col => {
+          const value = col.accessor(item)
+          // Escape commas and quotes in CSV
+          return typeof value === 'string' && (value.includes(',') || value.includes('"'))
+            ? `"${value.replace(/"/g, '""')}"`
+            : value || ''
+        })
+      )
+      content = [headers.join(','), ...rows.map(row => row.join(','))].join('\n')
+      mimeType = 'text/csv'
+      extension = 'csv'
+    } else if (format === 'html') {
+      content = generateHTMLReport({ data, title, columns })
+      mimeType = 'text/html'
+      extension = 'html'
+    }
+
+    // Download the file
+    const blob = new Blob([content], { type: mimeType })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    const timestamp = new Date().toISOString().split('T')[0]
+    link.setAttribute('download', `${filename}_${timestamp}.${extension}`)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+
+    return true
+  } catch (err) {
+    console.error('Error generating report:', err)
+    throw err
+  }
+}
+
+/**
+ * Generate HTML report
+ */
+function generateHTMLReport({ data, title, columns }) {
+  const dataArray = Array.isArray(data) ? data : [data]
+
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #7c3aed;
+      border-bottom: 3px solid #7c3aed;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .meta {
+      color: #666;
+      margin-bottom: 30px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+    .meta strong { color: #333; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+    thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    th {
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    tr:hover {
+      background: #f8f9fa;
+    }
+    .critical { color: #dc2626; font-weight: 600; }
+    .high { color: #ea580c; font-weight: 600; }
+    .medium { color: #ca8a04; }
+    .low { color: #65a30d; }
+    .footer {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+    @media print {
+      body { background: white; }
+      .container { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>${title}</h1>
+    <div class="meta">
+      <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+      <p><strong>Total Records:</strong> ${dataArray.length}</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          ${columns.map(col => `<th>${col.label}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        ${dataArray.map(item => `
+          <tr>
+            ${columns.map(col => `<td>${col.accessor(item) || 'N/A'}</td>`).join('')}
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <p>RODEO - Cybersecurity Platform • Generated by AI-Enhanced Security Operations</p>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
+/**
+ * Show format selection modal and generate report
+ * Returns a React component that can be rendered
+ */
+export function ReportButton({ data, title, columns, filename, className = '' }) {
+  const handleGenerate = (format) => {
+    try {
+      generateReport({ format, data, title, columns, filename })
+    } catch (err) {
+      alert(`Failed to generate report: ${err.message}`)
+    }
+  }
+
+  return {
+    html: () => handleGenerate('html'),
+    json: () => handleGenerate('json'),
+    csv: () => handleGenerate('csv')
+  }
+}

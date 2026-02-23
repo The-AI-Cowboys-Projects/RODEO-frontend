@@ -1,0 +1,460 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for dist/assets/CIIPDashboard-C9sVlxAo.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">dist/assets</a> CIIPDashboard-C9sVlxAo.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/88</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/88</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import{j as e}from"./query-vendor-Bgne-RFE.js";import{a as n}from"./react-vendor-z1mORbJf.js";import{u as H,e as j}from"./index-B7LRZIR5.js";import{F as I}from"./ExclamationTriangleIcon-DaPwqFbG.js";import{F as N}from"./ServerIcon-CLn-Fqqk.js";import{F as z}from"./ShieldCheckIcon-CeYePmaG.js";import{F as R}from"./BanknotesIcon-DOXlsWdi.js";import{F as A}from"./SignalIcon-5duUAnom.js";import{F as E}from"./BoltIcon-C6sxOS-k.js";import{F as G}from"./GlobeAltIcon-DuPgHQe8.js";import{F as T}from"./XMarkIcon-BeZ-C2Lx.js";function B({title:a,titleId:o,...i},c){return n.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",fill:"none",viewBox:"0 0 24 24",strokeWidth:1.5,stroke:"currentColor","aria-hidden":"true","data-slot":"icon",ref:c,"aria-labelledby":o},i),a?n.createElement("title",{id:o},a):null,n.createElement("path",{strokeLinecap:"round",strokeLinejoin:"round",d:"M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"}))}const L=n.forwardRef(B);function V({title:a,titleId:o,...i},c){return n.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",fill:"none",viewBox:"0 0 24 24",strokeWidth:1.5,stroke:"currentColor","aria-hidden":"true","data-slot":"icon",ref:c,"aria-labelledby":o},i),a?n.createElement("title",{id:o},a):null,n.createElement("path",{strokeLinecap:"round",strokeLinejoin:"round",d:"M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"}))}const P=n.forwardRef(V);function K({title:a,titleId:o,...i},c){return n.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",fill:"none",viewBox:"0 0 24 24",strokeWidth:1.5,stroke:"currentColor","aria-hidden":"true","data-slot":"icon",ref:c,"aria-labelledby":o},i),a?n.createElement("title",{id:o},a):null,n.createElement("path",{strokeLinecap:"round",strokeLinejoin:"round",d:"M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"}))}const D=n.forwardRef(K),f="http://localhost:8001",_=({title:a,value:o,subtitle:i,icon:c,trend:d,color:l="blue"})=&gt;{const t={blue:"bg-blue-500",green:"bg-green-500",yellow:"bg-yellow-500",red:"bg-red-500",purple:"bg-purple-500",indigo:"bg-indigo-500"};return e.jsx("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsxs("div",{className:"flex-1",children:[e.jsx("p",{className:"text-base font-semibold text-white/80",children:a}),e.jsx("p",{className:"mt-2 text-3xl font-semibold text-gray-900",children:o}),i&amp;&amp;e.jsx("p",{className:"mt-1 text-base text-white/70",children:i}),d&amp;&amp;e.jsxs("p",{className:`mt-1 text-base font-semibold ${d.startsWith("+")?"text-green-600":"text-red-600"}`,children:[d," from last period"]})]}),c&amp;&amp;e.jsx("div",{className:`p-3 rounded-full ${t[l]}`,children:e.jsx(c,{className:"w-8 h-8 text-white"})})]})})},w=({level:a})=&gt;{const o={critical:"bg-red-100 text-red-800",high:"bg-orange-100 text-orange-800",medium:"bg-yellow-100 text-yellow-800",low:"bg-blue-100 text-blue-800",minimal:"bg-green-100 text-green-800"};return e.jsx("span",{className:`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${o[a]}`,children:a.toUpperCase()})},J=({score:a,label:o})=&gt;{const i=c=&gt;c&gt;=90?"bg-green-500":c&gt;=75?"bg-blue-500":c&gt;=60?"bg-yellow-500":"bg-red-500";return e.jsxs("div",{className:"mb-6",children:[e.jsxs("div",{className:"flex justify-between items-center mb-2",children:[e.jsx("span",{className:"text-base font-semibold text-white/90",children:o}),e.jsxs("span",{className:"text-base font-semibold text-white",children:[a,"%"]})]}),e.jsx("div",{className:"w-full bg-gray-200 rounded-full h-3",children:e.jsx("div",{className:`${i(a)} h-3 rounded-full transition-all duration-500`,style:{width:`${a}%`}})})]})},W=()=&gt;{const{isDarkMode:a}=H(),[o,i]=n.useState(!0),[c,d]=n.useState(null),[l,t]=n.useState(null),[m,h]=n.useState("overview");n.useEffect(()=&gt;{r()},[]);const r=async()=&gt;{try{i(!0);const x=await j.get(`${f}/api/ciip/dashboard/overview`);d(x.data)}catch(x){console.error("Error fetching CIIP dashboard data:",x)}finally{i(!1)}};return o?e.jsx("div",{className:"flex items-center justify-center h-screen",children:e.jsx("div",{className:"animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"})}):c?e.jsxs("div",{className:`min-h-screen ${a?"bg-slate-900":"bg-gray-50"} p-6`,children:[e.jsxs("div",{className:"mb-8",children:[e.jsx("h1",{className:`text-3xl font-bold ${a?"text-white":"text-[#800080]"}`,children:"Critical Infrastructure Protection Dashboard"}),e.jsx("p",{className:`mt-2 text-lg ${a?"text-white/80":"text-[#800080]"}`,children:"ITU National Cybersecurity Framework Compliance &amp; Monitoring"})]}),e.jsx("div",{className:"mb-8",children:e.jsx("nav",{className:"flex space-x-4",children:["overview","compliance","sectors","assets","incidents"].map(x=&gt;e.jsx("button",{onClick:()=&gt;h(x),className:`px-6 py-3 rounded-2xl font-semibold text-base transition-colors border-2 ${m===x?"bg-blue-600 text-white border-blue-600":"bg-white text-gray-700 border-gray-200 hover:bg-gray-100"}`,children:x.charAt(0).toUpperCase()+x.slice(1)},x))})}),m==="overview"&amp;&amp;e.jsx(Z,{data:c}),m==="compliance"&amp;&amp;e.jsx(Q,{}),m==="sectors"&amp;&amp;e.jsx(X,{}),m==="assets"&amp;&amp;e.jsx(Y,{}),m==="incidents"&amp;&amp;e.jsx(q,{})]}):e.jsx("div",{className:"flex items-center justify-center h-screen",children:e.jsxs("div",{className:"text-center",children:[e.jsx(I,{className:"mx-auto h-12 w-12 text-gray-400"}),e.jsx("h3",{className:"mt-2 text-sm font-medium text-gray-900",children:"No data available"}),e.jsx("p",{className:"mt-1 text-sm text-gray-500",children:"Unable to load dashboard data"})]})})},Z=({data:a})=&gt;{const o={energy:E,telecommunications:A,financial:R,healthcare:D,government:L};return e.jsxs("div",{className:"space-y-6",children:[e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",children:[e.jsx(_,{title:"Infrastructure Health",value:a.infrastructure_health.overall_score,subtitle:a.infrastructure_health.status.toUpperCase(),trend:a.infrastructure_health.trend,icon:N,color:"green"}),e.jsx(_,{title:"ITU Compliance",value:`${a.itu_compliance.overall_score}%`,subtitle:"Overall Score",icon:z,color:"blue"}),e.jsx(_,{title:"Critical Assets",value:a.critical_assets.crown_jewels,subtitle:`${a.critical_assets.at_risk} at risk`,icon:N,color:"purple"}),e.jsx(_,{title:"Incidents (30d)",value:a.recent_incidents.last_30d,subtitle:`${a.recent_incidents.critical_open} critical open`,icon:I,color:"red"})]}),e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsx("h2",{className:"text-xl font-semibold text-gray-900 mb-6",children:"ITU Framework Compliance (5 Pillars)"}),e.jsx("div",{className:"space-y-4",children:Object.entries(a.itu_compliance.pillars).map(([i,c])=&gt;e.jsx(J,{label:i.replace(/_/g," ").replace(/\b\w/g,d=&gt;d.toUpperCase()),score:c.score},i))})]}),e.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-2 gap-8",children:[e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsx("h2",{className:"text-xl font-semibold text-gray-900 mb-6",children:"Critical Infrastructure Sectors"}),e.jsx("div",{className:"space-y-4",children:a.sector_distribution.map(i=&gt;{const c=o[i.sector]||N;return e.jsxs("div",{className:"flex items-center justify-between p-4 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsxs("div",{className:"flex items-center space-x-4",children:[e.jsx(c,{className:"w-7 h-7 text-blue-600"}),e.jsxs("div",{children:[e.jsx("p",{className:"font-semibold text-gray-900 capitalize text-base",children:i.sector}),e.jsxs("p",{className:"text-base text-white/70",children:[i.assets," assets"]})]})]}),e.jsxs("div",{className:"text-right",children:[e.jsxs("p",{className:"text-base font-semibold text-gray-900",children:["Risk: ",i.risk_score]}),e.jsx(w,{level:i.risk_score&gt;80?"critical":i.risk_score&gt;70?"high":"medium"})]})]},i.sector)})})]}),e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsxs("h2",{className:"text-xl font-semibold text-gray-900 mb-6 flex items-center",children:[e.jsx(G,{className:"w-7 h-7 mr-3 text-blue-600"}),"Geographic Distribution"]}),e.jsx("div",{className:"space-y-4",children:Object.entries(a.geographic_distribution).map(([i,c])=&gt;e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/90 uppercase",children:i}),e.jsxs("div",{className:"flex items-center space-x-3",children:[e.jsxs("span",{className:"text-base font-semibold text-gray-900",children:[c," assets"]}),e.jsx("div",{className:"w-32 bg-gray-200 rounded-full h-3",children:e.jsx("div",{className:"bg-blue-500 h-3 rounded-full",style:{width:`${c/342*100}%`}})})]})]},i))})]})]}),e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsx("h2",{className:"text-xl font-semibold text-gray-900 mb-6",children:"Recent Incidents"}),e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6",children:[e.jsxs("div",{className:"p-6 bg-red-50 rounded-2xl border-2 border-red-100",children:[e.jsx("p",{className:"text-3xl font-bold text-red-900",children:a.recent_incidents.last_24h}),e.jsx("p",{className:"text-base font-semibold text-red-700",children:"Last 24 Hours"})]}),e.jsxs("div",{className:"p-6 bg-orange-50 rounded-2xl border-2 border-orange-100",children:[e.jsx("p",{className:"text-3xl font-bold text-orange-900",children:a.recent_incidents.last_7d}),e.jsx("p",{className:"text-base font-semibold text-orange-700",children:"Last 7 Days"})]}),e.jsxs("div",{className:"p-6 bg-yellow-50 rounded-2xl border-2 border-yellow-100",children:[e.jsx("p",{className:"text-3xl font-bold text-yellow-900",children:a.recent_incidents.last_30d}),e.jsx("p",{className:"text-base font-semibold text-yellow-700",children:"Last 30 Days"})]})]})]})]})},Q=()=&gt;{const[a,o]=n.useState(null),[i,c]=n.useState(!0);n.useEffect(()=&gt;{d()},[]);const d=async()=&gt;{try{const l=await j.get(`${f}/api/ciip/compliance/itu`);o(l.data)}catch(l){console.error("Error fetching compliance data:",l)}finally{c(!1)}};return i||!a?e.jsx("div",{className:"text-center py-12",children:"Loading compliance data..."}):e.jsxs("div",{className:"space-y-8",children:[e.jsx("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("div",{children:[e.jsx("h2",{className:"text-2xl font-bold text-gray-900",children:"ITU Framework Compliance"}),e.jsxs("p",{className:"text-base text-white/80 mt-2",children:["Last Assessment: ",new Date(a.overall_compliance.last_assessment).toLocaleDateString()]})]}),e.jsxs("div",{className:"text-center",children:[e.jsxs("div",{className:"text-5xl font-bold text-blue-600",children:[a.overall_compliance.score,"%"]}),e.jsx("p",{className:"text-base text-white/80 mt-2",children:"Overall Score"})]})]})}),Object.entries(a.pillars).map(([l,t])=&gt;e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsx("h3",{className:"text-xl font-semibold text-gray-900 capitalize",children:l.replace(/_/g," ")}),e.jsxs("div",{className:"flex items-center space-x-4",children:[e.jsxs("span",{className:"text-2xl font-bold text-gray-900",children:[t.score,"%"]}),e.jsx("span",{className:`px-4 py-2 rounded-full text-sm font-semibold ${t.status==="compliant"?"bg-green-100 text-green-800":t.status==="partial"?"bg-yellow-100 text-yellow-800":"bg-red-100 text-red-800"}`,children:t.status.toUpperCase()})]})]}),e.jsx("div",{className:"space-y-6",children:Object.entries(t.requirements).map(([m,h])=&gt;e.jsx("div",{className:"border-l-4 border-gray-300 pl-6",children:e.jsxs("div",{className:"flex items-start justify-between",children:[e.jsxs("div",{className:"flex-1",children:[e.jsx("h4",{className:"font-semibold text-gray-900 capitalize text-base",children:m.replace(/_/g," ")}),h.evidence&amp;&amp;h.evidence.length&gt;0&amp;&amp;e.jsxs("div",{className:"mt-3",children:[e.jsx("p",{className:"text-sm font-semibold text-white/80 mb-2",children:"Evidence:"}),e.jsx("ul",{className:"list-disc list-inside text-base text-white/70 space-y-1",children:h.evidence.map((r,x)=&gt;e.jsx("li",{children:r},x))})]}),h.gaps&amp;&amp;h.gaps.length&gt;0&amp;&amp;e.jsxs("div",{className:"mt-3",children:[e.jsx("p",{className:"text-sm font-semibold text-red-500 mb-2",children:"Gaps:"}),e.jsx("ul",{className:"list-disc list-inside text-base text-red-600 space-y-1",children:h.gaps.map((r,x)=&gt;e.jsx("li",{children:r},x))})]})]}),e.jsx("span",{className:`ml-4 px-3 py-1 rounded text-sm font-semibold ${h.status==="compliant"?"bg-green-100 text-green-800":h.status==="partial"?"bg-yellow-100 text-yellow-800":"bg-red-100 text-red-800"}`,children:h.status})]})},m))}),t.recommendations&amp;&amp;t.recommendations.length&gt;0&amp;&amp;e.jsxs("div",{className:"mt-6 p-6 bg-blue-50 rounded-2xl border-2 border-blue-100",children:[e.jsx("p",{className:"text-base font-semibold text-blue-900 mb-3",children:"Recommendations:"}),e.jsx("ul",{className:"list-disc list-inside text-base text-blue-800 space-y-2",children:t.recommendations.map((m,h)=&gt;e.jsx("li",{children:m},h))})]})]},l)),e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsx("h3",{className:"text-xl font-semibold text-gray-900 mb-6",children:"Gap Analysis &amp; Remediation Roadmap"}),["high_priority","medium_priority","low_priority"].map(l=&gt;e.jsxs("div",{className:"mb-8",children:[e.jsx("h4",{className:"text-base font-semibold text-white/90 mb-4 uppercase",children:l.replace(/_/g," ")}),e.jsx("div",{className:"space-y-3",children:a.gap_analysis[l].map((t,m)=&gt;e.jsxs("div",{className:"flex items-center justify-between p-4 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsxs("div",{className:"flex-1",children:[e.jsx("p",{className:"text-base font-semibold text-gray-900",children:t.gap}),e.jsxs("p",{className:"text-sm text-white/70 mt-1",children:["Pillar: ",t.pillar]})]}),e.jsx("span",{className:"ml-4 px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold",children:t.target_date})]},m))})]},l))]})]})},X=()=&gt;{const[a,o]=n.useState([]),[i,c]=n.useState(!0),[d,l]=n.useState(null),[t,m]=n.useState(null),[h,r]=n.useState(null),[x,$]=n.useState(!1);n.useEffect(()=&gt;{M()},[]);const M=async()=&gt;{try{const s=await j.get(`${f}/api/ciip/sectors`);o(s.data.sectors)}catch(s){console.error("Error fetching sectors:",s)}finally{c(!1)}},O=async s=&gt;{m(s),$(!0);try{const p=await j.get(`${f}/api/ciip/sectors/${s.id}`);r(p.data)}catch(p){console.error("Error fetching sector details:",p),r(s)}finally{$(!1)}},C=()=&gt;{m(null),r(null)},S=async s=&gt;{l(s.id);try{const g=(await j.get(`${f}/api/ciip/sectors/${s.id}/remediation-plan`)).data,b=U(s,g),y=new Blob([b],{type:"text/markdown"}),u=URL.createObjectURL(y),v=document.createElement("a");v.href=u,v.download=`${s.id}_remediation_plan_${new Date().toISOString().split("T")[0]}.md`,document.body.appendChild(v),v.click(),document.body.removeChild(v),URL.revokeObjectURL(u)}catch(p){console.error("Error fetching remediation plan:",p);const g=F(s),b=new Blob([g],{type:"text/markdown"}),y=URL.createObjectURL(b),u=document.createElement("a");u.href=y,u.download=`${s.id}_remediation_plan_${new Date().toISOString().split("T")[0]}.md`,document.body.appendChild(u),u.click(),document.body.removeChild(u),URL.revokeObjectURL(y)}finally{l(null)}},U=(s,p)=&gt;{var g;return`# ${s.name} Sector Remediation Plan</span></span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >**Generated:** ${new Date().toISOString()}</span>
+<span class="cstat-no" title="statement not covered" >**Risk Score:** ${s.risk_score}</span>
+<span class="cstat-no" title="statement not covered" >**Compliance:** ${s.compliance}%</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Executive Summary</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >This remediation plan addresses ${s.incidents_30d} incidents in the last 30 days across ${s.assets} assets, including ${s.crown_jewels} crown jewels.</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Current Status</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >| Metric | Value |</span>
+<span class="cstat-no" title="statement not covered" >|--------|-------|</span>
+<span class="cstat-no" title="statement not covered" >| Assets | ${s.assets} |</span>
+<span class="cstat-no" title="statement not covered" >| Crown Jewels | ${s.crown_jewels} |</span>
+<span class="cstat-no" title="statement not covered" >| Risk Score | ${s.risk_score} |</span>
+<span class="cstat-no" title="statement not covered" >| Incidents (30d) | ${s.incidents_30d} |</span>
+<span class="cstat-no" title="statement not covered" >| Compliance | ${s.compliance}% |</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Key Systems</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >${s.key_systems.map(b=&gt;`- ${b}`).join(`</span>
+<span class="cstat-no" title="statement not covered" >`)}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Remediation Actions</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >${((g=p==null?void 0:p.actions)==null?void 0:g.map((b,y)=&gt;`### ${y+1}. ${b.title}</span>
+<span class="cstat-no" title="statement not covered" >- **Priority:** ${b.priority}</span>
+<span class="cstat-no" title="statement not covered" >- **Owner:** ${b.owner}</span>
+<span class="cstat-no" title="statement not covered" >- **Status:** ${b.status}</span>
+<span class="cstat-no" title="statement not covered" >- **Description:** ${b.description}</span>
+<span class="cstat-no" title="statement not covered" >`).join(`</span>
+<span class="cstat-no" title="statement not covered" >`))||`### Pending API Implementation</span>
+<span class="cstat-no" title="statement not covered" >Remediation actions will be populated from the backend API.`}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >*Generated by RODEO CIIP Module*</span>
+<span class="cstat-no" title="statement not covered" >`},F=s=&gt;{const g={government:{priority:"CRITICAL",focus:"APT defense, PAM, Zero-trust"},financial:{priority:"HIGH",focus:"Fraud detection, PCI-DSS 4.0, incident closure"},energy:{priority:"HIGH",focus:"SCADA audit, IT/OT segmentation, NERC CIP"},telecommunications:{priority:"MEDIUM",focus:"5G Core security, DNS protection, SS7"},healthcare:{priority:"MEDIUM",focus:"Ransomware defense, HIPAA, immutable backups"}}[s.id]||{priority:"MEDIUM",focus:"General security hardening"};return`# ${s.name} Sector Remediation Plan</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >**Generated:** ${new Date().toISOString()}</span>
+<span class="cstat-no" title="statement not covered" >**Classification:** Internal Use Only</span>
+<span class="cstat-no" title="statement not covered" >**Priority:** ${g.priority}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Executive Summary</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >This remediation plan addresses the ${s.name} sector with a current risk score of **${s.risk_score}** and **${s.compliance}%** compliance.</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Current Status</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >| Metric | Value | Status |</span>
+<span class="cstat-no" title="statement not covered" >|--------|-------|--------|</span>
+<span class="cstat-no" title="statement not covered" >| Total Assets | ${s.assets} | - |</span>
+<span class="cstat-no" title="statement not covered" >| Crown Jewels | ${s.crown_jewels} | Protected |</span>
+<span class="cstat-no" title="statement not covered" >| Risk Score | ${s.risk_score} | ${s.risk_score&gt;80?"CRITICAL":s.risk_score&gt;70?"HIGH":"MEDIUM"} |</span>
+<span class="cstat-no" title="statement not covered" >| Incidents (30d) | ${s.incidents_30d} | ${s.incidents_30d&gt;10?"Elevated":"Normal"} |</span>
+<span class="cstat-no" title="statement not covered" >| Compliance | ${s.compliance}% | ${s.compliance&gt;=90?"Good":"Needs Improvement"} |</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Key Systems at Risk</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >${s.key_systems.map(b=&gt;`- **${b}** - Requires security assessment`).join(`</span>
+<span class="cstat-no" title="statement not covered" >`)}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Focus Areas</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >${g.focus}</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Phase 1: Immediate Actions (0-30 Days)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >| Action | Owner | Priority | Status |</span>
+<span class="cstat-no" title="statement not covered" >|--------|-------|----------|--------|</span>
+<span class="cstat-no" title="statement not covered" >| Deploy EDR on all ${s.crown_jewels} crown jewel systems | Security Team | P0 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Implement network micro-segmentation | Network Team | P0 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Enable 24/7 SOC monitoring for sector subnet | SOC | P0 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Conduct threat hunt for indicators | IR Team | P0 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Implement privileged access management (PAM) | Identity Team | P0 | Pending |</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Phase 2: Short-Term (30-90 Days)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >| Action | Owner | Priority | Status |</span>
+<span class="cstat-no" title="statement not covered" >|--------|-------|----------|--------|</span>
+<span class="cstat-no" title="statement not covered" >| Complete compliance gap remediation | Compliance | P1 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Deploy UEBA for insider threat detection | Security Team | P1 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Conduct red team assessment | External | P1 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Implement zero-trust architecture | Architecture | P1 | Pending |</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Phase 3: Long-Term (90-180 Days)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >| Action | Owner | Priority | Status |</span>
+<span class="cstat-no" title="statement not covered" >|--------|-------|----------|--------|</span>
+<span class="cstat-no" title="statement not covered" >| Complete legacy system modernization | Architecture | P2 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Deploy advanced threat protection | Security | P2 | Pending |</span>
+<span class="cstat-no" title="statement not covered" >| Establish cross-sector threat intel sharing | CISO | P2 | Pending |</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Success Metrics</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >- Reduce risk score from ${s.risk_score} to &lt;${Math.max(45,s.risk_score-25)} within 90 days</span>
+<span class="cstat-no" title="statement not covered" >- Achieve ${Math.min(100,s.compliance+10)}% compliance</span>
+<span class="cstat-no" title="statement not covered" >- Zero successful intrusions on crown jewels</span>
+<span class="cstat-no" title="statement not covered" >- Mean time to detect (MTTD) &lt; 1 hour</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >## Appendix: MITRE ATT&amp;CK Techniques</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >Common techniques targeting ${s.name} sector:</span>
+<span class="cstat-no" title="statement not covered" >- T1071 - Application Layer Protocol</span>
+<span class="cstat-no" title="statement not covered" >- T1078 - Valid Accounts</span>
+<span class="cstat-no" title="statement not covered" >- T1486 - Data Encrypted for Impact</span>
+<span class="cstat-no" title="statement not covered" >- T1566 - Phishing</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >---</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >*Generated by RODEO CIIP Module*</span>
+<span class="cstat-no" title="statement not covered" >*Report Date: ${new Date().toLocaleDateString()}*</span>
+<span class="cstat-no" title="statement not covered" >`};if(i)return e.jsx("div",{className:"text-center py-12",children:"Loading sectors..."});const k={energy:E,telecommunications:A,financial:R,healthcare:D,government:L};return e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",children:[a.map(s=&gt;{const p=k[s.id]||N;return e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8 hover:shadow-lg transition-shadow",children:[e.jsxs("div",{className:"flex items-center justify-between mb-6",children:[e.jsxs("div",{className:"flex items-center space-x-4",children:[e.jsx("div",{className:"p-3 bg-blue-100 rounded-2xl",children:e.jsx(p,{className:"w-7 h-7 text-blue-600"})}),e.jsx("h3",{className:"text-xl font-semibold text-gray-900",children:s.name})]}),e.jsx(w,{level:s.risk_score&gt;80?"critical":s.risk_score&gt;70?"high":"medium"})]}),e.jsxs("div",{className:"space-y-4",children:[e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Total Assets"}),e.jsx("span",{className:"text-base font-semibold text-gray-900",children:s.assets})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Crown Jewels"}),e.jsx("span",{className:"text-base font-semibold text-gray-900",children:s.crown_jewels})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Risk Score"}),e.jsx("span",{className:"text-base font-semibold text-gray-900",children:s.risk_score})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Incidents (30d)"}),e.jsx("span",{className:"text-base font-semibold text-gray-900",children:s.incidents_30d})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Compliance"}),e.jsxs("span",{className:"text-base font-semibold text-gray-900",children:[s.compliance,"%"]})]})]}),e.jsxs("div",{className:"mt-6 pt-6 border-t-2 border-gray-200",children:[e.jsx("p",{className:"text-sm font-semibold text-white/80 mb-3",children:"Key Systems:"}),e.jsx("div",{className:"flex flex-wrap gap-2",children:s.key_systems.map(g=&gt;e.jsx("span",{className:"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold",children:g},g))})]}),e.jsxs("div",{className:"mt-6 flex gap-3",children:[e.jsx("button",{onClick:()=&gt;O(s),className:"flex-1 px-5 py-3 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-base font-semibold",children:"View Details"}),e.jsx("button",{onClick:()=&gt;S(s),disabled:d===s.id,className:"flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed",title:"Export Remediation Plan",children:d===s.id?e.jsxs("svg",{className:"animate-spin h-6 w-6",xmlns:"http://www.w3.org/2000/svg",fill:"none",viewBox:"0 0 24 24",children:[e.jsx("circle",{className:"opacity-25",cx:"12",cy:"12",r:"10",stroke:"currentColor",strokeWidth:"4"}),e.jsx("path",{className:"opacity-75",fill:"currentColor",d:"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"})]}):e.jsx(P,{className:"w-6 h-6"})})]})]},s.id)}),t&amp;&amp;e.jsx("div",{className:"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4",children:e.jsxs("div",{className:"bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-2 border-gray-200",children:[e.jsxs("div",{className:"flex items-center justify-between p-8 border-b-2 border-gray-200 sticky top-0 bg-white z-10",children:[e.jsxs("div",{className:"flex items-center space-x-4",children:[(()=&gt;{const s=k[t.id]||N;return e.jsx("div",{className:"p-3 bg-blue-100 rounded-2xl",children:e.jsx(s,{className:"w-7 h-7 text-blue-600"})})})(),e.jsxs("div",{children:[e.jsxs("h2",{className:"text-2xl font-bold text-gray-900",children:[t.name," Sector"]}),e.jsx("p",{className:"text-base text-white/80",children:"Critical Infrastructure Details"})]})]}),e.jsx("button",{onClick:C,className:"p-3 hover:bg-gray-100 rounded-2xl transition-colors",children:e.jsx(T,{className:"w-7 h-7 text-gray-500"})})]}),x?e.jsxs("div",{className:"p-12 text-center",children:[e.jsx("div",{className:"animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto"}),e.jsx("p",{className:"mt-6 text-white/80 text-lg",children:"Loading sector details..."})]}):e.jsxs("div",{className:"p-8 space-y-8",children:[e.jsxs("div",{className:"grid grid-cols-2 md:grid-cols-4 gap-6",children:[e.jsxs("div",{className:"p-6 bg-gray-50 rounded-2xl text-center border-2 border-gray-100",children:[e.jsx("p",{className:"text-3xl font-bold text-gray-900",children:t.assets}),e.jsx("p",{className:"text-base font-semibold text-white/80 mt-2",children:"Total Assets"})]}),e.jsxs("div",{className:"p-6 bg-purple-50 rounded-2xl text-center border-2 border-purple-100",children:[e.jsx("p",{className:"text-3xl font-bold text-purple-900",children:t.crown_jewels}),e.jsx("p",{className:"text-base font-semibold text-purple-700 mt-2",children:"Crown Jewels"})]}),e.jsxs("div",{className:"p-6 bg-red-50 rounded-2xl text-center border-2 border-red-100",children:[e.jsx("p",{className:"text-3xl font-bold text-red-900",children:t.risk_score}),e.jsx("p",{className:"text-base font-semibold text-red-700 mt-2",children:"Risk Score"})]}),e.jsxs("div",{className:"p-6 bg-orange-50 rounded-2xl text-center border-2 border-orange-100",children:[e.jsx("p",{className:"text-3xl font-bold text-orange-900",children:t.incidents_30d}),e.jsx("p",{className:"text-base font-semibold text-orange-700 mt-2",children:"Incidents (30d)"})]})]}),e.jsxs("div",{className:"bg-gray-50 rounded-2xl p-6 border-2 border-gray-100",children:[e.jsxs("div",{className:"flex items-center justify-between mb-3",children:[e.jsx("h3",{className:"font-semibold text-gray-900 text-lg",children:"Compliance Score"}),e.jsxs("span",{className:"text-2xl font-bold text-blue-600",children:[t.compliance,"%"]})]}),e.jsx("div",{className:"w-full bg-gray-200 rounded-full h-4",children:e.jsx("div",{className:`h-4 rounded-full transition-all duration-500 ${t.compliance&gt;=90?"bg-green-500":t.compliance&gt;=75?"bg-blue-500":t.compliance&gt;=60?"bg-yellow-500":"bg-red-500"}`,style:{width:`${t.compliance}%`}})})]}),e.jsxs("div",{children:[e.jsx("h3",{className:"font-semibold text-gray-900 mb-4 text-lg",children:"Key Systems"}),e.jsx("div",{className:"grid grid-cols-2 md:grid-cols-3 gap-3",children:t.key_systems.map(s=&gt;e.jsxs("div",{className:"flex items-center space-x-3 p-4 bg-blue-50 rounded-2xl border-2 border-blue-100",children:[e.jsx(N,{className:"w-6 h-6 text-blue-600"}),e.jsx("span",{className:"text-base font-semibold text-blue-900",children:s})]},s))})]}),e.jsxs("div",{children:[e.jsx("h3",{className:"font-semibold text-gray-900 mb-4 text-lg",children:"Risk Assessment"}),e.jsxs("div",{className:"space-y-3",children:[e.jsxs("div",{className:"flex items-center justify-between p-4 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Threat Level"}),e.jsx(w,{level:t.risk_score&gt;80?"critical":t.risk_score&gt;70?"high":"medium"})]}),e.jsxs("div",{className:"flex items-center justify-between p-4 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Protection Status"}),e.jsx("span",{className:`px-3 py-1 rounded text-sm font-semibold ${t.compliance&gt;=80?"bg-green-100 text-green-800":t.compliance&gt;=60?"bg-yellow-100 text-yellow-800":"bg-red-100 text-red-800"}`,children:t.compliance&gt;=80?"Protected":t.compliance&gt;=60?"Partially Protected":"At Risk"})]}),e.jsxs("div",{className:"flex items-center justify-between p-4 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsx("span",{className:"text-base font-semibold text-white/80",children:"Incident Trend"}),e.jsx("span",{className:`px-3 py-1 rounded text-sm font-semibold ${t.incidents_30d&lt;=5?"bg-green-100 text-green-800":t.incidents_30d&lt;=15?"bg-yellow-100 text-yellow-800":"bg-red-100 text-red-800"}`,children:t.incidents_30d&lt;=5?"Low":t.incidents_30d&lt;=15?"Moderate":"High"})]})]})]}),e.jsxs("div",{className:"flex gap-4 pt-6 border-t-2 border-gray-200",children:[e.jsxs("button",{onClick:()=&gt;{S(t)},className:"flex-1 px-6 py-3 bg-green-600 text-white rounded-2xl hover:bg-green-700 transition-colors font-semibold flex items-center justify-center gap-2 text-base",children:[e.jsx(P,{className:"w-6 h-6"}),"Export Remediation Plan"]}),e.jsx("button",{onClick:C,className:"px-8 py-3 bg-gray-200 text-gray-700 rounded-2xl hover:bg-gray-300 transition-colors font-semibold text-base",children:"Close"})]})]})]})})]})},Y=()=&gt;{const[a,o]=n.useState([]),[i,c]=n.useState(!0),[d,l]=n.useState({sector:null,criticality:null,risk_level:null}),[t,m]=n.useState(null);n.useEffect(()=&gt;{h()},[d]);const h=async()=&gt;{try{const r=new URLSearchParams;d.sector&amp;&amp;r.append("sector",d.sector),d.criticality&amp;&amp;r.append("criticality",d.criticality),d.risk_level&amp;&amp;r.append("risk_level",d.risk_level);const x=await j.get(`${f}/api/ciip/assets/critical?${r}`);o(x.data.assets)}catch(r){console.error("Error fetching assets:",r)}finally{c(!1)}};return i?e.jsx("div",{className:"text-center py-12",children:"Loading assets..."}):e.jsxs("div",{className:"space-y-8",children:[e.jsx("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-6",children:e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-3 gap-6",children:[e.jsxs("select",{value:d.sector||"",onChange:r=&gt;l({...d,sector:r.target.value||null}),className:"px-5 py-3 border-2 border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-semibold",children:[e.jsx("option",{value:"",children:"All Sectors"}),e.jsx("option",{value:"energy",children:"Energy"}),e.jsx("option",{value:"financial",children:"Financial"}),e.jsx("option",{value:"telecommunications",children:"Telecommunications"}),e.jsx("option",{value:"healthcare",children:"Healthcare"}),e.jsx("option",{value:"government",children:"Government"})]}),e.jsxs("select",{value:d.criticality||"",onChange:r=&gt;l({...d,criticality:r.target.value||null}),className:"px-5 py-3 border-2 border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-semibold",children:[e.jsx("option",{value:"",children:"All Criticality Levels"}),e.jsx("option",{value:"crown_jewel",children:"Crown Jewel"}),e.jsx("option",{value:"high",children:"High"}),e.jsx("option",{value:"normal",children:"Normal"})]}),e.jsxs("select",{value:d.risk_level||"",onChange:r=&gt;l({...d,risk_level:r.target.value||null}),className:"px-5 py-3 border-2 border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base font-semibold",children:[e.jsx("option",{value:"",children:"All Risk Levels"}),e.jsx("option",{value:"critical",children:"Critical"}),e.jsx("option",{value:"high",children:"High"}),e.jsx("option",{value:"medium",children:"Medium"}),e.jsx("option",{value:"low",children:"Low"})]})]})}),e.jsx("div",{className:"space-y-6",children:a.map(r=&gt;e.jsxs("div",{className:"bg-white rounded-2xl shadow border-2 border-gray-200 p-8",children:[e.jsxs("div",{className:"flex items-start justify-between mb-6",children:[e.jsxs("div",{className:"flex-1",children:[e.jsxs("div",{className:"flex items-center space-x-4 mb-3",children:[e.jsx("h3",{className:"text-xl font-semibold text-gray-900",children:r.name}),e.jsx("span",{className:`px-3 py-1 rounded text-sm font-semibold ${r.criticality==="crown_jewel"?"bg-purple-100 text-purple-800":r.criticality==="high"?"bg-orange-100 text-orange-800":"bg-gray-100 text-gray-800"}`,children:r.criticality.replace("_"," ").toUpperCase()}),e.jsx(w,{level:r.risk_level})]}),e.jsxs("div",{className:"flex items-center space-x-4 text-base text-white/80",children:[e.jsx("span",{children:r.sector.toUpperCase()}),e.jsx("span",{children:"•"}),e.jsx("span",{children:r.ip_address}),e.jsx("span",{children:"•"}),e.jsx("span",{children:r.location})]})]}),e.jsxs("div",{className:"text-right",children:[e.jsx("div",{className:"text-3xl font-bold text-gray-900",children:r.risk_score}),e.jsx("div",{className:"text-sm text-white/70 font-semibold",children:"Risk Score"})]})]}),e.jsxs("div",{className:"grid grid-cols-2 md:grid-cols-5 gap-6 mb-6",children:[e.jsxs("div",{className:"text-center p-5 bg-red-50 rounded-2xl border-2 border-red-100",children:[e.jsx("div",{className:"text-2xl font-bold text-red-900",children:r.vulnerabilities.critical}),e.jsx("div",{className:"text-sm font-semibold text-red-700",children:"Critical"})]}),e.jsxs("div",{className:"text-center p-5 bg-orange-50 rounded-2xl border-2 border-orange-100",children:[e.jsx("div",{className:"text-2xl font-bold text-orange-900",children:r.vulnerabilities.high}),e.jsx("div",{className:"text-sm font-semibold text-orange-700",children:"High"})]}),e.jsxs("div",{className:"text-center p-5 bg-yellow-50 rounded-2xl border-2 border-yellow-100",children:[e.jsx("div",{className:"text-2xl font-bold text-yellow-900",children:r.vulnerabilities.medium}),e.jsx("div",{className:"text-sm font-semibold text-yellow-700",children:"Medium"})]}),e.jsxs("div",{className:"text-center p-5 bg-blue-50 rounded-2xl border-2 border-blue-100",children:[e.jsx("div",{className:"text-2xl font-bold text-blue-900",children:r.vulnerabilities.low}),e.jsx("div",{className:"text-sm font-semibold text-blue-700",children:"Low"})]}),e.jsxs("div",{className:"text-center p-5 bg-gray-50 rounded-2xl border-2 border-gray-100",children:[e.jsx("div",{className:`text-2xl font-bold ${r.compliance_status==="compliant"?"text-green-900":"text-yellow-900"}`,children:r.compliance_status==="compliant"?"✓":"⚠"}),e.jsx("div",{className:"text-sm font-semibold text-gray-700",children:"Compliance"})]})]}),e.jsxs("div",{className:"flex items-center justify-between pt-6 border-t-2 border-gray-200",children:[e.jsxs("div",{className:"flex space-x-6 text-sm",children:[e.jsxs("span",{className:`flex items-center font-semibold ${r.controls.encryption?"text-green-600":"text-red-600"}`,children:[r.controls.encryption?"✓":"✗"," Encryption"]}),e.jsxs("span",{className:`flex items-center font-semibold ${r.controls.mfa?"text-green-600":"text-red-600"}`,children:[r.controls.mfa?"✓":"✗"," MFA"]}),e.jsxs("span",{className:`flex items-center font-semibold ${r.controls.segmented?"text-green-600":"text-red-600"}`,children:[r.controls.segmented?"✓":"✗"," Segmented"]}),e.jsxs("span",{className:`flex items-center font-semibold ${r.controls.monitored?"text-green-600":"text-red-600"}`,children:[r.controls.monitored?"✓":"✗"," Monitored"]}),e.jsxs("span",{className:`flex items-center font-semibold ${r.controls.patched?"text-green-600":"text-red-600"}`,children:[r.controls.patched?"✓":"✗"," Patched"]})]}),e.jsx("button",{onClick:()=&gt;m(r),className:"px-6 py-3 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition-colors text-base font-semibold",children:"View Details"})]})]},r.asset_id))}),t&amp;&amp;e.jsx("div",{className:"fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4",children:e.jsxs("div",{className:"bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto",children:[e.jsxs("div",{className:"flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10",children:[e.jsxs("div",{children:[e.jsx("h2",{className:"text-xl font-bold text-gray-900",children:t.name}),e.jsxs("div",{className:"flex items-center space-x-2 mt-1",children:[e.jsx("span",{className:"text-sm text-gray-500",children:t.asset_id}),e.jsx("span",{className:"text-gray-300",children:"|"}),e.jsx("span",{className:"text-sm text-gray-500 uppercase",children:t.sector})]})]}),e.jsx("button",{onClick:()=&gt;m(null),className:"p-2 hover:bg-gray-100 rounded-lg transition-colors",children:e.jsx(T,{className:"w-6 h-6 text-gray-500"})})]}),e.jsxs("div",{className:"p-6 space-y-6",children:[e.jsxs("div",{className:"grid grid-cols-2 md:grid-cols-4 gap-4",children:[e.jsxs("div",{className:"p-4 bg-gray-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-sm text-gray-600",children:"IP Address"}),e.jsx("p",{className:"text-lg font-semibold text-gray-900",children:t.ip_address})]}),e.jsxs("div",{className:"p-4 bg-gray-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-sm text-gray-600",children:"Location"}),e.jsx("p",{className:"text-lg font-semibold text-gray-900",children:t.location})]}),e.jsxs("div",{className:"p-4 bg-purple-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-sm text-purple-600",children:"Criticality"}),e.jsx("p",{className:"text-lg font-semibold text-purple-900 capitalize",children:t.criticality.replace("_"," ")})]}),e.jsxs("div",{className:"p-4 bg-red-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-sm text-red-600",children:"Risk Score"}),e.jsx("p",{className:"text-3xl font-bold text-red-900",children:t.risk_score})]})]}),e.jsxs("div",{children:[e.jsx("h3",{className:"font-semibold text-gray-900 mb-3",children:"Vulnerabilities"}),e.jsxs("div",{className:"grid grid-cols-4 gap-3",children:[e.jsxs("div",{className:"p-4 bg-red-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-3xl font-bold text-red-900",children:t.vulnerabilities.critical}),e.jsx("p",{className:"text-sm text-red-700",children:"Critical"})]}),e.jsxs("div",{className:"p-4 bg-orange-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-3xl font-bold text-orange-900",children:t.vulnerabilities.high}),e.jsx("p",{className:"text-sm text-orange-700",children:"High"})]}),e.jsxs("div",{className:"p-4 bg-yellow-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-3xl font-bold text-yellow-900",children:t.vulnerabilities.medium}),e.jsx("p",{className:"text-sm text-yellow-700",children:"Medium"})]}),e.jsxs("div",{className:"p-4 bg-blue-50 rounded-lg text-center",children:[e.jsx("p",{className:"text-3xl font-bold text-blue-900",children:t.vulnerabilities.low}),e.jsx("p",{className:"text-sm text-blue-700",children:"Low"})]})]})]}),e.jsxs("div",{children:[e.jsx("h3",{className:"font-semibold text-gray-900 mb-3",children:"Security Controls"}),e.jsx("div",{className:"grid grid-cols-2 md:grid-cols-5 gap-3",children:Object.entries(t.controls).map(([r,x])=&gt;e.jsxs("div",{className:`p-3 rounded-lg text-center ${x?"bg-green-50":"bg-red-50"}`,children:[e.jsx("div",{className:`text-2xl mb-1 ${x?"text-green-600":"text-red-600"}`,children:x?"✓":"✗"}),e.jsx("p",{className:`text-sm font-medium capitalize ${x?"text-green-800":"text-red-800"}`,children:r})]},r))})]}),e.jsx("div",{className:"bg-gray-50 rounded-lg p-4",children:e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("h3",{className:"font-semibold text-gray-900",children:"Compliance Status"}),e.jsx("span",{className:`px-3 py-1 rounded-full text-sm font-medium ${t.compliance_status==="compliant"?"bg-green-100 text-green-800":"bg-yellow-100 text-yellow-800"}`,children:t.compliance_status==="compliant"?"Compliant":"Needs Attention"})]})}),e.jsx("div",{className:"bg-gray-50 rounded-lg p-4",children:e.jsxs("div",{className:"flex items-center justify-between",children:[e.jsx("h3",{className:"font-semibold text-gray-900",children:"Risk Level"}),e.jsx(w,{level:t.risk_level})]})}),e.jsx("div",{className:"flex gap-3 pt-4 border-t border-gray-200",children:e.jsx("button",{onClick:()=&gt;m(null),className:"flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium",children:"Close"})})]})]})})]})},q=()=&gt;{const[a,o]=n.useState([]),[i,c]=n.useState(!0);n.useEffect(()=&gt;{d()},[]);const d=async()=&gt;{try{const l=await j.get(`${f}/api/ciip/incidents/critical`);o(l.data.incidents)}catch(l){console.error("Error fetching incidents:",l)}finally{c(!1)}};return i?e.jsx("div",{className:"text-center py-12",children:"Loading incidents..."}):e.jsx("div",{className:"space-y-4",children:a.map(l=&gt;e.jsxs("div",{className:"bg-white rounded-lg shadow p-6",children:[e.jsx("div",{className:"flex items-start justify-between mb-4",children:e.jsxs("div",{className:"flex-1",children:[e.jsxs("div",{className:"flex items-center space-x-3 mb-2",children:[e.jsx("h3",{className:"text-lg font-semibold text-gray-900",children:l.incident_id}),e.jsx("span",{className:`px-2 py-1 rounded text-xs font-medium ${l.severity==="critical"?"bg-red-100 text-red-800":l.severity==="high"?"bg-orange-100 text-orange-800":"bg-yellow-100 text-yellow-800"}`,children:l.severity.toUpperCase()}),e.jsx("span",{className:`px-2 py-1 rounded text-xs font-medium ${l.status==="resolved"?"bg-green-100 text-green-800":l.status==="in_progress"?"bg-blue-100 text-blue-800":"bg-gray-100 text-gray-800"}`,children:l.status.replace("_"," ").toUpperCase()})]}),e.jsx("p",{className:"text-gray-700 mb-2",children:l.description}),e.jsxs("div",{className:"flex items-center space-x-4 text-sm text-gray-600",children:[e.jsx("span",{children:new Date(l.timestamp).toLocaleString()}),e.jsx("span",{children:"•"}),e.jsx("span",{className:"font-medium",children:l.asset_name}),e.jsx("span",{children:"•"}),e.jsx("span",{className:"uppercase",children:l.sector})]})]})}),e.jsxs("div",{className:"grid grid-cols-2 gap-4 mb-4",children:[e.jsxs("div",{children:[e.jsx("p",{className:"text-xs text-gray-500 mb-1",children:"Attack Stage"}),e.jsx("p",{className:"text-sm font-medium text-gray-900",children:l.attack_stage.replace("_"," ").toUpperCase()})]}),e.jsxs("div",{children:[e.jsx("p",{className:"text-xs text-gray-500 mb-1",children:"Assigned To"}),e.jsx("p",{className:"text-sm font-medium text-gray-900",children:l.assigned_to})]})]}),e.jsxs("div",{className:"flex flex-wrap gap-2 mb-4",children:[e.jsx("span",{className:"text-xs text-gray-500",children:"MITRE ATT&amp;CK:"}),l.mitre_techniques.map(t=&gt;e.jsx("span",{className:"px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-medium",children:t},t))]}),e.jsxs("div",{className:"flex flex-wrap gap-2",children:[e.jsx("span",{className:"text-xs text-gray-500",children:"Response Actions:"}),l.response_actions.map(t=&gt;e.jsx("span",{className:"px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-medium",children:t},t))]})]},l.incident_id))})},xe=Object.freeze(Object.defineProperty({__proto__:null,default:W},Symbol.toStringTag,{value:"Module"}));export{W as C,D as F,xe as a};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-02-09T23:34:34.230Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

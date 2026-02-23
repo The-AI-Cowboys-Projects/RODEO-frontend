@@ -1,0 +1,88 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for dist/assets/SandboxViewer-DkQKtmu5.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">dist/assets</a> SandboxViewer-DkQKtmu5.js</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import{j as e}from"./query-vendor-Bgne-RFE.js";import{a as i}from"./react-vendor-z1mORbJf.js";import{e as x}from"./index-B7LRZIR5.js";const p="http://localhost:8001",L=()=&gt;{const[v,k]=i.useState([]),[l,j]=i.useState(null),[u,f]=i.useState(null),[N,g]=i.useState(!1),[y,o]=i.useState(null),[n,h]=i.useState({os_type:"windows_10_x64",mode:"interactive",timeout:300,sample_path:"",sample_url:""}),c=i.useRef(null),d=i.useRef(null),b=async()=&gt;{try{const s=await x.get(`${p}/api/sandbox/sessions`);k(s.data.sessions||[])}catch(s){console.error("Failed to fetch sessions:",s)}},M=async()=&gt;{var s,t;g(!0),o(null);try{const a={os_type:n.os_type,mode:n.mode,timeout:parseInt(n.timeout)};n.sample_path&amp;&amp;(a.sample_path=n.sample_path),n.sample_url&amp;&amp;(a.sample_url=n.sample_url);const m=(await x.post(`${p}/api/sandbox/sessions`,a)).data.session;j(m),w(m),_(m.session_id),b()}catch(a){o(((t=(s=a.response)==null?void 0:s.data)==null?void 0:t.detail)||"Failed to create session"),console.error("Session creation error:",a)}finally{g(!1)}},w=s=&gt;{if(!c.current)return;c.current.innerHTML="";const t=document.createElement("iframe");t.src=s.viewer_url||"http://localhost:6080/vnc.html?autoconnect=true&amp;resize=scale",t.style.width="100%",t.style.height="600px",t.style.border="1px solid #ccc",t.style.borderRadius="4px",c.current.appendChild(t)},_=s=&gt;{d.current&amp;&amp;clearInterval(d.current);const t=async()=&gt;{try{const a=await x.get(`${p}/api/sandbox/sessions/${s}/metrics`);f(a.data.metrics)}catch(a){console.error("Failed to fetch metrics:",a)}};t(),d.current=setInterval(t,5e3)},S=()=&gt;{d.current&amp;&amp;(clearInterval(d.current),d.current=null)},C=async s=&gt;{var t,a;try{await x.post(`${p}/api/sandbox/sessions/${s}/stop`,null,{params:{generate_report:!0}}),j(null),f(null),S(),c.current&amp;&amp;(c.current.innerHTML=""),b()}catch(r){o(((a=(t=r.response)==null?void 0:t.data)==null?void 0:a.detail)||"Failed to stop session"),console.error("Stop session error:",r)}},$=async s=&gt;{var t,a;try{await x.post(`${p}/api/sandbox/sessions/${s}/interact`,{action:"screenshot",params:{name:`screenshot_${Date.now()}.png`}}),alert("Screenshot captured successfully!")}catch(r){o(((a=(t=r.response)==null?void 0:t.data)==null?void 0:a.detail)||"Failed to capture screenshot")}},I=async s=&gt;{var t,a;try{const m=(await x.get(`${p}/api/sandbox/sessions/${s}`)).data;j(m),w(m),_(s)}catch(r){o(((a=(t=r.response)==null?void 0:t.data)==null?void 0:a.detail)||"Failed to load session")}};return i.useEffect(()=&gt;(b(),()=&gt;{S()}),[]),e.jsxs("div",{className:"sandbox-viewer p-6 max-w-7xl mx-auto",children:[e.jsx("h1",{className:"text-3xl font-bold mb-6",children:"Interactive Sandbox"}),y&amp;&amp;e.jsxs("div",{className:"bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4",children:[y,e.jsx("button",{onClick:()=&gt;o(null),className:"float-right font-bold",children:"×"})]}),e.jsxs("div",{className:"grid grid-cols-1 lg:grid-cols-3 gap-6",children:[e.jsxs("div",{className:"lg:col-span-1",children:[e.jsxs("div",{className:"bg-white rounded-lg shadow p-6",children:[e.jsx("h2",{className:"text-xl font-semibold mb-4",children:"New Session"}),e.jsxs("div",{className:"space-y-4",children:[e.jsxs("div",{children:[e.jsx("label",{className:"block text-sm font-medium mb-1",children:"OS Type"}),e.jsxs("select",{value:n.os_type,onChange:s=&gt;h({...n,os_type:s.target.value}),className:"w-full border rounded px-3 py-2",children:[e.jsx("option",{value:"windows_10_x64",children:"Windows 10 x64"}),e.jsx("option",{value:"windows_11_x64",children:"Windows 11 x64"}),e.jsx("option",{value:"ubuntu_22_04_x64",children:"Ubuntu 22.04 x64"}),e.jsx("option",{value:"debian_12_x64",children:"Debian 12 x64"})]})]}),e.jsxs("div",{children:[e.jsx("label",{className:"block text-sm font-medium mb-1",children:"Mode"}),e.jsxs("select",{value:n.mode,onChange:s=&gt;h({...n,mode:s.target.value}),className:"w-full border rounded px-3 py-2",children:[e.jsx("option",{value:"interactive",children:"Interactive"}),e.jsx("option",{value:"automated",children:"Automated"})]})]}),e.jsxs("div",{children:[e.jsx("label",{className:"block text-sm font-medium mb-1",children:"Timeout (seconds)"}),e.jsx("input",{type:"number",value:n.timeout,onChange:s=&gt;h({...n,timeout:s.target.value}),className:"w-full border rounded px-3 py-2",min:"30",max:"3600"})]}),e.jsxs("div",{children:[e.jsx("label",{className:"block text-sm font-medium mb-1",children:"Sample Path (optional)"}),e.jsx("input",{type:"text",value:n.sample_path,onChange:s=&gt;h({...n,sample_path:s.target.value}),className:"w-full border rounded px-3 py-2",placeholder:"/path/to/sample.exe"})]}),e.jsxs("div",{children:[e.jsx("label",{className:"block text-sm font-medium mb-1",children:"Sample URL (optional)"}),e.jsx("input",{type:"text",value:n.sample_url,onChange:s=&gt;h({...n,sample_url:s.target.value}),className:"w-full border rounded px-3 py-2",placeholder:"https://example.com"})]}),e.jsx("button",{onClick:M,disabled:N,className:"w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400",children:N?"Creating...":"Start Sandbox"})]}),e.jsxs("div",{className:"mt-6",children:[e.jsx("h3",{className:"text-lg font-semibold mb-2",children:"Active Sessions"}),e.jsx("div",{className:"space-y-2",children:v.length===0?e.jsx("p",{className:"text-gray-500 text-sm",children:"No active sessions"}):v.map(s=&gt;e.jsx("div",{className:"border rounded p-2",children:e.jsxs("div",{className:"flex justify-between items-start",children:[e.jsxs("div",{className:"text-sm",children:[e.jsx("div",{className:"font-medium",children:s.os_type}),e.jsxs("div",{className:"text-gray-500",children:[Math.floor(s.elapsed_time||0),"s elapsed"]})]}),e.jsxs("div",{className:"space-x-2",children:[e.jsx("button",{onClick:()=&gt;I(s.session_id),className:"text-blue-600 hover:text-blue-800 text-sm",children:"View"}),e.jsx("button",{onClick:()=&gt;C(s.session_id),className:"text-red-600 hover:text-red-800 text-sm",children:"Stop"})]})]})},s.session_id))})]})]}),l&amp;&amp;u&amp;&amp;e.jsxs("div",{className:"bg-white rounded-lg shadow p-6 mt-6",children:[e.jsx("h3",{className:"text-lg font-semibold mb-4",children:"Live Metrics"}),e.jsxs("div",{className:"space-y-2 text-sm",children:[e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{children:"Processes:"}),e.jsx("span",{className:"font-medium",children:u.process_count||0})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{children:"Network Connections:"}),e.jsx("span",{className:"font-medium",children:u.network_count||0})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{children:"File Modifications:"}),e.jsx("span",{className:"font-medium",children:u.file_count||0})]}),e.jsxs("div",{className:"flex justify-between",children:[e.jsx("span",{children:"Screenshots:"}),e.jsx("span",{cl</span></span>assName:"font-medium",children:u.screenshot_count||0})]})]})]})]}),e.jsx("div",{className:"lg:col-span-2",children:e.jsxs("div",{className:"bg-white rounded-lg shadow p-6",children:[e.jsxs("div",{className:"flex justify-between items-center mb-4",children:[e.jsx("h2",{className:"text-xl font-semibold",children:l?`Session: ${l.session_id}`:"No Active Session"}),l&amp;&amp;e.jsxs("div",{className:"space-x-2",children:[e.jsx("button",{onClick:()=&gt;$(l.session_id),className:"bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700",children:"Screenshot"}),e.jsx("button",{onClick:()=&gt;C(l.session_id),className:"bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700",children:"Stop Session"})]})]}),e.jsx("div",{ref:c,className:"vnc-container bg-gray-100 rounded min-h-[600px] flex items-center justify-center",children:!l&amp;&amp;e.jsx("p",{className:"text-gray-500",children:"Start a sandbox session to begin analysis"})}),l&amp;&amp;e.jsxs("div",{className:"mt-4 p-4 bg-gray-50 rounded",children:[e.jsx("h3",{className:"font-semibold mb-2",children:"Session Info"}),e.jsxs("div",{className:"grid grid-cols-2 gap-2 text-sm",children:[e.jsxs("div",{children:[e.jsx("span",{className:"text-gray-600",children:"Status:"})," ",e.jsx("span",{className:"font-medium text-green-600",children:l.status})]}),e.jsxs("div",{children:[e.jsx("span",{className:"text-gray-600",children:"OS:"})," ",e.jsx("span",{className:"font-medium",children:l.os_type})]}),e.jsxs("div",{children:[e.jsx("span",{className:"text-gray-600",children:"Mode:"})," ",e.jsx("span",{className:"font-medium",children:l.mode})]}),e.jsxs("div",{children:[e.jsx("span",{className:"text-gray-600",children:"Timeout:"})," ",e.jsxs("span",{className:"font-medium",children:[l.timeout,"s"]})]})]})]})]})})]})]})};export{L as default};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-02-09T23:34:34.230Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    

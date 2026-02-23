@@ -28,7 +28,8 @@ import {
   FeedbackIcon,
   KnowledgeIcon,
   ThreatIntelIcon,
-  LogAnomalyIcon
+  LogAnomalyIcon,
+  UserIcon
 } from './icons'
 
 export default function Layout({ children }) {
@@ -107,7 +108,7 @@ export default function Layout({ children }) {
     { path: '/compliance', label: 'Compliance', Icon: ClipboardIcon, ariaLabel: 'Compliance dashboard', permission: 'read_reports' },
     { path: '/bcdr', label: 'BC/DR Testing', Icon: ShieldIcon, ariaLabel: 'Business continuity and disaster recovery', permission: 'manage_system' },
     { path: '/bug-bounty', label: 'Bug Bounty', Icon: BugBountyIcon, ariaLabel: 'Bug bounty hunter dashboard', permission: 'run_scans' },
-    { path: '/users', label: 'User Management', Icon: ShieldIcon, ariaLabel: 'User and role management', permission: 'read_users' },
+    { path: '/users', label: 'User Management', Icon: UserIcon, ariaLabel: 'User and role management', permission: 'read_users' },
   ]
 
   // Filter nav items based on user permissions

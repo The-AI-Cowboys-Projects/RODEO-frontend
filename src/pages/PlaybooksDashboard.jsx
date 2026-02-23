@@ -68,7 +68,7 @@ export default function PlaybooksDashboard() {
       setEngineStatus(statusData)
       setPlaybookList(Array.isArray(listData?.playbooks) ? listData.playbooks : [])
       if (!triggerPlaybookId && listData?.playbooks?.length > 0) {
-        setTriggerPlaybookId(listData.playbooks[0].id || '')
+        setTriggerPlaybookId(listData.playbooks[0].playbook_id || '')
       }
     } catch (err) {
       console.error('Failed to fetch playbook data:', err)
@@ -87,13 +87,13 @@ export default function PlaybooksDashboard() {
   }
 
   const handleTogglePlaybook = async (playbook) => {
-    setTogglingId(playbook.id)
+    setTogglingId(playbook.playbook_id)
     try {
       if (playbook.enabled) {
-        await playbooks.disable(playbook.id)
+        await playbooks.disable(playbook.playbook_id)
         showNotif(`Disabled: ${playbook.name}`)
       } else {
-        await playbooks.enable(playbook.id)
+        await playbooks.enable(playbook.playbook_id)
         showNotif(`Enabled: ${playbook.name}`)
       }
       await fetchAllData()
@@ -342,18 +342,18 @@ export default function PlaybooksDashboard() {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {playbookList.map((playbook) => {
-                  const isExpanded = expandedPlaybooks.has(playbook.id)
-                  const isToggling = togglingId === playbook.id
+                  const isExpanded = expandedPlaybooks.has(playbook.playbook_id)
+                  const isToggling = togglingId === playbook.playbook_id
                   const steps = Array.isArray(playbook.steps) ? playbook.steps : []
                   return (
                     <div
-                      key={playbook.id}
+                      key={playbook.playbook_id}
                       className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg border transition-colors`}
                     >
                       {/* Card Header — clickable to expand */}
                       <div
                         className="p-4 cursor-pointer"
-                        onClick={() => togglePlaybookExpand(playbook.id)}
+                        onClick={() => togglePlaybookExpand(playbook.playbook_id)}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex-1 min-w-0">
@@ -367,7 +367,7 @@ export default function PlaybooksDashboard() {
                               </Badge>
                             </div>
                             <p className={`text-xs mb-2 font-mono ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                              {playbook.id}
+                              {playbook.playbook_id}
                             </p>
                             <div className={`flex flex-wrap gap-x-4 gap-y-1 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                               <span>
@@ -629,7 +629,7 @@ export default function PlaybooksDashboard() {
                   >
                     <option value="">— Select a playbook —</option>
                     {playbookList.map((pb) => (
-                      <option key={pb.id} value={pb.id}>
+                      <option key={pb.playbook_id} value={pb.playbook_id}>
                         {pb.name} {pb.enabled ? '' : '(disabled)'}
                       </option>
                     ))}
@@ -697,7 +697,7 @@ export default function PlaybooksDashboard() {
                 </div>
 
                 {/* Warning for disabled playbook */}
-                {triggerPlaybookId && playbookList.find((p) => p.id === triggerPlaybookId && !p.enabled) && (
+                {triggerPlaybookId && playbookList.find((p) => p.playbook_id === triggerPlaybookId && !p.enabled) && (
                   <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${isDarkMode ? 'bg-orange-900/30 border border-orange-700/50' : 'bg-orange-50 border border-orange-200'}`}>
                     <ExclamationTriangleIcon className="w-5 h-5 text-orange-400 flex-shrink-0" />
                     <p className={`text-sm ${isDarkMode ? 'text-orange-300' : 'text-orange-700'}`}>

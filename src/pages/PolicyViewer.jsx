@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { policy } from '../api/client'
 import { useTheme } from '../context/ThemeContext'
 import axios from 'axios'
@@ -25,7 +26,8 @@ import {
   FireIcon,
   ArrowsRightLeftIcon,
   CheckIcon,
-  TicketIcon
+  TicketIcon,
+  ArrowTopRightOnSquareIcon
 } from '@heroicons/react/24/outline'
 import { CheckIcon as CheckIconSolid } from '@heroicons/react/24/solid'
 
@@ -206,7 +208,27 @@ export default function PolicyViewer() {
   )
 }
 
+// Map action types to the page that manages the affected host/resource
+const ACTION_ROUTES = {
+  isolate_host:           '/edr',
+  block_ip:               '/edr',
+  quarantine_file:        '/edr',
+  terminate_process:      '/edr',
+  apply_patch:            '/patches',
+  update_firewall_rules:  '/edr',
+  disable_service:        '/edr',
+  create_jira_ticket:     '/settings',
+  send_notification:      '/pipeline',
+  enforce_policy:         '/compliance',
+  revoke_permissions:     '/users',
+  enforce_encryption:     '/compliance',
+  run_triage:             '/approvals',
+  investigate:            '/approvals',
+  escalate:               '/approvals',
+}
+
 function ActionMatrixTab({ data }) {
+  const navigate = useNavigate()
   const actions = data?.actions || {}
   const baseMatrix = data?.base_matrix || {}
   const stages = ['data_exfil', 'exploit_attempt', 'persistence', 'benign']
@@ -241,15 +263,31 @@ function ActionMatrixTab({ data }) {
           <h3 className="text-lg font-semibold text-white">Available Actions</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {Object.entries(actions).map(([key, description]) => (
-            <div
-              key={key}
-              className="group bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl p-4 border border-slate-600/50 hover:border-purple-500/50 transition-all hover:scale-[1.02]"
-            >
-              <div className="font-mono text-sm font-bold text-purple-400 mb-1">{key}</div>
-              <div className="text-gray-400 text-xs">{description}</div>
-            </div>
-          ))}
+          {Object.entries(actions).map(([key, description]) => {
+            const route = ACTION_ROUTES[key]
+            return (
+              <div
+                key={key}
+                onClick={() => route && navigate(route)}
+                className={`group bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl p-4 border border-slate-600/50 hover:border-purple-500/50 transition-all hover:scale-[1.02] ${
+                  route ? 'cursor-pointer' : ''
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <div className="font-mono text-sm font-bold text-purple-400">{key}</div>
+                  {route && (
+                    <ArrowTopRightOnSquareIcon className="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors" />
+                  )}
+                </div>
+                <div className="text-gray-400 text-xs">{description}</div>
+                {route && (
+                  <div className="mt-2 text-xs text-gray-600 group-hover:text-purple-400/60 transition-colors">
+                    Go to {route.replace('/', '')}
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
 
@@ -297,7 +335,12 @@ function ActionMatrixTab({ data }) {
                       return (
                         <td key={severity} className="py-4 px-5">
                           {action ? (
-                            <div className={`inline-flex items-center px-3 py-1.5 rounded-lg border bg-gradient-to-r ${getSeverityStyle(severity)} font-mono text-sm`}>
+                            <div
+                              onClick={() => ACTION_ROUTES[action] && navigate(ACTION_ROUTES[action])}
+                              className={`inline-flex items-center px-3 py-1.5 rounded-lg border bg-gradient-to-r ${getSeverityStyle(severity)} font-mono text-sm ${
+                                ACTION_ROUTES[action] ? 'cursor-pointer hover:ring-2 hover:ring-purple-500/50 transition-all' : ''
+                              }`}
+                            >
                               {action}
                             </div>
                           ) : (

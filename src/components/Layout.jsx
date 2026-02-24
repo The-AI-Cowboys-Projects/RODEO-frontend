@@ -43,6 +43,7 @@ export default function Layout({ children }) {
   // Fixed icon color scheme: #800080, #C38BBF, #000000, white
   const iconPrimary = '#800080'
   const iconSecondary = '#C38BBF'
+  const iconDetail = isDarkMode ? 'white' : '#000000'
   const [isMobile, setIsMobile] = useState(false)
 
   // Check for mobile viewport
@@ -208,7 +209,7 @@ export default function Layout({ children }) {
                           }`
                     }`}
                   >
-                    <item.Icon className="w-5 h-5 mr-3 flex-shrink-0" primary={iconPrimary} secondary={iconSecondary} aria-hidden="true" />
+                    <item.Icon className="w-5 h-5 mr-3 flex-shrink-0" primary={iconPrimary} secondary={iconSecondary} detail={iconDetail} aria-hidden="true" />
                     <span>{item.label}</span>
                   </Link>
                 </li>

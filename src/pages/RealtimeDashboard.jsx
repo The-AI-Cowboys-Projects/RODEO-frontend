@@ -26,6 +26,7 @@ import { SignalIcon as SignalSolid } from '@heroicons/react/24/solid'
 export default function RealtimeDashboard() {
   const { isDarkMode } = useTheme()
   const { isDemoMode, seededInt, seededRandom } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [pluginActivity, setPluginActivity] = useState([])
   const [vulnerabilities, setVulnerabilities] = useState([])
   const [systemMetrics, setSystemMetrics] = useState({
@@ -37,268 +38,305 @@ export default function RealtimeDashboard() {
   const [recentScans, setRecentScans] = useState([])
   const [liveEvents, setLiveEvents] = useState([])
   const [networkData, setNetworkData] = useState([])
-  const [isLive, setIsLive] = useState(true)
+  const [pluginDistData, setPluginDistData] = useState(null)
+  const [isPaused, setIsPaused] = useState(false)
+  const isLive = isLiveMode && !isPaused
   const [uptime, setUptime] = useState(0)
+  // 'live' = real API data, 'simulated' = API failed fallback, 'demo' = demo mode seeded
+  const [dataSource, setDataSource] = useState(isDemoMode ? 'demo' : 'live')
   const eventFeedRef = useRef(null)
   const liveFetchFailed = useRef(false)
 
-  // Initialize network data
+  // Update dataSource when demo mode changes
   useEffect(() => {
+    if (isDemoMode) {
+      setDataSource('demo')
+      liveFetchFailed.current = false
+    }
+  }, [isDemoMode])
+
+  // Demo mode: seed all widgets with stable data
+  useEffect(() => {
+    if (!isDemoMode) return
+
     const initialData = Array.from({ length: 30 }, (_, i) => ({
       time: i,
-      packets: isDemoMode ? seededInt(`rt_pkt_${i}`, 200, 1000) : Math.floor(Math.random() * 800) + 200,
-      bandwidth: isDemoMode ? seededInt(`rt_bw_${i}`, 100, 500) : Math.floor(Math.random() * 400) + 100,
-      threats: isDemoMode ? seededInt(`rt_thr_${i}`, 0, 50) : Math.floor(Math.random() * 50)
+      packets: seededInt(`rt_pkt_${i}`, 200, 1000),
+      bandwidth: seededInt(`rt_bw_${i}`, 100, 500),
+      threats: seededInt(`rt_thr_${i}`, 0, 50)
+    }))
+    setNetworkData(initialData)
+
+    const plugins = ['Nmap Scanner', 'Metasploit', 'CVE Analyzer', 'Binary Strings', 'OWASP ZAP', 'Nuclei', 'SQLMap', 'Nikto']
+    setPluginActivity(plugins.slice(0, 6).map((p, i) => ({
+      id: `demo_plugin_${i}`,
+      timestamp: `${seededInt(`rt_ph_${i}`, 8, 23)}:${String(seededInt(`rt_pm_${i}`, 0, 59)).padStart(2, '0')}:${String(seededInt(`rt_ps_${i}`, 0, 59)).padStart(2, '0')}`,
+      plugin: p,
+      status: seededRandom(`rt_pstat_${i}`) > 0.2 ? 'success' : 'running',
+      duration: seededInt(`rt_pdur_${i}`, 1, 30),
+      target: `192.168.${seededInt(`rt_pa_${i}`, 1, 10)}.${seededInt(`rt_pb_${i}`, 1, 254)}`
+    })))
+
+    const severities = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+    const services = ['OpenSSH 8.2', 'Apache 2.4', 'MySQL 8.0', 'PostgreSQL 14', 'nginx 1.21', 'Redis 6.2']
+    setVulnerabilities(Array.from({ length: 5 }, (_, i) => {
+      const sev = severities[seededInt(`rt_vs_${i}`, 0, severities.length - 1)]
+      return {
+        id: `CVE-2024-${String(seededInt(`rt_vcve_${i}`, 10000, 99999)).padStart(5, '0')}`,
+        severity: sev,
+        service: services[seededInt(`rt_vsvc_${i}`, 0, services.length - 1)],
+        score: sev === 'CRITICAL' ? (9 + seededRandom(`rt_vsc_${i}`)).toFixed(1)
+          : sev === 'HIGH' ? (7 + seededRandom(`rt_vsc_${i}`) * 2).toFixed(1)
+          : sev === 'MEDIUM' ? (4 + seededRandom(`rt_vsc_${i}`) * 3).toFixed(1)
+          : (1 + seededRandom(`rt_vsc_${i}`) * 3).toFixed(1),
+        timestamp: `${seededInt(`rt_vth_${i}`, 8, 23)}:${String(seededInt(`rt_vtm_${i}`, 0, 59)).padStart(2, '0')}`
+      }
+    }))
+
+    setSystemMetrics({
+      cpu: seededInt('rt_cpu', 20, 75),
+      memory: seededInt('rt_mem', 40, 80),
+      network: seededInt('rt_net', 10, 60),
+      active_plugins: seededInt('rt_ap', 2, 7)
+    })
+
+    setRecentScans(Array.from({ length: 4 }, (_, i) => ({
+      id: `demo_scan_${i}`,
+      target: `192.168.${seededInt(`rt_st_${i}`, 1, 10)}.${seededInt(`rt_st2_${i}`, 1, 254)}`,
+      ports_found: seededInt(`rt_sp_${i}`, 1, 15),
+      vulns: seededInt(`rt_sv_${i}`, 0, 8),
+      status: i === 0 ? 'scanning' : 'complete',
+      progress: i === 0 ? seededInt('rt_spg', 20, 85) : 100
+    })))
+
+    setLiveEvents(Array.from({ length: 8 }, (_, i) => ({
+      id: `demo_evt_${i}`,
+      type: ['success', 'info', 'error'][seededInt(`rt_et_${i}`, 0, 2)],
+      message: [
+        'Nmap Scanner completed scan on 192.168.1.50',
+        'CRITICAL vulnerability CVE-2024-38210 found in OpenSSH 8.2',
+        'Nuclei scanning 10.0.0.0/24',
+        'CVE Analyzer completed on PostgreSQL 14',
+        'HIGH vulnerability CVE-2024-41002 found in Apache 2.4',
+        'Metasploit running on 192.168.5.12',
+        'OWASP ZAP completed scan on 192.168.3.100',
+        'SQLMap completed injection test on 10.0.1.15',
+      ][i],
+      timestamp: `${seededInt(`rt_evh_${i}`, 8, 23)}:${String(seededInt(`rt_evm_${i}`, 0, 59)).padStart(2, '0')}:${String(seededInt(`rt_evs_${i}`, 0, 59)).padStart(2, '0')}`
+    })))
+
+    setPluginDistData(null) // Will use default
+  }, [isDemoMode, seededInt, seededRandom])
+
+  // Live mode: initialize network data with empty chart
+  useEffect(() => {
+    if (isDemoMode) return
+    const initialData = Array.from({ length: 30 }, (_, i) => ({
+      time: i, packets: 0, bandwidth: 0, threats: 0
     }))
     setNetworkData(initialData)
   }, [isDemoMode])
 
-  // Real-time updates
+  // Real-time updates — only when live mode is active AND not paused
   useEffect(() => {
     if (!isLive) return
+
+    let anySuccess = false
+    let anyFail = false
+    const updateSource = (success) => {
+      if (success) anySuccess = true; else anyFail = true
+      liveFetchFailed.current = anyFail && !anySuccess
+      setDataSource(anySuccess ? 'live' : 'simulated')
+    }
 
     // Update uptime
     const uptimeInterval = setInterval(() => {
       setUptime(prev => prev + 1)
     }, 1000)
 
-    // Plugin activity — try pipeline.getFlow(), fall back to random
-    const activityInterval = setInterval(() => {
-      ;(async () => {
-        try {
-          const events = await pipeline.getFlow(10)
-          if (!Array.isArray(events) || events.length === 0) throw new Error('empty')
-          const mapped = events.map(evt => ({
-            id: evt.id || evt.timestamp || Date.now() + Math.random(),
-            timestamp: evt.timestamp
-              ? new Date(evt.timestamp).toLocaleTimeString()
-              : new Date().toLocaleTimeString(),
-            plugin: evt.event_type || 'Pipeline Event',
-            status: (evt.severity === 'critical' || evt.severity === 'high') ? 'running' : 'success',
-            duration: evt.duration_ms ? Math.round(evt.duration_ms / 1000) : Math.floor(Math.random() * 30) + 1,
-            target: evt.target || evt.source || `pipeline`
-          }))
-          setPluginActivity(mapped.slice(0, 8))
+    // Plugin activity — pipeline.getFlow()
+    const fetchPluginActivity = async () => {
+      try {
+        const events = await pipeline.getFlow(10)
+        if (!Array.isArray(events) || events.length === 0) throw new Error('empty')
+        const mapped = events.map(evt => ({
+          id: evt.id || evt.event_id || evt.timestamp || Date.now() + Math.random(),
+          timestamp: evt.timestamp
+            ? new Date(evt.timestamp).toLocaleTimeString()
+            : new Date().toLocaleTimeString(),
+          plugin: evt.event_type || 'Pipeline Event',
+          status: (evt.severity === 'critical' || evt.severity === 'high') ? 'running' : 'success',
+          duration: evt.duration_ms ? Math.round(evt.duration_ms / 1000) : Math.floor(Math.random() * 30) + 1,
+          target: evt.target || evt.source || 'pipeline'
+        }))
+        setPluginActivity(mapped.slice(0, 8))
+        const newLiveEvents = mapped.slice(0, 3).map(a => ({
+          id: Date.now() + Math.random(),
+          type: a.status === 'success' ? 'success' : 'info',
+          message: `${a.plugin} ${a.status === 'success' ? 'completed on' : 'running on'} ${a.target}`,
+          timestamp: a.timestamp
+        }))
+        setLiveEvents(prev => [...newLiveEvents, ...prev].slice(0, 50))
+        updateSource(true)
+      } catch {
+        updateSource(false)
+      }
+    }
+    const activityInterval = setInterval(fetchPluginActivity, 5000)
+    fetchPluginActivity()
 
-          // Feed live events from real pipeline data
-          const newLiveEvents = mapped.slice(0, 3).map(a => ({
-            id: Date.now() + Math.random(),
-            type: a.status === 'success' ? 'success' : 'info',
-            message: `${a.plugin} ${a.status === 'success' ? 'completed on' : 'running on'} ${a.target}`,
-            timestamp: a.timestamp
-          }))
-          setLiveEvents(prev => [...newLiveEvents, ...prev].slice(0, 50))
-          liveFetchFailed.current = false
-        } catch (err) {
-          console.error('API fetch failed (plugin activity), using simulated data:', err)
-          liveFetchFailed.current = true
-          const plugins = ['Nmap Scanner', 'Metasploit', 'CVE Analyzer', 'Binary Strings', 'OWASP ZAP', 'Nuclei', 'SQLMap', 'Nikto']
-          const newActivity = {
-            id: Date.now(),
-            timestamp: new Date().toLocaleTimeString(),
-            plugin: plugins[Math.floor(Math.random() * plugins.length)],
-            status: Math.random() > 0.2 ? 'success' : 'running',
-            duration: Math.floor(Math.random() * 30) + 1,
-            target: `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-          }
-          setPluginActivity(prev => [newActivity, ...prev].slice(0, 8))
-          setLiveEvents(prev => [{
-            id: Date.now(),
-            type: newActivity.status === 'success' ? 'success' : 'info',
-            message: `${newActivity.plugin} ${newActivity.status === 'success' ? 'completed scan on' : 'scanning'} ${newActivity.target}`,
-            timestamp: new Date().toLocaleTimeString()
-          }, ...prev].slice(0, 50))
-        }
-      })()
-    }, 5000)
-
-    // Vulnerabilities — try vulnerabilities.getCritical(), fall back to random
-    const vulnInterval = setInterval(() => {
-      ;(async () => {
-        try {
-          const data = await vulnApi.getCritical()
-          const list = Array.isArray(data) ? data : (data?.vulnerabilities || [])
-          if (list.length === 0) throw new Error('empty')
-          const mapped = list.map(v => ({
-            id: v.cve_id || v.id || `CVE-2024-${Math.floor(Math.random() * 10000).toString().padStart(5, '0')}`,
-            severity: (v.severity || 'HIGH').toUpperCase(),
-            service: v.affected_service || v.service || 'Unknown Service',
-            score: v.cvss_score != null ? parseFloat(v.cvss_score).toFixed(1) : '9.0',
-            timestamp: v.published_at || v.timestamp
-              ? new Date(v.published_at || v.timestamp).toLocaleTimeString()
-              : new Date().toLocaleTimeString()
-          }))
-          setVulnerabilities(mapped.slice(0, 6))
-
-          // Emit live events for critical/high
-          const critical = mapped.filter(v => v.severity === 'CRITICAL' || v.severity === 'HIGH').slice(0, 2)
-          if (critical.length > 0) {
-            setLiveEvents(prev => [
-              ...critical.map(v => ({
-                id: Date.now() + Math.random(),
-                type: 'error',
-                message: `${v.severity} vulnerability ${v.id} found in ${v.service}`,
-                timestamp: new Date().toLocaleTimeString()
-              })),
-              ...prev
-            ].slice(0, 50))
-          }
-          liveFetchFailed.current = false
-        } catch (err) {
-          console.error('API fetch failed (vulnerabilities), using simulated data:', err)
-          liveFetchFailed.current = true
-          if (Math.random() > 0.6) {
-            const severities = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
-            const severity = severities[Math.floor(Math.random() * severities.length)]
-            const services = ['OpenSSH 8.2', 'Apache 2.4', 'MySQL 8.0', 'PostgreSQL 14', 'nginx 1.21', 'Redis 6.2', 'MongoDB 5.0']
-            const newVuln = {
-              id: `CVE-2024-${Math.floor(Math.random() * 10000).toString().padStart(5, '0')}`,
-              severity,
-              service: services[Math.floor(Math.random() * services.length)],
-              score: severity === 'CRITICAL' ? (9 + Math.random()).toFixed(1) :
-                     severity === 'HIGH' ? (7 + Math.random() * 2).toFixed(1) :
-                     severity === 'MEDIUM' ? (4 + Math.random() * 3).toFixed(1) :
-                     (1 + Math.random() * 3).toFixed(1),
+    // Vulnerabilities — vulnApi.getCritical()
+    const fetchVulns = async () => {
+      try {
+        const data = await vulnApi.getCritical()
+        const list = Array.isArray(data) ? data : (data?.vulnerabilities || [])
+        if (list.length === 0) throw new Error('empty')
+        const mapped = list.map(v => ({
+          id: v.cve_id || v.id || `CVE-2024-${Math.floor(Math.random() * 10000).toString().padStart(5, '0')}`,
+          severity: (v.severity || 'HIGH').toUpperCase(),
+          service: v.affected_service || v.service || 'Unknown Service',
+          score: v.cvss_score != null ? parseFloat(v.cvss_score).toFixed(1) : '9.0',
+          timestamp: v.published_at || v.timestamp
+            ? new Date(v.published_at || v.timestamp).toLocaleTimeString()
+            : new Date().toLocaleTimeString()
+        }))
+        setVulnerabilities(mapped.slice(0, 6))
+        const critical = mapped.filter(v => v.severity === 'CRITICAL' || v.severity === 'HIGH').slice(0, 2)
+        if (critical.length > 0) {
+          setLiveEvents(prev => [
+            ...critical.map(v => ({
+              id: Date.now() + Math.random(),
+              type: 'error',
+              message: `${v.severity} vulnerability ${v.id} found in ${v.service}`,
               timestamp: new Date().toLocaleTimeString()
-            }
-            setVulnerabilities(prev => [newVuln, ...prev].slice(0, 6))
-            if (severity === 'CRITICAL' || severity === 'HIGH') {
-              setLiveEvents(prev => [{
-                id: Date.now(),
-                type: 'error',
-                message: `${severity} vulnerability ${newVuln.id} found in ${newVuln.service}`,
-                timestamp: new Date().toLocaleTimeString()
-              }, ...prev].slice(0, 50))
-            }
+            })),
+            ...prev
+          ].slice(0, 50))
+        }
+        updateSource(true)
+      } catch {
+        updateSource(false)
+      }
+    }
+    const vulnInterval = setInterval(fetchVulns, 10000)
+    fetchVulns()
+
+    // System metrics — stats.overview() + edr.getStatus()
+    const fetchMetrics = async () => {
+      try {
+        const [overview, edrStatus] = await Promise.all([
+          stats.overview(),
+          edr.getStatus()
+        ])
+        const endpointsCount = edrStatus?.endpoints_count ?? 0
+        const detectionsCount = edrStatus?.detections_count ?? 0
+        const connectorCount = edrStatus?.connectors
+          ? Object.keys(edrStatus.connectors).length : 0
+        const cpuVal = overview?.cpu_usage != null
+          ? overview.cpu_usage
+          : Math.min(95, Math.max(10, (endpointsCount % 80) + 20))
+        const memVal = overview?.memory_usage != null
+          ? overview.memory_usage
+          : Math.min(90, Math.max(30, (detectionsCount % 55) + 30))
+        const netVal = overview?.network_usage != null
+          ? overview.network_usage
+          : Math.min(95, Math.max(5, (endpointsCount * 3) % 90))
+        const activePlugins = connectorCount > 0
+          ? connectorCount
+          : (overview?.active_plugins ?? 0)
+        setSystemMetrics({ cpu: cpuVal, memory: memVal, network: netVal, active_plugins: activePlugins })
+        updateSource(true)
+      } catch {
+        updateSource(false)
+      }
+    }
+    const metricsInterval = setInterval(fetchMetrics, 5000)
+    fetchMetrics()
+
+    // Network data — networkAnalytics.metrics()
+    const fetchNetwork = async () => {
+      try {
+        const metrics = await networkAnalytics.metrics(1)
+        setNetworkData(prev => {
+          const newPoint = {
+            time: prev.length > 0 ? prev[prev.length - 1].time + 1 : 0,
+            packets: metrics.packets_per_second != null
+              ? Math.round(metrics.packets_per_second) : 0,
+            bandwidth: metrics.bandwidth_mbps != null
+              ? Math.round(metrics.bandwidth_mbps) : 0,
+            threats: metrics.threat_count != null
+              ? metrics.threat_count : 0
           }
-        }
-      })()
-    }, 10000)
+          return [...prev.slice(-29), newPoint]
+        })
+        updateSource(true)
+      } catch {
+        updateSource(false)
+      }
+    }
+    const networkInterval = setInterval(fetchNetwork, 3000)
+    fetchNetwork()
 
-    // System metrics — try stats.overview() + edr.getStatus(), fall back to random jitter
-    const metricsInterval = setInterval(() => {
-      ;(async () => {
-        try {
-          const [overview, edrStatus] = await Promise.all([
-            stats.overview(),
-            edr.getStatus()
-          ])
-          const endpointsCount = edrStatus?.endpoints_count ?? 0
-          const detectionsCount = edrStatus?.detections_count ?? 0
-          const connectorCount = edrStatus?.connectors
-            ? Object.keys(edrStatus.connectors).length
-            : 0
-          // Derive utilisation-style metrics from available data
-          const cpuVal = overview?.cpu_usage != null
-            ? overview.cpu_usage
-            : Math.min(95, Math.max(10, (endpointsCount % 80) + 20))
-          const memVal = overview?.memory_usage != null
-            ? overview.memory_usage
-            : Math.min(90, Math.max(30, (detectionsCount % 55) + 30))
-          const netVal = overview?.network_usage != null
-            ? overview.network_usage
-            : Math.min(95, Math.max(5, (endpointsCount * 3) % 90))
-          const activePlugins = connectorCount > 0
-            ? connectorCount
-            : (overview?.active_plugins ?? Math.floor(Math.random() * 5) + 2)
-          setSystemMetrics({
-            cpu: cpuVal,
-            memory: memVal,
-            network: netVal,
-            active_plugins: activePlugins
-          })
-          liveFetchFailed.current = false
-        } catch (err) {
-          console.error('API fetch failed (system metrics), using simulated data:', err)
-          liveFetchFailed.current = true
-          setSystemMetrics(prev => ({
-            cpu: Math.max(10, Math.min(95, prev.cpu + (Math.random() - 0.5) * 20)),
-            memory: Math.max(30, Math.min(90, prev.memory + (Math.random() - 0.5) * 10)),
-            network: Math.max(5, Math.min(95, prev.network + (Math.random() - 0.5) * 30)),
-            active_plugins: Math.floor(Math.random() * 5) + 2
-          }))
-        }
-      })()
-    }, 5000)
-
-    // Network data — try networkAnalytics.metrics(1), fall back to random
-    const networkInterval = setInterval(() => {
-      ;(async () => {
-        try {
-          const metrics = await networkAnalytics.metrics(1)
-          setNetworkData(prev => {
-            const newPoint = {
-              time: prev.length > 0 ? prev[prev.length - 1].time + 1 : 0,
-              packets: metrics.packets_per_second != null
-                ? Math.round(metrics.packets_per_second)
-                : Math.floor(Math.random() * 800) + 200,
-              bandwidth: metrics.bandwidth_mbps != null
-                ? Math.round(metrics.bandwidth_mbps)
-                : Math.floor(Math.random() * 400) + 100,
-              threats: metrics.threat_count != null
-                ? metrics.threat_count
-                : Math.floor(Math.random() * 50)
-            }
-            return [...prev.slice(-29), newPoint]
-          })
-          liveFetchFailed.current = false
-        } catch (err) {
-          console.error('API fetch failed (network data), using simulated data:', err)
-          liveFetchFailed.current = true
-          setNetworkData(prev => {
-            const newPoint = {
-              time: prev.length > 0 ? prev[prev.length - 1].time + 1 : 0,
-              packets: Math.floor(Math.random() * 800) + 200,
-              bandwidth: Math.floor(Math.random() * 400) + 100,
-              threats: Math.floor(Math.random() * 50)
-            }
-            return [...prev.slice(-29), newPoint]
-          })
-        }
-      })()
-    }, 3000)
-
-    // Recent scans — try pipeline.getFlow filtered for scan events, fall back to random
-    const scansInterval = setInterval(() => {
-      ;(async () => {
-        try {
-          const events = await pipeline.getFlow(20)
-          const list = Array.isArray(events) ? events : []
-          // Filter for scan-related events; fall back to all events if none match
-          const scanEvents = list.filter(e =>
-            e.event_type && (
-              e.event_type.toLowerCase().includes('scan') ||
-              e.event_type.toLowerCase().includes('vuln') ||
-              e.event_type.toLowerCase().includes('detect')
-            )
+    // Recent scans — pipeline.getFlow() filtered for scan events
+    const fetchScans = async () => {
+      try {
+        const events = await pipeline.getFlow(20)
+        const list = Array.isArray(events) ? events : []
+        const scanEvents = list.filter(e =>
+          e.event_type && (
+            e.event_type.toLowerCase().includes('scan') ||
+            e.event_type.toLowerCase().includes('vuln') ||
+            e.event_type.toLowerCase().includes('detect')
           )
-          const source = scanEvents.length > 0 ? scanEvents : list
-          if (source.length === 0) throw new Error('empty')
-          const mapped = source.slice(0, 5).map(evt => ({
-            id: evt.id || Date.now() + Math.random(),
-            target: evt.target || evt.source || `pipeline`,
-            ports_found: evt.ports_found ?? Math.floor(Math.random() * 15) + 1,
-            vulns: evt.vulnerability_count ?? evt.vuln_count ?? Math.floor(Math.random() * 8),
-            status: evt.status === 'running' ? 'scanning' : 'complete',
-            progress: evt.progress ?? 100
-          }))
-          setRecentScans(mapped)
-          liveFetchFailed.current = false
-        } catch (err) {
-          console.error('API fetch failed (recent scans), using simulated data:', err)
-          liveFetchFailed.current = true
-          const newScan = {
-            id: Date.now(),
-            target: `192.168.${Math.floor(Math.random() * 10)}.${Math.floor(Math.random() * 255)}`,
-            ports_found: Math.floor(Math.random() * 15) + 1,
-            vulns: Math.floor(Math.random() * 8),
-            status: Math.random() > 0.3 ? 'complete' : 'scanning',
-            progress: Math.floor(Math.random() * 100)
-          }
-          setRecentScans(prev => [newScan, ...prev].slice(0, 5))
-        }
-      })()
-    }, 4000)
+        )
+        const source = scanEvents.length > 0 ? scanEvents : list
+        if (source.length === 0) throw new Error('empty')
+        const mapped = source.slice(0, 5).map(evt => ({
+          id: evt.id || evt.event_id || Date.now() + Math.random(),
+          target: evt.target || evt.source || 'pipeline',
+          ports_found: evt.ports_found ?? 0,
+          vulns: evt.vulnerability_count ?? evt.vuln_count ?? 0,
+          status: evt.status === 'running' ? 'scanning' : 'complete',
+          progress: evt.progress ?? 100
+        }))
+        setRecentScans(mapped)
+        updateSource(true)
+      } catch {
+        updateSource(false)
+      }
+    }
+    const scansInterval = setInterval(fetchScans, 4000)
+    fetchScans()
+
+    // Plugin distribution — pipeline.getStats() for dynamic pie chart
+    const fetchDistribution = async () => {
+      try {
+        const pipeStats = await pipeline.getStats()
+        const eventStats = pipeStats?.events || {}
+        const execStats = pipeStats?.execution || {}
+        const agentStats = pipeStats?.agent || {}
+
+        const totalEvents = eventStats.events_published || 0
+        const totalOutcomes = (execStats.total_outcomes || 0) + (execStats.successes || 0) + (execStats.failures || 0)
+        const totalDecisions = agentStats.total_decisions || agentStats.decisions_made || 0
+        const totalPlaybooks = pipeStats?.playbooks?.total_executions || 0
+
+        if (totalEvents + totalOutcomes + totalDecisions + totalPlaybooks === 0) throw new Error('empty')
+
+        setPluginDistData([
+          { name: 'Events', value: totalEvents || 1, color: '#3b82f6' },
+          { name: 'Decisions', value: totalDecisions || 1, color: '#8b5cf6' },
+          { name: 'Actions', value: totalOutcomes || 1, color: '#f59e0b' },
+          { name: 'Playbooks', value: totalPlaybooks || 1, color: '#10b981' },
+        ])
+        updateSource(true)
+      } catch {
+        setPluginDistData(null)
+        updateSource(false)
+      }
+    }
+    const distInterval = setInterval(fetchDistribution, 15000)
+    fetchDistribution()
 
     return () => {
       clearInterval(uptimeInterval)
@@ -307,6 +345,7 @@ export default function RealtimeDashboard() {
       clearInterval(metricsInterval)
       clearInterval(networkInterval)
       clearInterval(scansInterval)
+      clearInterval(distInterval)
     }
   }, [isLive])
 
@@ -317,12 +356,13 @@ export default function RealtimeDashboard() {
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  const pluginDistribution = [
+  const defaultDistribution = [
     { name: 'Reconnaissance', value: 35, color: '#3b82f6' },
     { name: 'Vulnerability', value: 28, color: '#8b5cf6' },
     { name: 'Exploitation', value: 18, color: '#f59e0b' },
     { name: 'Analysis', value: 19, color: '#10b981' }
   ]
+  const pluginDistribution = pluginDistData || defaultDistribution
 
   const severityConfig = {
     CRITICAL: { color: '#ef4444', bg: 'from-red-500/20 to-red-600/10', border: 'border-red-500/30' },
@@ -364,7 +404,23 @@ export default function RealtimeDashboard() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+              {/* Data Source Indicator */}
+              <div className={`flex items-center space-x-2 px-3 py-2 rounded-xl border text-xs font-semibold ${
+                dataSource === 'live'
+                  ? isDarkMode ? 'bg-emerald-900/30 border-emerald-500/50 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  : dataSource === 'demo'
+                    ? isDarkMode ? 'bg-purple-900/30 border-purple-500/50 text-purple-400' : 'bg-purple-50 border-purple-200 text-purple-700'
+                    : isDarkMode ? 'bg-amber-900/30 border-amber-500/50 text-amber-400' : 'bg-amber-50 border-amber-200 text-amber-700'
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${
+                  dataSource === 'live' ? 'bg-emerald-400 animate-pulse'
+                    : dataSource === 'demo' ? 'bg-purple-400'
+                    : 'bg-amber-400 animate-pulse'
+                }`} />
+                <span>{dataSource === 'live' ? 'Live Data' : dataSource === 'demo' ? 'Demo Mode' : 'API Unavailable'}</span>
+              </div>
+
               {/* Uptime */}
               <div className={`flex items-center space-x-2 px-4 py-2 rounded-xl ${isDarkMode ? 'bg-slate-900/50 border border-slate-700' : 'bg-gray-100 border border-gray-200'}`}>
                 <ClockIcon className="w-4 h-4 text-cyan-400" />
@@ -373,19 +429,21 @@ export default function RealtimeDashboard() {
                 </span>
               </div>
 
-              {/* Live Toggle */}
-              <button
-                onClick={() => setIsLive(!isLive)}
-                className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
-                  isLive
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/30'
-                    : 'bg-gradient-to-r from-slate-600 to-slate-700 text-gray-300 shadow-lg'
-                }`}
-              >
-                {isLive ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
-                <span>{isLive ? 'Live' : 'Paused'}</span>
-                {isLive && <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>}
-              </button>
+              {/* Live / Pause Toggle — only shown in live mode (not demo) */}
+              {isLiveMode && (
+                <button
+                  onClick={() => setIsPaused(!isPaused)}
+                  className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
+                    !isPaused
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/30'
+                      : 'bg-gradient-to-r from-slate-600 to-slate-700 text-gray-300 shadow-lg'
+                  }`}
+                >
+                  {!isPaused ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
+                  <span>{!isPaused ? 'Live' : 'Paused'}</span>
+                  {!isPaused && <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>}
+                </button>
+              )}
 
               {/* Connection Status */}
               <div className={`flex items-center space-x-2 px-4 py-2 rounded-xl border ${
@@ -395,7 +453,7 @@ export default function RealtimeDashboard() {
               }`}>
                 <WifiIcon className={`w-4 h-4 ${isLive ? 'text-emerald-400' : 'text-gray-400'}`} />
                 <span className={`text-sm font-medium ${isLive ? 'text-emerald-400' : 'text-gray-400'}`}>
-                  {isLive ? 'Connected' : 'Disconnected'}
+                  {isLive ? 'Connected' : isDemoMode ? 'Demo' : 'Paused'}
                 </span>
               </div>
             </div>

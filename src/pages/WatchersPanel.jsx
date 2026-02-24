@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { watchers } from '../api/client'
 import Button from '../components/ui/Button'
 import Badge from '../components/ui/Badge'
@@ -34,9 +35,11 @@ const WATCHER_NAMES = {
  */
 export default function WatchersPanel() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
   const [activeTab, setActiveTab] = useState('grid')
   const [loading, setLoading] = useState(true)
   const [notification, setNotification] = useState(null)
+  const isLiveMode = !isDemoMode
 
   // Watcher data
   const [watcherMap, setWatcherMap] = useState({})
@@ -58,12 +61,32 @@ export default function WatchersPanel() {
     setTimeout(() => setNotification(null), 3000)
   }
 
+  // Initial load on mount
   useEffect(() => {
     fetchStatus()
-    // Poll every 10 seconds
-    const interval = setInterval(fetchStatus, 10000)
-    return () => clearInterval(interval)
   }, [])
+
+  // Live polling — runs only when isLiveMode is true
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => {
+      watchers.getStatus()
+        .then((data) => {
+          if (data && data.watchers && typeof data.watchers === 'object') {
+            setWatcherMap(data.watchers)
+            setTotalWatchers(data.total || Object.keys(data.watchers).length)
+            setRunningCount(
+              data.running ??
+                Object.values(data.watchers).filter((w) => w.state === 'running').length
+            )
+          }
+        })
+        .catch((err) => {
+          console.error('Live poll error:', err)
+        })
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const fetchStatus = async () => {
     try {

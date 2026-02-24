@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { feedback } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -123,8 +124,10 @@ function recommendationIcon(text) {
 
 export default function FeedbackDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
   const [activeTab, setActiveTab] = useState('effectiveness')
   const [loading, setLoading] = useState(true)
+  const isLiveMode = !isDemoMode
 
   // Data state
   const [statusData, setStatusData] = useState(null)
@@ -186,6 +189,41 @@ export default function FeedbackDashboard() {
   useEffect(() => {
     fetchAll()
   }, [])
+
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(async () => {
+      try {
+        const [
+          statusRes,
+          actionEffRes,
+          playbookEffRes,
+          outcomesRes,
+          incidentsRes,
+          multipliersRes,
+          recommendationsRes,
+        ] = await Promise.all([
+          feedback.getStatus().catch(() => null),
+          feedback.getActionEffectiveness().catch(() => null),
+          feedback.getPlaybookEffectiveness().catch(() => null),
+          feedback.getOutcomes(50).catch(() => null),
+          feedback.getIncidents(30).catch(() => null),
+          feedback.getMultipliers().catch(() => null),
+          feedback.getRecommendations().catch(() => null),
+        ])
+        if (statusRes !== null) setStatusData(statusRes)
+        if (actionEffRes !== null) setActionEffectiveness(Array.isArray(actionEffRes?.action_types) ? actionEffRes.action_types : [])
+        if (playbookEffRes !== null) setPlaybookEffectiveness(Array.isArray(playbookEffRes?.playbooks) ? playbookEffRes.playbooks : [])
+        if (outcomesRes !== null) setOutcomes(Array.isArray(outcomesRes?.outcomes) ? outcomesRes.outcomes : [])
+        if (incidentsRes !== null) setIncidents(Array.isArray(incidentsRes?.incidents) ? incidentsRes.incidents : [])
+        if (multipliersRes !== null) setMultipliers(multipliersRes?.multipliers || {})
+        if (recommendationsRes !== null) setRecommendations(Array.isArray(recommendationsRes?.recommendations) ? recommendationsRes.recommendations : [])
+      } catch (err) {
+        console.error('FeedbackDashboard live poll error:', err)
+      }
+    }, 20000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const handleAutoAssess = async () => {
     setAutoAssessing(true)
@@ -291,10 +329,12 @@ export default function FeedbackDashboard() {
               </p>
             </div>
           </div>
-          <Button size="sm" onClick={fetchAll} className="flex items-center gap-2">
-            <ArrowPathIcon className="w-4 h-4" />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm" onClick={fetchAll} className="flex items-center gap-2">
+              <ArrowPathIcon className="w-4 h-4" />
+              Refresh
+            </Button>
+          </div>
         </div>
 
         {/* Stats Grid */}

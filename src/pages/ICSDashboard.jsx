@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { ics } from '../api/client'
 
 const TABS = ['Overview', 'Water Treatment', 'Power Grid', 'Manufacturing', 'Alerts', 'Attack Tools', 'MITRE ICS']
@@ -25,6 +26,8 @@ const statusColor = {
 
 export default function ICSDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState(0)
   const [status, setStatus] = useState(null)
   const [devices, setDevices] = useState([])
@@ -61,6 +64,13 @@ export default function ICSDashboard() {
   }, [])
 
   useEffect(() => { fetchAll() }, [fetchAll])
+
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchAll() }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, fetchAll])
 
   useEffect(() => {
     if (activeTab === 4) {

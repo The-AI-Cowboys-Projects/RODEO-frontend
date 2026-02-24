@@ -25,6 +25,7 @@ const attackFlows = [
 export default function Dashboard() {
   const { isDarkMode } = useTheme()
   const { isDemoMode, seededInt } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [threatData, setThreatData] = useState([])
   const [activeFlows, setActiveFlows] = useState([])
   const animationRef = useRef(null)
@@ -78,16 +79,22 @@ export default function Dashboard() {
   const { data: statsData, isLoading: statsLoading } = useQuery({
     queryKey: ['stats'],
     queryFn: stats.overview,
+    refetchInterval: isLiveMode ? 15000 : false,
+    onError: (err) => console.error('[DashboardWithMap] stats poll error:', err),
   })
 
   const { data: highRiskSamples, isLoading: samplesLoading } = useQuery({
     queryKey: ['high-risk-samples'],
     queryFn: () => samples.getHighRisk(0.7),
+    refetchInterval: isLiveMode ? 15000 : false,
+    onError: (err) => console.error('[DashboardWithMap] high-risk-samples poll error:', err),
   })
 
   const { data: criticalVulns, isLoading: vulnsLoading } = useQuery({
     queryKey: ['critical-vulns'],
     queryFn: vulnerabilities.getCritical,
+    refetchInterval: isLiveMode ? 15000 : false,
+    onError: (err) => console.error('[DashboardWithMap] critical-vulns poll error:', err),
   })
 
   if (statsLoading || samplesLoading || vulnsLoading) {

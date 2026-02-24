@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 const statusColor = {
   online: 'text-green-400',
@@ -123,6 +124,8 @@ function timeAgo(iso) {
 
 export default function SCADADeviceDetail() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const { device_id } = useParams()
   const [device, setDevice] = useState(null)
   const [registers, setRegisters] = useState([])
@@ -173,6 +176,13 @@ export default function SCADADeviceDetail() {
   }, [device_id])
 
   useEffect(() => { fetchDevice() }, [fetchDevice])
+
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchDevice() }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, fetchDevice])
 
   const handleAction = async (action) => {
     setConfirmAction(null)

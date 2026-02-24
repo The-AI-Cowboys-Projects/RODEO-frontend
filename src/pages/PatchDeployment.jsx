@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { patchDeployment } from '../api/client'
 import {
   RocketLaunchIcon,
@@ -38,6 +39,8 @@ import {
 
 const PatchDeployment = () => {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [loading, setLoading] = useState(true)
   const [authError, setAuthError] = useState(false)
   const [status, setStatus] = useState(null)
@@ -125,6 +128,35 @@ const PatchDeployment = () => {
   useEffect(() => {
     fetchData()
   }, [fetchData])
+
+  useEffect(() => {
+    if (!isLiveMode) return
+    const intervalId = setInterval(async () => {
+      try {
+        const handleError = (error) => {
+          if (error?.response?.status === 401 || error?.response?.status === 403) {
+            setAuthError(true)
+          }
+          return null
+        }
+        const [statusRes, hostsRes, historyRes, statsRes, algosRes] = await Promise.all([
+          patchDeployment.getStatus().catch(handleError),
+          patchDeployment.getHosts().catch(e => handleError(e) || { hosts: [] }),
+          patchDeployment.getHistory().catch(e => handleError(e) || { deployments: [] }),
+          patchDeployment.getStats().catch(handleError),
+          patchDeployment.getAlgorithms().catch(handleError)
+        ])
+        if (statusRes !== null) setStatus(statusRes)
+        if (hostsRes !== null) setHosts(hostsRes?.hosts || [])
+        if (historyRes !== null) setHistory(historyRes?.deployments || [])
+        if (statsRes !== null) setStats(statsRes)
+        if (algosRes !== null) setAlgorithms(algosRes)
+      } catch (error) {
+        console.error('Live mode poll failed:', error)
+      }
+    }, 15000)
+    return () => clearInterval(intervalId)
+  }, [isLiveMode])
 
   // Handle host registration
   const handleAddHost = async () => {

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 // -------------------------------------------------------------------------
 // Constants
@@ -259,6 +260,8 @@ const defaultAuth = () => ({
 
 export default function ICSOffensive() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState(0)
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -283,6 +286,13 @@ export default function ICSOffensive() {
   useEffect(() => {
     fetchStatus()
   }, [fetchStatus])
+
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchStatus() }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, fetchStatus])
 
   // -----------------------------------------------------------------------
   // Tab 0: Dashboard

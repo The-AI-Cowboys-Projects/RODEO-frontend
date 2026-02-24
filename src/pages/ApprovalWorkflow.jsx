@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { approvals } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -20,6 +21,8 @@ import {
 
 export default function ApprovalWorkflow() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState('pending')
   const [loading, setLoading] = useState(true)
   const [queue, setQueue] = useState([])
@@ -123,6 +126,14 @@ export default function ApprovalWorkflow() {
       fetchConfig()
     }
   }, [activeTab])
+
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => {
+      fetchData().catch(err => console.error('Live poll error:', err))
+    }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const handleApprove = async (actionId) => {
     try {

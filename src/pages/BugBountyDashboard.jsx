@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
+import { useDemoMode } from "../context/DemoModeContext";
 import { bugBounty } from "../api/client";
 import {
     BugAntIcon,
@@ -1738,6 +1739,8 @@ function ProgramsTab({ programs, onSync, isDarkMode }) {
 // ==================== Main Dashboard ====================
 export default function BugBountyDashboard() {
     const { isDarkMode } = useTheme();
+    const { isDemoMode } = useDemoMode();
+    const isLiveMode = !isDemoMode;
     const [activeTab, setActiveTab] = useState("overview");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -1799,6 +1802,29 @@ export default function BugBountyDashboard() {
         const interval = setInterval(loadData, 30000);
         return () => clearInterval(interval);
     }, [loadData]);
+
+    // Live mode polling: re-fetch all data every 15s when not in demo mode
+    useEffect(() => {
+        if (!isLiveMode) return;
+        const interval = setInterval(async () => {
+            try {
+                const [statsRes, scansRes, findingsRes, reportsRes] =
+                    await Promise.all([
+                        bugBounty.getStats().catch(() => null),
+                        bugBounty.getScans().catch(() => null),
+                        bugBounty.getFindings().catch(() => null),
+                        bugBounty.getReports().catch(() => null),
+                    ]);
+                if (statsRes?.data !== undefined) setStats(statsRes.data);
+                if (Array.isArray(scansRes?.data)) setScans(scansRes.data);
+                if (Array.isArray(findingsRes?.data)) setFindings(findingsRes.data);
+                if (Array.isArray(reportsRes?.data)) setReports(reportsRes.data);
+            } catch (err) {
+                console.error("Live mode poll error:", err);
+            }
+        }, 15000);
+        return () => clearInterval(interval);
+    }, [isLiveMode]);
 
     // Handlers
     const handleStartScan = async (config) => {

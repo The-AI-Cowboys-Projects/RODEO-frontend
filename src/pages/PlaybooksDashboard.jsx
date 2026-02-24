@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { playbooks } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -24,6 +25,7 @@ import {
  */
 export default function PlaybooksDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
   const [activeTab, setActiveTab] = useState('overview')
   const [loading, setLoading] = useState(true)
   const [notification, setNotification] = useState(null)
@@ -35,6 +37,7 @@ export default function PlaybooksDashboard() {
   const [expandedPlaybooks, setExpandedPlaybooks] = useState(new Set())
   const [expandedExecutions, setExpandedExecutions] = useState(new Set())
   const [togglingId, setTogglingId] = useState(null)
+  const isLiveMode = !isDemoMode
 
   // Trigger form state
   const [triggerPlaybookId, setTriggerPlaybookId] = useState('')
@@ -57,6 +60,31 @@ export default function PlaybooksDashboard() {
       fetchExecutions()
     }
   }, [activeTab])
+
+  useEffect(() => {
+    if (!isLiveMode) return
+    const poll = async () => {
+      try {
+        const [statusData, listData, execData] = await Promise.all([
+          playbooks.getStatus().catch(() => null),
+          playbooks.list().catch(() => null),
+          playbooks.getExecutions(50).catch(() => null),
+        ])
+        if (statusData !== null) setEngineStatus(statusData)
+        if (listData !== null) {
+          setPlaybookList(Array.isArray(listData?.playbooks) ? listData.playbooks : [])
+        }
+        if (execData !== null) {
+          setExecutions(Array.isArray(execData?.executions) ? execData.executions : [])
+        }
+      } catch (err) {
+        console.error('Live poll error:', err)
+      }
+    }
+    poll()
+    const interval = setInterval(poll, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const fetchAllData = async () => {
     setLoading(true)
@@ -233,17 +261,19 @@ export default function PlaybooksDashboard() {
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-purple-500/20">
-              <DocumentTextIcon className="w-8 h-8 text-purple-400" />
-            </div>
-            <div>
-              <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-                Response Playbooks
-              </h1>
-              <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
-                Manage automated incident response workflows
-              </p>
+          <div className="flex items-center justify-between gap-3 mb-2">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-purple-500/20">
+                <DocumentTextIcon className="w-8 h-8 text-purple-400" />
+              </div>
+              <div>
+                <h1 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  Response Playbooks
+                </h1>
+                <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+                  Manage automated incident response workflows
+                </p>
+              </div>
             </div>
           </div>
         </div>

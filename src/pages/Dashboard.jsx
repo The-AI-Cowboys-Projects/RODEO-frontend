@@ -23,7 +23,7 @@ export default function Dashboard() {
   const [threatData, setThreatData] = useState({ regions: [], threatTypes: [] })
   const [attackFlows, setAttackFlows] = useState([])
   const [activeFlows, setActiveFlows] = useState([])
-  const [isLiveMode, setIsLiveMode] = useState(false)
+  const isLiveMode = !isDemoMode
   const [lastUpdated, setLastUpdated] = useState(null)
   const [isLoadingGeoData, setIsLoadingGeoData] = useState(true)
 
@@ -191,35 +191,7 @@ export default function Dashboard() {
               <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' mt-2'}>Real-time threat intelligence and analytics</p>
             </div>
             <div className="flex items-center space-x-4">
-              {/* Live/Demo Mode Toggle */}
-              <button
-                onClick={() => setIsLiveMode(!isLiveMode)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg border transition-all duration-300 ${
-                  isLiveMode
-                    ? isDarkMode
-                      ? 'bg-emerald-900/30 border-emerald-500/50 hover:bg-emerald-900/50'
-                      : 'bg-emerald-50 border-emerald-300 hover:bg-emerald-100'
-                    : isDarkMode
-                      ? 'bg-slate-800 border-slate-600 hover:bg-slate-700'
-                      : 'bg-gray-100 border-gray-300 hover:bg-gray-200'
-                }`}
-                aria-label={isLiveMode ? 'Switch to demo mode' : 'Switch to live mode'}
-              >
-                <div className={`w-8 h-4 rounded-full relative transition-colors duration-300 ${
-                  isLiveMode ? 'bg-emerald-500' : isDarkMode ? 'bg-slate-600' : 'bg-gray-400'
-                }`}>
-                  <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full shadow transition-transform duration-300 ${
-                    isLiveMode ? 'translate-x-4' : 'translate-x-0.5'
-                  }`} />
-                </div>
-                <span className={`text-sm font-medium ${
-                  isLiveMode ? 'text-emerald-400' : isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}>
-                  {isLiveMode ? 'Live' : 'Demo'}
-                </span>
-              </button>
-
-              {/* Status Badge */}
+              {/* Status Badge — controlled by global Demo Mode in Settings */}
               <div className={'flex items-center space-x-3 px-4 py-2 rounded-lg border ' + (
                 isLiveMode
                   ? isDarkMode ? 'bg-slate-900/50 border-emerald-500/50' : 'bg-emerald-50 border-emerald-200'

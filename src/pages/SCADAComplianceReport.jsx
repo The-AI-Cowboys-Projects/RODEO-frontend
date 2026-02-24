@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 const FRAMEWORKS = [
   { id: 'iec_62443', label: 'IEC 62443', description: 'Industrial Automation and Control Systems Security' },
@@ -85,6 +86,8 @@ function timeAgo(iso) {
 
 export default function SCADAComplianceReport() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [selectedFramework, setSelectedFramework] = useState('iec_62443')
   const [report, setReport] = useState(null)
   const [statusFilter, setStatusFilter] = useState('all')
@@ -116,6 +119,13 @@ export default function SCADAComplianceReport() {
   useEffect(() => {
     fetchReport(selectedFramework)
   }, [selectedFramework, fetchReport])
+
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchReport(selectedFramework) }, 20000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, selectedFramework, fetchReport])
 
   const handleFrameworkChange = (e) => {
     setSelectedFramework(e.target.value)

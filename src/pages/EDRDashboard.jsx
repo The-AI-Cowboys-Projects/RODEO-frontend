@@ -3407,6 +3407,8 @@ export default function EDRDashboard() {
   const wsRef = useRef(null)
   const [wsConnected, setWsConnected] = useState(false)
   const [realtimeAlerts, setRealtimeAlerts] = useState([])
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
 
   // Demo data for when API is unavailable
   const getDemoData = useCallback(() => {
@@ -3611,6 +3613,21 @@ export default function EDRDashboard() {
       }
     }
   }, []) // Empty dependency array - only run on mount
+
+  // Live polling: re-run loadData every 15 seconds when isLiveMode is on
+  useEffect(() => {
+    if (!isLiveMode) return
+    const fetchLiveData = async () => {
+      try {
+        await loadData()
+      } catch (err) {
+        console.error('Live data fetch failed:', err)
+      }
+    }
+    fetchLiveData()
+    const interval = setInterval(fetchLiveData, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, loadData])
 
   // Keyboard shortcuts for tabs
   useEffect(() => {

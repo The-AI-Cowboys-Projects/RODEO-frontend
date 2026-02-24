@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 // Purdue model zone definitions
 const PURDUE_ZONES = [
@@ -78,6 +79,8 @@ function timeAgo(iso) {
 
 export default function SCADAOverview() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [devices, setDevices] = useState([])
   const [compliance, setCompliance] = useState(null)
   const [events, setEvents] = useState([])
@@ -124,6 +127,13 @@ export default function SCADAOverview() {
   }, [])
 
   useEffect(() => { fetchData() }, [fetchData])
+
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchData() }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, fetchData])
 
   // Compute zone counts from devices
   const zoneCounts = {}

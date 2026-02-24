@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { autonomous } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -22,6 +23,8 @@ import {
 
 export default function AutonomousDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [agentStatus, setAgentStatus] = useState(null)
   const [pendingActions, setPendingActions] = useState([])
   const [actionHistory, setActionHistory] = useState([])
@@ -45,6 +48,19 @@ export default function AutonomousDashboard() {
 
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (!isLiveMode) return
+
+    const liveInterval = setInterval(() => {
+      fetchAgentStatus().catch((err) => console.error('Live poll: fetchAgentStatus error', err))
+      fetchPendingActions().catch((err) => console.error('Live poll: fetchPendingActions error', err))
+      fetchStatistics().catch((err) => console.error('Live poll: fetchStatistics error', err))
+      fetchActionHistory().catch((err) => console.error('Live poll: fetchActionHistory error', err))
+    }, 15000)
+
+    return () => clearInterval(liveInterval)
+  }, [isLiveMode])
 
   const fetchAgentStatus = async () => {
     try {

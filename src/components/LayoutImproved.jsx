@@ -1,8 +1,10 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import Badge from './ui/Badge'
+import { useTheme } from '../context/ThemeContext'
 
 export default function LayoutImproved({ children }) {
+  const { isDarkMode } = useTheme()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -155,11 +157,11 @@ export default function LayoutImproved({ children }) {
   ]
 
   return (
-    <div className="flex h-screen bg-slate-900">
+    <div className={`flex h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gray-100'}`}>
       {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className="bg-gradient-to-b from-slate-800 to-slate-900 border-r border-slate-700 flex flex-col transition-all duration-300 animate-slideInLeft relative"
+        className={`${isDarkMode ? 'bg-gradient-to-b from-slate-800 to-slate-900 border-slate-700' : 'bg-gradient-to-b from-white to-gray-50 border-gray-200'} border-r flex flex-col transition-all duration-300 animate-slideInLeft relative`}
         style={{
           width: sidebarCollapsed ? '80px' : `${sidebarWidth}px`,
           minWidth: sidebarCollapsed ? '80px' : '200px',
@@ -175,12 +177,12 @@ export default function LayoutImproved({ children }) {
           >
             <div
               className={`absolute right-0 top-0 bottom-0 w-1 transition-all ${
-                isResizing ? 'bg-purple-500 w-2' : 'bg-slate-600 group-hover:bg-purple-400 group-hover:w-2'
+                isResizing ? 'bg-purple-500 w-2' : isDarkMode ? 'bg-slate-600 group-hover:bg-purple-400 group-hover:w-2' : 'bg-gray-300 group-hover:bg-purple-400 group-hover:w-2'
               }`}
             />
             {/* Resize indicator */}
             <div
-              className={`absolute right-0.5 top-1/2 -translate-y-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${
+              className={`absolute right-0.5 top-1/2 -translate-y-1/2 text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${
                 isResizing ? 'opacity-100' : ''
               }`}
             >
@@ -191,43 +193,43 @@ export default function LayoutImproved({ children }) {
           </div>
         )}
         {/* Logo */}
-        <div className="p-6 border-b border-slate-700">
+        <div className={`p-6 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
           <div className="flex items-center justify-between">
             {!sidebarCollapsed && (
               <div className="animate-fadeInLeft flex-1">
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   R-O-D-E-O
                 </h1>
-                <p className="text-xs text-gray-500 mt-1">AI Cyber Operations</p>
+                <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mt-1`}>AI Cyber Operations</p>
               </div>
             )}
             <div className="flex items-center gap-2">
               {!sidebarCollapsed && (
                 <div className="group relative">
                   <button
-                    className="p-2 rounded-lg hover:bg-slate-700 transition-color"
+                    className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} transition-color`}
                     title="Sidebar info"
                   >
-                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className={`w-4 h-4 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </button>
                   {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-700 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+                  <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-800 text-white'} text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50`}>
                     Width: {sidebarWidth}px
                     <br />
                     Drag edge to resize
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-700" />
+                    <div className={`absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent ${isDarkMode ? 'border-t-slate-700' : 'border-t-gray-800'}`} />
                   </div>
                 </div>
               )}
               <button
                 onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                className="p-2 rounded-lg hover:bg-slate-700 transition-color"
+                className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} transition-color`}
                 title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               >
                 <svg
-                  className={`w-5 h-5 text-gray-400 transition-transform ${sidebarCollapsed ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} transition-transform ${sidebarCollapsed ? 'rotate-180' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -248,8 +250,7 @@ export default function LayoutImproved({ children }) {
                 key={item.path}
                 to={item.path}
                 className={`
-                  flex items-center px-6 py-3 text-gray-300
-                  hover:bg-slate-700/50 hover:text-white
+                  flex items-center px-6 py-3 ${isDarkMode ? 'text-gray-300 hover:bg-slate-700/50 hover:text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'}
                   transition-all
                   ${isActive ? 'bg-gradient-to-r from-purple-600/20 to-transparent text-white border-l-4 border-purple-500' : ''}
                   ${sidebarCollapsed ? 'justify-center px-4' : ''}
@@ -278,14 +279,14 @@ export default function LayoutImproved({ children }) {
 
         {/* Quick Actions */}
         {!sidebarCollapsed && (
-          <div className="p-4 border-t border-slate-700 animate-fadeInUp">
-            <p className="text-xs font-semibold text-gray-500 uppercase mb-3">Quick Actions</p>
+          <div className={`p-4 border-t ${isDarkMode ? 'border-slate-700' : 'border-gray-200'} animate-fadeInUp`}>
+            <p className={`text-xs font-semibold ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} uppercase mb-3`}>Quick Actions</p>
             <div className="space-y-2">
               {quickActions.map((action, index) => (
                 <button
                   key={index}
                   onClick={action.action}
-                  className="w-full flex items-center px-3 py-2 text-sm text-gray-300 hover:bg-slate-700 rounded-lg transition-color"
+                  className={`w-full flex items-center px-3 py-2 text-sm ${isDarkMode ? 'text-gray-300 hover:bg-slate-700' : 'text-gray-600 hover:bg-gray-100'} rounded-lg transition-color`}
                 >
                   <span className="mr-2">{action.icon}</span>
                   {action.label}
@@ -296,31 +297,31 @@ export default function LayoutImproved({ children }) {
         )}
 
         {/* User Section */}
-        <div className="p-4 border-t border-slate-700">
+        <div className={`p-4 border-t ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
           {sidebarCollapsed ? (
             <button
               onClick={handleLogout}
-              className="w-full p-2 rounded-lg hover:bg-slate-700 transition-color"
+              className={`w-full p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} transition-color`}
               title="Logout"
             >
-              <svg className="w-5 h-5 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mx-auto`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
             </button>
           ) : (
             <div className="animate-fadeInUp">
-              <div className="flex items-center space-x-3 p-3 rounded-lg bg-slate-700/30">
+              <div className={`flex items-center space-x-3 p-3 rounded-lg ${isDarkMode ? 'bg-slate-700/30' : 'bg-gray-100'}`}>
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
                   A
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-white">Admin</p>
-                  <p className="text-xs text-gray-400">admin@rodeo.local</p>
+                  <p className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Admin</p>
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>admin@rodeo.local</p>
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full mt-3 px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-color flex items-center justify-center"
+                className={`w-full mt-3 px-4 py-2 text-sm ${isDarkMode ? 'text-gray-300 hover:text-white hover:bg-slate-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'} rounded-lg transition-color flex items-center justify-center`}
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -335,11 +336,11 @@ export default function LayoutImproved({ children }) {
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="bg-slate-800/50 backdrop-blur-lg border-b border-slate-700 px-8 py-4 animate-fadeInDown">
+        <header className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white/80 border-gray-200'} backdrop-blur-lg border-b px-8 py-4 animate-fadeInDown`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg hover:bg-slate-700 transition-color lg:hidden">
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} transition-color lg:hidden`}>
+                <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
@@ -347,17 +348,17 @@ export default function LayoutImproved({ children }) {
                 <input
                   type="text"
                   placeholder="Search samples, CVEs, patches..."
-                  className="w-96 px-4 py-2 pl-10 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                  className={`w-96 px-4 py-2 pl-10 ${isDarkMode ? 'bg-slate-700/50 border-slate-600 text-white placeholder-gray-400' : 'bg-gray-100 border-gray-200 text-gray-900 placeholder-gray-500'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all`}
                 />
-                <svg className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} absolute left-3 top-2.5`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg hover:bg-slate-700 transition-color relative">
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-700' : 'hover:bg-gray-100'} transition-color relative`}>
+                <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
@@ -370,7 +371,7 @@ export default function LayoutImproved({ children }) {
         </header>
 
         {/* Main content area */}
-        <main className="flex-1 overflow-auto bg-slate-900 p-8">
+        <main className={`flex-1 overflow-auto ${isDarkMode ? 'bg-slate-900' : 'bg-gray-100'} p-8`}>
           {children}
         </main>
       </div>

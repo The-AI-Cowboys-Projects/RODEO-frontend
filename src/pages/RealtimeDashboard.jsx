@@ -310,7 +310,7 @@ export default function RealtimeDashboard() {
                 <span className={`text-lg ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{metric.suffix}</span>
               </div>
               {!metric.isCount && (
-                <div className="mt-3 h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
+                <div className={`mt-3 h-1.5 ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-200'} rounded-full overflow-hidden`}>
                   <div
                     className={`h-full rounded-full bg-gradient-to-r ${getMetricGradient(metric.value)} transition-all duration-500`}
                     style={{ width: `${metric.value}%` }}
@@ -586,7 +586,7 @@ export default function RealtimeDashboard() {
                     </span>
                   </div>
                   {scan.status === 'scanning' && (
-                    <div className="mt-2 h-1 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className={`mt-2 h-1 ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-200'} rounded-full overflow-hidden`}>
                       <div
                         className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full animate-pulse"
                         style={{ width: `${scan.progress}%` }}

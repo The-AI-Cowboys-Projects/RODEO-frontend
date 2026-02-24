@@ -7,6 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import KeyboardShortcutsModal from './KeyboardShortcutsModal';
 
 // Default keyboard shortcuts configuration
@@ -36,6 +37,7 @@ const SHORTCUTS = {
 };
 
 export default function GlobalKeyboardShortcuts({ children }) {
+  const { isDarkMode } = useTheme()
   const navigate = useNavigate();
   const location = useLocation();
   const [showHelp, setShowHelp] = useState(false);
@@ -158,9 +160,9 @@ export default function GlobalKeyboardShortcuts({ children }) {
 
       {/* Key sequence indicator */}
       {keySequence && (
-        <div className="fixed bottom-4 right-4 z-50 px-3 py-2 bg-gray-900/90 text-white rounded-lg shadow-lg border border-gray-700">
-          <span className="text-xs text-gray-400 mr-2">Waiting for:</span>
-          <kbd className="px-2 py-1 bg-gray-700 rounded text-sm font-mono">{keySequence}</kbd>
+        <div className={`fixed bottom-4 right-4 z-50 px-3 py-2 rounded-lg shadow-lg border ${isDarkMode ? 'bg-gray-900/90 text-white border-gray-700' : 'bg-white text-gray-900 border-gray-200'}`}>
+          <span className={`text-xs mr-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Waiting for:</span>
+          <kbd className={`px-2 py-1 rounded text-sm font-mono ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>{keySequence}</kbd>
         </div>
       )}
 

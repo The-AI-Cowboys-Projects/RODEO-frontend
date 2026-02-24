@@ -454,7 +454,7 @@ export default function KnowledgeBasePage() {
                   </p>
                 </div>
               </div>
-              <button onClick={handleCloseUploadModal} className="p-1 rounded hover:bg-slate-700/50 transition-colors">
+              <button onClick={handleCloseUploadModal} className={`p-1 rounded ${isDarkMode ? 'hover:bg-slate-700/50' : 'hover:bg-gray-100'} transition-colors`}>
                 <XMarkIcon className="w-5 h-5" />
               </button>
             </div>
@@ -1111,7 +1111,7 @@ export default function KnowledgeBasePage() {
                                     {doc.content || 'No content available.'}
                                   </p>
                                   {tags.length > 0 && (
-                                    <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-slate-700/30">
+                                    <div className={`flex flex-wrap gap-1 mt-3 pt-3 border-t ${isDarkMode ? 'border-slate-700/30' : 'border-gray-200'}`}>
                                       {tags.map(tag => (
                                         <button
                                           key={tag}

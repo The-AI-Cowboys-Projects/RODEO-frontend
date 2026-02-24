@@ -176,7 +176,7 @@ export default function HighRiskSamples() {
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm p-6 rounded-xl border border-slate-700/50 shadow-xl">
+      <div className={`${isDarkMode ? 'bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm p-6 rounded-xl border shadow-xl`}>
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -189,7 +189,7 @@ export default function HighRiskSamples() {
                 placeholder="Search by Sample ID or SHA256..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className={`w-full pl-10 pr-4 py-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all`}
               />
             </div>
           </div>
@@ -199,7 +199,7 @@ export default function HighRiskSamples() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all cursor-pointer"
+              className={`w-full px-4 py-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700 text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all cursor-pointer`}
             >
               <option value="risk_score">Sort by Risk Score</option>
               <option value="date">Sort by Date</option>
@@ -216,7 +216,7 @@ export default function HighRiskSamples() {
           return (
             <div
               key={sample.sample_id}
-              className={`group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-xl border ${risk.border} hover:border-opacity-100 transition-all duration-300 overflow-hidden cursor-pointer`}
+              className={`group relative ${isDarkMode ? 'bg-gradient-to-br from-slate-800/90 to-slate-900/90' : 'bg-white'} backdrop-blur-sm rounded-xl border ${risk.border} hover:border-opacity-100 transition-all duration-300 overflow-hidden cursor-pointer`}
               onClick={() => setSelectedSample(sample)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -225,12 +225,12 @@ export default function HighRiskSamples() {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 rounded-lg bg-slate-900/50 flex items-center justify-center border border-slate-700">
+                    <div className={`w-12 h-12 rounded-lg ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-100 border-gray-200'} flex items-center justify-center border`}>
                       <span className="text-lg font-bold text-purple-400">#{idx + 1}</span>
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-lg">{sample.sample_id}</h3>
-                      <p className="text-xs text-gray-400 uppercase tracking-wide mt-1">Sample Analysis</p>
+                      <h3 className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} text-lg`}>{sample.sample_id}</h3>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mt-1`}>Sample Analysis</p>
                     </div>
                   </div>
                   <div className={`px-3 py-1.5 rounded-lg ${risk.bg} border ${risk.border}`}>
@@ -239,13 +239,13 @@ export default function HighRiskSamples() {
                 </div>
 
                 {/* SHA256 Hash */}
-                <div className="mb-4 p-3 bg-slate-900/50 rounded-lg border border-slate-700/50">
+                <div className={`mb-4 p-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                       </svg>
-                      <span className="text-xs text-gray-400 font-medium">SHA256</span>
+                      <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-medium`}>SHA256</span>
                     </div>
                     <button
                       onClick={(e) => {
@@ -257,18 +257,18 @@ export default function HighRiskSamples() {
                       Copy
                     </button>
                   </div>
-                  <p className="text-sm text-gray-300 font-mono mt-2 break-all">{sample.sha256}</p>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} font-mono mt-2 break-all`}>{sample.sha256}</p>
                 </div>
 
                 {/* Risk Score */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-400 font-medium">Risk Score</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} font-medium`}>Risk Score</span>
                     <span className={`text-2xl font-bold ${risk.color}`}>
                       {(sample.overall_risk_score * 100).toFixed(0)}%
                     </span>
                   </div>
-                  <div className="w-full bg-slate-900/50 rounded-full h-3 overflow-hidden">
+                  <div className={`w-full ${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-200'} rounded-full h-3 overflow-hidden`}>
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${risk.color.replace('text-', 'bg-')}`}
                       style={{
@@ -281,27 +281,27 @@ export default function HighRiskSamples() {
 
                 {/* Metadata Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Status</p>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Status</p>
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span className="text-sm text-green-300 font-semibold">{sample.analysis_status}</span>
+                      <span className="text-sm text-green-500 font-semibold">{sample.analysis_status}</span>
                     </div>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">File Type</p>
-                    <span className="text-sm text-white font-semibold">{sample.file_type || 'Unknown'}</span>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>File Type</p>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>{sample.file_type || 'Unknown'}</span>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Size</p>
-                    <span className="text-sm text-white font-semibold">{sample.file_size ? `${(sample.file_size / 1024).toFixed(2)} KB` : 'N/A'}</span>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Size</p>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>{sample.file_size ? `${(sample.file_size / 1024).toFixed(2)} KB` : 'N/A'}</span>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Date</p>
-                    <span className="text-sm text-white font-semibold">
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Date</p>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>
                       {sample.created_at ? new Date(sample.created_at).toLocaleDateString() : 'N/A'}
                     </span>
                   </div>
@@ -340,18 +340,18 @@ export default function HighRiskSamples() {
       {/* Detail Modal */}
       {selectedSample && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setSelectedSample(null)}>
-          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700 p-6 z-10">
+          <div className={`${isDarkMode ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700' : 'bg-white border-gray-200'} rounded-2xl border max-w-4xl w-full max-h-[90vh] overflow-y-auto`} onClick={(e) => e.stopPropagation()}>
+            <div className={`sticky top-0 ${isDarkMode ? 'bg-slate-800/95 border-slate-700' : 'bg-white border-gray-200'} backdrop-blur-sm border-b p-6 z-10`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">{selectedSample.sample_id}</h2>
-                  <p className="text-sm text-gray-400 mt-1">Detailed Sample Analysis</p>
+                  <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{selectedSample.sample_id}</h2>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Detailed Sample Analysis</p>
                 </div>
                 <button
                   onClick={() => setSelectedSample(null)}
-                  className="w-10 h-10 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition-colors"
+                  className={`w-10 h-10 rounded-lg ${isDarkMode ? 'bg-slate-700/50 hover:bg-slate-600/50' : 'bg-gray-100 hover:bg-gray-200'} flex items-center justify-center transition-colors`}
                 >
-                  <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -360,17 +360,17 @@ export default function HighRiskSamples() {
 
             <div className="p-6 space-y-6">
               {/* Risk Assessment */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Risk Assessment</h3>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Risk Assessment</h3>
                 <div className="space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-gray-400">Overall Risk Score</span>
+                      <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Overall Risk Score</span>
                       <span className={`text-xl font-bold ${getRiskLevel(selectedSample.overall_risk_score).color}`}>
                         {(selectedSample.overall_risk_score * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-4 overflow-hidden">
+                    <div className={`w-full ${isDarkMode ? 'bg-slate-800' : 'bg-gray-200'} rounded-full h-4 overflow-hidden`}>
                       <div
                         className={`h-full rounded-full ${getRiskLevel(selectedSample.overall_risk_score).color.replace('text-', 'bg-')}`}
                         style={{ width: `${(selectedSample.overall_risk_score || 0) * 100}%` }}
@@ -381,12 +381,12 @@ export default function HighRiskSamples() {
               </div>
 
               {/* File Information */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">File Information</h3>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>File Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-xs text-gray-400 uppercase tracking-wide">SHA256 Hash</p>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide`}>SHA256 Hash</p>
                       <button
                         onClick={() => navigator.clipboard.writeText(selectedSample.sha256)}
                         className="text-gray-400 hover:text-purple-400 transition-colors"
@@ -397,40 +397,40 @@ export default function HighRiskSamples() {
                         </svg>
                       </button>
                     </div>
-                    <p className="text-sm text-white font-mono break-all">{selectedSample.sha256}</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-mono break-all`}>{selectedSample.sha256}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">File Type</p>
-                    <p className="text-sm text-white">{selectedSample.file_type || 'Unknown'}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>File Type</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{selectedSample.file_type || 'Unknown'}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">File Size</p>
-                    <p className="text-sm text-white">{selectedSample.file_size ? `${(selectedSample.file_size / 1024).toFixed(2)} KB` : 'N/A'}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>File Size</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{selectedSample.file_size ? `${(selectedSample.file_size / 1024).toFixed(2)} KB` : 'N/A'}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Analysis Status</p>
-                    <p className="text-sm text-green-300">{selectedSample.analysis_status}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Analysis Status</p>
+                    <p className="text-sm text-green-500">{selectedSample.analysis_status}</p>
                   </div>
                 </div>
               </div>
 
               {/* Analysis Details */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Analysis Details</h3>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Analysis Details</h3>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
-                    <span className="text-sm text-gray-400">Sample ID</span>
-                    <span className="text-sm text-white font-semibold">{selectedSample.sample_id}</span>
+                  <div className={`flex items-center justify-between p-3 ${isDarkMode ? 'bg-slate-800/50' : 'bg-white border border-gray-200'} rounded-lg`}>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Sample ID</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>{selectedSample.sample_id}</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
-                    <span className="text-sm text-gray-400">Created At</span>
-                    <span className="text-sm text-white font-semibold">
+                  <div className={`flex items-center justify-between p-3 ${isDarkMode ? 'bg-slate-800/50' : 'bg-white border border-gray-200'} rounded-lg`}>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Created At</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>
                       {selectedSample.created_at ? new Date(selectedSample.created_at).toLocaleString() : 'N/A'}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
-                    <span className="text-sm text-gray-400">Last Updated</span>
-                    <span className="text-sm text-white font-semibold">
+                  <div className={`flex items-center justify-between p-3 ${isDarkMode ? 'bg-slate-800/50' : 'bg-white border border-gray-200'} rounded-lg`}>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Last Updated</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>
                       {selectedSample.updated_at ? new Date(selectedSample.updated_at).toLocaleString() : 'N/A'}
                     </span>
                   </div>
@@ -446,30 +446,30 @@ export default function HighRiskSamples() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 bottom-full mb-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                    <div className="px-3 py-2 border-b border-slate-700">
-                      <p className="text-xs text-gray-400 font-semibold uppercase">Select Format</p>
+                  <div className={`absolute right-0 bottom-full mb-2 w-56 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10`}>
+                    <div className={`px-3 py-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-semibold uppercase`}>Select Format</p>
                     </div>
                     <button
                       onClick={() => generateReport('html')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">HTML Report</span>
-                      <span className="block text-xs text-gray-400">Interactive web page</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Interactive web page</span>
                     </button>
                     <button
                       onClick={() => generateReport('json')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">JSON Data</span>
-                      <span className="block text-xs text-gray-400">Structured data export</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Structured data export</span>
                     </button>
                     <button
                       onClick={() => generateReport('csv')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 rounded-b-lg transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} rounded-b-lg transition`}
                     >
                       <span className="font-medium">CSV Spreadsheet</span>
-                      <span className="block text-xs text-gray-400">Excel compatible</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Excel compatible</span>
                     </button>
                   </div>
                 </div>
@@ -480,23 +480,23 @@ export default function HighRiskSamples() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 bottom-full mb-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                    <div className="px-3 py-2 border-b border-slate-700">
-                      <p className="text-xs text-gray-400 font-semibold uppercase">Export Format</p>
+                  <div className={`absolute right-0 bottom-full mb-2 w-56 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10`}>
+                    <div className={`px-3 py-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-semibold uppercase`}>Export Format</p>
                     </div>
                     <button
                       onClick={() => generateReport('json')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">JSON</span>
-                      <span className="block text-xs text-gray-400">Raw data export</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Raw data export</span>
                     </button>
                     <button
                       onClick={() => generateReport('csv')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 rounded-b-lg transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} rounded-b-lg transition`}
                     >
                       <span className="font-medium">CSV</span>
-                      <span className="block text-xs text-gray-400">Spreadsheet format</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Spreadsheet format</span>
                     </button>
                   </div>
                 </div>

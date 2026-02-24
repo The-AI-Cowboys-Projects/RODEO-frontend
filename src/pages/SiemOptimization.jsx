@@ -169,7 +169,7 @@ export default function SiemOptimization() {
       {/* Key Performance Indicators - Big Impact Numbers */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Triage Time Reduction */}
-        <div className="bg-gradient-to-br from-purple-900/50 to-slate-800 p-6 rounded-xl border border-purple-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-purple-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-purple-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -182,17 +182,17 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>Average Triage Time</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.avgTriageTime.rodeo}</span>
-            <span className="text-sm text-gray-400">{efficiencyMetrics.avgTriageTime.unit}</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.avgTriageTime.rodeo}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{efficiencyMetrics.avgTriageTime.unit}</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             <span className="line-through">{efficiencyMetrics.avgTriageTime.manual} {efficiencyMetrics.avgTriageTime.unit}</span>
             <span className="ml-1">manual process</span>
           </div>
         </div>
 
         {/* False Positive Reduction */}
-        <div className="bg-gradient-to-br from-blue-900/50 to-slate-800 p-6 rounded-xl border border-blue-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-blue-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-blue-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -205,17 +205,17 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>False Positive Rate</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.falsePositiveRate.rodeo}</span>
-            <span className="text-sm text-gray-400">{efficiencyMetrics.falsePositiveRate.unit}</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.falsePositiveRate.rodeo}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{efficiencyMetrics.falsePositiveRate.unit}</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             <span className="line-through">{efficiencyMetrics.falsePositiveRate.manual}{efficiencyMetrics.falsePositiveRate.unit}</span>
             <span className="ml-1">industry average</span>
           </div>
         </div>
 
         {/* Time Saved */}
-        <div className="bg-gradient-to-br from-green-900/50 to-slate-800 p-6 rounded-xl border border-green-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-green-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-green-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,16 +228,16 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>Analyst Time Saved</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.analystTimeSaved.perWeek}</span>
-            <span className="text-sm text-gray-400">hours/week</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.analystTimeSaved.perWeek}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>hours/week</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             ~{efficiencyMetrics.analystTimeSaved.perMonth} hours/month per analyst
           </div>
         </div>
 
         {/* MTTD Reduction */}
-        <div className="bg-gradient-to-br from-orange-900/50 to-slate-800 p-6 rounded-xl border border-orange-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-orange-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-orange-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -251,17 +251,17 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>Mean Time to Detect (MTTD)</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.mttd.rodeo}</span>
-            <span className="text-sm text-gray-400">{efficiencyMetrics.mttd.unit}</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.mttd.rodeo}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{efficiencyMetrics.mttd.unit}</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             <span className="line-through">{efficiencyMetrics.mttd.manual} {efficiencyMetrics.mttd.unit}</span>
             <span className="ml-1">manual detection</span>
           </div>
         </div>
 
         {/* MTTR Reduction */}
-        <div className="bg-gradient-to-br from-red-900/50 to-slate-800 p-6 rounded-xl border border-red-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-red-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-red-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,17 +274,17 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>Mean Time to Respond (MTTR)</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.mttr.rodeo}</span>
-            <span className="text-sm text-gray-400">{efficiencyMetrics.mttr.unit}</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.mttr.rodeo}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{efficiencyMetrics.mttr.unit}</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             <span className="line-through">{efficiencyMetrics.mttr.manual} {efficiencyMetrics.mttr.unit}</span>
             <span className="ml-1">manual response</span>
           </div>
         </div>
 
         {/* Auto-Remediation Rate */}
-        <div className="bg-gradient-to-br from-teal-900/50 to-slate-800 p-6 rounded-xl border border-teal-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-teal-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-teal-500/30`}>
           <div className="flex items-center justify-between mb-4">
             <div className="w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,10 +298,10 @@ export default function SiemOptimization() {
           </div>
           <h3 className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm font-medium mb-2'}>Auto-Remediation Rate</h3>
           <div className="flex items-baseline space-x-2 mb-2">
-            <span className="text-3xl font-bold text-white">{efficiencyMetrics.autoRemediationRate.value}</span>
-            <span className="text-sm text-gray-400">{efficiencyMetrics.autoRemediationRate.unit}</span>
+            <span className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{efficiencyMetrics.autoRemediationRate.value}</span>
+            <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{efficiencyMetrics.autoRemediationRate.unit}</span>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             Patches applied without manual intervention
           </div>
         </div>
@@ -379,17 +379,17 @@ export default function SiemOptimization() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Time Savings Trend */}
         <div className={'p-6 rounded-xl border ' + (isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200')}>
-          <h2 className="text-2xl font-bold text-white mb-2">Analyst Time Savings Trend</h2>
+          <h2 className={'text-2xl font-bold mb-2 ' + (isDarkMode ? 'text-white' : 'text-gray-900')}>Analyst Time Savings Trend</h2>
           <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm mb-6'}>Weekly hours saved per analyst over time</p>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={timeSavingsTrend}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="week" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" label={{ value: 'Hours', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e5e7eb'} />
+              <XAxis dataKey="week" stroke={isDarkMode ? '#94a3b8' : '#4b5563'} />
+              <YAxis stroke={isDarkMode ? '#94a3b8' : '#4b5563'} label={{ value: 'Hours', angle: -90, position: 'insideLeft', fill: isDarkMode ? '#94a3b8' : '#4b5563' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: `1px solid ${isDarkMode ? '#475569' : '#d1d5db'}`,
                   borderRadius: '8px'
                 }}
               />
@@ -403,20 +403,20 @@ export default function SiemOptimization() {
 
         {/* Capability Improvement Radar */}
         <div className={'p-6 rounded-xl border ' + (isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200')}>
-          <h2 className="text-2xl font-bold text-white mb-2">Security Operations Capability</h2>
+          <h2 className={'text-2xl font-bold mb-2 ' + (isDarkMode ? 'text-white' : 'text-gray-900')}>Security Operations Capability</h2>
           <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm mb-6'}>Performance across key operational areas</p>
           <ResponsiveContainer width="100%" height={300}>
             <RadarChart data={capabilityData}>
-              <PolarGrid stroke="#334155" />
-              <PolarAngleAxis dataKey="capability" stroke="#94a3b8" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#94a3b8" />
+              <PolarGrid stroke={isDarkMode ? '#334155' : '#e5e7eb'} />
+              <PolarAngleAxis dataKey="capability" stroke={isDarkMode ? '#94a3b8' : '#4b5563'} tick={{ fill: isDarkMode ? '#94a3b8' : '#4b5563', fontSize: 11 }} />
+              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke={isDarkMode ? '#94a3b8' : '#4b5563'} />
               <Radar name="Manual Process" dataKey="manual" stroke="#ef4444" fill="#ef4444" fillOpacity={0.3} />
               <Radar name="With R-O-D-E-O" dataKey="rodeo" stroke="#10b981" fill="#10b981" fillOpacity={0.5} />
               <Legend />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: `1px solid ${isDarkMode ? '#475569' : '#d1d5db'}`,
                   borderRadius: '8px'
                 }}
               />
@@ -427,18 +427,18 @@ export default function SiemOptimization() {
 
       {/* Automation Breakdown */}
       <div className={'p-6 rounded-xl border ' + (isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200')}>
-        <h2 className="text-2xl font-bold text-white mb-2">Workflow Automation Breakdown</h2>
+        <h2 className={'text-2xl font-bold mb-2 ' + (isDarkMode ? 'text-white' : 'text-gray-900')}>Workflow Automation Breakdown</h2>
         <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm mb-6'}>Automation percentage by security workflow stage</p>
         <div className="space-y-4">
           {automationBreakdown.map((stage, idx) => (
             <div key={idx}>
               <div className="flex items-center justify-between mb-2">
                 <span className={(isDarkMode ? 'text-white' : 'text-gray-900') + ' font-medium'}>{stage.stage}</span>
-                <span className="text-sm text-gray-400">
-                  <span className="text-green-400 font-semibold">{stage.automated}%</span> automated · {stage.manual}% manual
+                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className="text-green-500 font-semibold">{stage.automated}%</span> automated · {stage.manual}% manual
                 </span>
               </div>
-              <div className="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
+              <div className={`w-full rounded-full h-3 overflow-hidden ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'}`}>
                 <div
                   className="bg-gradient-to-r from-green-500 to-teal-500 h-full rounded-full transition-all duration-500"
                   style={{ width: `${stage.automated}%` }}
@@ -451,7 +451,7 @@ export default function SiemOptimization() {
 
       {/* ROI & Cost Savings */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-yellow-900/50 to-slate-800 p-6 rounded-xl border border-yellow-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-yellow-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-yellow-500/30`}>
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -460,15 +460,15 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>Monthly Savings</p>
-              <p className="text-2xl font-bold text-white">${(monthlySavings / 1000).toFixed(1)}K</p>
+              <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>${(monthlySavings / 1000).toFixed(1)}K</p>
             </div>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             Analyst time + incident cost reduction
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-emerald-900/50 to-slate-800 p-6 rounded-xl border border-emerald-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-emerald-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-emerald-500/30`}>
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -477,15 +477,15 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>Annual Savings</p>
-              <p className="text-2xl font-bold text-white">${(annualSavings / 1000).toFixed(1)}K</p>
+              <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>${(annualSavings / 1000).toFixed(1)}K</p>
             </div>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             Total cost reduction per year
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-900/50 to-slate-800 p-6 rounded-xl border border-purple-500/30">
+        <div className={`${isDarkMode ? 'bg-gradient-to-br from-purple-900/50 to-slate-800' : 'bg-white'} p-6 rounded-xl border border-purple-500/30`}>
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
               <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -494,18 +494,18 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>ROI</p>
-              <p className="text-2xl font-bold text-white">{roi}%</p>
+              <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{roi}%</p>
             </div>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
             Return on investment (annual)
           </div>
         </div>
       </div>
 
       {/* Key Insights */}
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border border-slate-700">
-        <h2 className="text-2xl font-bold text-white mb-4">Key Optimization Insights</h2>
+      <div className={`p-6 rounded-xl border ${isDarkMode ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700' : 'bg-gray-50 border-gray-200'}`}>
+        <h2 className={'text-2xl font-bold mb-4 ' + (isDarkMode ? 'text-white' : 'text-gray-900')}>Key Optimization Insights</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-start space-x-3">
             <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
@@ -515,7 +515,7 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-white' : 'text-gray-900') + ' font-medium mb-1'}>AI-Powered Triage</p>
-              <p className="text-sm text-gray-400">ML models trained on 25+ years of CVE data automatically prioritize threats with 94% accuracy, eliminating manual sorting.</p>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>ML models trained on 25+ years of CVE data automatically prioritize threats with 94% accuracy, eliminating manual sorting.</p>
             </div>
           </div>
 
@@ -527,7 +527,7 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-white' : 'text-gray-900') + ' font-medium mb-1'}>Alert Fatigue Eliminated</p>
-              <p className="text-sm text-gray-400">Intelligent filtering reduces daily alerts by 81%, allowing analysts to focus on genuine threats instead of false positives.</p>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Intelligent filtering reduces daily alerts by 81%, allowing analysts to focus on genuine threats instead of false positives.</p>
             </div>
           </div>
 
@@ -539,7 +539,7 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-white' : 'text-gray-900') + ' font-medium mb-1'}>Autonomous Operations</p>
-              <p className="text-sm text-gray-400">From discovery to patching, 88% of security workflows run autonomously, freeing teams for strategic initiatives.</p>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>From discovery to patching, 88% of security workflows run autonomously, freeing teams for strategic initiatives.</p>
             </div>
           </div>
 
@@ -551,7 +551,7 @@ export default function SiemOptimization() {
             </div>
             <div>
               <p className={(isDarkMode ? 'text-white' : 'text-gray-900') + ' font-medium mb-1'}>Real-Time Response</p>
-              <p className="text-sm text-gray-400">Automated ticket creation and patch deployment reduces response time from days to hours, containing threats faster.</p>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Automated ticket creation and patch deployment reduces response time from days to hours, containing threats faster.</p>
             </div>
           </div>
         </div>

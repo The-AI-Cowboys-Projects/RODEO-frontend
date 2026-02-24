@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 const FRAMEWORKS = [
   { id: 'iec_62443', label: 'IEC 62443', description: 'Industrial Automation and Control Systems Security' },
@@ -83,6 +84,7 @@ function timeAgo(iso) {
 }
 
 export default function SCADAComplianceReport() {
+  const { isDarkMode } = useTheme()
   const [selectedFramework, setSelectedFramework] = useState('iec_62443')
   const [report, setReport] = useState(null)
   const [statusFilter, setStatusFilter] = useState('all')
@@ -165,7 +167,7 @@ export default function SCADAComplianceReport() {
   }
 
   return (
-    <div className="p-6 space-y-6 text-white">
+    <div className={`p-6 space-y-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
       {/* Notification toast */}
       {notif && (
         <div className="fixed top-4 right-4 z-50 bg-amber-700 text-white px-4 py-2 rounded-lg shadow-lg text-sm">
@@ -177,7 +179,7 @@ export default function SCADAComplianceReport() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-amber-400">ICS Compliance Report</h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm mt-1`}>
             Control-by-control assessment against industrial cybersecurity frameworks
           </p>
         </div>
@@ -200,11 +202,11 @@ export default function SCADAComplianceReport() {
       <div className="flex flex-wrap items-center gap-4">
         {/* Framework selector */}
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-400">Framework:</label>
+          <label className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Framework:</label>
           <select
             value={selectedFramework}
             onChange={handleFrameworkChange}
-            className="bg-gray-800 border border-gray-600 text-white text-sm rounded px-3 py-1.5 focus:outline-none focus:border-amber-500"
+            className={`${isDarkMode ? 'bg-gray-800 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'} border text-sm rounded px-3 py-1.5 focus:outline-none focus:border-amber-500`}
           >
             {FRAMEWORKS.map(fw => (
               <option key={fw.id} value={fw.id}>{fw.label}</option>
@@ -221,7 +223,9 @@ export default function SCADAComplianceReport() {
               className={`text-xs px-3 py-1.5 rounded transition-colors capitalize ${
                 statusFilter === f
                   ? 'bg-amber-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
+                  : isDarkMode
+                    ? 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
+                    : 'bg-gray-100 text-gray-500 hover:text-gray-900 hover:bg-gray-200'
               }`}
             >
               {f}
@@ -232,10 +236,10 @@ export default function SCADAComplianceReport() {
 
       {/* Framework description */}
       {FRAMEWORKS.find(f => f.id === selectedFramework) && (
-        <p className="text-xs text-gray-500">
+        <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
           {FRAMEWORKS.find(f => f.id === selectedFramework).description}
           {report?.generated_at && (
-            <span className="ml-3 text-gray-600">Generated {timeAgo(report.generated_at)}</span>
+            <span className={`ml-3 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`}>Generated {timeAgo(report.generated_at)}</span>
           )}
         </p>
       )}
@@ -248,30 +252,31 @@ export default function SCADAComplianceReport() {
         <>
           {/* Summary stats bar */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <StatCard label="Total Controls" value={total} />
-            <StatCard label="Passed" value={passed} color="text-green-400" />
-            <StatCard label="Failed" value={failed} color="text-red-400" />
-            <StatCard label="Warnings" value={warned} color="text-yellow-400" />
+            <StatCard label="Total Controls" value={total} isDarkMode={isDarkMode} />
+            <StatCard label="Passed" value={passed} color="text-green-400" isDarkMode={isDarkMode} />
+            <StatCard label="Failed" value={failed} color="text-red-400" isDarkMode={isDarkMode} />
+            <StatCard label="Warnings" value={warned} color="text-yellow-400" isDarkMode={isDarkMode} />
             <StatCard
               label="Pass Rate"
               value={`${passRate}%`}
               color={passRate >= 80 ? 'text-green-400' : passRate >= 60 ? 'text-yellow-400' : 'text-red-400'}
+              isDarkMode={isDarkMode}
             />
           </div>
 
           {/* Progress bar */}
           {total > 0 && (
             <div>
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <div className={`flex justify-between text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mb-1`}>
                 <span>Compliance progress</span>
                 <span>{passed}/{total} controls passing</span>
               </div>
-              <div className="h-3 rounded-full bg-gray-800 overflow-hidden flex">
+              <div className={`h-3 rounded-full ${isDarkMode ? 'bg-gray-800' : 'bg-gray-200'} overflow-hidden flex`}>
                 <div className="bg-green-500 h-full transition-all" style={{ width: `${(passed / total) * 100}%` }} />
                 <div className="bg-yellow-400 h-full transition-all" style={{ width: `${(warned / total) * 100}%` }} />
                 <div className="bg-red-500 h-full transition-all" style={{ width: `${(failed / total) * 100}%` }} />
               </div>
-              <div className="flex gap-4 mt-1 text-xs">
+              <div className={`flex gap-4 mt-1 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" />Pass</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-400 inline-block" />Warning</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Fail</span>
@@ -280,14 +285,14 @@ export default function SCADAComplianceReport() {
           )}
 
           {/* Control grid / table */}
-          <Section title={`Controls (${filtered.length})`}>
+          <Section title={`Controls (${filtered.length})`} isDarkMode={isDarkMode}>
             {filtered.length === 0 ? (
-              <p className="text-gray-400 text-sm">No controls match the selected filter.</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>No controls match the selected filter.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-400 border-b border-gray-700">
+                    <tr className={`text-left ${isDarkMode ? 'text-gray-400 border-b border-gray-700' : 'text-gray-500 border-b border-gray-200'}`}>
                       <th className="pb-2 pr-4">Control ID</th>
                       <th className="pb-2 pr-4">Name</th>
                       <th className="pb-2 pr-4">Status</th>
@@ -296,15 +301,15 @@ export default function SCADAComplianceReport() {
                   </thead>
                   <tbody>
                     {filtered.map((ctrl, i) => (
-                      <tr key={ctrl.control_id || i} className="border-b border-gray-800 hover:bg-gray-900/40">
+                      <tr key={ctrl.control_id || i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-900/40' : 'border-gray-200 hover:bg-gray-50'}`}>
                         <td className="py-2.5 pr-4 font-mono text-xs text-amber-300 whitespace-nowrap">{ctrl.control_id}</td>
                         <td className="py-2.5 pr-4 font-medium">{ctrl.name}</td>
                         <td className="py-2.5 pr-4 whitespace-nowrap">
-                          <span className={`text-xs px-2 py-0.5 rounded font-semibold ${statusBadge[ctrl.status] || 'bg-gray-700 text-gray-300'}`}>
+                          <span className={`text-xs px-2 py-0.5 rounded font-semibold ${statusBadge[ctrl.status] || (isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600 border border-gray-200')}`}>
                             {(ctrl.status || 'unknown').toUpperCase()}
                           </span>
                         </td>
-                        <td className="py-2.5 text-xs text-gray-400 max-w-xs">{ctrl.details || '—'}</td>
+                        <td className={`py-2.5 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} max-w-xs`}>{ctrl.details || '—'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -315,7 +320,7 @@ export default function SCADAComplianceReport() {
 
           {/* Remediation list — failed controls only */}
           {failedControls.length > 0 && (
-            <Section title={`Remediation Required (${failedControls.length})`}>
+            <Section title={`Remediation Required (${failedControls.length})`} isDarkMode={isDarkMode}>
               <div className="space-y-3">
                 {failedControls.map((ctrl, i) => (
                   <div
@@ -326,13 +331,13 @@ export default function SCADAComplianceReport() {
                       <span className="font-mono text-xs text-amber-300 bg-amber-950/40 px-2 py-0.5 rounded">
                         {ctrl.control_id}
                       </span>
-                      <span className="font-semibold text-sm text-white">{ctrl.name}</span>
+                      <span className={`font-semibold text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{ctrl.name}</span>
                       <span className="text-xs px-2 py-0.5 rounded bg-red-700 text-red-100 font-semibold">FAIL</span>
                     </div>
-                    <p className="text-xs text-gray-400 mb-2">{ctrl.details}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-2`}>{ctrl.details}</p>
                     <div className="flex items-start gap-2">
                       <span className="text-xs text-amber-400 font-semibold flex-shrink-0 mt-0.5">Remediation:</span>
-                      <p className="text-xs text-gray-300">{ctrl.remediation}</p>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{ctrl.remediation}</p>
                     </div>
                   </div>
                 ))}
@@ -347,16 +352,17 @@ export default function SCADAComplianceReport() {
 
 // --- Shared sub-components ---
 
-function StatCard({ label, value, color = 'text-white' }) {
+function StatCard({ label, value, color = '', isDarkMode }) {
+  const textColor = color || (isDarkMode ? 'text-white' : 'text-gray-900')
   return (
-    <div className="rounded-lg border border-amber-500/20 bg-gray-900/60 p-4 text-center">
-      <p className={`text-2xl font-bold ${color}`}>{value}</p>
-      <p className="text-xs text-gray-400 mt-1">{label}</p>
+    <div className={`rounded-lg border border-amber-500/20 ${isDarkMode ? 'bg-gray-900/60' : 'bg-gray-50'} p-4 text-center`}>
+      <p className={`text-2xl font-bold ${textColor}`}>{value}</p>
+      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>{label}</p>
     </div>
   )
 }
 
-function Section({ title, children }) {
+function Section({ title, children, isDarkMode }) {
   return (
     <div>
       <h2 className="text-lg font-semibold mb-3 text-amber-300">{title}</h2>

@@ -23,7 +23,7 @@ api.interceptors.request.use((config) => {
 export default function GeneralSettings() {
   const queryClient = useQueryClient()
   const [saveStatus, setSaveStatus] = useState(null)
-  const { setTheme } = useTheme()
+  const { isDarkMode, setTheme } = useTheme()
 
   const [formData, setFormData] = useState({
     system_name: 'R-O-D-E-O',
@@ -116,10 +116,10 @@ export default function GeneralSettings() {
   }
 
   return (
-    <div className="bg-slate-900 border border-slate-700 rounded-lg p-6">
+    <div className={`${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'} border rounded-lg p-6`}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-brand-purple-light mb-2">General Settings</h2>
-        <p className="text-gray-400 text-sm">
+        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
           Configure system-wide preferences and display options
         </p>
       </div>
@@ -127,12 +127,12 @@ export default function GeneralSettings() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* System Information */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
+          <h3 className={`text-lg font-semibold text-purple-300 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'} pb-2`}>
             System Information
           </h3>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
               System Name
             </label>
             <input
@@ -140,7 +140,7 @@ export default function GeneralSettings() {
               name="system_name"
               value={formData.system_name}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple"
+              className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg placeholder-gray-500 focus:outline-none focus:border-brand-purple`}
             />
             <p className="text-xs text-gray-500 mt-1">
               Display name for the system
@@ -150,20 +150,20 @@ export default function GeneralSettings() {
 
         {/* Localization */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
+          <h3 className={`text-lg font-semibold text-purple-300 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'} pb-2`}>
             Localization
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Timezone
               </label>
               <select
                 name="timezone"
                 value={formData.timezone}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               >
                 <option value="UTC">UTC</option>
                 <option value="America/New_York">Eastern Time (ET)</option>
@@ -178,14 +178,14 @@ export default function GeneralSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Language
               </label>
               <select
                 name="language"
                 value={formData.language}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               >
                 <option value="en">English</option>
                 <option value="es">Español</option>
@@ -197,14 +197,14 @@ export default function GeneralSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Date Format
               </label>
               <select
                 name="date_format"
                 value={formData.date_format}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               >
                 <option value="YYYY-MM-DD">2025-01-15 (ISO)</option>
                 <option value="MM/DD/YYYY">01/15/2025 (US)</option>
@@ -214,14 +214,14 @@ export default function GeneralSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Time Format
               </label>
               <select
                 name="time_format"
                 value={formData.time_format}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               >
                 <option value="24h">24-hour (13:00)</option>
                 <option value="12h">12-hour (1:00 PM)</option>
@@ -232,13 +232,13 @@ export default function GeneralSettings() {
 
         {/* Display Settings */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
+          <h3 className={`text-lg font-semibold text-purple-300 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'} pb-2`}>
             Display Settings
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Auto-Refresh Interval (seconds)
               </label>
               <input
@@ -248,7 +248,7 @@ export default function GeneralSettings() {
                 onChange={handleChange}
                 min="10"
                 max="300"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               />
               <p className="text-xs text-gray-500 mt-1">
                 How often dashboards auto-refresh (10-300 seconds)
@@ -256,14 +256,14 @@ export default function GeneralSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
                 Items Per Page
               </label>
               <select
                 name="items_per_page"
                 value={formData.items_per_page}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-brand-purple"
+                className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg focus:outline-none focus:border-brand-purple`}
               >
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -283,10 +283,10 @@ export default function GeneralSettings() {
                 name="enable_dark_mode"
                 checked={formData.enable_dark_mode}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-brand-purple cursor-pointer"
+                className={`w-5 h-5 text-purple-600 ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-gray-100 border-gray-200'} rounded focus:ring-brand-purple cursor-pointer`}
               />
               <div>
-                <div className="text-sm font-medium text-gray-300">Enable Dark Mode</div>
+                <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Enable Dark Mode</div>
                 <div className="text-xs text-gray-500">Toggle between dark and light theme</div>
               </div>
             </label>
@@ -297,10 +297,10 @@ export default function GeneralSettings() {
                 name="enable_animations"
                 checked={formData.enable_animations}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-brand-purple"
+                className={`w-5 h-5 text-purple-600 ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-gray-100 border-gray-200'} rounded focus:ring-brand-purple`}
               />
               <div>
-                <div className="text-sm font-medium text-gray-300">Enable Animations</div>
+                <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Enable Animations</div>
                 <div className="text-xs text-gray-500">Show transitions and animations</div>
               </div>
             </label>
@@ -345,7 +345,7 @@ export default function GeneralSettings() {
                 setTheme(settings.enable_dark_mode)
               }
             }}
-            className="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+            className={`px-4 py-3 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-900'} rounded-lg font-medium transition-colors`}
           >
             Reset
           </button>

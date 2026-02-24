@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { XMarkIcon, CommandLineIcon } from '@heroicons/react/24/outline';
+import { useTheme } from '../context/ThemeContext';
 
 const shortcuts = {
   navigation: {
@@ -57,19 +58,23 @@ const shortcuts = {
 };
 
 function KeyBadge({ children }) {
+  const { isDarkMode } = useTheme()
   return (
-    <kbd className="inline-flex items-center justify-center min-w-[24px] h-6 px-2 text-xs font-medium
-      bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200
-      border border-gray-300 dark:border-gray-600 rounded shadow-sm">
+    <kbd className={`inline-flex items-center justify-center min-w-[24px] h-6 px-2 text-xs font-medium rounded shadow-sm border ${
+      isDarkMode
+        ? 'bg-gray-700 text-gray-200 border-gray-600'
+        : 'bg-gray-100 text-gray-800 border-gray-300'
+    }`}>
       {children}
     </kbd>
   );
 }
 
 function ShortcutItem({ keys, description }) {
+  const { isDarkMode } = useTheme()
   return (
-    <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
-      <span className="text-sm text-gray-700 dark:text-gray-300">{description}</span>
+    <div className={`flex items-center justify-between py-2 border-b last:border-0 ${isDarkMode ? 'border-gray-800' : 'border-gray-100'}`}>
+      <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{description}</span>
       <div className="flex items-center gap-1">
         {keys.map((key, index) => (
           <React.Fragment key={index}>
@@ -83,12 +88,13 @@ function ShortcutItem({ keys, description }) {
 }
 
 function ShortcutSection({ title, items }) {
+  const { isDarkMode } = useTheme()
   return (
     <div className="mb-6 last:mb-0">
-      <h3 className="text-sm font-semibold text-pink-500 dark:text-pink-400 mb-3 uppercase tracking-wide">
+      <h3 className={`text-sm font-semibold mb-3 uppercase tracking-wide ${isDarkMode ? 'text-pink-400' : 'text-pink-500'}`}>
         {title}
       </h3>
-      <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+      <div className={`rounded-lg border p-3 ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}>
         {items.map((item, index) => (
           <ShortcutItem key={index} keys={item.keys} description={item.description} />
         ))}
@@ -98,6 +104,7 @@ function ShortcutSection({ title, items }) {
 }
 
 export default function KeyboardShortcutsModal({ isOpen, onClose }) {
+  const { isDarkMode } = useTheme()
   if (!isOpen) return null;
 
   return (

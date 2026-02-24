@@ -36,15 +36,19 @@ export default function Settings() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6 border-b border-slate-700">
+        <div className={`flex gap-2 mb-6 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-5 py-3 font-medium transition-colors relative rounded-t-lg ${
                 activeTab === tab.id
-                  ? 'text-white bg-slate-800 border-b-2 border-purple-500'
-                  : 'text-gray-400 hover:text-gray-300 hover:bg-slate-800/50'
+                  ? isDarkMode
+                    ? 'text-white bg-slate-800 border-b-2 border-purple-500'
+                    : 'text-gray-900 bg-gray-100 border-b-2 border-purple-500'
+                  : isDarkMode
+                    ? 'text-gray-400 hover:text-gray-300 hover:bg-slate-800/50'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
               }`}
             >
               <span className="mr-2">{tab.icon}</span>
@@ -55,7 +59,7 @@ export default function Settings() {
 
         {/* Tab Content */}
         <div className="mt-6">
-          {activeTab === 'overview' && <SettingsOverview onNavigate={setActiveTab} />}
+          {activeTab === 'overview' && <SettingsOverview onNavigate={setActiveTab} isDarkMode={isDarkMode} />}
           {activeTab === 'general' && <GeneralSettings />}
           {activeTab === 'security' && <SecuritySettings />}
           {activeTab === 'notifications' && <NotificationSettings />}
@@ -72,7 +76,7 @@ export default function Settings() {
  * Settings Overview Component
  * Displays summary of all settings categories with quick access
  */
-function SettingsOverview({ onNavigate }) {
+function SettingsOverview({ onNavigate, isDarkMode }) {
   const settingsCategories = [
     {
       id: 'general',
@@ -131,8 +135,8 @@ function SettingsOverview({ onNavigate }) {
         <div className="flex items-start gap-4">
           <div className="text-4xl">🎛️</div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-white mb-2">R-O-D-E-O Settings</h2>
-            <p className="text-gray-300 text-sm">
+            <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2`}>R-O-D-E-O Settings</h2>
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} text-sm`}>
               Configure system preferences, security policies, integrations, and notification settings
               to customize your security operations platform.
             </p>
@@ -142,38 +146,38 @@ function SettingsOverview({ onNavigate }) {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-gray-50 border-gray-200'} border rounded-lg p-4`}>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center text-2xl">
               🔗
             </div>
             <div>
-              <div className="text-2xl font-bold text-white">2</div>
-              <div className="text-sm text-gray-400">Active Integrations</div>
+              <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>2</div>
+              <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Active Integrations</div>
             </div>
           </div>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-gray-50 border-gray-200'} border rounded-lg p-4`}>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center text-2xl">
               ✓
             </div>
             <div>
-              <div className="text-2xl font-bold text-white">5</div>
-              <div className="text-sm text-gray-400">Configured Settings</div>
+              <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>5</div>
+              <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Configured Settings</div>
             </div>
           </div>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-gray-50 border-gray-200'} border rounded-lg p-4`}>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center text-2xl">
               🔔
             </div>
             <div>
-              <div className="text-2xl font-bold text-white">6</div>
-              <div className="text-sm text-gray-400">Alert Channels</div>
+              <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>6</div>
+              <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Alert Channels</div>
             </div>
           </div>
         </div>
@@ -184,7 +188,7 @@ function SettingsOverview({ onNavigate }) {
         {settingsCategories.map((category) => (
           <div
             key={category.id}
-            className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:border-purple-500/50 transition-all cursor-pointer group"
+            className={`${isDarkMode ? 'bg-slate-800 border-slate-700 hover:border-purple-500/50' : 'bg-gray-50 border-gray-200 hover:border-purple-400'} border rounded-lg p-5 transition-all cursor-pointer group`}
             onClick={() => onNavigate(category.id)}
           >
             <div className="flex items-start gap-4">
@@ -192,24 +196,24 @@ function SettingsOverview({ onNavigate }) {
                 {category.icon}
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1 group-hover:text-purple-400 transition-colors`}>
                   {category.title}
                 </h3>
-                <p className="text-sm text-gray-400 mb-3">
+                <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-3`}>
                   {category.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {category.features.map((feature, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-1 bg-slate-700 text-xs text-gray-300 rounded"
+                      className={`px-2 py-1 ${isDarkMode ? 'bg-slate-700 text-gray-300' : 'bg-gray-200 text-gray-600'} text-xs rounded`}
                     >
                       {feature}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="text-gray-500 group-hover:text-purple-400 transition-colors">
+              <div className={`${isDarkMode ? 'text-gray-500' : 'text-gray-400'} group-hover:text-purple-400 transition-colors`}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
@@ -220,52 +224,52 @@ function SettingsOverview({ onNavigate }) {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+      <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-gray-50 border-gray-200'} border rounded-lg p-6`}>
         <h3 className="text-lg font-semibold text-purple-300 mb-4">Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           <button
             onClick={() => onNavigate('jira')}
-            className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-left transition-colors group"
+            className={`p-4 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 border-slate-600' : 'bg-gray-100 hover:bg-purple-50/30 border-gray-200'} border rounded-lg text-left transition-colors group`}
           >
             <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">🎫</div>
-            <div className="text-sm font-medium text-white">Configure Jira</div>
-            <div className="text-xs text-gray-400 mt-1">Setup ticket integration</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Configure Jira</div>
+            <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Setup ticket integration</div>
           </button>
 
           <button
             onClick={() => onNavigate('servicenow')}
-            className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-left transition-colors group"
+            className={`p-4 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 border-slate-600' : 'bg-gray-100 hover:bg-purple-50/30 border-gray-200'} border rounded-lg text-left transition-colors group`}
           >
             <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">🔧</div>
-            <div className="text-sm font-medium text-white">Configure ServiceNow</div>
-            <div className="text-xs text-gray-400 mt-1">Setup ITSM integration</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Configure ServiceNow</div>
+            <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Setup ITSM integration</div>
           </button>
 
           <button
             onClick={() => onNavigate('notifications')}
-            className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-left transition-colors group"
+            className={`p-4 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 border-slate-600' : 'bg-gray-100 hover:bg-purple-50/30 border-gray-200'} border rounded-lg text-left transition-colors group`}
           >
             <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">🔔</div>
-            <div className="text-sm font-medium text-white">Setup Alerts</div>
-            <div className="text-xs text-gray-400 mt-1">Configure notifications</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Setup Alerts</div>
+            <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Configure notifications</div>
           </button>
 
           <button
             onClick={() => onNavigate('security')}
-            className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-left transition-colors group"
+            className={`p-4 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 border-slate-600' : 'bg-gray-100 hover:bg-purple-50/30 border-gray-200'} border rounded-lg text-left transition-colors group`}
           >
             <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">🔒</div>
-            <div className="text-sm font-medium text-white">Security Policies</div>
-            <div className="text-xs text-gray-400 mt-1">Manage security settings</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Security Policies</div>
+            <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Manage security settings</div>
           </button>
 
           <button
             onClick={() => onNavigate('threat-intel')}
-            className="p-4 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-lg text-left transition-colors group"
+            className={`p-4 ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 border-slate-600' : 'bg-gray-100 hover:bg-purple-50/30 border-gray-200'} border rounded-lg text-left transition-colors group`}
           >
             <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">🛡️</div>
-            <div className="text-sm font-medium text-white">Threat Intelligence</div>
-            <div className="text-xs text-gray-400 mt-1">Configure VirusTotal API</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Threat Intelligence</div>
+            <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Configure VirusTotal API</div>
           </button>
         </div>
       </div>
@@ -276,7 +280,7 @@ function SettingsOverview({ onNavigate }) {
           <div className="text-2xl">💡</div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-blue-400 mb-2">Getting Started</h3>
-            <div className="text-sm text-gray-300 space-y-2">
+            <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} space-y-2`}>
               <p>
                 <strong>New to R-O-D-E-O?</strong> Start by configuring your general system preferences,
                 then setup security policies to match your organization's requirements.

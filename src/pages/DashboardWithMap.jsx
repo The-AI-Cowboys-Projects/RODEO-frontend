@@ -123,16 +123,16 @@ export default function Dashboard() {
       </div>
 
       {/* Chart */}
-      <div className="bg-slate-800 p-6 rounded-lg border border-slate-700">
-        <h2 className="text-xl font-bold text-white mb-4">Overview</h2>
+      <div className={`p-6 rounded-lg border ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}>
+        <h2 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Overview</h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="name" stroke="#9ca3af" />
-            <YAxis stroke="#9ca3af" />
+            <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#374151' : '#e5e7eb'} />
+            <XAxis dataKey="name" stroke={isDarkMode ? '#9ca3af' : '#6b7280'} />
+            <YAxis stroke={isDarkMode ? '#9ca3af' : '#6b7280'} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-              labelStyle={{ color: '#e2e8f0' }}
+              contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#ffffff', border: `1px solid ${isDarkMode ? '#475569' : '#d1d5db'}` }}
+              labelStyle={{ color: isDarkMode ? '#e2e8f0' : '#111827' }}
             />
             <Bar dataKey="value" fill="#a78bfa" />
           </BarChart>
@@ -140,11 +140,11 @@ export default function Dashboard() {
       </div>
 
       {/* Interactive World Map with Real Countries */}
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 overflow-hidden">
-        <div className="px-6 py-4 bg-slate-800/80 border-b border-slate-700/50">
+      <div className={`backdrop-blur-sm rounded-xl border overflow-hidden ${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'}`}>
+        <div className={`px-6 py-4 border-b ${isDarkMode ? 'bg-slate-800/80 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <h2 className="text-lg font-semibold text-white">Global Threat Intelligence</h2>
+              <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Global Threat Intelligence</h2>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                 <span className="text-xs text-emerald-400 font-medium">Live</span>
@@ -153,7 +153,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="relative h-[600px] bg-slate-900/30">
+        <div className={`relative h-[600px] ${isDarkMode ? 'bg-slate-900/30' : 'bg-gray-100/50'}`}>
           {/* CSS Animation for flowing dashes */}
           <style>
             {`
@@ -292,25 +292,25 @@ export default function Dashboard() {
           </ComposableMap>
 
           {/* Map legend */}
-          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-3 bg-slate-900/80 backdrop-blur-sm border-t border-slate-700/30">
+          <div className={`absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-3 backdrop-blur-sm border-t ${isDarkMode ? 'bg-slate-900/80 border-slate-700/30' : 'bg-white/90 border-gray-200'}`}>
             <div className="flex items-center space-x-6">
-              <div className="text-xs text-gray-500">Threat Severity:</div>
+              <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Threat Severity:</div>
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-1.5">
                   <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                  <span className="text-xs text-gray-400">Medium</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Medium</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                  <span className="text-xs text-gray-400">High</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>High</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                  <span className="text-xs text-gray-400">Critical</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Critical</span>
                 </div>
               </div>
             </div>
-            <div className="text-xs text-gray-500">
+            <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
               Updated {new Date().toLocaleTimeString()}
             </div>
           </div>
@@ -318,23 +318,23 @@ export default function Dashboard() {
       </div>
 
       {/* Recent High-Risk Samples */}
-      <div className="bg-slate-800 p-6 rounded-lg border border-slate-700">
-        <h2 className="text-xl font-bold text-white mb-4">Recent High-Risk Samples</h2>
+      <div className={`p-6 rounded-lg border ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}>
+        <h2 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Recent High-Risk Samples</h2>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-700">
+          <table className={`min-w-full divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
             <thead>
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Sample ID</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">SHA256</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Risk Score</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase">Status</th>
+                <th className={`px-4 py-3 text-left text-xs font-medium uppercase ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Sample ID</th>
+                <th className={`px-4 py-3 text-left text-xs font-medium uppercase ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>SHA256</th>
+                <th className={`px-4 py-3 text-left text-xs font-medium uppercase ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Risk Score</th>
+                <th className={`px-4 py-3 text-left text-xs font-medium uppercase ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700">
+            <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
               {highRiskSamples?.slice(0, 5).map((sample) => (
                 <tr key={sample.sample_id}>
-                  <td className="px-4 py-3 text-sm text-white">{sample.sample_id}</td>
-                  <td className="px-4 py-3 text-sm text-gray-400 font-mono">
+                  <td className={`px-4 py-3 text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{sample.sample_id}</td>
+                  <td className={`px-4 py-3 text-sm font-mono ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     <div className="flex items-center gap-2">
                       <span>{sample.sha256?.substring(0, 16)}...</span>
                       <button
@@ -352,7 +352,7 @@ export default function Dashboard() {
                     <span className="text-red-400 font-bold">{sample.overall_risk_score?.toFixed(2)}</span>
                   </td>
                   <td className="px-4 py-3 text-sm">
-                    <span className="px-2 py-1 text-xs rounded-full bg-green-900 text-green-200">
+                    <span className={`px-2 py-1 text-xs rounded-full ${isDarkMode ? 'bg-green-900 text-green-200' : 'bg-green-50 text-green-800 border border-green-200'}`}>
                       {sample.analysis_status}
                     </span>
                   </td>

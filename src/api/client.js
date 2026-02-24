@@ -1064,4 +1064,59 @@ export const logAnomaly = {
     },
 };
 
+export const ics = {
+    getStatus: async () => {
+        const response = await apiClient.get("/ics/status");
+        return response.data;
+    },
+    getDevices: async () => {
+        const response = await apiClient.get("/ics/devices");
+        return response.data;
+    },
+    getScenarios: async () => {
+        const response = await apiClient.get("/ics/scenarios");
+        return response.data;
+    },
+    getAlerts: async () => {
+        const response = await apiClient.get("/ics/alerts");
+        return response.data;
+    },
+    getAttackHistory: async () => {
+        const response = await apiClient.get("/ics/attacks/history");
+        return response.data;
+    },
+    getMitreICS: async () => {
+        const response = await apiClient.get("/ics/mitre");
+        return response.data;
+    },
+    startScenario: async (name) => {
+        const response = await apiClient.post(`/ics/scenarios/${name}/start`);
+        return response.data;
+    },
+    stopScenario: async (name) => {
+        const response = await apiClient.post(`/ics/scenarios/${name}/stop`);
+        return response.data;
+    },
+    pollDevice: async (deviceId) => {
+        const response = await apiClient.get(`/ics/devices/${deviceId}/poll`);
+        return response.data;
+    },
+    getRegisters: async (deviceId) => {
+        const response = await apiClient.get(`/ics/devices/${deviceId}/registers`);
+        return response.data;
+    },
+    runModbusScan: async (params) => {
+        const response = await apiClient.post("/ics/scan/modbus", params);
+        return response.data;
+    },
+    runCANInject: async (params) => {
+        const response = await apiClient.post("/ics/can/inject", params);
+        return response.data;
+    },
+    runSetpointFuzz: async (params) => {
+        const response = await apiClient.post("/ics/fuzz/setpoint", params);
+        return response.data;
+    },
+};
+
 export default apiClient;

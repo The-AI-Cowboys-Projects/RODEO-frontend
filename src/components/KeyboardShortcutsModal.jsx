@@ -116,18 +116,18 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }) {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-3xl max-h-[80vh] overflow-hidden bg-white dark:bg-gray-900 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700">
+      <div className={`relative w-full max-w-3xl max-h-[80vh] overflow-hidden rounded-xl shadow-2xl border ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'}`}>
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-pink-500/10 to-purple-500/10">
+        <div className={`flex items-center justify-between px-6 py-4 border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} bg-gradient-to-r from-pink-500/10 to-purple-500/10`}>
           <div className="flex items-center gap-3">
             <CommandLineIcon className="w-6 h-6 text-pink-500" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Keyboard Shortcuts
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className={`p-2 rounded-lg transition-colors ${isDarkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'}`}
           >
             <XMarkIcon className="w-5 h-5 text-gray-500" />
           </button>
@@ -147,8 +147,8 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }) {
           </div>
 
           {/* Footer tip */}
-          <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+          <div className={`mt-6 pt-4 border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+            <p className={`text-sm text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Press <KeyBadge>?</KeyBadge> to toggle this menu
             </p>
           </div>

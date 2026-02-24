@@ -30,7 +30,9 @@ import {
   ThreatIntelIcon,
   LogAnomalyIcon,
   UserIcon,
-  BCDRIcon
+  BCDRIcon,
+  ICSIcon,
+  GlobeIcon
 } from './icons'
 
 export default function Layout({ children }) {
@@ -98,6 +100,8 @@ export default function Layout({ children }) {
     { path: '/knowledge', label: 'Knowledge Base', Icon: KnowledgeIcon, ariaLabel: 'Orchestrator knowledge base', permission: 'read_scan_results' },
     { path: '/threat-intel', label: 'Threat Intel', Icon: ThreatIntelIcon, ariaLabel: 'Threat intelligence lookups', permission: 'read_scan_results' },
     { path: '/log-anomaly', label: 'Log Anomaly', Icon: LogAnomalyIcon, ariaLabel: 'Log anomaly detection and ML training', permission: 'read_scan_results' },
+    { path: '/threat-map', label: 'Geo Threat Map', Icon: GlobeIcon, ariaLabel: 'Geographic threat visualization', permission: 'read_scan_results' },
+    { path: '/analytics', label: 'Advanced Analytics', Icon: DashboardIcon, ariaLabel: 'Advanced analytics dashboard', permission: 'read_scan_results' },
     { path: '/edr', label: 'EDR/XDR', Icon: EDRIcon, ariaLabel: 'Endpoint detection and response dashboard', permission: 'read_scan_results' },
     { path: '/security-arsenal', label: 'Security Arsenal', Icon: ArsenalIcon, ariaLabel: 'Security tools and scanners', permission: 'run_scans' },
     { path: '/policy', label: 'Security Policies', Icon: PolicyIcon, ariaLabel: 'Security policies viewer' },
@@ -111,6 +115,10 @@ export default function Layout({ children }) {
     { path: '/patch-deployment', label: 'Patch Deployment', Icon: DeployIcon, ariaLabel: 'Intelligent patch deployment', permission: 'apply_patches' },
     { path: '/network-analytics', label: 'Network Analytics', Icon: NetworkIcon, ariaLabel: 'Network analytics dashboard', permission: 'read_scan_results' },
     { path: '/privacy', label: 'Privacy & Data Protection', Icon: PrivacyIcon, ariaLabel: 'PII detection and data protection', permission: 'read_assets' },
+    { path: '/ics', label: 'ICS/SCADA', Icon: ICSIcon, ariaLabel: 'Industrial control systems dashboard', permission: 'read_assets' },
+    { path: '/scada', label: 'SCADA Devices', Icon: ICSIcon, ariaLabel: 'SCADA device overview', permission: 'read_assets' },
+    { path: '/scada-compliance', label: 'SCADA Compliance', Icon: ClipboardIcon, ariaLabel: 'SCADA compliance report', permission: 'read_reports' },
+    { path: '/ics-offensive', label: 'ICS Offensive', Icon: ExploitIcon, ariaLabel: 'ICS offensive operations', permission: 'create_exploits' },
     { path: '/compliance', label: 'Compliance', Icon: ClipboardIcon, ariaLabel: 'Compliance dashboard', permission: 'read_reports' },
     { path: '/bcdr', label: 'BC/DR Testing', Icon: BCDRIcon, ariaLabel: 'Business continuity and disaster recovery', permission: 'manage_system' },
     { path: '/bug-bounty', label: 'Bug Bounty', Icon: BugBountyIcon, ariaLabel: 'Bug bounty hunter dashboard', permission: 'run_scans' },

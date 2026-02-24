@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 const API_BASE = ''
 
@@ -24,6 +25,7 @@ export default function GeneralSettings() {
   const queryClient = useQueryClient()
   const [saveStatus, setSaveStatus] = useState(null)
   const { isDarkMode, setTheme } = useTheme()
+  const { isDemoMode, toggleDemoMode } = useDemoMode()
 
   const [formData, setFormData] = useState({
     system_name: 'R-O-D-E-O',
@@ -302,6 +304,19 @@ export default function GeneralSettings() {
               <div>
                 <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Enable Animations</div>
                 <div className="text-xs text-gray-500">Show transitions and animations</div>
+              </div>
+            </label>
+
+            <label className="flex items-center space-x-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={isDemoMode}
+                onChange={toggleDemoMode}
+                className={`w-5 h-5 text-purple-600 ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-gray-100 border-gray-200'} rounded focus:ring-brand-purple cursor-pointer`}
+              />
+              <div>
+                <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Demo Mode</div>
+                <div className="text-xs text-gray-500">Show stable simulated data on dashboards (disable for live API data only)</div>
               </div>
             </label>
           </div>

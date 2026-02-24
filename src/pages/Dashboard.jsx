@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { stats, samples, vulnerabilities, networkAnalytics } from '../api/client'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps'
@@ -17,6 +18,7 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 export default function Dashboard() {
   const navigate = useNavigate()
   const { isDarkMode } = useTheme()
+  const { isDemoMode, seededInt } = useDemoMode()
   const toast = useToast()
   const [threatData, setThreatData] = useState({ regions: [], threatTypes: [] })
   const [attackFlows, setAttackFlows] = useState([])
@@ -113,7 +115,7 @@ export default function Dashboard() {
 
     let flowIndex = 0
     const interval = setInterval(() => {
-      const numActive = Math.floor(Math.random() * 3) + 3
+      const numActive = isDemoMode ? seededInt(`dash_flows_${Math.floor(Date.now() / 5000)}`, 3, 5) : Math.floor(Math.random() * 3) + 3
       const newActive = []
       for (let i = 0; i < numActive; i++) {
         newActive.push((flowIndex + i) % attackFlows.length)
@@ -123,7 +125,7 @@ export default function Dashboard() {
     }, 800)
 
     return () => clearInterval(interval)
-  }, [attackFlows])
+  }, [attackFlows, isDemoMode, seededInt])
 
   const { data: statsData, isLoading: statsLoading } = useQuery({
     queryKey: ['stats'],

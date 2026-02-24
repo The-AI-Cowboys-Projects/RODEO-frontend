@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import Badge from '../components/ui/Badge'
 import {
@@ -23,6 +24,7 @@ import { SignalIcon as SignalSolid } from '@heroicons/react/24/solid'
 
 export default function RealtimeDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode, seededInt, seededRandom } = useDemoMode()
   const [pluginActivity, setPluginActivity] = useState([])
   const [vulnerabilities, setVulnerabilities] = useState([])
   const [systemMetrics, setSystemMetrics] = useState({
@@ -42,12 +44,12 @@ export default function RealtimeDashboard() {
   useEffect(() => {
     const initialData = Array.from({ length: 30 }, (_, i) => ({
       time: i,
-      packets: Math.floor(Math.random() * 800) + 200,
-      bandwidth: Math.floor(Math.random() * 400) + 100,
-      threats: Math.floor(Math.random() * 50)
+      packets: isDemoMode ? seededInt(`rt_pkt_${i}`, 200, 1000) : Math.floor(Math.random() * 800) + 200,
+      bandwidth: isDemoMode ? seededInt(`rt_bw_${i}`, 100, 500) : Math.floor(Math.random() * 400) + 100,
+      threats: isDemoMode ? seededInt(`rt_thr_${i}`, 0, 50) : Math.floor(Math.random() * 50)
     }))
     setNetworkData(initialData)
-  }, [])
+  }, [isDemoMode])
 
   // Real-time updates
   useEffect(() => {

@@ -97,10 +97,10 @@ export default function AiTriagePanel() {
   }
 
   const getConfidenceColor = (confidence) => {
-    if (confidence >= 90) return 'text-green-400'
-    if (confidence >= 75) return 'text-blue-400'
-    if (confidence >= 60) return 'text-yellow-400'
-    return 'text-orange-400'
+    if (confidence >= 90) return isDarkMode ? 'text-green-400' : 'text-green-600'
+    if (confidence >= 75) return isDarkMode ? 'text-blue-400' : 'text-blue-600'
+    if (confidence >= 60) return isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
+    return isDarkMode ? 'text-orange-400' : 'text-orange-600'
   }
 
   return (
@@ -119,9 +119,9 @@ export default function AiTriagePanel() {
               <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>ML-powered threat prioritization & exploitability prediction</p>
             </div>
           </div>
-          <div className="flex items-center space-x-2 bg-green-500/10 px-4 py-2 rounded-lg border border-green-500/30">
+          <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg border ${isDarkMode ? 'bg-green-500/10 border-green-500/30' : 'bg-green-50 border-green-200'}`}>
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-green-400 font-semibold text-sm">AI Active</span>
+            <span className={`font-semibold text-sm ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>AI Active</span>
           </div>
         </div>
 
@@ -211,8 +211,8 @@ export default function AiTriagePanel() {
                 ))}
               </Scatter>
               {/* Quadrant lines */}
-              <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="#475569" strokeWidth={1} strokeDasharray="5 5" />
-              <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="#475569" strokeWidth={1} strokeDasharray="5 5" />
+              <line x1="50%" y1="0%" x2="50%" y2="100%" stroke={isDarkMode ? '#475569' : '#cbd5e1'} strokeWidth={1} strokeDasharray="5 5" />
+              <line x1="0%" y1="50%" x2="100%" y2="50%" stroke={isDarkMode ? '#475569' : '#cbd5e1'} strokeWidth={1} strokeDasharray="5 5" />
             </ScatterChart>
           </ResponsiveContainer>
           <div className="grid grid-cols-2 gap-2 mt-4 text-xs">
@@ -220,17 +220,17 @@ export default function AiTriagePanel() {
               <p className="text-gray-500">High Impact, Low Exploit</p>
               <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-[10px]`}>Monitor & plan patching</p>
             </div>
-            <div className="bg-red-900/20 p-2 rounded border border-red-500/30">
-              <p className="text-red-400 font-semibold">High Impact, High Exploit</p>
-              <p className="text-red-300 text-[10px]">CRITICAL - Patch immediately</p>
+            <div className={`${isDarkMode ? 'bg-red-900/20 border-red-500/30' : 'bg-red-50 border-red-200'} p-2 rounded border`}>
+              <p className={`${isDarkMode ? 'text-red-400' : 'text-red-700'} font-semibold`}>High Impact, High Exploit</p>
+              <p className={`${isDarkMode ? 'text-red-300' : 'text-red-600'} text-[10px]`}>CRITICAL - Patch immediately</p>
             </div>
             <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} p-2 rounded border`}>
               <p className="text-gray-500">Low Impact, Low Exploit</p>
               <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-[10px]`}>Low priority monitoring</p>
             </div>
-            <div className="bg-yellow-900/20 p-2 rounded border border-yellow-500/30">
-              <p className="text-yellow-400 font-semibold">Low Impact, High Exploit</p>
-              <p className="text-yellow-300 text-[10px]">Patch when convenient</p>
+            <div className={`${isDarkMode ? 'bg-yellow-900/20 border-yellow-500/30' : 'bg-amber-50 border-amber-200'} p-2 rounded border`}>
+              <p className={`${isDarkMode ? 'text-yellow-400' : 'text-amber-700'} font-semibold`}>Low Impact, High Exploit</p>
+              <p className={`${isDarkMode ? 'text-yellow-300' : 'text-amber-600'} text-[10px]`}>Patch when convenient</p>
             </div>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function AiTriagePanel() {
               <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Live Triage Queue</h3>
               <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Real-time ML classification & scoring</p>
             </div>
-            <div className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-semibold">
+            <div className={`px-3 py-1 rounded-full text-xs font-semibold ${isDarkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-700 border border-blue-200'}`}>
               {triageQueue.length} Active
             </div>
           </div>
@@ -284,22 +284,22 @@ export default function AiTriagePanel() {
                   </div>
                   <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} p-2 rounded`}>
                     <p className="text-[10px] text-gray-500 uppercase">Exploit</p>
-                    <p className="text-sm font-semibold text-orange-400">{threat.exploitability}%</p>
+                    <p className={`text-sm font-semibold ${isDarkMode ? 'text-orange-400' : 'text-orange-600'}`}>{threat.exploitability}%</p>
                   </div>
                   <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} p-2 rounded`}>
                     <p className="text-[10px] text-gray-500 uppercase">Impact</p>
-                    <p className="text-sm font-semibold text-red-400">{threat.impact}%</p>
+                    <p className={`text-sm font-semibold ${isDarkMode ? 'text-red-400' : 'text-red-600'}`}>{threat.impact}%</p>
                   </div>
                 </div>
 
                 {/* AI Prediction */}
-                <div className="bg-purple-900/20 border border-purple-500/30 rounded p-2 mb-2">
+                <div className={`${isDarkMode ? 'bg-purple-900/20 border-purple-500/30' : 'bg-purple-50 border-purple-200'} border rounded p-2 mb-2`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className={`w-4 h-4 ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                       </svg>
-                      <span className="text-xs text-purple-300 font-medium">{threat.mlPrediction}</span>
+                      <span className={`text-xs font-medium ${isDarkMode ? 'text-purple-300' : 'text-purple-700'}`}>{threat.mlPrediction}</span>
                     </div>
                     <span className={`text-xs font-semibold ${getConfidenceColor(threat.confidence)}`}>
                       {threat.confidence}% conf
@@ -334,7 +334,7 @@ export default function AiTriagePanel() {
           <div className="flex-1">
             <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold mb-1`}>ML-Powered Triage Engine</h4>
             <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-              R-O-D-E-O's AI models are trained on <span className="text-purple-400 font-semibold">27 years of CVE data (1998-2025)</span>,
+              R-O-D-E-O's AI models are trained on <span className={`${isDarkMode ? 'text-purple-400' : 'text-purple-700'} font-semibold`}>27 years of CVE data (1998-2025)</span>,
               analyzing exploitation patterns, attack vectors, and real-world impact to predict threat priority with 94%+ accuracy.
               The system automatically triages vulnerabilities, eliminating 97% of manual classification time and reducing false positives by 81%.
             </p>

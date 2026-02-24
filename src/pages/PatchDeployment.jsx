@@ -574,7 +574,7 @@ const PatchDeployment = () => {
                         <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Success Rate</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700/30">
+                    <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700/30' : 'divide-gray-200'}`}>
                       {hosts.map((host) => (
                         <tr key={host.host_id} className={`transition-colors ${isDarkMode ? 'hover:bg-slate-700/30' : 'hover:bg-gray-50'}`}>
                           <td className="px-6 py-4">
@@ -740,7 +740,7 @@ const PatchDeployment = () => {
                         max="20"
                         value={numCanaries}
                         onChange={(e) => setNumCanaries(parseInt(e.target.value))}
-                        className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-cyan-500"
+                        className={`w-full h-2 rounded-full appearance-none cursor-pointer ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'} accent-cyan-500`}
                       />
                     </div>
 
@@ -758,7 +758,7 @@ const PatchDeployment = () => {
                         step="0.05"
                         value={minDetectionStrength}
                         onChange={(e) => setMinDetectionStrength(parseFloat(e.target.value))}
-                        className="w-full h-2 rounded-full appearance-none cursor-pointer bg-slate-700 accent-purple-500"
+                        className={`w-full h-2 rounded-full appearance-none cursor-pointer ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'} accent-purple-500`}
                       />
                     </div>
                   </div>
@@ -777,7 +777,7 @@ const PatchDeployment = () => {
 
               {/* Canary Results */}
               {canaryResults && (
-                <div className="mt-8 pt-8 border-t border-slate-700/50">
+                <div className={`mt-8 pt-8 border-t ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
                   <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                     <CheckCircleIcon className="w-5 h-5 text-emerald-400" />
                     Selected Canary Hosts
@@ -974,7 +974,7 @@ const PatchDeployment = () => {
                       <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider">Duration</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-700/30">
+                  <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700/30' : 'divide-gray-200'}`}>
                     {history.map((deployment) => (
                       <tr key={deployment.deployment_id} className={`transition-colors ${isDarkMode ? 'hover:bg-slate-700/30' : 'hover:bg-gray-50'}`}>
                         <td className="px-6 py-4">{getStatusIcon(deployment.status)}</td>

@@ -66,7 +66,7 @@ export default function ComplianceDashboard() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-emerald-900/50 via-slate-900 to-teal-900/50 rounded-2xl border border-emerald-500/20 p-8">
+      <div className={`relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-r from-emerald-900/50 via-slate-900 to-teal-900/50 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-white to-teal-50 border-emerald-200'} rounded-2xl border p-8`}>
         {/* Background Effects */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
@@ -85,7 +85,7 @@ export default function ComplianceDashboard() {
                 <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-emerald-500/30 rotate-3 hover:rotate-0 transition-transform duration-300">
                   <ShieldCheckIcon className="w-10 h-10 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-400 rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-lg">
+                <div className={`absolute -top-2 -right-2 w-8 h-8 bg-green-400 rounded-xl flex items-center justify-center border-2 ${isDarkMode ? 'border-slate-900' : 'border-white'} shadow-lg`}>
                   <CheckBadgeIcon className="w-5 h-5 text-slate-900" />
                 </div>
               </div>
@@ -93,7 +93,7 @@ export default function ComplianceDashboard() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-emerald-200 to-teal-200 bg-clip-text text-transparent">
                   Compliance Frameworks
                 </h1>
-                <p className="text-gray-400 mt-2 text-lg max-w-xl">
+                <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-2 text-lg max-w-xl`}>
                   Monitor compliance status across regulatory frameworks and industry standards
                 </p>
               </div>
@@ -138,9 +138,9 @@ export default function ComplianceDashboard() {
       </div>
 
       {/* Tab Content */}
-      <div className="bg-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden">
+      <div className={`${isDarkMode ? 'bg-slate-800/30 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border overflow-hidden`}>
         {/* Tab Header */}
-        <div className="flex items-center justify-between px-6 py-4 bg-slate-900/50 border-b border-slate-700/50">
+        <div className={`flex items-center justify-between px-6 py-4 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} border-b`}>
           <div className="flex items-center gap-3">
             {activeFramework && (
               <>
@@ -150,13 +150,13 @@ export default function ComplianceDashboard() {
                   <activeFramework.icon className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-white">{activeFramework.fullName}</h2>
-                  <p className="text-xs text-gray-500">Compliance Dashboard</p>
+                  <h2 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{activeFramework.fullName}</h2>
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Compliance Dashboard</p>
                 </div>
               </>
             )}
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-400">
+          <div className={`flex items-center gap-2 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             <SparklesIcon className="w-4 h-4 text-emerald-400" />
             <span>Real-time monitoring enabled</span>
           </div>
@@ -216,15 +216,16 @@ function QuickStat({ icon: Icon, value, label, color }) {
     cyan: 'bg-cyan-500/20 text-cyan-400',
   }
 
+  const { isDarkMode } = useTheme()
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 px-4 py-3">
+    <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-xl border px-4 py-3`}>
       <div className="flex items-center gap-3">
         <div className={`w-10 h-10 rounded-lg ${colorStyles[color]} flex items-center justify-center`}>
           <Icon className="w-5 h-5" />
         </div>
         <div>
-          <div className="text-2xl font-bold text-white">{value}</div>
-          <div className="text-xs text-gray-500">{label}</div>
+          <div className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{value}</div>
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{label}</div>
         </div>
       </div>
     </div>

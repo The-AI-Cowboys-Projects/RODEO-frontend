@@ -47,7 +47,7 @@ export default function DashboardImproved() {
       key: 'sample_id',
       label: 'Sample ID',
       render: (row) => (
-        <span className="font-medium text-white">{row.sample_id}</span>
+        <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{row.sample_id}</span>
       ),
     },
     {
@@ -76,7 +76,7 @@ export default function DashboardImproved() {
       render: (row) => (
         <div className="flex items-center space-x-2">
           <div
-            className="w-16 h-2 bg-slate-700 rounded-full overflow-hidden"
+            className={`w-16 h-2 ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'} rounded-full overflow-hidden`}
             title={`${(row.overall_risk_score * 100).toFixed(0)}%`}
           >
             <div
@@ -180,7 +180,7 @@ export default function DashboardImproved() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Overview Chart */}
         <Card variant="glass" className="animate-fadeInUp stagger-delay-1">
-          <h2 className="text-xl font-bold text-white mb-6 flex items-center">
+          <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
             <span className="mr-2">📊</span>
             Security Overview
           </h2>
@@ -197,11 +197,11 @@ export default function DashboardImproved() {
               <YAxis stroke="#9ca3af" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: isDarkMode ? '1px solid #475569' : '1px solid #e5e7eb',
                   borderRadius: '8px',
                 }}
-                labelStyle={{ color: '#e2e8f0' }}
+                labelStyle={{ color: isDarkMode ? '#e2e8f0' : '#111827' }}
               />
               <Bar dataKey="value" fill="url(#barGradient)" radius={[8, 8, 0, 0]} />
             </BarChart>
@@ -210,7 +210,7 @@ export default function DashboardImproved() {
 
         {/* Risk Distribution */}
         <Card variant="glass" className="animate-fadeInUp stagger-delay-2">
-          <h2 className="text-xl font-bold text-white mb-6 flex items-center">
+          <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
             <span className="mr-2">🎯</span>
             Risk Distribution
           </h2>
@@ -231,8 +231,8 @@ export default function DashboardImproved() {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: isDarkMode ? '1px solid #475569' : '1px solid #e5e7eb',
                   borderRadius: '8px',
                 }}
               />
@@ -245,7 +245,7 @@ export default function DashboardImproved() {
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-sm text-gray-400">{item.name}: {item.value}</span>
+                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{item.name}: {item.value}</span>
               </div>
             ))}
           </div>
@@ -255,7 +255,7 @@ export default function DashboardImproved() {
       {/* High-Risk Samples Table */}
       <Card variant="glass" className="animate-fadeInUp stagger-delay-3">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-white flex items-center">
+          <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} flex items-center`}>
             <span className="mr-2">🚨</span>
             Recent High-Risk Samples
           </h2>

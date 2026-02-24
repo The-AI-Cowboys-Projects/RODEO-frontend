@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTheme } from '../context/ThemeContext'
 import {
   CurrencyDollarIcon,
   UserGroupIcon,
@@ -24,6 +25,7 @@ const colorClasses = {
 
 // Slider input component with cool styling and editable value - defined outside to prevent re-creation
 function SliderInput({ label, icon: Icon, value, onChange, min, max, step = 1, unit = '', color = 'purple' }) {
+  const { isDarkMode } = useTheme()
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
 
@@ -54,13 +56,13 @@ function SliderInput({ label, icon: Icon, value, onChange, min, max, step = 1, u
   }
 
   return (
-    <div className={`bg-gradient-to-r ${c.bg} p-4 rounded-xl border ${c.border} group hover:scale-[1.02] transition-all duration-300`}>
+    <div className={`p-4 rounded-xl border group hover:scale-[1.02] transition-all duration-300 ${isDarkMode ? `bg-gradient-to-r ${c.bg} ${c.border}` : 'bg-white border-gray-200 shadow-sm'}`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <div className={`w-8 h-8 rounded-lg ${c.accent}/20 flex items-center justify-center`}>
             <Icon className={`w-5 h-5 ${c.text}`} />
           </div>
-          <span className="text-gray-300 text-sm font-medium">{label}</span>
+          <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-500'}`}>{label}</span>
         </div>
         {isEditing ? (
           <div className="flex items-center gap-1">
@@ -72,7 +74,7 @@ function SliderInput({ label, icon: Icon, value, onChange, min, max, step = 1, u
               onBlur={handleEditComplete}
               onKeyDown={handleKeyDown}
               autoFocus
-              className={`w-24 bg-slate-800/80 ${c.text} font-bold text-lg text-right px-2 py-0.5 rounded-lg border-0 ring-2 ${c.ring} focus:outline-none`}
+              className={`w-24 font-bold text-lg text-right px-2 py-0.5 rounded-lg border-0 ring-2 ${c.ring} focus:outline-none ${c.text} ${isDarkMode ? 'bg-slate-800/80' : 'bg-gray-100'}`}
             />
             {unit !== '$' && unit && <span className={`${c.text} font-bold text-lg`}>{unit}</span>}
           </div>
@@ -87,7 +89,7 @@ function SliderInput({ label, icon: Icon, value, onChange, min, max, step = 1, u
         )}
       </div>
       <div className="relative">
-        <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+        <div className={`h-2 rounded-full overflow-hidden ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-200'}`}>
           <div
             className={`h-full ${c.accent} rounded-full transition-all duration-300`}
             style={{ width: `${percentage}%` }}
@@ -112,6 +114,7 @@ function SliderInput({ label, icon: Icon, value, onChange, min, max, step = 1, u
 }
 
 export default function RoiCalculator() {
+  const { isDarkMode } = useTheme()
   const [inputs, setInputs] = useState({
     analysts: 5,
     avgSalary: 95000,
@@ -224,11 +227,11 @@ export default function RoiCalculator() {
   return (
     <div className="relative overflow-hidden">
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-slate-900 to-blue-900/30" />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-br from-purple-900/30 via-slate-900 to-blue-900/30' : 'bg-gradient-to-br from-purple-50/80 via-white to-blue-50/80'}`} />
+      <div className={`absolute top-0 right-0 w-96 h-96 ${isDarkMode ? 'bg-purple-500/10' : 'bg-purple-200/30'} rounded-full blur-3xl animate-pulse`} />
+      <div className={`absolute bottom-0 left-0 w-96 h-96 ${isDarkMode ? 'bg-blue-500/10' : 'bg-blue-200/30'} rounded-full blur-3xl animate-pulse`} style={{ animationDelay: '1s' }} />
 
-      <div className="relative bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-slate-700/50">
+      <div className={`relative backdrop-blur-xl rounded-2xl shadow-2xl p-8 border ${isDarkMode ? 'bg-slate-900/80 border-slate-700/50' : 'bg-white border-gray-200'}`}>
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
@@ -240,15 +243,15 @@ export default function RoiCalculator() {
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+              <h2 className={`text-3xl font-bold ${isDarkMode ? 'bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent' : 'text-gray-900'}`}>
                 ROI Calculator
               </h2>
-              <p className="text-gray-400 text-sm mt-1">See your return on investment with R-O-D-E-O</p>
+              <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>See your return on investment with R-O-D-E-O</p>
             </div>
           </div>
-          <div className="hidden lg:flex items-center gap-2 bg-green-500/10 px-4 py-2 rounded-full border border-green-500/30">
-            <SparklesIcon className="w-5 h-5 text-green-400" />
-            <span className="text-green-400 font-medium text-sm">Live Calculation</span>
+          <div className={`hidden lg:flex items-center gap-2 px-4 py-2 rounded-full border ${isDarkMode ? 'bg-green-500/10 border-green-500/30' : 'bg-green-50 border-green-200'}`}>
+            <SparklesIcon className={`w-5 h-5 ${isDarkMode ? 'text-green-400' : 'text-green-600'}`} />
+            <span className={`font-medium text-sm ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>Live Calculation</span>
           </div>
         </div>
 
@@ -257,7 +260,7 @@ export default function RoiCalculator() {
           <div className="xl:col-span-2 space-y-4">
             <div className="flex items-center gap-2 mb-4">
               <ChartBarIcon className="w-5 h-5 text-purple-400" />
-              <h3 className="text-lg font-semibold text-white">Configure Your Environment</h3>
+              <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Configure Your Environment</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -329,7 +332,7 @@ export default function RoiCalculator() {
           <div className="flex flex-col items-center justify-center">
             <div className="relative">
               {/* Outer glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-full blur-2xl scale-125" />
+              <div className={`absolute inset-0 rounded-full blur-2xl scale-125 ${isDarkMode ? 'bg-gradient-to-br from-purple-500/30 to-pink-500/30' : 'bg-gradient-to-br from-purple-300/20 to-pink-300/20'}`} />
 
               {/* SVG Ring */}
               <svg className="w-[36rem] h-[36rem] transform -rotate-90 relative" viewBox="0 0 192 192">
@@ -366,71 +369,71 @@ export default function RoiCalculator() {
 
               {/* Center content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-4xl leading-none font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className={`text-4xl leading-none font-bold bg-gradient-to-r bg-clip-text text-transparent ${isDarkMode ? 'from-purple-400 to-pink-400' : 'from-purple-600 to-pink-600'}`}>
                   {animatedRoi}%
                 </span>
-                <span className="text-gray-400 text-lg font-medium mt-1">ROI</span>
+                <span className={`text-lg font-medium mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>ROI</span>
               </div>
             </div>
 
             {/* Payback period */}
             <div className="mt-6 text-center">
-              <div className="text-3xl font-bold text-white">{results.paybackMonths} months</div>
-              <div className="text-gray-400 text-sm">Payback Period</div>
+              <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{results.paybackMonths} months</div>
+              <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Payback Period</div>
             </div>
           </div>
         </div>
 
         {/* Results Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-          <div className="bg-gradient-to-br from-green-900/40 to-emerald-900/20 rounded-xl p-5 border border-green-500/30 group hover:scale-105 transition-transform duration-300">
+          <div className={`rounded-xl p-5 border group hover:scale-105 transition-transform duration-300 ${isDarkMode ? 'bg-gradient-to-br from-green-900/40 to-emerald-900/20 border-green-500/30' : 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200'}`}>
             <div className="flex items-center gap-2 mb-2">
-              <ArrowTrendingUpIcon className="w-5 h-5 text-green-400" />
-              <span className="text-green-400 text-sm font-medium">Total Savings</span>
+              <ArrowTrendingUpIcon className={`w-5 h-5 ${isDarkMode ? 'text-green-400' : 'text-green-600'}`} />
+              <span className={`text-sm font-medium ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>Total Savings</span>
             </div>
-            <div className="text-3xl font-bold text-white">
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               ${parseInt(results.totalAnnualSavings || results.timeSavedCost).toLocaleString()}
             </div>
-            <div className="text-gray-500 text-xs mt-1">per year</div>
+            <div className={`text-xs mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>per year</div>
           </div>
 
-          <div className="bg-gradient-to-br from-purple-900/40 to-violet-900/20 rounded-xl p-5 border border-purple-500/30 group hover:scale-105 transition-transform duration-300">
+          <div className={`rounded-xl p-5 border group hover:scale-105 transition-transform duration-300 ${isDarkMode ? 'bg-gradient-to-br from-purple-900/40 to-violet-900/20 border-purple-500/30' : 'bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200'}`}>
             <div className="flex items-center gap-2 mb-2">
-              <BanknotesIcon className="w-5 h-5 text-purple-400" />
-              <span className="text-purple-400 text-sm font-medium">Net Savings</span>
+              <BanknotesIcon className={`w-5 h-5 ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              <span className={`text-sm font-medium ${isDarkMode ? 'text-purple-400' : 'text-purple-700'}`}>Net Savings</span>
             </div>
-            <div className="text-3xl font-bold text-white">
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               ${parseInt(results.netSavings).toLocaleString()}
             </div>
-            <div className="text-gray-500 text-xs mt-1">after investment</div>
+            <div className={`text-xs mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>after investment</div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-900/40 to-cyan-900/20 rounded-xl p-5 border border-blue-500/30 group hover:scale-105 transition-transform duration-300">
+          <div className={`rounded-xl p-5 border group hover:scale-105 transition-transform duration-300 ${isDarkMode ? 'bg-gradient-to-br from-blue-900/40 to-cyan-900/20 border-blue-500/30' : 'bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200'}`}>
             <div className="flex items-center gap-2 mb-2">
-              <ClockIcon className="w-5 h-5 text-blue-400" />
-              <span className="text-blue-400 text-sm font-medium">Hours Saved</span>
+              <ClockIcon className={`w-5 h-5 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`} />
+              <span className={`text-sm font-medium ${isDarkMode ? 'text-blue-400' : 'text-blue-700'}`}>Hours Saved</span>
             </div>
-            <div className="text-3xl font-bold text-white">
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               {parseInt(results.timeSavedHours).toLocaleString()}
             </div>
-            <div className="text-gray-500 text-xs mt-1">per year</div>
+            <div className={`text-xs mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>per year</div>
           </div>
 
-          <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/20 rounded-xl p-5 border border-amber-500/30 group hover:scale-105 transition-transform duration-300">
+          <div className={`rounded-xl p-5 border group hover:scale-105 transition-transform duration-300 ${isDarkMode ? 'bg-gradient-to-br from-amber-900/40 to-orange-900/20 border-amber-500/30' : 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200'}`}>
             <div className="flex items-center gap-2 mb-2">
-              <ExclamationTriangleIcon className="w-5 h-5 text-amber-400" />
-              <span className="text-amber-400 text-sm font-medium">False Positives Eliminated</span>
+              <ExclamationTriangleIcon className={`w-5 h-5 ${isDarkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+              <span className={`text-sm font-medium ${isDarkMode ? 'text-amber-400' : 'text-amber-700'}`}>False Positives Eliminated</span>
             </div>
-            <div className="text-3xl font-bold text-white">
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               {parseInt(results.falsePositivesSaved).toLocaleString()}
             </div>
-            <div className="text-gray-500 text-xs mt-1">per year</div>
+            <div className={`text-xs mt-1 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>per year</div>
           </div>
         </div>
 
         {/* Benefits List */}
-        <div className="mt-8 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-xl p-6 border border-slate-700/50">
-          <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <div className={`mt-8 rounded-xl p-6 border ${isDarkMode ? 'bg-gradient-to-r from-slate-800/50 to-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <h4 className={`text-lg font-semibold mb-4 flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             <SparklesIcon className="w-5 h-5 text-purple-400" />
             Additional Benefits Included
           </h4>
@@ -443,9 +446,9 @@ export default function RoiCalculator() {
               'Instant threat prioritization',
               'Focus on strategic initiatives'
             ].map((benefit, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-gray-300 text-sm">
-                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                  <CheckIcon className="w-3 h-3 text-green-400" />
+              <div key={idx} className={`flex items-center gap-2 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${isDarkMode ? 'bg-green-500/20' : 'bg-green-100'}`}>
+                  <CheckIcon className={`w-3 h-3 ${isDarkMode ? 'text-green-400' : 'text-green-600'}`} />
                 </div>
                 {benefit}
               </div>
@@ -454,16 +457,16 @@ export default function RoiCalculator() {
         </div>
 
         {/* Summary Bar */}
-        <div className="mt-6 bg-gradient-to-r from-purple-900/40 via-pink-900/30 to-blue-900/40 rounded-xl p-4 border border-purple-500/20">
+        <div className={`mt-6 rounded-xl p-4 border ${isDarkMode ? 'bg-gradient-to-r from-purple-900/40 via-pink-900/30 to-blue-900/40 border-purple-500/20' : 'bg-gradient-to-r from-purple-50/80 via-pink-50/60 to-blue-50/80 border-purple-200'}`}>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-gray-300 text-center sm:text-left">
-              With <strong className="text-white">{inputs.analysts}</strong> analysts processing{' '}
-              <strong className="text-white">{inputs.alertsPerDay.toLocaleString()}</strong> alerts/day
+            <div className={`text-center sm:text-left ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              With <strong className={isDarkMode ? 'text-white' : 'text-gray-900'}>{inputs.analysts}</strong> analysts processing{' '}
+              <strong className={isDarkMode ? 'text-white' : 'text-gray-900'}>{inputs.alertsPerDay.toLocaleString()}</strong> alerts/day
             </div>
-            <div className="flex items-center gap-2 bg-purple-500/20 px-4 py-2 rounded-full">
-              <SparklesIcon className="w-4 h-4 text-purple-400" />
-              <span className="text-purple-300 font-medium">
-                R-O-D-E-O saves <strong className="text-white">{parseInt(results.timeSavedHours).toLocaleString()}</strong> hours/year
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${isDarkMode ? 'bg-purple-500/20' : 'bg-purple-50 border border-purple-200'}`}>
+              <SparklesIcon className={`w-4 h-4 ${isDarkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              <span className={`font-medium ${isDarkMode ? 'text-purple-300' : 'text-purple-700'}`}>
+                R-O-D-E-O saves <strong className={isDarkMode ? 'text-white' : 'text-gray-900'}>{parseInt(results.timeSavedHours).toLocaleString()}</strong> hours/year
               </span>
             </div>
           </div>

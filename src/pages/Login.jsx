@@ -348,14 +348,14 @@ export default function Login({ setIsAuthenticated }) {
                     <p className={`text-sm ${isLocked ? 'text-orange-200' : 'text-red-200'}`}>{error}</p>
                   </div>
                   {isLocked && lockoutSeconds > 0 && (
-                    <div className="mt-3 p-3 bg-slate-900 bg-opacity-50 rounded">
+                    <div className={`mt-3 p-3 rounded ${isDarkMode ? 'bg-slate-900 bg-opacity-50' : 'bg-gray-100'}`}>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-400">Time remaining:</span>
+                        <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Time remaining:</span>
                         <span className="text-lg font-mono font-bold text-orange-400">
                           {formatLockoutTime(lockoutSeconds)}
                         </span>
                       </div>
-                      <div className="mt-2 w-full bg-slate-700 rounded-full h-2">
+                      <div className={`mt-2 w-full rounded-full h-2 ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'}`}>
                         <div
                           className="bg-orange-500 h-2 rounded-full transition-all duration-1000"
                           style={{ width: `${(lockoutSeconds / 1800) * 100}%` }}

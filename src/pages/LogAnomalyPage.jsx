@@ -852,7 +852,7 @@ export default function LogAnomalyPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end mt-6 pt-4 border-t border-slate-700">
+              <div className={`flex justify-end mt-6 pt-4 border-t ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
                 <button
                   onClick={handleSaveRules}
                   disabled={savingRules}

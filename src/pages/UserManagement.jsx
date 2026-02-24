@@ -255,14 +255,14 @@ export default function UserManagement() {
           <table className="w-full">
             <thead className={`${isDarkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Roles</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Created</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+                <th className={`px-6 py-3 text-left text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase tracking-wider`}>User</th>
+                <th className={`px-6 py-3 text-left text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase tracking-wider`}>Email</th>
+                <th className={`px-6 py-3 text-left text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase tracking-wider`}>Roles</th>
+                <th className={`px-6 py-3 text-left text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase tracking-wider`}>Created</th>
+                <th className={`px-6 py-3 text-right text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase tracking-wider`}>Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700">
+            <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
               {userList.map((user) => (
                 <tr key={user.id} className={`${isDarkMode ? 'hover:bg-slate-700/50' : 'hover:bg-gray-50'} transition-colors`}>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -295,7 +295,7 @@ export default function UserManagement() {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     {user.created_at ? new Date(user.created_at).toLocaleDateString() : '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -305,7 +305,7 @@ export default function UserManagement() {
                         className={`p-2 rounded-lg ${isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-gray-100'} transition-colors`}
                         title="View Details"
                       >
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
@@ -342,7 +342,7 @@ export default function UserManagement() {
             </tbody>
           </table>
           {userList.length === 0 && (
-            <div className="text-center py-12 text-gray-400">
+            <div className={`text-center py-12 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               No users found
             </div>
           )}
@@ -369,7 +369,7 @@ export default function UserManagement() {
               <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
                 {role.description || 'No description'}
               </p>
-              <div className="text-xs text-gray-500">
+              <div className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 {role.permission_count} permissions
               </div>
             </div>
@@ -575,7 +575,7 @@ export default function UserManagement() {
 
             {/* Roles */}
             <div className="mb-6">
-              <h4 className="text-sm font-medium text-gray-400 uppercase mb-2">Roles</h4>
+              <h4 className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase mb-2`}>Roles</h4>
               <div className="flex flex-wrap gap-2">
                 {selectedUser.roles?.length > 0 ? (
                   selectedUser.roles.map((role) => (
@@ -594,7 +594,7 @@ export default function UserManagement() {
 
             {/* Permissions */}
             <div>
-              <h4 className="text-sm font-medium text-gray-400 uppercase mb-2">
+              <h4 className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} uppercase mb-2`}>
                 Permissions ({selectedUser.permissions?.length || 0})
               </h4>
               <div className="flex flex-wrap gap-2">

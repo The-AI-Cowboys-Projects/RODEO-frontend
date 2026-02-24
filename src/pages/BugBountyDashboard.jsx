@@ -129,13 +129,19 @@ if (!document.querySelector("#bugbounty-animations")) {
 }
 
 // ==================== Severity Badge ====================
-function SeverityBadge({ severity, size = "md" }) {
-    const colors = {
+function SeverityBadge({ severity, size = "md", isDarkMode }) {
+    const colors = isDarkMode ? {
         critical: "bg-red-500/20 text-red-400 border-red-500/30",
         high: "bg-orange-500/20 text-orange-400 border-orange-500/30",
         medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
         low: "bg-blue-500/20 text-blue-400 border-blue-500/30",
         info: "bg-gray-500/20 text-gray-400 border-gray-500/30",
+    } : {
+        critical: "bg-red-50 text-red-800 border border-red-200",
+        high: "bg-orange-50 text-orange-800 border border-orange-200",
+        medium: "bg-yellow-50 text-yellow-800 border border-yellow-200",
+        low: "bg-blue-50 text-blue-800 border border-blue-200",
+        info: "bg-gray-50 text-gray-700 border border-gray-200",
     };
     const sizes = {
         sm: "px-2 py-0.5 text-xs",
@@ -152,8 +158,8 @@ function SeverityBadge({ severity, size = "md" }) {
 }
 
 // ==================== Status Badge ====================
-function StatusBadge({ status }) {
-    const config = {
+function StatusBadge({ status, isDarkMode }) {
+    const config = isDarkMode ? {
         running: {
             color: "bg-green-500/20 text-green-400 border-green-500/30",
             icon: PlayIcon,
@@ -176,6 +182,32 @@ function StatusBadge({ status }) {
         },
         pending: {
             color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+            icon: ClockIcon,
+            pulse: true,
+        },
+    } : {
+        running: {
+            color: "bg-green-50 text-green-700 border-green-200",
+            icon: PlayIcon,
+            pulse: true,
+        },
+        completed: {
+            color: "bg-blue-50 text-blue-700 border-blue-200",
+            icon: CheckCircleIcon,
+            pulse: false,
+        },
+        stopped: {
+            color: "bg-gray-50 text-gray-600 border-gray-200",
+            icon: StopIcon,
+            pulse: false,
+        },
+        error: {
+            color: "bg-red-50 text-red-700 border-red-200",
+            icon: XCircleIcon,
+            pulse: false,
+        },
+        pending: {
+            color: "bg-yellow-50 text-yellow-700 border-yellow-200",
             icon: ClockIcon,
             pulse: true,
         },
@@ -276,7 +308,7 @@ function FindingCard({ finding, onView, onSubmit, isDarkMode }) {
             <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
-                        <SeverityBadge severity={finding.severity} size="sm" />
+                        <SeverityBadge severity={finding.severity} size="sm" isDarkMode={isDarkMode} />
                         <span
                             className={`text-xs ${isDarkMode ? "text-gray-500" : "text-gray-400"}`}
                         >
@@ -350,7 +382,7 @@ function ScanCard({ scan, onStop, onView, isDarkMode }) {
             <div className="flex items-start justify-between mb-4">
                 <div>
                     <div className="flex items-center gap-2 mb-1">
-                        <StatusBadge status={scan.status} />
+                        <StatusBadge status={scan.status} isDarkMode={isDarkMode} />
                         {scan.profile && (
                             <span
                                 className={`px-2 py-0.5 text-xs rounded-md ${isDarkMode ? "bg-cyan-500/20 text-cyan-400" : "bg-cyan-100 text-cyan-600"}`}
@@ -438,7 +470,7 @@ function ScanCard({ scan, onStop, onView, isDarkMode }) {
             )}
 
             {scan.status === "completed" && (
-                <div className="flex items-center gap-4 mt-2 pt-3 border-t border-gray-700/30">
+                <div className={`flex items-center gap-4 mt-2 pt-3 border-t ${isDarkMode ? "border-gray-700/30" : "border-gray-200"}`}>
                     <div className="flex items-center gap-1.5">
                         <BugAntIcon className="w-4 h-4 text-pink-400" />
                         <span
@@ -509,7 +541,7 @@ function NewScanModal({ isOpen, onClose, onSubmit, isDarkMode }) {
                 className={`w-full max-w-lg mx-4 rounded-2xl shadow-2xl animate-slide-up
         ${isDarkMode ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200"}`}
             >
-                <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                <div className={`flex items-center justify-between p-6 border-b ${isDarkMode ? "border-gray-700/50" : "border-gray-200"}`}>
                     <h3
                         className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-gray-900"}`}
                     >
@@ -639,7 +671,7 @@ function NewScanModal({ isOpen, onClose, onSubmit, isDarkMode }) {
                     </div>
                 </div>
 
-                <div className="flex gap-3 p-6 border-t border-gray-700/50">
+                <div className={`flex gap-3 p-6 border-t ${isDarkMode ? "border-gray-700/50" : "border-gray-200"}`}>
                     <button
                         onClick={onClose}
                         className={`flex-1 px-4 py-3 rounded-xl font-medium transition-colors
@@ -684,9 +716,9 @@ function FindingDetailModal({
                 className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl animate-slide-up
         ${isDarkMode ? "bg-gray-900 border border-gray-700" : "bg-white border border-gray-200"}`}
             >
-                <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
+                <div className={`flex items-center justify-between p-6 border-b ${isDarkMode ? "border-gray-700/50" : "border-gray-200"}`}>
                     <div className="flex items-center gap-3">
-                        <SeverityBadge severity={finding.severity} />
+                        <SeverityBadge severity={finding.severity} isDarkMode={isDarkMode} />
                         <h3
                             className={`text-xl font-bold ${isDarkMode ? "text-white" : "text-gray-900"}`}
                         >
@@ -827,7 +859,7 @@ function FindingDetailModal({
                     )}
                 </div>
 
-                <div className="flex gap-3 p-6 border-t border-gray-700/50">
+                <div className={`flex gap-3 p-6 border-t ${isDarkMode ? "border-gray-700/50" : "border-gray-200"}`}>
                     <button
                         onClick={onClose}
                         className={`flex-1 px-4 py-3 rounded-xl font-medium transition-colors
@@ -1649,7 +1681,7 @@ function ProgramsTab({ programs, onSync, isDarkMode }) {
                                 )}
                             </div>
 
-                            <div className="flex gap-2 mt-4 pt-3 border-t border-gray-700/30">
+                            <div className={`flex gap-2 mt-4 pt-3 border-t ${isDarkMode ? "border-gray-700/30" : "border-gray-200"}`}>
                                 <button
                                     className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors
                   ${isDarkMode ? "bg-gray-700 text-gray-300 hover:bg-gray-600" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}

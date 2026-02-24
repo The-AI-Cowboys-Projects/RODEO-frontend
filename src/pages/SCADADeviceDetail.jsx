@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
 
 const statusColor = {
   online: 'text-green-400',
@@ -121,6 +122,7 @@ function timeAgo(iso) {
 }
 
 export default function SCADADeviceDetail() {
+  const { isDarkMode } = useTheme()
   const { device_id } = useParams()
   const [device, setDevice] = useState(null)
   const [registers, setRegisters] = useState([])
@@ -206,14 +208,14 @@ export default function SCADADeviceDetail() {
 
   if (!device) {
     return (
-      <div className="p-6 text-gray-400">
+      <div className={`p-6 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
         Device <code className="text-amber-300">{device_id}</code> not found.
       </div>
     )
   }
 
   return (
-    <div className="p-6 space-y-6 text-white">
+    <div className={`p-6 space-y-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
       {/* Notification toast */}
       {notif && (
         <div className="fixed top-4 right-4 z-50 bg-amber-700 text-white px-4 py-2 rounded-lg shadow-lg text-sm">
@@ -224,16 +226,16 @@ export default function SCADADeviceDetail() {
       {/* Confirmation dialog */}
       {confirmAction && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-gray-900 border border-amber-600/40 rounded-xl p-6 max-w-md w-full mx-4">
+          <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'} border border-amber-600/40 rounded-xl p-6 max-w-md w-full mx-4`}>
             <h3 className="text-lg font-bold text-amber-300 mb-2">{confirmAction.label}</h3>
-            <p className="text-sm text-gray-300 mb-4">{confirmAction.description}</p>
-            <p className="text-xs text-gray-500 mb-6">
+            <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-4`}>{confirmAction.description}</p>
+            <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mb-6`}>
               Target device: <span className="text-amber-200 font-mono">{device_id}</span>
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setConfirmAction(null)}
-                className="px-4 py-2 text-sm rounded bg-gray-700 hover:bg-gray-600 text-white"
+                className={`px-4 py-2 text-sm rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'} text-white`}
               >
                 Cancel
               </button>
@@ -256,20 +258,20 @@ export default function SCADADeviceDetail() {
             <span className={`w-3 h-3 rounded-full flex-shrink-0 ${statusDot[device.status] || 'bg-gray-400'}`} />
             <h1 className="text-2xl font-bold text-amber-400">{device.name}</h1>
           </div>
-          <div className="flex gap-4 mt-1 text-sm text-gray-400">
+          <div className={`flex gap-4 mt-1 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
             <span>
-              <span className="text-gray-500">ID: </span>
+              <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>ID: </span>
               <span className="font-mono text-xs text-amber-300">{device.device_id}</span>
             </span>
             <span>
-              <span className="text-gray-500">Protocol: </span>
-              <span className="text-white">{device.protocol}</span>
+              <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Protocol: </span>
+              <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>{device.protocol}</span>
             </span>
             <span>
-              <span className="text-gray-500">Scenario: </span>
-              <span className="text-white">{device.scenario || '—'}</span>
+              <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Scenario: </span>
+              <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>{device.scenario || '—'}</span>
             </span>
-            <span className={statusColor[device.status] || 'text-gray-400'}>{device.status}</span>
+            <span className={statusColor[device.status] || (isDarkMode ? 'text-gray-400' : 'text-gray-500')}>{device.status}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -289,21 +291,21 @@ export default function SCADADeviceDetail() {
 
       {/* Device stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Poll Count" value={device.poll_count ?? '—'} />
-        <StatCard label="Anomalies" value={device.anomaly_count ?? 0} color={device.anomaly_count > 0 ? 'text-red-400' : 'text-green-400'} />
-        <StatCard label="Registers" value={registers.length} />
-        <StatCard label="Compliance" value={`${compliance.filter(c => c.status === 'pass').length}/${compliance.length}`} color="text-amber-300" />
+        <StatCard label="Poll Count" value={device.poll_count ?? '—'} isDarkMode={isDarkMode} />
+        <StatCard label="Anomalies" value={device.anomaly_count ?? 0} color={device.anomaly_count > 0 ? 'text-red-400' : 'text-green-400'} isDarkMode={isDarkMode} />
+        <StatCard label="Registers" value={registers.length} isDarkMode={isDarkMode} />
+        <StatCard label="Compliance" value={`${compliance.filter(c => c.status === 'pass').length}/${compliance.length}`} color="text-amber-300" isDarkMode={isDarkMode} />
       </div>
 
       {/* Register Table */}
-      <Section title="Registers">
+      <Section title="Registers" isDarkMode={isDarkMode}>
         {registers.length === 0 ? (
-          <p className="text-gray-400 text-sm">No register data. Poll the device to read values.</p>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>No register data. Poll the device to read values.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-gray-400 border-b border-gray-700">
+                <tr className={`text-left ${isDarkMode ? 'text-gray-400 border-b border-gray-700' : 'text-gray-500 border-b border-gray-200'}`}>
                   <th className="pb-2 pr-4">Addr</th>
                   <th className="pb-2 pr-4">Name</th>
                   <th className="pb-2 pr-4">Value</th>
@@ -316,13 +318,13 @@ export default function SCADADeviceDetail() {
                 {registers.map((reg, i) => (
                   <tr
                     key={reg.address ?? i}
-                    className={`border-b border-gray-800 ${reg.safety_critical ? 'bg-red-950/20' : ''}`}
+                    className={`border-b ${isDarkMode ? 'border-gray-800' : 'border-gray-200'} ${reg.safety_critical ? 'bg-red-950/20' : ''}`}
                   >
-                    <td className="py-2 pr-4 font-mono text-xs text-gray-400">{reg.address}</td>
+                    <td className={`py-2 pr-4 font-mono text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{reg.address}</td>
                     <td className="py-2 pr-4 font-medium">{reg.name}</td>
                     <td className="py-2 pr-4 font-mono text-amber-300">{reg.value ?? '—'}</td>
-                    <td className="py-2 pr-4 text-xs text-gray-400">{reg.unit || '—'}</td>
-                    <td className="py-2 pr-4 text-xs text-gray-400">
+                    <td className={`py-2 pr-4 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{reg.unit || '—'}</td>
+                    <td className={`py-2 pr-4 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                       {reg.min != null && reg.max != null ? `${reg.min} – ${reg.max}` : '—'}
                     </td>
                     <td className="py-2">
@@ -341,20 +343,20 @@ export default function SCADADeviceDetail() {
       </Section>
 
       {/* Anomaly / Event History */}
-      <Section title="Event History">
+      <Section title="Event History" isDarkMode={isDarkMode}>
         {events.length === 0 ? (
-          <p className="text-gray-400 text-sm">No events recorded for this device.</p>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>No events recorded for this device.</p>
         ) : (
           <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
             {events.map((ev, i) => (
-              <div key={ev.id || i} className="rounded-lg border border-gray-700 bg-gray-900/50 p-3 flex items-start gap-3">
+              <div key={ev.id || i} className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50'} p-3 flex items-start gap-3`}>
                 <span className={`flex-shrink-0 text-xs px-2 py-0.5 rounded font-semibold mt-0.5 ${severityBadge[ev.severity] || 'bg-gray-600 text-white'}`}>
                   {(ev.severity || 'info').toUpperCase()}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold">{ev.event_type}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{ev.description}</p>
-                  <p className="text-xs text-gray-600 mt-1">{ev.timestamp ? timeAgo(ev.timestamp) : ''}</p>
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-0.5`}>{ev.description}</p>
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-600' : 'text-gray-400'} mt-1`}>{ev.timestamp ? timeAgo(ev.timestamp) : ''}</p>
                 </div>
               </div>
             ))}
@@ -363,14 +365,14 @@ export default function SCADADeviceDetail() {
       </Section>
 
       {/* Compliance Results */}
-      <Section title="Compliance Controls">
+      <Section title="Compliance Controls" isDarkMode={isDarkMode}>
         {compliance.length === 0 ? (
-          <p className="text-gray-400 text-sm">No compliance checks available for this device.</p>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>No compliance checks available for this device.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-left text-gray-400 border-b border-gray-700">
+                <tr className={`text-left ${isDarkMode ? 'text-gray-400 border-b border-gray-700' : 'text-gray-500 border-b border-gray-200'}`}>
                   <th className="pb-2 pr-4">Control ID</th>
                   <th className="pb-2 pr-4">Name</th>
                   <th className="pb-2 pr-4">Status</th>
@@ -379,15 +381,15 @@ export default function SCADADeviceDetail() {
               </thead>
               <tbody>
                 {compliance.map((ctrl, i) => (
-                  <tr key={ctrl.control_id || i} className="border-b border-gray-800">
+                  <tr key={ctrl.control_id || i} className={`border-b ${isDarkMode ? 'border-gray-800' : 'border-gray-200'}`}>
                     <td className="py-2 pr-4 font-mono text-xs text-amber-300">{ctrl.control_id}</td>
                     <td className="py-2 pr-4">{ctrl.name}</td>
                     <td className="py-2 pr-4">
-                      <span className={`text-xs px-2 py-0.5 rounded font-semibold ${complianceBadge[ctrl.status] || 'bg-gray-700 text-gray-300'}`}>
+                      <span className={`text-xs px-2 py-0.5 rounded font-semibold ${complianceBadge[ctrl.status] || (isDarkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600 border border-gray-200')}`}>
                         {(ctrl.status || '').toUpperCase()}
                       </span>
                     </td>
-                    <td className="py-2 text-xs text-gray-400">{ctrl.details || '—'}</td>
+                    <td className={`py-2 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{ctrl.details || '—'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -397,8 +399,8 @@ export default function SCADADeviceDetail() {
       </Section>
 
       {/* Action Controls */}
-      <Section title="Device Actions">
-        <p className="text-xs text-gray-500 mb-4">
+      <Section title="Device Actions" isDarkMode={isDarkMode}>
+        <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mb-4`}>
           Actions are routed through the approval workflow. A senior analyst must approve before execution.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -421,16 +423,17 @@ export default function SCADADeviceDetail() {
 
 // --- Shared sub-components ---
 
-function StatCard({ label, value, color = 'text-white' }) {
+function StatCard({ label, value, color = '', isDarkMode }) {
+  const textColor = color || (isDarkMode ? 'text-white' : 'text-gray-900')
   return (
-    <div className="rounded-lg border border-amber-500/20 bg-gray-900/60 p-4 text-center">
-      <p className={`text-2xl font-bold ${color}`}>{value}</p>
-      <p className="text-xs text-gray-400 mt-1">{label}</p>
+    <div className={`rounded-lg border border-amber-500/20 ${isDarkMode ? 'bg-gray-900/60' : 'bg-gray-50'} p-4 text-center`}>
+      <p className={`text-2xl font-bold ${textColor}`}>{value}</p>
+      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>{label}</p>
     </div>
   )
 }
 
-function Section({ title, children }) {
+function Section({ title, children, isDarkMode }) {
   return (
     <div>
       <h2 className="text-lg font-semibold mb-3 text-amber-300">{title}</h2>

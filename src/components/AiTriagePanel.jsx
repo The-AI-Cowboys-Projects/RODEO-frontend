@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ZAxis } from 'recharts'
+import { useTheme } from '../context/ThemeContext'
 
 export default function AiTriagePanel() {
+  const { isDarkMode } = useTheme()
   const [activeThreats, setActiveThreats] = useState([])
   const [triageQueue, setTriageQueue] = useState([])
   const [mlStats, setMlStats] = useState({
@@ -104,7 +106,7 @@ export default function AiTriagePanel() {
   return (
     <div className="space-y-6">
       {/* Header with ML Stats */}
-      <div className="bg-gradient-to-r from-purple-900/50 via-indigo-900/50 to-blue-900/50 p-6 rounded-xl border border-purple-500/30">
+      <div className={`${isDarkMode ? 'bg-gradient-to-r from-purple-900/50 via-indigo-900/50 to-blue-900/50 border-purple-500/30' : 'bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 border-purple-200'} p-6 rounded-xl border`}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
@@ -113,8 +115,8 @@ export default function AiTriagePanel() {
               </svg>
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">AI Triage Intelligence</h2>
-              <p className="text-gray-400 text-sm">ML-powered threat prioritization & exploitability prediction</p>
+              <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>AI Triage Intelligence</h2>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>ML-powered threat prioritization & exploitability prediction</p>
             </div>
           </div>
           <div className="flex items-center space-x-2 bg-green-500/10 px-4 py-2 rounded-lg border border-green-500/30">
@@ -125,23 +127,23 @@ export default function AiTriagePanel() {
 
         {/* ML Performance Metrics */}
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
-            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Model Accuracy</p>
-            <p className="text-2xl font-bold text-white">{mlStats.accuracy.toFixed(1)}%</p>
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/60 border-gray-200'} p-4 rounded-lg border`}>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wide mb-1`}>Model Accuracy</p>
+            <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mlStats.accuracy.toFixed(1)}%</p>
             <p className="text-xs text-gray-500 mt-1">CVE Dataset: 1998-2025</p>
           </div>
-          <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
-            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Threats Processed</p>
-            <p className="text-2xl font-bold text-white">{mlStats.processed}</p>
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/60 border-gray-200'} p-4 rounded-lg border`}>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wide mb-1`}>Threats Processed</p>
+            <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mlStats.processed}</p>
             <p className="text-xs text-gray-500 mt-1">This session</p>
           </div>
-          <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
-            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Auto-Classified</p>
-            <p className="text-2xl font-bold text-white">{mlStats.autoClassified}</p>
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/60 border-gray-200'} p-4 rounded-lg border`}>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wide mb-1`}>Auto-Classified</p>
+            <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{mlStats.autoClassified}</p>
             <p className="text-xs text-gray-500 mt-1">{mlStats.processed > 0 ? ((mlStats.autoClassified / mlStats.processed) * 100).toFixed(0) : 0}% automated</p>
           </div>
-          <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700/50">
-            <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">Current Confidence</p>
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/60 border-gray-200'} p-4 rounded-lg border`}>
+            <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wide mb-1`}>Current Confidence</p>
             <p className={`text-2xl font-bold ${getConfidenceColor(mlStats.confidence)}`}>
               {mlStats.confidence.toFixed(1)}%
             </p>
@@ -153,47 +155,47 @@ export default function AiTriagePanel() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Risk Prioritization Matrix */}
-        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} p-6 rounded-xl border`}>
           <div className="mb-4">
-            <h3 className="text-xl font-bold text-white mb-1">Risk Prioritization Matrix</h3>
-            <p className="text-sm text-gray-400">AI-predicted exploitability vs. business impact</p>
+            <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Risk Prioritization Matrix</h3>
+            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>AI-predicted exploitability vs. business impact</p>
           </div>
           <ResponsiveContainer width="100%" height={350}>
             <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e2e8f0'} />
               <XAxis
                 type="number"
                 dataKey="exploitability"
                 name="Exploitability"
-                stroke="#94a3b8"
-                label={{ value: 'Exploitability Score', position: 'bottom', fill: '#94a3b8' }}
+                stroke={isDarkMode ? '#94a3b8' : '#64748b'}
+                label={{ value: 'Exploitability Score', position: 'bottom', fill: isDarkMode ? '#94a3b8' : '#64748b' }}
                 domain={[0, 100]}
               />
               <YAxis
                 type="number"
                 dataKey="impact"
                 name="Impact"
-                stroke="#94a3b8"
-                label={{ value: 'Business Impact', angle: -90, position: 'insideLeft', fill: '#94a3b8' }}
+                stroke={isDarkMode ? '#94a3b8' : '#64748b'}
+                label={{ value: 'Business Impact', angle: -90, position: 'insideLeft', fill: isDarkMode ? '#94a3b8' : '#64748b' }}
                 domain={[0, 100]}
               />
               <ZAxis type="number" dataKey="riskScore" range={[100, 400]} />
               <Tooltip
                 cursor={{ strokeDasharray: '3 3' }}
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #475569',
+                  backgroundColor: isDarkMode ? '#1e293b' : '#ffffff',
+                  border: isDarkMode ? '1px solid #475569' : '1px solid #e2e8f0',
                   borderRadius: '8px'
                 }}
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload
                     return (
-                      <div className="bg-slate-800 border border-slate-700 rounded-lg p-3">
-                        <p className="text-white font-semibold mb-1">{data.name}</p>
-                        <p className="text-xs text-gray-400">Exploitability: {data.exploitability}%</p>
-                        <p className="text-xs text-gray-400">Impact: {data.impact}%</p>
-                        <p className="text-xs text-gray-400">Risk Score: {data.riskScore}</p>
+                      <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} border rounded-lg p-3`}>
+                        <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold mb-1`}>{data.name}</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Exploitability: {data.exploitability}%</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Impact: {data.impact}%</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Risk Score: {data.riskScore}</p>
                         <div className={`text-xs font-semibold mt-1`} style={{ color: getPriorityColor(data.priority) }}>
                           {data.priority} PRIORITY
                         </div>
@@ -214,17 +216,17 @@ export default function AiTriagePanel() {
             </ScatterChart>
           </ResponsiveContainer>
           <div className="grid grid-cols-2 gap-2 mt-4 text-xs">
-            <div className="bg-slate-900/50 p-2 rounded border border-slate-700">
+            <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} p-2 rounded border`}>
               <p className="text-gray-500">High Impact, Low Exploit</p>
-              <p className="text-gray-400 text-[10px]">Monitor & plan patching</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-[10px]`}>Monitor & plan patching</p>
             </div>
             <div className="bg-red-900/20 p-2 rounded border border-red-500/30">
               <p className="text-red-400 font-semibold">High Impact, High Exploit</p>
               <p className="text-red-300 text-[10px]">CRITICAL - Patch immediately</p>
             </div>
-            <div className="bg-slate-900/50 p-2 rounded border border-slate-700">
+            <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} p-2 rounded border`}>
               <p className="text-gray-500">Low Impact, Low Exploit</p>
-              <p className="text-gray-400 text-[10px]">Low priority monitoring</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-[10px]`}>Low priority monitoring</p>
             </div>
             <div className="bg-yellow-900/20 p-2 rounded border border-yellow-500/30">
               <p className="text-yellow-400 font-semibold">Low Impact, High Exploit</p>
@@ -234,27 +236,27 @@ export default function AiTriagePanel() {
         </div>
 
         {/* Live Triage Queue */}
-        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} p-6 rounded-xl border`}>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-xl font-bold text-white mb-1">Live Triage Queue</h3>
-              <p className="text-sm text-gray-400">Real-time ML classification & scoring</p>
+              <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>Live Triage Queue</h3>
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Real-time ML classification & scoring</p>
             </div>
             <div className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-semibold">
               {triageQueue.length} Active
             </div>
           </div>
 
-          <div className="space-y-3 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
+          <div className={`space-y-3 max-h-[400px] overflow-y-auto scrollbar-thin ${isDarkMode ? 'scrollbar-thumb-slate-700' : 'scrollbar-thumb-gray-300'}`}>
             {triageQueue.map((threat) => (
               <div
                 key={threat.id}
-                className="bg-slate-900/50 p-4 rounded-lg border border-slate-700 hover:border-purple-500/50 transition-all"
+                className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} p-4 rounded-lg border hover:border-purple-500/50 transition-all`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-white font-semibold font-mono text-sm">{threat.cve}</span>
+                      <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold font-mono text-sm`}>{threat.cve}</span>
                       <span
                         className="px-2 py-0.5 text-[10px] font-bold rounded uppercase"
                         style={{
@@ -266,25 +268,25 @@ export default function AiTriagePanel() {
                         {threat.priority}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-400">{threat.service} • {threat.category}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{threat.service} • {threat.category}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-white">{threat.riskScore}</p>
+                    <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{threat.riskScore}</p>
                     <p className="text-[10px] text-gray-500">Risk Score</p>
                   </div>
                 </div>
 
                 {/* ML Prediction Metrics */}
                 <div className="grid grid-cols-3 gap-2 mb-3">
-                  <div className="bg-slate-800 p-2 rounded">
+                  <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} p-2 rounded`}>
                     <p className="text-[10px] text-gray-500 uppercase">CVSS</p>
-                    <p className="text-sm font-semibold text-white">{threat.cvssScore}</p>
+                    <p className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{threat.cvssScore}</p>
                   </div>
-                  <div className="bg-slate-800 p-2 rounded">
+                  <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} p-2 rounded`}>
                     <p className="text-[10px] text-gray-500 uppercase">Exploit</p>
                     <p className="text-sm font-semibold text-orange-400">{threat.exploitability}%</p>
                   </div>
-                  <div className="bg-slate-800 p-2 rounded">
+                  <div className={`${isDarkMode ? 'bg-slate-800' : 'bg-white border border-gray-200'} p-2 rounded`}>
                     <p className="text-[10px] text-gray-500 uppercase">Impact</p>
                     <p className="text-sm font-semibold text-red-400">{threat.impact}%</p>
                   </div>
@@ -311,9 +313,9 @@ export default function AiTriagePanel() {
                     <svg className="w-3 h-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
-                    <span className="text-xs text-gray-400">{threat.recommendedAction}</span>
+                    <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{threat.recommendedAction}</span>
                   </div>
-                  <span className="text-[10px] text-gray-600">{threat.timestamp}</span>
+                  <span className={`text-[10px] ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`}>{threat.timestamp}</span>
                 </div>
               </div>
             ))}
@@ -322,7 +324,7 @@ export default function AiTriagePanel() {
       </div>
 
       {/* ML Model Info Banner */}
-      <div className="bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border border-indigo-500/30 rounded-lg p-4">
+      <div className={`${isDarkMode ? 'bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border-indigo-500/30' : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200'} border rounded-lg p-4`}>
         <div className="flex items-start space-x-3">
           <div className="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
             <svg className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,8 +332,8 @@ export default function AiTriagePanel() {
             </svg>
           </div>
           <div className="flex-1">
-            <h4 className="text-white font-semibold mb-1">ML-Powered Triage Engine</h4>
-            <p className="text-sm text-gray-400">
+            <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold mb-1`}>ML-Powered Triage Engine</h4>
+            <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
               R-O-D-E-O's AI models are trained on <span className="text-purple-400 font-semibold">27 years of CVE data (1998-2025)</span>,
               analyzing exploitation patterns, attack vectors, and real-world impact to predict threat priority with 94%+ accuracy.
               The system automatically triages vulnerabilities, eliminating 97% of manual classification time and reducing false positives by 81%.

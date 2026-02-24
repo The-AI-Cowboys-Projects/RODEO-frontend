@@ -130,7 +130,7 @@ export default function SBOMDashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-indigo-900/50 via-slate-900 to-purple-900/50 rounded-2xl border border-indigo-500/20 p-6">
+      <div className={`relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-r from-indigo-900/50 via-slate-900 to-purple-900/50 border-indigo-500/20' : 'bg-gradient-to-r from-indigo-50 via-white to-purple-50 border-indigo-200'} rounded-2xl border p-6`}>
         {/* Background effects */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
@@ -142,7 +142,7 @@ export default function SBOMDashboard() {
               <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30 rotate-3 hover:rotate-0 transition-transform">
                 <CubeIcon className="w-9 h-9 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 border-slate-900 flex items-center justify-center">
+              <div className={`absolute -top-1 -right-1 w-5 h-5 bg-green-400 rounded-full border-2 ${isDarkMode ? 'border-slate-900' : 'border-white'} flex items-center justify-center`}>
                 <CheckCircleIcon className="w-3 h-3 text-slate-900" />
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function SBOMDashboard() {
               <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
                 Software Bill of Materials
               </h1>
-              <p className="text-gray-400 mt-1 flex items-center gap-2">
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1 flex items-center gap-2`}>
                 <span>Track components, vulnerabilities & license compliance</span>
               </p>
             </div>
@@ -176,7 +176,7 @@ export default function SBOMDashboard() {
               className={`group flex items-center gap-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all ${
                 selectedSbom?.sbom_id === sbom.sbom_id
                   ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-purple-500/25'
-                  : 'bg-slate-800/50 text-gray-400 hover:text-white hover:bg-slate-700/50 border border-slate-700/50'
+                  : `${isDarkMode ? 'bg-slate-800/50 text-gray-400 hover:text-white hover:bg-slate-700/50 border-slate-700/50' : 'bg-white text-gray-500 hover:text-gray-900 hover:bg-gray-50 border-gray-200'} border`
               }`}
             >
               <CubeTransparentIcon className="w-4 h-4" />
@@ -184,7 +184,7 @@ export default function SBOMDashboard() {
               <span className={`px-2 py-0.5 rounded-full text-xs ${
                 selectedSbom?.sbom_id === sbom.sbom_id
                   ? 'bg-white/20'
-                  : 'bg-slate-700/50'
+                  : (isDarkMode ? 'bg-slate-700/50' : 'bg-gray-100')
               }`}>
                 v{sbom.version}
               </span>
@@ -220,12 +220,12 @@ export default function SBOMDashboard() {
           </div>
 
           {/* Vulnerability Breakdown */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border p-6`}>
             <div className="flex items-center gap-2 mb-5">
               <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
                 <BoltIcon className="w-5 h-5 text-red-400" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Vulnerability Breakdown</h3>
+              <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Vulnerability Breakdown</h3>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <SeverityCard
@@ -252,7 +252,7 @@ export default function SBOMDashboard() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 p-1.5 bg-slate-800/50 rounded-xl border border-slate-700/50">
+          <div className={`flex gap-2 p-1.5 ${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} rounded-xl border`}>
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
@@ -263,7 +263,7 @@ export default function SBOMDashboard() {
                   className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                     isActive
                       ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                      : 'text-gray-400 hover:text-white hover:bg-slate-700/50'
+                      : `${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-slate-700/50' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -279,39 +279,40 @@ export default function SBOMDashboard() {
           </div>
 
           {/* Tab Content */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+          <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border p-6`}>
             {activeTab === 'overview' && (
-              <OverviewTab analytics={analytics} />
+              <OverviewTab analytics={analytics} isDarkMode={isDarkMode} />
             )}
             {activeTab === 'components' && (
               <ComponentsTab
                 components={components}
                 search={componentSearch}
                 onSearchChange={setComponentSearch}
+                isDarkMode={isDarkMode}
               />
             )}
             {activeTab === 'vulnerabilities' && (
-              <VulnerabilitiesTab vulnerabilities={vulnerabilities} />
+              <VulnerabilitiesTab vulnerabilities={vulnerabilities} isDarkMode={isDarkMode} />
             )}
             {activeTab === 'licenses' && (
-              <LicensesTab analytics={analytics} />
+              <LicensesTab analytics={analytics} isDarkMode={isDarkMode} />
             )}
           </div>
         </>
       )}
 
       {sboms.length === 0 && (
-        <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-12 text-center">
+        <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border p-12 text-center`}>
           <div className="relative inline-block mb-6">
             <div className="w-24 h-24 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-3xl flex items-center justify-center mx-auto">
               <CubeIcon className="w-12 h-12 text-indigo-400" />
             </div>
-            <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center border border-slate-700">
+            <div className={`absolute -bottom-2 -right-2 w-10 h-10 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-xl flex items-center justify-center border`}>
               <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
             </div>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-2">No SBOMs Found</h3>
-          <p className="text-gray-400 mb-6 max-w-md mx-auto">
+          <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2`}>No SBOMs Found</h3>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-6 max-w-md mx-auto`}>
             Scan a project to generate your first Software Bill of Materials and start tracking dependencies
           </p>
           <button
@@ -336,6 +337,7 @@ export default function SBOMDashboard() {
 
 // Stat Card Component
 function StatCard({ icon: Icon, label, value, color, trend }) {
+  const { isDarkMode } = useTheme()
   const colorStyles = {
     indigo: 'from-indigo-500/20 to-indigo-600/10 border-indigo-500/30 text-indigo-400',
     green: 'from-green-500/20 to-green-600/10 border-green-500/30 text-green-400',
@@ -356,7 +358,7 @@ function StatCard({ icon: Icon, label, value, color, trend }) {
             <ArrowTrendingUpIcon className="w-5 h-5 text-orange-400" />
           )}
         </div>
-        <div className="text-4xl font-bold text-white mb-1">{value}</div>
+        <div className={`text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{value}</div>
         <div className="text-sm opacity-80">{label}</div>
       </div>
     </div>
@@ -365,6 +367,7 @@ function StatCard({ icon: Icon, label, value, color, trend }) {
 
 // Risk Score Card with animated ring
 function RiskScoreCard({ score }) {
+  const { isDarkMode } = useTheme()
   const getScoreColor = (s) => {
     if (s >= 75) return { ring: 'text-red-500', bg: 'from-red-500/20', label: 'Critical' }
     if (s >= 50) return { ring: 'text-orange-500', bg: 'from-orange-500/20', label: 'High' }
@@ -377,7 +380,7 @@ function RiskScoreCard({ score }) {
   const offset = circumference - (score / 100) * circumference
 
   return (
-    <div className={`relative overflow-hidden bg-gradient-to-br ${bg} to-slate-800/50 rounded-2xl border border-slate-700/50 p-5 group hover:scale-[1.02] transition-transform`}>
+    <div className={`relative overflow-hidden bg-gradient-to-br ${bg} ${isDarkMode ? 'to-slate-800/50 border-slate-700/50' : 'to-white border-gray-200'} rounded-2xl border p-5 group hover:scale-[1.02] transition-transform`}>
       <div className="flex items-center gap-4">
         <div className="relative w-24 h-24">
           <svg className="w-24 h-24 -rotate-90">
@@ -388,7 +391,7 @@ function RiskScoreCard({ score }) {
               stroke="currentColor"
               strokeWidth="8"
               fill="none"
-              className="text-slate-700/50"
+              className={isDarkMode ? 'text-slate-700/50' : 'text-gray-200'}
             />
             <circle
               cx="48"
@@ -406,13 +409,13 @@ function RiskScoreCard({ score }) {
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl font-bold text-white">{score}</span>
+            <span className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{score}</span>
           </div>
         </div>
         <div>
-          <div className="text-sm text-gray-400 mb-1">Risk Score</div>
+          <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-1`}>Risk Score</div>
           <div className={`text-lg font-semibold ${ring}`}>{label} Risk</div>
-          <div className="text-xs text-gray-500 mt-1">0-100 scale</div>
+          <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mt-1`}>0-100 scale</div>
         </div>
       </div>
     </div>
@@ -421,6 +424,7 @@ function RiskScoreCard({ score }) {
 
 // Severity Card Component
 function SeverityCard({ severity, count, color }) {
+  const { isDarkMode } = useTheme()
   const colorStyles = {
     red: 'from-red-500/20 to-red-600/5 border-red-500/30 text-red-400 hover:shadow-red-500/20',
     orange: 'from-orange-500/20 to-orange-600/5 border-orange-500/30 text-orange-400 hover:shadow-orange-500/20',
@@ -430,7 +434,7 @@ function SeverityCard({ severity, count, color }) {
 
   return (
     <div className={`relative bg-gradient-to-br ${colorStyles[color]} rounded-xl border p-5 text-center group hover:scale-105 hover:shadow-lg transition-all cursor-default`}>
-      <div className="text-4xl font-bold text-white mb-1">{count}</div>
+      <div className={`text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{count}</div>
       <div className="text-sm font-medium">{severity}</div>
       {count > 0 && (
         <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-current animate-pulse" />
@@ -440,14 +444,14 @@ function SeverityCard({ severity, count, color }) {
 }
 
 // Overview Tab
-function OverviewTab({ analytics }) {
+function OverviewTab({ analytics, isDarkMode }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Component Types */}
-      <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-700/30">
+      <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-xl p-5 border`}>
         <div className="flex items-center gap-2 mb-4">
           <CircleStackIcon className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-semibold text-white">Component Types</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Component Types</h3>
         </div>
         <div className="space-y-3">
           {Object.entries(analytics.component_type_distribution).map(([type, count]) => {
@@ -456,13 +460,13 @@ function OverviewTab({ analytics }) {
             return (
               <div key={type} className="group">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-gray-300 capitalize flex items-center gap-2">
+                  <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} capitalize flex items-center gap-2`}>
                     <CodeBracketIcon className="w-4 h-4 text-gray-500" />
                     {type}
                   </span>
-                  <span className="text-white font-semibold">{count}</span>
+                  <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>{count}</span>
                 </div>
-                <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                <div className={`h-2 ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-200'} rounded-full overflow-hidden`}>
                   <div
                     className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all group-hover:from-indigo-400 group-hover:to-purple-400"
                     style={{ width: `${percent}%` }}
@@ -475,10 +479,10 @@ function OverviewTab({ analytics }) {
       </div>
 
       {/* Risk Metrics */}
-      <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-700/30">
+      <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-xl p-5 border`}>
         <div className="flex items-center gap-2 mb-4">
           <ChartBarIcon className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-semibold text-white">Risk Metrics</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Risk Metrics</h3>
         </div>
         <div className="space-y-4">
           <MetricRow
@@ -486,24 +490,28 @@ function OverviewTab({ analytics }) {
             label="Vulnerability Rate"
             value={`${analytics.risk_metrics.vulnerability_rate.toFixed(1)}%`}
             color={analytics.risk_metrics.vulnerability_rate > 10 ? 'red' : 'green'}
+            isDarkMode={isDarkMode}
           />
           <MetricRow
             icon={ScaleIcon}
             label="High-Risk Licenses"
             value={analytics.compliance_metrics.high_risk_licenses}
             color={analytics.compliance_metrics.high_risk_licenses > 0 ? 'orange' : 'green'}
+            isDarkMode={isDarkMode}
           />
           <MetricRow
             icon={ClockIcon}
             label="Deprecated Components"
             value={analytics.compliance_metrics.deprecated_components}
             color={analytics.compliance_metrics.deprecated_components > 0 ? 'yellow' : 'green'}
+            isDarkMode={isDarkMode}
           />
           <MetricRow
             icon={GlobeAltIcon}
             label="External Dependencies"
             value={Object.values(analytics.component_type_distribution).reduce((a, b) => a + b, 0)}
             color="indigo"
+            isDarkMode={isDarkMode}
           />
         </div>
       </div>
@@ -512,7 +520,7 @@ function OverviewTab({ analytics }) {
       <div className="md:col-span-2 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl p-5 border border-indigo-500/20">
         <div className="flex items-center gap-2 mb-4">
           <SparklesIcon className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-semibold text-white">Quick Insights</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Quick Insights</h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InsightCard
@@ -521,6 +529,7 @@ function OverviewTab({ analytics }) {
             value={`${((1 - analytics.risk_metrics.vulnerability_rate / 100) * 100).toFixed(0)}%`}
             description="of components have no known vulnerabilities"
             color="green"
+            isDarkMode={isDarkMode}
           />
           <InsightCard
             icon={ScaleIcon}
@@ -528,6 +537,7 @@ function OverviewTab({ analytics }) {
             value={analytics.compliance_metrics.high_risk_licenses === 0 ? 'Compliant' : 'Review Needed'}
             description={analytics.compliance_metrics.high_risk_licenses === 0 ? 'No high-risk licenses detected' : `${analytics.compliance_metrics.high_risk_licenses} license(s) need review`}
             color={analytics.compliance_metrics.high_risk_licenses === 0 ? 'green' : 'orange'}
+            isDarkMode={isDarkMode}
           />
           <InsightCard
             icon={ArrowPathIcon}
@@ -535,6 +545,7 @@ function OverviewTab({ analytics }) {
             value={analytics.compliance_metrics.deprecated_components === 0 ? 'Up to Date' : 'Updates Available'}
             description={analytics.compliance_metrics.deprecated_components === 0 ? 'All components are current' : `${analytics.compliance_metrics.deprecated_components} deprecated component(s)`}
             color={analytics.compliance_metrics.deprecated_components === 0 ? 'green' : 'yellow'}
+            isDarkMode={isDarkMode}
           />
         </div>
       </div>
@@ -542,7 +553,7 @@ function OverviewTab({ analytics }) {
   )
 }
 
-function MetricRow({ icon: Icon, label, value, color }) {
+function MetricRow({ icon: Icon, label, value, color, isDarkMode }) {
   const colorStyles = {
     red: 'text-red-400',
     orange: 'text-orange-400',
@@ -552,17 +563,17 @@ function MetricRow({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+    <div className={`flex items-center justify-between p-3 ${isDarkMode ? 'bg-slate-800/50' : 'bg-white border border-gray-200'} rounded-lg`}>
       <div className="flex items-center gap-3">
         <Icon className={`w-5 h-5 ${colorStyles[color]}`} />
-        <span className="text-gray-300">{label}</span>
+        <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{label}</span>
       </div>
       <span className={`font-bold ${colorStyles[color]}`}>{value}</span>
     </div>
   )
 }
 
-function InsightCard({ icon: Icon, title, value, description, color }) {
+function InsightCard({ icon: Icon, title, value, description, color, isDarkMode }) {
   const colorStyles = {
     green: 'border-green-500/30 text-green-400',
     orange: 'border-orange-500/30 text-orange-400',
@@ -570,19 +581,19 @@ function InsightCard({ icon: Icon, title, value, description, color }) {
   }
 
   return (
-    <div className={`bg-slate-900/50 rounded-xl p-4 border ${colorStyles[color]}`}>
+    <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-white'} rounded-xl p-4 border ${colorStyles[color]}`}>
       <div className="flex items-center gap-2 mb-2">
         <Icon className="w-5 h-5" />
-        <span className="text-sm text-gray-400">{title}</span>
+        <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{title}</span>
       </div>
-      <div className="text-xl font-bold text-white mb-1">{value}</div>
-      <div className="text-xs text-gray-500">{description}</div>
+      <div className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{value}</div>
+      <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{description}</div>
     </div>
   )
 }
 
 // Components Tab
-function ComponentsTab({ components, search, onSearchChange }) {
+function ComponentsTab({ components, search, onSearchChange, isDarkMode }) {
   const filteredComponents = components.filter(comp =>
     comp.name.toLowerCase().includes(search.toLowerCase()) ||
     comp.version.toLowerCase().includes(search.toLowerCase())
@@ -593,7 +604,7 @@ function ComponentsTab({ components, search, onSearchChange }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <CubeTransparentIcon className="w-5 h-5 text-indigo-400" />
-          <h3 className="text-lg font-semibold text-white">Components ({components.length})</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Components ({components.length})</h3>
         </div>
         <div className="relative">
           <MagnifyingGlassIcon className="w-5 h-5 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -602,28 +613,28 @@ function ComponentsTab({ components, search, onSearchChange }) {
             placeholder="Search components..."
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-10 pr-4 py-2 bg-slate-900/50 border border-slate-600/50 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500/50 w-64"
+            className={`pl-10 pr-4 py-2 ${isDarkMode ? 'bg-slate-900/50 border-slate-600/50 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'} border rounded-lg focus:outline-none focus:border-indigo-500/50 w-64`}
           />
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-700/50">
+      <div className={`overflow-x-auto rounded-xl border ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
         <table className="w-full">
           <thead>
-            <tr className="bg-slate-900/50">
-              <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">Component</th>
-              <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">Version</th>
-              <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">Type</th>
-              <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">License</th>
-              <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">Vulnerabilities</th>
+            <tr className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'}`}>
+              <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>Component</th>
+              <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>Version</th>
+              <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>Type</th>
+              <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>License</th>
+              <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>Vulnerabilities</th>
             </tr>
           </thead>
           <tbody>
             {filteredComponents.slice(0, 50).map((comp, idx) => (
               <tr
                 key={idx}
-                className={`border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors ${
-                  idx % 2 === 0 ? 'bg-slate-800/30' : ''
+                className={`border-b ${isDarkMode ? 'border-slate-700/30 hover:bg-slate-700/20' : 'border-gray-100 hover:bg-gray-50'} transition-colors ${
+                  idx % 2 === 0 ? (isDarkMode ? 'bg-slate-800/30' : 'bg-gray-50/50') : ''
                 }`}
               >
                 <td className="py-4 px-5">
@@ -631,11 +642,11 @@ function ComponentsTab({ components, search, onSearchChange }) {
                     <div className="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
                       <CubeTransparentIcon className="w-4 h-4 text-indigo-400" />
                     </div>
-                    <span className="text-white font-medium">{comp.name}</span>
+                    <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-medium`}>{comp.name}</span>
                   </div>
                 </td>
                 <td className="py-4 px-5">
-                  <span className="px-2 py-1 bg-slate-700/50 rounded text-gray-300 text-sm font-mono">
+                  <span className={`px-2 py-1 ${isDarkMode ? 'bg-slate-700/50 text-gray-300' : 'bg-gray-100 text-gray-600'} rounded text-sm font-mono`}>
                     {comp.version}
                   </span>
                 </td>
@@ -679,7 +690,7 @@ function ComponentsTab({ components, search, onSearchChange }) {
       </div>
 
       {filteredComponents.length > 50 && (
-        <div className="text-center text-gray-400 text-sm py-4">
+        <div className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm py-4`}>
           Showing 50 of {filteredComponents.length} components
         </div>
       )}
@@ -688,7 +699,7 @@ function ComponentsTab({ components, search, onSearchChange }) {
 }
 
 // Vulnerabilities Tab
-function VulnerabilitiesTab({ vulnerabilities }) {
+function VulnerabilitiesTab({ vulnerabilities, isDarkMode }) {
   const getSeverityStyle = (severity) => {
     switch (severity?.toUpperCase()) {
       case 'CRITICAL': return 'from-red-500/20 to-red-600/5 border-red-500/40 text-red-400'
@@ -715,8 +726,8 @@ function VulnerabilitiesTab({ vulnerabilities }) {
         <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <ShieldCheckSolid className="w-8 h-8 text-green-400" />
         </div>
-        <h3 className="text-xl font-semibold text-white mb-2">No Vulnerabilities Found</h3>
-        <p className="text-gray-400">All components are secure with no known vulnerabilities</p>
+        <h3 className={`text-xl font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2`}>No Vulnerabilities Found</h3>
+        <p className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>All components are secure with no known vulnerabilities</p>
       </div>
     )
   }
@@ -725,7 +736,7 @@ function VulnerabilitiesTab({ vulnerabilities }) {
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         <ShieldExclamationIcon className="w-5 h-5 text-red-400" />
-        <h3 className="text-lg font-semibold text-white">Vulnerabilities ({vulnerabilities.length})</h3>
+        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Vulnerabilities ({vulnerabilities.length})</h3>
       </div>
 
       <div className="space-y-4">
@@ -740,8 +751,8 @@ function VulnerabilitiesTab({ vulnerabilities }) {
                   <ExclamationTriangleIcon className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-white">{vuln.vulnerability.vulnerability_id}</div>
-                  <div className="text-sm text-gray-400">
+                  <div className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{vuln.vulnerability.vulnerability_id}</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                     in <span className="text-purple-400">{vuln.component.name}</span> {vuln.component.version}
                   </div>
                 </div>
@@ -751,14 +762,14 @@ function VulnerabilitiesTab({ vulnerabilities }) {
               </span>
             </div>
 
-            <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} text-sm mb-3 line-clamp-2`}>
               {vuln.vulnerability.description?.substring(0, 200)}...
             </p>
 
             {vuln.vulnerability.cvss_score && (
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500 text-sm">CVSS Score:</span>
+                  <span className={`${isDarkMode ? 'text-gray-500' : 'text-gray-400'} text-sm`}>CVSS Score:</span>
                   <span className={`font-bold ${
                     vuln.vulnerability.cvss_score >= 9 ? 'text-red-400' :
                     vuln.vulnerability.cvss_score >= 7 ? 'text-orange-400' :
@@ -779,7 +790,7 @@ function VulnerabilitiesTab({ vulnerabilities }) {
       </div>
 
       {vulnerabilities.length > 20 && (
-        <div className="text-center text-gray-400 text-sm py-4">
+        <div className={`text-center ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm py-4`}>
           Showing 20 of {vulnerabilities.length} vulnerabilities
         </div>
       )}
@@ -788,7 +799,7 @@ function VulnerabilitiesTab({ vulnerabilities }) {
 }
 
 // Licenses Tab
-function LicensesTab({ analytics }) {
+function LicensesTab({ analytics, isDarkMode }) {
   const getLicenseRisk = (license) => {
     const highRisk = ['GPL-3.0', 'AGPL-3.0', 'GPL-2.0', 'LGPL-3.0', 'LGPL-2.1']
     const mediumRisk = ['MPL-2.0', 'EPL-2.0', 'CDDL-1.0']
@@ -817,7 +828,7 @@ function LicensesTab({ analytics }) {
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         <ScaleIcon className="w-5 h-5 text-purple-400" />
-        <h3 className="text-lg font-semibold text-white">License Distribution</h3>
+        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>License Distribution</h3>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -842,18 +853,18 @@ function LicensesTab({ analytics }) {
                   {risk === 'high' ? 'Copyleft' : risk === 'medium' ? 'Weak Copyleft' : 'Permissive'}
                 </span>
               </div>
-              <div className="text-3xl font-bold text-white mb-1">{count}</div>
-              <div className="text-sm text-gray-400 truncate" title={license}>{license}</div>
+              <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{count}</div>
+              <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} truncate`} title={license}>{license}</div>
             </div>
           )
         })}
       </div>
 
       {/* License Legend */}
-      <div className="bg-slate-900/50 rounded-xl p-5 border border-slate-700/30 mt-6">
+      <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-xl p-5 border mt-6`}>
         <div className="flex items-center gap-2 mb-4">
           <SparklesIcon className="w-5 h-5 text-indigo-400" />
-          <h4 className="font-semibold text-white">License Risk Guide</h4>
+          <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>License Risk Guide</h4>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex items-start gap-3">

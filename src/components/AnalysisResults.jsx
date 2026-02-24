@@ -16,14 +16,16 @@ import {
 } from '@heroicons/react/24/outline'
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import AICopilot from './AICopilot'
+import { useTheme } from '../context/ThemeContext'
 
 export default function AnalysisResults({ sessionId, results }) {
+  const { isDarkMode } = useTheme()
   const [activeTab, setActiveTab] = useState('overview')
 
   if (!results) {
     return (
-      <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 text-center">
-        <p className="text-gray-400">No analysis results available</p>
+      <div className={`backdrop-blur-sm rounded-2xl border p-8 text-center ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
+        <p className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>No analysis results available</p>
       </div>
     )
   }
@@ -40,19 +42,18 @@ export default function AnalysisResults({ sessionId, results }) {
   const getThreatColor = (level) => {
     switch (level?.toLowerCase()) {
       case 'critical':
-        return 'text-red-400 bg-red-900/20 border-red-500/50'
+        return isDarkMode ? 'text-red-400 bg-red-900/20 border-red-500/50' : 'text-red-700 bg-red-50 border-red-200'
       case 'high':
-        return 'text-orange-400 bg-orange-900/20 border-orange-500/50'
+        return isDarkMode ? 'text-orange-400 bg-orange-900/20 border-orange-500/50' : 'text-orange-700 bg-orange-50 border-orange-200'
       case 'medium':
-        return 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50'
+        return isDarkMode ? 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50' : 'text-yellow-700 bg-yellow-50 border-yellow-200'
       case 'low':
-        return 'text-blue-400 bg-blue-900/20 border-blue-500/50'
+        return isDarkMode ? 'text-blue-400 bg-blue-900/20 border-blue-500/50' : 'text-blue-700 bg-blue-50 border-blue-200'
       case 'benign':
       case 'safe':
-        return 'text-green-400 bg-green-900/20 border-green-500/50'
+        return isDarkMode ? 'text-green-400 bg-green-900/20 border-green-500/50' : 'text-green-700 bg-green-50 border-green-200'
       default:
-        // UNKNOWN and other unrecognized values - yellow to indicate caution
-        return 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50'
+        return isDarkMode ? 'text-yellow-400 bg-yellow-900/20 border-yellow-500/50' : 'text-yellow-700 bg-yellow-50 border-yellow-200'
     }
   }
 
@@ -61,22 +62,22 @@ export default function AnalysisResults({ sessionId, results }) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+      <div className={`backdrop-blur-sm rounded-2xl border p-6 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white">Analysis Results</h2>
-            <p className="text-gray-400 text-sm mt-1">
+            <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Analysis Results</h2>
+            <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
               Session: <span className="font-mono text-purple-400">{sessionId}</span>
             </p>
           </div>
 
           {/* Action Buttons */}
           <div className="flex space-x-2">
-            <button className="px-4 py-2 bg-slate-900/50 hover:bg-slate-900/70 border border-slate-700 rounded-lg text-white text-sm font-medium transition-colors flex items-center space-x-2">
+            <button className={`px-4 py-2 border rounded-lg text-sm font-medium transition-colors flex items-center space-x-2 ${isDarkMode ? 'bg-slate-900/50 hover:bg-slate-900/70 border-slate-700 text-white' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-900'}`}>
               <ArrowDownTrayIcon className="w-4 h-4" />
               <span>Export</span>
             </button>
-            <button className="px-4 py-2 bg-slate-900/50 hover:bg-slate-900/70 border border-slate-700 rounded-lg text-white text-sm font-medium transition-colors flex items-center space-x-2">
+            <button className={`px-4 py-2 border rounded-lg text-sm font-medium transition-colors flex items-center space-x-2 ${isDarkMode ? 'bg-slate-900/50 hover:bg-slate-900/70 border-slate-700 text-white' : 'bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-900'}`}>
               <ShareIcon className="w-4 h-4" />
               <span>Share</span>
             </button>
@@ -91,7 +92,7 @@ export default function AnalysisResults({ sessionId, results }) {
           </div>
 
           {results.classification?.threat_type && (
-            <div className="px-4 py-2 bg-purple-900/20 border border-purple-500/50 rounded-lg">
+            <div className={`px-4 py-2 border rounded-lg ${isDarkMode ? 'bg-purple-900/20 border-purple-500/50' : 'bg-purple-50 border-purple-200'}`}>
               <span className="text-purple-400 font-semibold">
                 {results.classification.threat_type}
               </span>
@@ -99,9 +100,9 @@ export default function AnalysisResults({ sessionId, results }) {
           )}
 
           {results.classification?.confidence && (
-            <div className="px-4 py-2 bg-slate-900/50 border border-slate-700 rounded-lg">
-              <span className="text-gray-400 text-sm">Confidence: </span>
-              <span className="text-white font-semibold">
+            <div className={`px-4 py-2 border rounded-lg ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'}`}>
+              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Confidence: </span>
+              <span className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 {Math.round(results.classification.confidence * 100)}%
               </span>
             </div>
@@ -111,11 +112,11 @@ export default function AnalysisResults({ sessionId, results }) {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+        <div className={`backdrop-blur-sm rounded-xl border p-4 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Processes</p>
-              <p className="text-3xl font-bold text-white mt-1">
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Processes</p>
+              <p className={`text-3xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 {results.metadata?.process_count || 0}
               </p>
             </div>
@@ -123,11 +124,11 @@ export default function AnalysisResults({ sessionId, results }) {
           </div>
         </div>
 
-        <div className="bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+        <div className={`backdrop-blur-sm rounded-xl border p-4 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Network</p>
-              <p className="text-3xl font-bold text-white mt-1">
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Network</p>
+              <p className={`text-3xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 {results.metadata?.connection_count || 0}
               </p>
             </div>
@@ -135,11 +136,11 @@ export default function AnalysisResults({ sessionId, results }) {
           </div>
         </div>
 
-        <div className="bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+        <div className={`backdrop-blur-sm rounded-xl border p-4 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">IOCs</p>
-              <p className="text-3xl font-bold text-white mt-1">
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>IOCs</p>
+              <p className={`text-3xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 {Object.values(results.iocs || {}).flat().length || 0}
               </p>
             </div>
@@ -147,11 +148,11 @@ export default function AnalysisResults({ sessionId, results }) {
           </div>
         </div>
 
-        <div className="bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+        <div className={`backdrop-blur-sm rounded-xl border p-4 ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-400 text-sm">Patterns</p>
-              <p className="text-3xl font-bold text-white mt-1">
+              <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Patterns</p>
+              <p className={`text-3xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                 {results.behavior_patterns?.length || 0}
               </p>
             </div>
@@ -161,9 +162,9 @@ export default function AnalysisResults({ sessionId, results }) {
       </div>
 
       {/* Tabs */}
-      <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden">
+      <div className={`backdrop-blur-sm rounded-2xl border overflow-hidden ${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'}`}>
         {/* Tab Headers */}
-        <div className="flex border-b border-slate-700">
+        <div className={`flex border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
           {tabs.map((tab) => {
             const Icon = tab.icon
             return (
@@ -173,7 +174,9 @@ export default function AnalysisResults({ sessionId, results }) {
                 className={`flex-1 px-6 py-4 text-sm font-medium transition-all ${
                   activeTab === tab.id
                     ? 'bg-purple-600/20 text-purple-400 border-b-2 border-purple-500'
-                    : 'text-gray-400 hover:text-white hover:bg-slate-900/30'
+                    : isDarkMode
+                    ? 'text-gray-400 hover:text-white hover:bg-slate-900/30'
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
                 <Icon className="w-5 h-5 inline mr-2" />
@@ -185,12 +188,12 @@ export default function AnalysisResults({ sessionId, results }) {
 
         {/* Tab Content */}
         <div className={activeTab === 'copilot' ? 'h-[600px]' : 'p-6'}>
-          {activeTab === 'overview' && <OverviewTab results={results} />}
+          {activeTab === 'overview' && <OverviewTab results={results} isDarkMode={isDarkMode} />}
           {activeTab === 'copilot' && <AICopilot sessionId={sessionId} analysisResults={results} />}
-          {activeTab === 'behavior' && <BehaviorTab results={results} />}
-          {activeTab === 'network' && <NetworkTab results={results} />}
-          {activeTab === 'iocs' && <IOCsTab results={results} />}
-          {activeTab === 'mitre' && <MITRETab results={results} />}
+          {activeTab === 'behavior' && <BehaviorTab results={results} isDarkMode={isDarkMode} />}
+          {activeTab === 'network' && <NetworkTab results={results} isDarkMode={isDarkMode} />}
+          {activeTab === 'iocs' && <IOCsTab results={results} isDarkMode={isDarkMode} />}
+          {activeTab === 'mitre' && <MITRETab results={results} isDarkMode={isDarkMode} />}
         </div>
       </div>
     </div>
@@ -198,7 +201,7 @@ export default function AnalysisResults({ sessionId, results }) {
 }
 
 // Overview Tab
-function OverviewTab({ results }) {
+function OverviewTab({ results, isDarkMode }) {
   // Prepare data for charts
   const iocData = Object.entries(results.iocs || {}).map(([type, values]) => ({
     name: type.replace(/_/g, ' ').toUpperCase(),
@@ -218,26 +221,30 @@ function OverviewTab({ results }) {
 
   const COLORS = ['#ef4444', '#f59e0b', '#eab308', '#22c55e']
 
+  const chartTooltipStyle = isDarkMode
+    ? { backgroundColor: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }
+    : { backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }
+
   return (
     <div className="space-y-6">
       {/* Summary */}
-      <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-        <h3 className="text-lg font-semibold text-white mb-3">Analysis Summary</h3>
+      <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+        <h3 className={`text-lg font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Analysis Summary</h3>
         <div className="space-y-2 text-sm">
-          <p className="text-gray-300">
-            <span className="text-gray-400">Threat Type:</span>{' '}
+          <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Threat Type:</span>{' '}
             <span className="font-semibold text-purple-400">
               {results.classification?.threat_type || 'Unknown'}
             </span>
           </p>
-          <p className="text-gray-300">
-            <span className="text-gray-400">Classification:</span>{' '}
+          <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Classification:</span>{' '}
             <span className="font-semibold">
               {results.classification?.family || 'N/A'}
             </span>
           </p>
-          <p className="text-gray-300">
-            <span className="text-gray-400">Severity Score:</span>{' '}
+          <p className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>
+            <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Severity Score:</span>{' '}
             <span className="font-semibold text-orange-400">
               {results.classification?.severity || 0}/10
             </span>
@@ -249,19 +256,16 @@ function OverviewTab({ results }) {
       <div className="grid grid-cols-2 gap-6">
         {/* IOC Distribution */}
         {iocData.length > 0 && (
-          <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide mb-4">
+          <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+            <h3 className={`text-sm font-semibold uppercase tracking-wide mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               IOC Distribution
             </h3>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={iocData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                <XAxis dataKey="name" stroke="#94a3b8" tick={{ fontSize: 12 }} />
-                <YAxis stroke="#94a3b8" tick={{ fontSize: 12 }} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }}
-                  labelStyle={{ color: '#e2e8f0' }}
-                />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? '#334155' : '#e5e7eb'} />
+                <XAxis dataKey="name" stroke={isDarkMode ? '#94a3b8' : '#6b7280'} tick={{ fontSize: 12 }} />
+                <YAxis stroke={isDarkMode ? '#94a3b8' : '#6b7280'} tick={{ fontSize: 12 }} />
+                <Tooltip contentStyle={chartTooltipStyle} labelStyle={{ color: isDarkMode ? '#e2e8f0' : '#111827' }} />
                 <Bar dataKey="count" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -270,8 +274,8 @@ function OverviewTab({ results }) {
 
         {/* Severity Distribution */}
         {severityChartData.length > 0 && (
-          <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide mb-4">
+          <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+            <h3 className={`text-sm font-semibold uppercase tracking-wide mb-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Pattern Severity
             </h3>
             <ResponsiveContainer width="100%" height={200}>
@@ -290,9 +294,7 @@ function OverviewTab({ results }) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }}
-                />
+                <Tooltip contentStyle={chartTooltipStyle} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -301,11 +303,11 @@ function OverviewTab({ results }) {
 
       {/* YARA Rule Preview */}
       {results.yara_rule && (
-        <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-          <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide mb-3">
+        <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <h3 className={`text-sm font-semibold uppercase tracking-wide mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             Generated YARA Rule
           </h3>
-          <pre className="bg-slate-950/50 rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto border border-slate-700">
+          <pre className={`rounded-lg p-4 text-sm text-green-400 font-mono overflow-x-auto border ${isDarkMode ? 'bg-slate-950/50 border-slate-700' : 'bg-gray-900 border-gray-700'}`}>
             {results.yara_rule.substring(0, 500)}
             {results.yara_rule.length > 500 && '...'}
           </pre>
@@ -316,7 +318,7 @@ function OverviewTab({ results }) {
 }
 
 // Behavior Tab
-function BehaviorTab({ results }) {
+function BehaviorTab({ results, isDarkMode }) {
   const patterns = results.behavior_patterns || []
 
   const getSeverityIcon = (severity) => {
@@ -335,20 +337,33 @@ function BehaviorTab({ results }) {
   const getSeverityColor = (severity) => {
     switch (severity?.toLowerCase()) {
       case 'critical':
-        return 'border-red-500/50 bg-red-900/10'
+        return isDarkMode ? 'border-red-500/50 bg-red-900/10' : 'border-red-200 bg-red-50'
       case 'high':
-        return 'border-orange-500/50 bg-orange-900/10'
+        return isDarkMode ? 'border-orange-500/50 bg-orange-900/10' : 'border-orange-200 bg-orange-50'
       case 'medium':
-        return 'border-yellow-500/50 bg-yellow-900/10'
+        return isDarkMode ? 'border-yellow-500/50 bg-yellow-900/10' : 'border-yellow-200 bg-yellow-50'
       default:
-        return 'border-blue-500/50 bg-blue-900/10'
+        return isDarkMode ? 'border-blue-500/50 bg-blue-900/10' : 'border-blue-200 bg-blue-50'
+    }
+  }
+
+  const getSeverityBadge = (severity) => {
+    switch (severity?.toLowerCase()) {
+      case 'critical':
+        return isDarkMode ? 'bg-red-500/20 text-red-400' : 'bg-red-50 text-red-800 border border-red-200'
+      case 'high':
+        return isDarkMode ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-50 text-orange-800 border border-orange-200'
+      case 'medium':
+        return isDarkMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
+      default:
+        return isDarkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-800 border border-blue-200'
     }
   }
 
   return (
     <div className="space-y-4">
       {patterns.length === 0 ? (
-        <p className="text-gray-400 text-center py-8">No behavior patterns detected</p>
+        <p className={`text-center py-8 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>No behavior patterns detected</p>
       ) : (
         patterns.map((pattern, index) => (
           <div
@@ -361,19 +376,14 @@ function BehaviorTab({ results }) {
               </div>
               <div className="flex-1">
                 <div className="flex items-start justify-between">
-                  <h4 className="font-semibold text-white">{pattern.name}</h4>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    pattern.severity === 'critical' ? 'bg-red-500/20 text-red-400' :
-                    pattern.severity === 'high' ? 'bg-orange-500/20 text-orange-400' :
-                    pattern.severity === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                    'bg-blue-500/20 text-blue-400'
-                  }`}>
+                  <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{pattern.name}</h4>
+                  <span className={`text-xs px-2 py-1 rounded ${getSeverityBadge(pattern.severity)}`}>
                     {pattern.severity?.toUpperCase()}
                   </span>
                 </div>
-                <p className="text-gray-400 text-sm mt-1">{pattern.description}</p>
+                <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{pattern.description}</p>
                 {pattern.confidence && (
-                  <p className="text-gray-500 text-xs mt-2">
+                  <p className={`text-xs mt-2 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
                     Confidence: {Math.round(pattern.confidence * 100)}%
                   </p>
                 )}
@@ -387,7 +397,7 @@ function BehaviorTab({ results }) {
 }
 
 // Network Tab
-function NetworkTab({ results }) {
+function NetworkTab({ results, isDarkMode }) {
   const connections = results.network_connections || []
   const ipAddresses = results.iocs?.ip_addresses || []
   const domains = results.iocs?.domains || []
@@ -396,39 +406,39 @@ function NetworkTab({ results }) {
     <div className="space-y-6">
       {/* Network Summary */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-          <p className="text-gray-400 text-sm">Total Connections</p>
-          <p className="text-2xl font-bold text-white mt-1">{connections.length}</p>
+        <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Total Connections</p>
+          <p className={`text-2xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{connections.length}</p>
         </div>
-        <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-          <p className="text-gray-400 text-sm">Unique IPs</p>
-          <p className="text-2xl font-bold text-white mt-1">{ipAddresses.length}</p>
+        <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Unique IPs</p>
+          <p className={`text-2xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{ipAddresses.length}</p>
         </div>
-        <div className="bg-slate-900/30 rounded-lg p-4 border border-slate-700/50">
-          <p className="text-gray-400 text-sm">Domains</p>
-          <p className="text-2xl font-bold text-white mt-1">{domains.length}</p>
+        <div className={`rounded-lg p-4 border ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Domains</p>
+          <p className={`text-2xl font-bold mt-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{domains.length}</p>
         </div>
       </div>
 
       {/* Connections List */}
       {connections.length > 0 && (
-        <div className="bg-slate-900/30 rounded-lg border border-slate-700/50 overflow-hidden">
-          <div className="px-4 py-3 border-b border-slate-700">
-            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+        <div className={`rounded-lg border overflow-hidden ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+          <div className={`px-4 py-3 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+            <h3 className={`text-sm font-semibold uppercase tracking-wide ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
               Network Connections
             </h3>
           </div>
-          <div className="divide-y divide-slate-700 max-h-96 overflow-y-auto">
+          <div className={`divide-y max-h-96 overflow-y-auto ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
             {connections.slice(0, 20).map((conn, index) => (
-              <div key={index} className="px-4 py-3 hover:bg-slate-900/50 transition-colors">
+              <div key={index} className={`px-4 py-3 transition-colors ${isDarkMode ? 'hover:bg-slate-900/50' : 'hover:bg-gray-100'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <p className="text-white font-mono text-sm">{conn.remote_address}</p>
-                    <p className="text-gray-400 text-xs mt-1">
+                    <p className={`font-mono text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{conn.remote_address}</p>
+                    <p className={`text-xs mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                       {conn.protocol} • {conn.state}
                     </p>
                   </div>
-                  <span className="text-xs text-gray-500">PID: {conn.pid}</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>PID: {conn.pid}</span>
                 </div>
               </div>
             ))}
@@ -440,7 +450,7 @@ function NetworkTab({ results }) {
 }
 
 // IOCs Tab
-function IOCsTab({ results }) {
+function IOCsTab({ results, isDarkMode }) {
   const iocs = results.iocs || {}
 
   const iocCategories = [
@@ -459,26 +469,26 @@ function IOCsTab({ results }) {
         if (items.length === 0) return null
 
         return (
-          <div key={category.key} className="bg-slate-900/30 rounded-lg border border-slate-700/50 overflow-hidden">
-            <div className="px-4 py-3 border-b border-slate-700 flex items-center justify-between">
+          <div key={category.key} className={`rounded-lg border overflow-hidden ${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'}`}>
+            <div className={`px-4 py-3 border-b flex items-center justify-between ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
               <div className="flex items-center space-x-2">
                 <Icon className="w-5 h-5 text-purple-400" />
-                <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+                <h3 className={`text-sm font-semibold uppercase tracking-wide ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   {category.name}
                 </h3>
               </div>
-              <span className="text-xs text-gray-500 bg-slate-900/50 px-2 py-1 rounded">
+              <span className={`text-xs px-2 py-1 rounded ${isDarkMode ? 'text-gray-500 bg-slate-900/50' : 'text-gray-400 bg-gray-200'}`}>
                 {items.length} found
               </span>
             </div>
-            <div className="divide-y divide-slate-700 max-h-60 overflow-y-auto">
+            <div className={`divide-y max-h-60 overflow-y-auto ${isDarkMode ? 'divide-slate-700' : 'divide-gray-200'}`}>
               {items.map((item, index) => (
-                <div key={index} className="px-4 py-2 hover:bg-slate-900/50 transition-colors">
+                <div key={index} className={`px-4 py-2 transition-colors ${isDarkMode ? 'hover:bg-slate-900/50' : 'hover:bg-gray-100'}`}>
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-white font-mono text-sm break-all flex-1">{item}</p>
+                    <p className={`font-mono text-sm break-all flex-1 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{item}</p>
                     <button
                       onClick={() => navigator.clipboard.writeText(item)}
-                      className="text-gray-500 hover:text-purple-400 transition-colors flex-shrink-0"
+                      className={`transition-colors flex-shrink-0 ${isDarkMode ? 'text-gray-500 hover:text-purple-400' : 'text-gray-400 hover:text-purple-600'}`}
                       title="Copy"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -494,14 +504,14 @@ function IOCsTab({ results }) {
       })}
 
       {Object.values(iocs).every(arr => arr.length === 0) && (
-        <p className="text-gray-400 text-center py-8">No IOCs extracted</p>
+        <p className={`text-center py-8 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>No IOCs extracted</p>
       )}
     </div>
   )
 }
 
 // MITRE ATT&CK Tab
-function MITRETab({ results }) {
+function MITRETab({ results, isDarkMode }) {
   const techniques = results.mitre_techniques || []
 
   // Group by tactic
@@ -512,7 +522,7 @@ function MITRETab({ results }) {
     return acc
   }, {})
 
-  const tacticColors = {
+  const tacticColors = isDarkMode ? {
     'Initial Access': 'border-red-500/50 bg-red-900/10',
     'Execution': 'border-orange-500/50 bg-orange-900/10',
     'Persistence': 'border-yellow-500/50 bg-yellow-900/10',
@@ -525,25 +535,38 @@ function MITRETab({ results }) {
     'Command and Control': 'border-teal-500/50 bg-teal-900/10',
     'Exfiltration': 'border-lime-500/50 bg-lime-900/10',
     'Impact': 'border-rose-500/50 bg-rose-900/10',
+  } : {
+    'Initial Access': 'border-red-200 bg-red-50',
+    'Execution': 'border-orange-200 bg-orange-50',
+    'Persistence': 'border-yellow-200 bg-yellow-50',
+    'Privilege Escalation': 'border-green-200 bg-green-50',
+    'Defense Evasion': 'border-blue-200 bg-blue-50',
+    'Credential Access': 'border-purple-200 bg-purple-50',
+    'Discovery': 'border-pink-200 bg-pink-50',
+    'Lateral Movement': 'border-indigo-200 bg-indigo-50',
+    'Collection': 'border-cyan-200 bg-cyan-50',
+    'Command and Control': 'border-teal-200 bg-teal-50',
+    'Exfiltration': 'border-lime-200 bg-lime-50',
+    'Impact': 'border-rose-200 bg-rose-50',
   }
 
   return (
     <div className="space-y-4">
       {techniques.length === 0 ? (
-        <p className="text-gray-400 text-center py-8">No MITRE ATT&CK techniques mapped</p>
+        <p className={`text-center py-8 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>No MITRE ATT&CK techniques mapped</p>
       ) : (
         Object.entries(groupedByTactic).map(([tactic, techs]) => (
-          <div key={tactic} className={`border rounded-lg p-4 ${tacticColors[tactic] || 'border-slate-700 bg-slate-900/10'}`}>
-            <h3 className="text-white font-semibold mb-3">{tactic}</h3>
+          <div key={tactic} className={`border rounded-lg p-4 ${tacticColors[tactic] || (isDarkMode ? 'border-slate-700 bg-slate-900/10' : 'border-gray-200 bg-gray-50')}`}>
+            <h3 className={`font-semibold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{tactic}</h3>
             <div className="space-y-2">
               {techs.map((technique, index) => (
-                <div key={index} className="bg-slate-950/30 rounded p-3 border border-slate-700/50">
+                <div key={index} className={`rounded p-3 border ${isDarkMode ? 'bg-slate-950/30 border-slate-700/50' : 'bg-white border-gray-200'}`}>
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-white font-medium">{technique.name}</p>
-                      <p className="text-gray-400 text-sm mt-1">{technique.description}</p>
+                      <p className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{technique.name}</p>
+                      <p className={`text-sm mt-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{technique.description}</p>
                     </div>
-                    <span className="text-xs text-gray-500 bg-slate-900/50 px-2 py-1 rounded">
+                    <span className={`text-xs px-2 py-1 rounded ${isDarkMode ? 'text-gray-500 bg-slate-900/50' : 'text-gray-400 bg-gray-100'}`}>
                       {technique.technique_id}
                     </span>
                   </div>

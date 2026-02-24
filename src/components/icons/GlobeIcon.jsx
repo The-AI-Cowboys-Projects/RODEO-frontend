@@ -1,4 +1,4 @@
-export default function GlobeIcon({ className = 'w-5 h-5', ...props }) {
+export default function GlobeIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -17,9 +17,9 @@ export default function GlobeIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Globe circle */}
-      <circle cx="12" cy="12" r="10" fill="#800080" />
+      <circle cx="12" cy="12" r="10" fill={primary} />
       {/* Inner glow */}
-      <circle cx="12" cy="12" r="8" fill="#C38BBF" fillOpacity="0.3" />
+      <circle cx="12" cy="12" r="8" fill={secondary} fillOpacity="0.3" />
       {/* Animated lines */}
       <g className="globe-lines">
         {/* Latitude lines */}

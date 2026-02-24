@@ -233,12 +233,12 @@ export default function CriticalVulnerabilities() {
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm p-6 rounded-xl border border-slate-700/50 shadow-xl">
+      <div className={`${isDarkMode ? 'bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm p-6 rounded-xl border shadow-xl`}>
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1">
             <div className="relative">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -246,7 +246,7 @@ export default function CriticalVulnerabilities() {
                 placeholder="Search by CVE ID, description, or software..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                className={`w-full pl-10 pr-4 py-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all`}
               />
             </div>
           </div>
@@ -256,7 +256,7 @@ export default function CriticalVulnerabilities() {
             <select
               value={filterSeverity}
               onChange={(e) => setFilterSeverity(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all cursor-pointer"
+              className={`w-full px-4 py-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700 text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all cursor-pointer`}
             >
               <option value="all">All Severities</option>
               <option value="CRITICAL">Critical</option>
@@ -271,7 +271,7 @@ export default function CriticalVulnerabilities() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all cursor-pointer"
+              className={`w-full px-4 py-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700 text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all cursor-pointer`}
             >
               <option value="cvss_score">Sort by CVSS Score</option>
               <option value="severity">Sort by Severity</option>
@@ -289,7 +289,7 @@ export default function CriticalVulnerabilities() {
           return (
             <div
               key={vuln.vulnerability_id}
-              className={`group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-xl border ${severity.border} hover:border-opacity-100 transition-all duration-300 overflow-hidden cursor-pointer hover:shadow-lg ${severity.glow}`}
+              className={`group relative ${isDarkMode ? 'bg-gradient-to-br from-slate-800/90 to-slate-900/90' : 'bg-white'} backdrop-blur-sm rounded-xl border ${severity.border} hover:border-opacity-100 transition-all duration-300 overflow-hidden cursor-pointer hover:shadow-lg ${severity.glow}`}
               onClick={() => setSelectedVuln(vuln)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -298,12 +298,12 @@ export default function CriticalVulnerabilities() {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 rounded-lg bg-slate-900/50 flex items-center justify-center border border-slate-700">
+                    <div className={`w-12 h-12 rounded-lg ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-100 border-gray-200'} flex items-center justify-center border`}>
                       <span className="text-lg font-bold text-orange-400">#{idx + 1}</span>
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-lg">{vuln.cve_id}</h3>
-                      <p className="text-xs text-gray-400 uppercase tracking-wide mt-1">Vulnerability</p>
+                      <h3 className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} text-lg`}>{vuln.cve_id}</h3>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mt-1`}>Vulnerability</p>
                     </div>
                   </div>
                   <div className={`px-3 py-1.5 rounded-lg ${severity.bg} border ${severity.border}`}>
@@ -312,19 +312,19 @@ export default function CriticalVulnerabilities() {
                 </div>
 
                 {/* Description */}
-                <div className="mb-4 p-3 bg-slate-900/50 rounded-lg border border-slate-700/50">
-                  <p className="text-sm text-gray-300 line-clamp-2">{vuln.description || 'No description available'}</p>
+                <div className={`mb-4 p-3 ${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} line-clamp-2`}>{vuln.description || 'No description available'}</p>
                 </div>
 
                 {/* CVSS Score */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-400 font-medium">CVSS Score</span>
+                    <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-medium`}>CVSS Score</span>
                     <span className={`text-2xl font-bold ${getCVSSColor(vuln.cvss_score)}`}>
                       {vuln.cvss_score?.toFixed(1) || 'N/A'}
                     </span>
                   </div>
-                  <div className="w-full bg-slate-900/50 rounded-full h-3 overflow-hidden">
+                  <div className={`w-full ${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-200'} rounded-full h-3 overflow-hidden`}>
                     <div
                       className={`h-full rounded-full transition-all duration-500`}
                       style={{
@@ -337,13 +337,13 @@ export default function CriticalVulnerabilities() {
 
                 {/* Metadata Grid */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Affected Software</p>
-                    <span className="text-sm text-white font-semibold line-clamp-1">{vuln.affected_software || 'Unknown'}</span>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Affected Software</p>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold line-clamp-1`}>{vuln.affected_software || 'Unknown'}</span>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Exploit Available</p>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Exploit Available</p>
                     <div className="flex items-center space-x-2">
                       {vuln.exploit_available ? (
                         <>
@@ -359,8 +359,8 @@ export default function CriticalVulnerabilities() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Patch Available</p>
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Patch Available</p>
                     <div className="flex items-center space-x-2">
                       {vuln.patch_available ? (
                         <>
@@ -376,9 +376,9 @@ export default function CriticalVulnerabilities() {
                     </div>
                   </div>
 
-                  <div className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Discovered</p>
-                    <span className="text-sm text-white font-semibold">
+                  <div className={`p-3 ${isDarkMode ? 'bg-slate-900/30 border-slate-700/30' : 'bg-gray-50 border-gray-200'} rounded-lg border`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Discovered</p>
+                    <span className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>
                       {vuln.discovered_date ? new Date(vuln.discovered_date).toLocaleDateString() : 'N/A'}
                     </span>
                   </div>
@@ -417,18 +417,18 @@ export default function CriticalVulnerabilities() {
       {/* Detail Modal */}
       {selectedVuln && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={() => setSelectedVuln(null)}>
-          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700 p-6 z-10">
+          <div className={`${isDarkMode ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700' : 'bg-white border-gray-200'} rounded-2xl border max-w-4xl w-full max-h-[90vh] overflow-y-auto`} onClick={(e) => e.stopPropagation()}>
+            <div className={`sticky top-0 ${isDarkMode ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-gray-200'} backdrop-blur-sm border-b p-6 z-10`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">{selectedVuln.cve_id}</h2>
-                  <p className="text-sm text-gray-400 mt-1">Detailed Vulnerability Analysis</p>
+                  <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{selectedVuln.cve_id}</h2>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Detailed Vulnerability Analysis</p>
                 </div>
                 <button
                   onClick={() => setSelectedVuln(null)}
-                  className="w-10 h-10 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition-colors"
+                  className={`w-10 h-10 rounded-lg ${isDarkMode ? 'bg-slate-700/50 hover:bg-slate-600/50' : 'bg-gray-100 hover:bg-gray-200'} flex items-center justify-center transition-colors`}
                 >
-                  <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className={`w-5 h-5 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -437,11 +437,11 @@ export default function CriticalVulnerabilities() {
 
             <div className="p-6 space-y-6">
               {/* Severity & CVSS */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Threat Assessment</h3>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Threat Assessment</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Severity Level</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-2`}>Severity Level</p>
                     <div className={`inline-flex px-4 py-2 rounded-lg ${getSeverityConfig(selectedVuln.severity).bg} border ${getSeverityConfig(selectedVuln.severity).border}`}>
                       <span className={`text-lg font-bold ${getSeverityConfig(selectedVuln.severity).color} uppercase`}>
                         {selectedVuln.severity}
@@ -449,44 +449,44 @@ export default function CriticalVulnerabilities() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">CVSS Score</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-2`}>CVSS Score</p>
                     <div className="flex items-baseline space-x-2">
                       <span className={`text-4xl font-bold ${getCVSSColor(selectedVuln.cvss_score)}`}>
                         {selectedVuln.cvss_score?.toFixed(1) || 'N/A'}
                       </span>
-                      <span className="text-gray-400">/ 10.0</span>
+                      <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>/ 10.0</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Description</h3>
-                <p className="text-sm text-gray-300 leading-relaxed">{selectedVuln.description || 'No description available'}</p>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Description</h3>
+                <p className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>{selectedVuln.description || 'No description available'}</p>
               </div>
 
               {/* Technical Details */}
-              <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Technical Details</h3>
+              <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Technical Details</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">CVE ID</p>
-                    <p className="text-sm text-white font-mono">{selectedVuln.cve_id}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>CVE ID</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'} font-mono`}>{selectedVuln.cve_id}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Affected Software</p>
-                    <p className="text-sm text-white">{selectedVuln.affected_software || 'Unknown'}</p>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Affected Software</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{selectedVuln.affected_software || 'Unknown'}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Discovered Date</p>
-                    <p className="text-sm text-white">
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Discovered Date</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                       {selectedVuln.discovered_date ? new Date(selectedVuln.discovered_date).toLocaleString() : 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Last Updated</p>
-                    <p className="text-sm text-white">
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} uppercase tracking-wide mb-1`}>Last Updated</p>
+                    <p className={`text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                       {selectedVuln.updated_at ? new Date(selectedVuln.updated_at).toLocaleString() : 'N/A'}
                     </p>
                   </div>
@@ -495,32 +495,32 @@ export default function CriticalVulnerabilities() {
 
               {/* Exploit & Patch Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">Exploit Status</h3>
+                <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                  <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Exploit Status</h3>
                   <div className={`p-4 rounded-lg ${selectedVuln.exploit_available ? 'bg-red-500/10 border border-red-500/30' : 'bg-green-500/10 border border-green-500/30'}`}>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-400">Exploit Available</span>
+                      <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Exploit Available</span>
                       <span className={`text-lg font-bold ${selectedVuln.exploit_available ? 'text-red-400' : 'text-green-400'}`}>
                         {selectedVuln.exploit_available ? 'YES' : 'NO'}
                       </span>
                     </div>
                     {selectedVuln.exploit_available && (
-                      <p className="text-xs text-red-300 mt-2">⚠️ Active exploits detected in the wild</p>
+                      <p className="text-xs text-red-300 mt-2">Active exploits detected in the wild</p>
                     )}
                   </div>
                 </div>
 
-                <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-bold text-white mb-4">Patch Status</h3>
+                <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl border p-6`}>
+                  <h3 className={`text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Patch Status</h3>
                   <div className={`p-4 rounded-lg ${selectedVuln.patch_available ? 'bg-green-500/10 border border-green-500/30' : 'bg-red-500/10 border border-red-500/30'}`}>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-400">Patch Available</span>
+                      <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Patch Available</span>
                       <span className={`text-lg font-bold ${selectedVuln.patch_available ? 'text-green-400' : 'text-red-400'}`}>
                         {selectedVuln.patch_available ? 'YES' : 'NO'}
                       </span>
                     </div>
                     {selectedVuln.patch_available && (
-                      <p className="text-xs text-green-300 mt-2">✓ Security patch available for download</p>
+                      <p className="text-xs text-green-300 mt-2">Security patch available for download</p>
                     )}
                   </div>
                 </div>
@@ -535,30 +535,30 @@ export default function CriticalVulnerabilities() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 bottom-full mb-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                    <div className="px-3 py-2 border-b border-slate-700">
-                      <p className="text-xs text-gray-400 font-semibold uppercase">Select Format</p>
+                  <div className={`absolute right-0 bottom-full mb-2 w-56 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10`}>
+                    <div className={`px-3 py-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-semibold uppercase`}>Select Format</p>
                     </div>
                     <button
                       onClick={() => handleGenerateReport('html')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">HTML Report</span>
-                      <span className="block text-xs text-gray-400">Interactive web page</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Interactive web page</span>
                     </button>
                     <button
                       onClick={() => handleGenerateReport('json')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">JSON Data</span>
-                      <span className="block text-xs text-gray-400">Structured data export</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Structured data export</span>
                     </button>
                     <button
                       onClick={() => handleGenerateReport('csv')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 rounded-b-lg transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} rounded-b-lg transition`}
                     >
                       <span className="font-medium">CSV Spreadsheet</span>
-                      <span className="block text-xs text-gray-400">Excel compatible</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Excel compatible</span>
                     </button>
                   </div>
                 </div>
@@ -569,23 +569,23 @@ export default function CriticalVulnerabilities() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 bottom-full mb-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                    <div className="px-3 py-2 border-b border-slate-700">
-                      <p className="text-xs text-gray-400 font-semibold uppercase">Export Format</p>
+                  <div className={`absolute right-0 bottom-full mb-2 w-56 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10`}>
+                    <div className={`px-3 py-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+                      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-semibold uppercase`}>Export Format</p>
                     </div>
                     <button
                       onClick={() => handleGenerateReport('json')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition`}
                     >
                       <span className="font-medium">JSON</span>
-                      <span className="block text-xs text-gray-400">Raw data export</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Raw data export</span>
                     </button>
                     <button
                       onClick={() => handleGenerateReport('csv')}
-                      className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 rounded-b-lg transition"
+                      className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} rounded-b-lg transition`}
                     >
                       <span className="font-medium">CSV</span>
-                      <span className="block text-xs text-gray-400">Spreadsheet format</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Spreadsheet format</span>
                     </button>
                   </div>
                 </div>

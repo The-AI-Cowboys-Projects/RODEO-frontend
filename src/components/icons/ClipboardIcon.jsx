@@ -1,4 +1,4 @@
-export default function ClipboardIcon({ className = 'w-5 h-5', ...props }) {
+export default function ClipboardIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -20,9 +20,9 @@ export default function ClipboardIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Clipboard body */}
-      <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill="#800080" />
+      <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" fill={primary} />
       {/* Clip */}
-      <rect className="clip-top" x="8" y="2" width="8" height="4" rx="1" fill="#C38BBF" />
+      <rect className="clip-top" x="8" y="2" width="8" height="4" rx="1" fill={secondary} />
       {/* Animated lines */}
       <rect className="line-scan-1" x="8" y="10" width="8" height="1.5" rx="0.5" fill="white" />
       <rect className="line-scan-2" x="8" y="13" width="6" height="1.5" rx="0.5" fill="white" />

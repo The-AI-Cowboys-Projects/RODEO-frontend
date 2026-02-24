@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 // -------------------------------------------------------------------------
 // Constants
@@ -169,19 +170,19 @@ const fetchJSON = async (url, options = {}) => {
 // Authorization form (shared across operative tabs)
 // -------------------------------------------------------------------------
 
-function AuthForm({ auth, setAuth }) {
+function AuthForm({ auth, setAuth, isDarkMode }) {
   return (
-    <div className="rounded-lg border border-cyan-500/30 bg-gray-900/60 p-4 mb-6">
+    <div className={`rounded-lg border border-cyan-500/30 ${isDarkMode ? 'bg-gray-900/60' : 'bg-cyan-50'} p-4 mb-6`}>
       <h4 className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-3">
         Authorization Context
       </h4>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Context</label>
+          <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Context</label>
           <select
             value={auth.context}
             onChange={(e) => setAuth((a) => ({ ...a, context: e.target.value }))}
-            className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+            className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-2 py-1.5 text-xs focus:outline-none focus:border-cyan-500`}
           >
             <option value="pentest">pentest</option>
             <option value="ctf">ctf</option>
@@ -190,33 +191,33 @@ function AuthForm({ auth, setAuth }) {
           </select>
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Authorized By</label>
+          <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Authorized By</label>
           <input
             type="text"
             value={auth.authorized_by}
             onChange={(e) => setAuth((a) => ({ ...a, authorized_by: e.target.value }))}
             placeholder="Name / role"
-            className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+            className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-2 py-1.5 text-xs focus:outline-none focus:border-cyan-500`}
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Auth Doc</label>
+          <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Auth Doc</label>
           <input
             type="text"
             value={auth.auth_doc}
             onChange={(e) => setAuth((a) => ({ ...a, auth_doc: e.target.value }))}
             placeholder="SOW / ticket ref"
-            className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+            className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-2 py-1.5 text-xs focus:outline-none focus:border-cyan-500`}
           />
         </div>
         <div>
-          <label className="block text-xs text-gray-400 mb-1">Scope</label>
+          <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Scope</label>
           <input
             type="text"
             value={auth.scope}
             onChange={(e) => setAuth((a) => ({ ...a, scope: e.target.value }))}
             placeholder="e.g. 10.0.0.0/8"
-            className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-1.5 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+            className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-2 py-1.5 text-xs focus:outline-none focus:border-cyan-500`}
           />
         </div>
         <div className="flex flex-col justify-end">
@@ -227,7 +228,7 @@ function AuthForm({ auth, setAuth }) {
               onChange={(e) => setAuth((a) => ({ ...a, mock_mode: e.target.checked }))}
               className="w-4 h-4 accent-cyan-500"
             />
-            <span className="text-xs text-gray-300">Mock Mode</span>
+            <span className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Mock Mode</span>
             {auth.mock_mode && (
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-700 text-cyan-100">
                 SAFE
@@ -257,6 +258,7 @@ const defaultAuth = () => ({
 // -------------------------------------------------------------------------
 
 export default function ICSOffensive() {
+  const { isDarkMode } = useTheme()
   const [activeTab, setActiveTab] = useState(0)
   const [status, setStatus] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -301,11 +303,11 @@ export default function ICSOffensive() {
     return (
       <div className="space-y-6">
         {/* Authorization status */}
-        <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+        <div className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-gray-50'} p-4`}>
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-gray-200">Module Authorization</h3>
-              <p className="text-xs text-gray-400 mt-0.5">
+              <h3 className={`text-sm font-semibold ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>Module Authorization</h3>
+              <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-0.5`}>
                 {status?.authorized
                   ? `Authorized — context: ${status.auth_context || 'unknown'}`
                   : 'Not yet authorized — set authorization context before running operations'}
@@ -324,22 +326,22 @@ export default function ICSOffensive() {
           {status?.authorized && (
             <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
               <div>
-                <span className="text-gray-500">Authorized by:</span>{' '}
-                <span className="text-gray-200">{status.authorized_by || '—'}</span>
+                <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Authorized by:</span>{' '}
+                <span className={isDarkMode ? 'text-gray-200' : 'text-gray-700'}>{status.authorized_by || '—'}</span>
               </div>
               <div>
-                <span className="text-gray-500">Scope:</span>{' '}
-                <span className="text-gray-200">{status.scope || '—'}</span>
+                <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Scope:</span>{' '}
+                <span className={isDarkMode ? 'text-gray-200' : 'text-gray-700'}>{status.scope || '—'}</span>
               </div>
               <div>
-                <span className="text-gray-500">Mock mode:</span>{' '}
+                <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Mock mode:</span>{' '}
                 <span className={status.mock_mode ? 'text-cyan-400' : 'text-yellow-400'}>
                   {status.mock_mode ? 'ON (safe)' : 'OFF (live)'}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500">Doc ref:</span>{' '}
-                <span className="text-gray-200">{status.auth_doc || '—'}</span>
+                <span className={isDarkMode ? 'text-gray-500' : 'text-gray-400'}>Doc ref:</span>{' '}
+                <span className={isDarkMode ? 'text-gray-200' : 'text-gray-700'}>{status.auth_doc || '—'}</span>
               </div>
             </div>
           )}
@@ -357,19 +359,19 @@ export default function ICSOffensive() {
               return (
                 <div
                   key={t.key}
-                  className="rounded-lg border border-gray-700 bg-gray-800 p-4 hover:border-cyan-500/40 transition-colors"
+                  className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-800 hover:border-cyan-500/40' : 'border-gray-200 bg-white hover:border-cyan-400'} p-4 transition-colors`}
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <span className="text-sm font-semibold text-white">{t.name}</span>
+                    <span className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{t.name}</span>
                     <span
                       className={`w-2.5 h-2.5 rounded-full mt-0.5 flex-shrink-0 ${
                         isReady ? 'bg-green-400' : 'bg-gray-600'
                       }`}
                     />
                   </div>
-                  <p className="text-xs text-gray-400">{t.desc}</p>
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{t.desc}</p>
                   {ts.last_run && (
-                    <p className="text-[10px] text-gray-500 mt-2">Last run: {ts.last_run}</p>
+                    <p className={`text-[10px] ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mt-2`}>Last run: {ts.last_run}</p>
                   )}
                 </div>
               )
@@ -383,23 +385,23 @@ export default function ICSOffensive() {
             Last Operation
           </h3>
           {status?.last_operation ? (
-            <div className="rounded-lg border border-gray-700 bg-gray-900/50 p-4 text-sm space-y-2">
+            <div className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50'} p-4 text-sm space-y-2`}>
               <div className="flex items-center gap-3">
-                <span className="text-gray-400">Tool:</span>
-                <span className="text-white font-medium">{status.last_operation.tool}</span>
-                <span className="text-gray-400">|</span>
-                <span className="text-gray-400">Operation:</span>
-                <span className="text-white font-medium">{status.last_operation.operation}</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Tool:</span>
+                <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{status.last_operation.tool}</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-400'}>|</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Operation:</span>
+                <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{status.last_operation.operation}</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-gray-400">Target:</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Target:</span>
                 <span className="font-mono text-cyan-300">{status.last_operation.target}</span>
-                <span className="text-gray-400">|</span>
-                <span className="text-gray-400">Time:</span>
-                <span className="text-gray-300">{status.last_operation.timestamp}</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-400'}>|</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Time:</span>
+                <span className={isDarkMode ? 'text-gray-300' : 'text-gray-600'}>{status.last_operation.timestamp}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-gray-400">Result:</span>
+                <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Result:</span>
                 <span
                   className={`text-xs px-2 py-0.5 rounded ${
                     status.last_operation.success ? 'bg-green-700 text-green-100' : 'bg-red-700 text-red-100'
@@ -408,32 +410,35 @@ export default function ICSOffensive() {
                   {status.last_operation.success ? 'SUCCESS' : 'FAILED'}
                 </span>
                 {status.last_operation.summary && (
-                  <span className="text-xs text-gray-400">{status.last_operation.summary}</span>
+                  <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{status.last_operation.summary}</span>
                 )}
               </div>
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">No operations recorded yet.</p>
+            <p className={`${isDarkMode ? 'text-gray-500' : 'text-gray-400'} text-sm`}>No operations recorded yet.</p>
           )}
         </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Total Operations" value={status?.stats?.total_operations ?? 0} />
+          <StatCard label="Total Operations" value={status?.stats?.total_operations ?? 0} isDarkMode={isDarkMode} />
           <StatCard
             label="Devices Discovered"
             value={status?.stats?.devices_discovered ?? 0}
             color="text-cyan-400"
+            isDarkMode={isDarkMode}
           />
           <StatCard
             label="Credentials Found"
             value={status?.stats?.credentials_found ?? 0}
             color="text-orange-400"
+            isDarkMode={isDarkMode}
           />
           <StatCard
             label="Audit Log Entries"
             value={status?.stats?.audit_entries ?? 0}
-            color="text-gray-300"
+            color={isDarkMode ? 'text-gray-300' : 'text-gray-600'}
+            isDarkMode={isDarkMode}
           />
         </div>
       </div>
@@ -492,27 +497,27 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="Scan Configuration">
+        <Section title="Scan Configuration" isDarkMode={isDarkMode}>
           <div className="space-y-4">
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Target Network (CIDR)</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Target Network (CIDR)</label>
               <input
                 type="text"
                 value={targetNetwork}
                 onChange={(e) => setTargetNetwork(e.target.value)}
                 placeholder="192.168.1.0/24"
-                className="w-full md:w-72 bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                className={`w-full md:w-72 ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500`}
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-2">ICS Ports to Probe</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>ICS Ports to Probe</label>
               <div className="flex flex-wrap gap-2">
                 {ICS_PORTS.map(({ port, label }) => (
                   <label
                     key={port}
-                    className="flex items-center gap-1.5 cursor-pointer bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-xs text-gray-300 hover:border-cyan-500/50 transition-colors"
+                    className={`flex items-center gap-1.5 cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-300 hover:border-cyan-500/50' : 'bg-gray-50 border-gray-300 text-gray-600 hover:border-cyan-400'} border rounded px-3 py-1.5 text-xs transition-colors`}
                   >
                     <input
                       type="checkbox"
@@ -528,7 +533,7 @@ export default function ICSOffensive() {
             <button
               onClick={runScan}
               disabled={scanning}
-              className="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors"
+              className={`px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors`}
             >
               {scanning ? 'Scanning...' : 'Start Scan'}
             </button>
@@ -536,11 +541,11 @@ export default function ICSOffensive() {
         </Section>
 
         {devices.length > 0 && (
-          <Section title={`Discovered Devices (${devices.length})`}>
+          <Section title={`Discovered Devices (${devices.length})`} isDarkMode={isDarkMode}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                  <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                     <th className="px-3 py-2">IP Address</th>
                     <th className="px-3 py-2">Port</th>
                     <th className="px-3 py-2">Protocol</th>
@@ -551,13 +556,13 @@ export default function ICSOffensive() {
                 </thead>
                 <tbody>
                   {devices.map((d, i) => (
-                    <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
+                    <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
                       <td className="px-3 py-2 font-mono text-cyan-300">{d.ip}</td>
-                      <td className="px-3 py-2 font-mono text-gray-300">{d.port}</td>
-                      <td className="px-3 py-2 text-gray-300">{d.protocol}</td>
-                      <td className="px-3 py-2 text-gray-300">{d.vendor || '—'}</td>
-                      <td className="px-3 py-2 text-gray-300">{d.model || '—'}</td>
-                      <td className="px-3 py-2 text-gray-400 text-xs font-mono">
+                      <td className={`px-3 py-2 font-mono ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{d.port}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{d.protocol}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{d.vendor || '—'}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{d.model || '—'}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs font-mono`}>
                         {d.firmware || '—'}
                       </td>
                     </tr>
@@ -614,16 +619,16 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="Target Configuration">
+        <Section title="Target Configuration" isDarkMode={isDarkMode}>
           <div className="flex flex-wrap gap-4 items-end">
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Vendor</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Vendor</label>
               <select
                 value={vendor}
                 onChange={(e) => setVendor(e.target.value)}
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-3 py-2 text-sm focus:outline-none focus:border-cyan-500`}
               >
                 {ICS_VENDORS.map((v) => (
                   <option key={v} value={v}>
@@ -633,29 +638,29 @@ export default function ICSOffensive() {
               </select>
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Host / IP</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Host / IP</label>
               <input
                 type="text"
                 value={host}
                 onChange={(e) => setHost(e.target.value)}
                 placeholder="192.168.1.100"
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500 w-44"
+                className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500 w-44`}
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Port</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Port</label>
               <input
                 type="number"
                 value={port}
                 onChange={(e) => setPort(e.target.value)}
                 placeholder="auto"
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500 w-24"
+                className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500 w-24`}
               />
             </div>
             <button
               onClick={runTest}
               disabled={testing}
-              className="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors"
+              className={`px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors`}
             >
               {testing ? 'Testing...' : 'Test Credentials'}
             </button>
@@ -663,11 +668,11 @@ export default function ICSOffensive() {
         </Section>
 
         {results.length > 0 && (
-          <Section title={`Results (${results.length})`}>
+          <Section title={`Results (${results.length})`} isDarkMode={isDarkMode}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                  <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                     <th className="px-3 py-2">Username</th>
                     <th className="px-3 py-2">Password</th>
                     <th className="px-3 py-2">Protocol</th>
@@ -678,23 +683,23 @@ export default function ICSOffensive() {
                 </thead>
                 <tbody>
                   {results.map((r, i) => (
-                    <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
-                      <td className="px-3 py-2 font-mono text-gray-200">{r.username}</td>
-                      <td className="px-3 py-2 font-mono text-gray-200">{r.password}</td>
-                      <td className="px-3 py-2 text-gray-300">{r.protocol || '—'}</td>
-                      <td className="px-3 py-2 text-gray-300">{r.service || '—'}</td>
+                    <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <td className={`px-3 py-2 font-mono ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>{r.username}</td>
+                      <td className={`px-3 py-2 font-mono ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>{r.password}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{r.protocol || '—'}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{r.service || '—'}</td>
                       <td className="px-3 py-2">
                         {r.success ? (
                           <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-green-700 text-green-100 font-semibold">
                             VALID
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-gray-700 text-gray-400">
+                          <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded ${isDarkMode ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-500'}`}>
                             INVALID
                           </span>
                         )}
                       </td>
-                      <td className="px-3 py-2 text-xs text-gray-400">{r.notes || '—'}</td>
+                      <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{r.notes || '—'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -760,17 +765,17 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="Fuzzer Configuration">
+        <Section title="Fuzzer Configuration" isDarkMode={isDarkMode}>
           <div className="space-y-4">
             <div className="flex flex-wrap gap-4 items-end">
               <div>
-                <label className="block text-xs text-gray-400 mb-1">Protocol</label>
+                <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Protocol</label>
                 <select
                   value={protocol}
                   onChange={(e) => setProtocol(e.target.value)}
-                  className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-3 py-2 text-sm focus:outline-none focus:border-cyan-500`}
                 >
                   {ICS_PROTOCOLS.map((p) => (
                     <option key={p} value={p}>
@@ -780,24 +785,24 @@ export default function ICSOffensive() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs text-gray-400 mb-1">Number of Cases</label>
+                <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Number of Cases</label>
                 <input
                   type="number"
                   value={numCases}
                   onChange={(e) => setNumCases(parseInt(e.target.value, 10) || 100)}
                   min={1}
                   max={10000}
-                  className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-cyan-500 w-28"
+                  className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500 w-28`}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-2">Mutation Types</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>Mutation Types</label>
               <div className="flex flex-wrap gap-2">
                 {MUTATION_TYPES.map(({ value, label }) => (
                   <label
                     key={value}
-                    className="flex items-center gap-1.5 cursor-pointer bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-xs text-gray-300 hover:border-cyan-500/50 transition-colors"
+                    className={`flex items-center gap-1.5 cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700 text-gray-300 hover:border-cyan-500/50' : 'bg-gray-50 border-gray-300 text-gray-600 hover:border-cyan-400'} border rounded px-3 py-1.5 text-xs transition-colors`}
                   >
                     <input
                       type="checkbox"
@@ -813,7 +818,7 @@ export default function ICSOffensive() {
             <button
               onClick={runFuzz}
               disabled={fuzzing}
-              className="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors"
+              className={`px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors`}
             >
               {fuzzing ? 'Fuzzing...' : 'Start Fuzzing'}
             </button>
@@ -821,13 +826,13 @@ export default function ICSOffensive() {
         </Section>
 
         {(fuzzing || coverage > 0) && (
-          <Section title="Coverage">
+          <Section title="Coverage" isDarkMode={isDarkMode}>
             <div className="space-y-2">
-              <div className="flex justify-between text-xs text-gray-400">
+              <div className={`flex justify-between text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 <span>Protocol state coverage</span>
                 <span>{coverage.toFixed(1)}%</span>
               </div>
-              <div className="h-3 rounded-full bg-gray-700 overflow-hidden">
+              <div className={`h-3 rounded-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} overflow-hidden`}>
                 <div
                   className="h-full rounded-full bg-cyan-500 transition-all duration-700"
                   style={{ width: `${Math.min(coverage, 100)}%` }}
@@ -838,11 +843,11 @@ export default function ICSOffensive() {
         )}
 
         {interestingCases.length > 0 && (
-          <Section title={`Interesting Cases (${interestingCases.length})`}>
+          <Section title={`Interesting Cases (${interestingCases.length})`} isDarkMode={isDarkMode}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                  <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                     <th className="px-3 py-2">Case #</th>
                     <th className="px-3 py-2">Mutation Type</th>
                     <th className="px-3 py-2">Payload (hex)</th>
@@ -852,13 +857,13 @@ export default function ICSOffensive() {
                 </thead>
                 <tbody>
                   {interestingCases.map((c, i) => (
-                    <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
-                      <td className="px-3 py-2 font-mono text-gray-400">{c.case_id || i + 1}</td>
-                      <td className="px-3 py-2 text-gray-300">{c.mutation_type}</td>
+                    <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <td className={`px-3 py-2 font-mono ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{c.case_id || i + 1}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{c.mutation_type}</td>
                       <td className="px-3 py-2 font-mono text-xs text-cyan-300 max-w-xs truncate">
                         {c.payload_hex || '—'}
                       </td>
-                      <td className="px-3 py-2 text-xs text-gray-300">{c.response || '—'}</td>
+                      <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{c.response || '—'}</td>
                       <td className="px-3 py-2">
                         <span
                           className={`text-xs px-2 py-0.5 rounded ${
@@ -918,18 +923,18 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="PLC Target">
+        <Section title="PLC Target" isDarkMode={isDarkMode}>
           <div className="flex flex-wrap items-end gap-4">
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Device ID</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Device ID</label>
               <input
                 type="text"
                 value={deviceId}
                 onChange={(e) => setDeviceId(e.target.value)}
                 placeholder="e.g. PLC-01 or 192.168.1.10"
-                className="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500 w-64"
+                className={`${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500 w-64`}
               />
             </div>
             <div className="flex gap-2">
@@ -938,7 +943,7 @@ export default function ICSOffensive() {
                   key={op}
                   onClick={() => runOp(op)}
                   disabled={loading2}
-                  className={`px-4 py-2 rounded text-sm font-medium transition-colors disabled:bg-gray-700 disabled:text-gray-500 ${
+                  className={`px-4 py-2 rounded text-sm font-medium transition-colors ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} ${
                     op === 'Simulate Bypass'
                       ? 'bg-red-600 hover:bg-red-700 text-white'
                       : 'bg-cyan-600 hover:bg-cyan-700 text-white'
@@ -952,11 +957,11 @@ export default function ICSOffensive() {
         </Section>
 
         {program && (
-          <Section title="Program Analysis">
+          <Section title="Program Analysis" isDarkMode={isDarkMode}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div className="rounded-lg bg-gray-900 border border-gray-700 p-3">
-                <p className="text-xs text-gray-400 mb-1">Safety Rungs</p>
-                <p className="text-2xl font-bold text-white">{program.safety_rungs ?? '—'}</p>
+              <div className={`rounded-lg ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border p-3`}>
+                <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-1`}>Safety Rungs</p>
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{program.safety_rungs ?? '—'}</p>
                 {program.safety_rung_list && (
                   <ul className="mt-2 space-y-0.5">
                     {program.safety_rung_list.map((r, i) => (
@@ -967,9 +972,9 @@ export default function ICSOffensive() {
                   </ul>
                 )}
               </div>
-              <div className="rounded-lg bg-gray-900 border border-gray-700 p-3">
-                <p className="text-xs text-gray-400 mb-1">Timers</p>
-                <p className="text-2xl font-bold text-white">{program.timers ?? '—'}</p>
+              <div className={`rounded-lg ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border p-3`}>
+                <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-1`}>Timers</p>
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{program.timers ?? '—'}</p>
                 {program.timer_list && (
                   <ul className="mt-2 space-y-0.5">
                     {program.timer_list.map((t, i) => (
@@ -980,9 +985,9 @@ export default function ICSOffensive() {
                   </ul>
                 )}
               </div>
-              <div className="rounded-lg bg-gray-900 border border-gray-700 p-3">
-                <p className="text-xs text-gray-400 mb-1">Outputs</p>
-                <p className="text-2xl font-bold text-white">{program.outputs ?? '—'}</p>
+              <div className={`rounded-lg ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border p-3`}>
+                <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-1`}>Outputs</p>
+                <p className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{program.outputs ?? '—'}</p>
                 {program.output_list && (
                   <ul className="mt-2 space-y-0.5">
                     {program.output_list.map((o, i) => (
@@ -995,7 +1000,7 @@ export default function ICSOffensive() {
               </div>
             </div>
             {program.raw && (
-              <pre className="bg-gray-900 border border-gray-700 rounded p-3 text-xs overflow-x-auto max-h-56 overflow-y-auto font-mono text-gray-300">
+              <pre className={`${isDarkMode ? 'bg-gray-900 border-gray-700 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-700'} border rounded p-3 text-xs overflow-x-auto max-h-56 overflow-y-auto font-mono`}>
                 {program.raw}
               </pre>
             )}
@@ -1003,8 +1008,8 @@ export default function ICSOffensive() {
         )}
 
         {diff && (
-          <Section title="Program Diff (Original vs Modified)">
-            <div className="rounded-lg bg-gray-900 border border-gray-700 p-3 overflow-x-auto">
+          <Section title="Program Diff (Original vs Modified)" isDarkMode={isDarkMode}>
+            <div className={`rounded-lg ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-50 border-gray-200'} border p-3 overflow-x-auto`}>
               {(diff.lines || []).map((line, i) => (
                 <div
                   key={i}
@@ -1013,14 +1018,14 @@ export default function ICSOffensive() {
                       ? 'text-green-400 bg-green-900/20'
                       : line.startsWith('-')
                       ? 'text-red-400 bg-red-900/20'
-                      : 'text-gray-500'
+                      : isDarkMode ? 'text-gray-500' : 'text-gray-400'
                   }`}
                 >
                   {line}
                 </div>
               ))}
               {!diff.lines && (
-                <pre className="text-xs text-gray-300">{JSON.stringify(diff, null, 2)}</pre>
+                <pre className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{JSON.stringify(diff, null, 2)}</pre>
               )}
             </div>
           </Section>
@@ -1082,36 +1087,36 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="Session Configuration">
+        <Section title="Session Configuration" isDarkMode={isDarkMode}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Target Client</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Target Client</label>
               <input
                 type="text"
                 value={targetClient}
                 onChange={(e) => setTargetClient(e.target.value)}
                 placeholder="192.168.1.50"
-                className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500`}
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Target Server / PLC</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Target Server / PLC</label>
               <input
                 type="text"
                 value={targetServer}
                 onChange={(e) => setTargetServer(e.target.value)}
                 placeholder="192.168.1.100"
-                className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500`}
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Protocol</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Protocol</label>
               <select
                 value={protocol}
                 onChange={(e) => setProtocol(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-3 py-2 text-sm focus:outline-none focus:border-cyan-500`}
               >
                 {ICS_PROTOCOLS.map((p) => (
                   <option key={p} value={p}>
@@ -1121,11 +1126,11 @@ export default function ICSOffensive() {
               </select>
             </div>
             <div>
-              <label className="block text-xs text-gray-400 mb-1">Mode</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Mode</label>
               <select
                 value={mode}
                 onChange={(e) => setMode(e.target.value)}
-                className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white' : 'bg-white border-gray-300 text-gray-900'} border rounded px-3 py-2 text-sm focus:outline-none focus:border-cyan-500`}
               >
                 <option value="passthrough">Passthrough (log only)</option>
                 <option value="modify">Modify (alter values)</option>
@@ -1138,7 +1143,7 @@ export default function ICSOffensive() {
               <button
                 onClick={startSession}
                 disabled={sessionLoading}
-                className="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors"
+                className={`px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors`}
               >
                 {sessionLoading ? 'Starting...' : 'Start Session'}
               </button>
@@ -1146,7 +1151,7 @@ export default function ICSOffensive() {
               <button
                 onClick={stopSession}
                 disabled={sessionLoading}
-                className="px-5 py-2 rounded bg-red-600 hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors"
+                className={`px-5 py-2 rounded bg-red-600 hover:bg-red-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors`}
               >
                 {sessionLoading ? 'Stopping...' : 'Stop Session'}
               </button>
@@ -1161,11 +1166,11 @@ export default function ICSOffensive() {
         </Section>
 
         {packets.length > 0 && (
-          <Section title={`Intercepted Packets (${packets.length})`}>
+          <Section title={`Intercepted Packets (${packets.length})`} isDarkMode={isDarkMode}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                  <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                     <th className="px-3 py-2">#</th>
                     <th className="px-3 py-2">Timestamp</th>
                     <th className="px-3 py-2">Direction</th>
@@ -1176,9 +1181,9 @@ export default function ICSOffensive() {
                 </thead>
                 <tbody>
                   {packets.map((p, i) => (
-                    <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
-                      <td className="px-3 py-2 font-mono text-gray-500">{i + 1}</td>
-                      <td className="px-3 py-2 text-xs text-gray-400 font-mono">{p.timestamp}</td>
+                    <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <td className={`px-3 py-2 font-mono ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>{i + 1}</td>
+                      <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-mono`}>{p.timestamp}</td>
                       <td className="px-3 py-2 text-xs">
                         <span
                           className={`px-1.5 py-0.5 rounded ${
@@ -1190,7 +1195,7 @@ export default function ICSOffensive() {
                           {p.direction === 'c2s' ? 'C→S' : 'S→C'}
                         </span>
                       </td>
-                      <td className="px-3 py-2 text-gray-300">{p.function || '—'}</td>
+                      <td className={`px-3 py-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{p.function || '—'}</td>
                       <td className="px-3 py-2 font-mono text-xs text-cyan-300 max-w-xs truncate">
                         {p.payload_hex || '—'}
                       </td>
@@ -1198,7 +1203,7 @@ export default function ICSOffensive() {
                         {p.modified ? (
                           <span className="text-xs text-yellow-400">YES</span>
                         ) : (
-                          <span className="text-xs text-gray-600">—</span>
+                          <span className={`text-xs ${isDarkMode ? 'text-gray-600' : 'text-gray-400'}`}>—</span>
                         )}
                       </td>
                     </tr>
@@ -1261,23 +1266,23 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {ATTACK_CHAIN_TEMPLATES.map((chain) => (
             <div
               key={chain.id}
-              className="rounded-lg border border-gray-700 bg-gray-800 p-4 flex flex-col"
+              className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'} p-4 flex flex-col`}
             >
               <div className="flex items-start justify-between mb-2">
-                <h4 className="text-sm font-bold text-white leading-tight">{chain.name}</h4>
+                <h4 className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} leading-tight`}>{chain.name}</h4>
                 {executing === chain.id && (
                   <span className="text-[10px] px-2 py-0.5 rounded bg-yellow-500 text-black font-semibold animate-pulse flex-shrink-0 ml-2">
                     RUNNING
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-400 mb-3 flex-grow leading-relaxed">
+              <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-3 flex-grow leading-relaxed`}>
                 {chain.description}
               </p>
               <div className="flex flex-wrap gap-1 mb-3">
@@ -1293,7 +1298,7 @@ export default function ICSOffensive() {
               <button
                 onClick={() => executeChain(chain)}
                 disabled={!!executing}
-                className="w-full py-1.5 rounded bg-red-600 hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-xs font-semibold transition-colors"
+                className={`w-full py-1.5 rounded bg-red-600 hover:bg-red-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-xs font-semibold transition-colors`}
               >
                 {executing === chain.id ? 'Executing...' : 'Execute Chain'}
               </button>
@@ -1302,26 +1307,26 @@ export default function ICSOffensive() {
         </div>
 
         {executing !== null && (
-          <Section title="Execution Progress">
+          <Section title="Execution Progress" isDarkMode={isDarkMode}>
             {(() => {
               const chain = ATTACK_CHAIN_TEMPLATES.find((c) => c.id === executing)
               if (!chain) return null
               return (
                 <div className="space-y-2">
-                  <p className="text-sm font-semibold text-white mb-3">{chain.name}</p>
+                  <p className={`text-sm font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-3`}>{chain.name}</p>
                   {chain.steps.map((step, i) => {
                     const s = stepStatuses[i] || 'pending'
                     return (
                       <div
                         key={i}
-                        className="flex items-center gap-3 rounded bg-gray-900/50 border border-gray-800 px-4 py-2"
+                        className={`flex items-center gap-3 rounded ${isDarkMode ? 'bg-gray-900/50 border-gray-800' : 'bg-gray-50 border-gray-200'} border px-4 py-2`}
                       >
                         <span
                           className={`flex-shrink-0 text-[10px] px-2 py-0.5 rounded font-semibold w-20 text-center ${STEP_STATUS_COLORS[s]}`}
                         >
                           {s.toUpperCase()}
                         </span>
-                        <span className="text-xs text-gray-300">{step}</span>
+                        <span className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{step}</span>
                       </div>
                     )
                   })}
@@ -1376,24 +1381,24 @@ export default function ICSOffensive() {
 
     return (
       <div className="space-y-6">
-        <AuthForm auth={auth} setAuth={setAuth} />
+        <AuthForm auth={auth} setAuth={setAuth} isDarkMode={isDarkMode} />
 
-        <Section title="Firmware File">
+        <Section title="Firmware File" isDarkMode={isDarkMode}>
           <div className="flex items-end gap-3">
             <div className="flex-1">
-              <label className="block text-xs text-gray-400 mb-1">File Path</label>
+              <label className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>File Path</label>
               <input
                 type="text"
                 value={filePath}
                 onChange={(e) => setFilePath(e.target.value)}
                 placeholder="/path/to/firmware.bin"
-                className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                className={`w-full ${isDarkMode ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-600' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'} border rounded px-3 py-2 text-sm font-mono focus:outline-none focus:border-cyan-500`}
               />
             </div>
             <button
               onClick={analyze}
               disabled={analyzing}
-              className="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white text-sm font-medium transition-colors flex-shrink-0"
+              className={`px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white text-sm font-medium transition-colors flex-shrink-0`}
             >
               {analyzing ? 'Analyzing...' : 'Analyze Firmware'}
             </button>
@@ -1404,7 +1409,7 @@ export default function ICSOffensive() {
           <div className="space-y-5">
             {/* Risk badge */}
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-400">Overall Risk:</span>
+              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Overall Risk:</span>
               <span
                 className={`text-sm px-3 py-1 rounded font-bold ${
                   RISK_COLORS[result.risk_level] || 'bg-gray-600 text-gray-200'
@@ -1413,30 +1418,30 @@ export default function ICSOffensive() {
                 {(result.risk_level || 'unknown').toUpperCase()}
               </span>
               {result.firmware_type && (
-                <span className="text-xs text-gray-400">Type: {result.firmware_type}</span>
+                <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Type: {result.firmware_type}</span>
               )}
               {result.architecture && (
-                <span className="text-xs text-gray-400">Arch: {result.architecture}</span>
+                <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Arch: {result.architecture}</span>
               )}
             </div>
 
             {/* Sections with entropy */}
             {result.sections && result.sections.length > 0 && (
-              <Section title="Binary Sections">
+              <Section title="Binary Sections" isDarkMode={isDarkMode}>
                 <div className="space-y-2">
                   {result.sections.map((sec, i) => (
-                    <div key={i} className="rounded bg-gray-900 border border-gray-800 p-3">
+                    <div key={i} className={`rounded ${isDarkMode ? 'bg-gray-900 border-gray-800' : 'bg-gray-50 border-gray-200'} border p-3`}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs font-mono text-cyan-300">{sec.name}</span>
-                        <span className="text-xs text-gray-400">
+                        <span className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                           {sec.size ? `${(sec.size / 1024).toFixed(1)} KB` : ''}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-gray-500 w-20">
+                        <span className={`text-[10px] ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} w-20`}>
                           Entropy: {(sec.entropy || 0).toFixed(2)}
                         </span>
-                        <div className="flex-1 h-1.5 rounded-full bg-gray-700 overflow-hidden">
+                        <div className={`flex-1 h-1.5 rounded-full ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} overflow-hidden`}>
                           <div
                             className={`h-full rounded-full transition-all ${
                               sec.entropy > 7
@@ -1448,7 +1453,7 @@ export default function ICSOffensive() {
                             style={{ width: `${Math.min((sec.entropy / 8) * 100, 100)}%` }}
                           />
                         </div>
-                        <span className="text-[10px] text-gray-500">/ 8.0</span>
+                        <span className={`text-[10px] ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>/ 8.0</span>
                       </div>
                     </div>
                   ))}
@@ -1458,11 +1463,11 @@ export default function ICSOffensive() {
 
             {/* Extracted credentials */}
             {result.credentials && result.credentials.length > 0 && (
-              <Section title={`Extracted Credentials (${result.credentials.length})`}>
+              <Section title={`Extracted Credentials (${result.credentials.length})`} isDarkMode={isDarkMode}>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                      <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                         <th className="px-3 py-2">Type</th>
                         <th className="px-3 py-2">Value</th>
                         <th className="px-3 py-2">Context</th>
@@ -1471,15 +1476,15 @@ export default function ICSOffensive() {
                     </thead>
                     <tbody>
                       {result.credentials.map((c, i) => (
-                        <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
+                        <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
                           <td className="px-3 py-2 text-xs">
                             <span className="px-2 py-0.5 rounded bg-orange-700/60 text-orange-200">
                               {c.type}
                             </span>
                           </td>
                           <td className="px-3 py-2 font-mono text-xs text-yellow-300">{c.value}</td>
-                          <td className="px-3 py-2 text-xs text-gray-400">{c.context || '—'}</td>
-                          <td className="px-3 py-2 font-mono text-xs text-gray-500">
+                          <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{c.context || '—'}</td>
+                          <td className={`px-3 py-2 font-mono text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
                             {c.offset != null ? `0x${c.offset.toString(16).toUpperCase()}` : '—'}
                           </td>
                         </tr>
@@ -1492,20 +1497,20 @@ export default function ICSOffensive() {
 
             {/* CVE matches */}
             {result.cve_matches && result.cve_matches.length > 0 && (
-              <Section title={`Known CVE Matches (${result.cve_matches.length})`}>
+              <Section title={`Known CVE Matches (${result.cve_matches.length})`} isDarkMode={isDarkMode}>
                 <div className="space-y-2">
                   {result.cve_matches.map((cve, i) => (
                     <div
                       key={i}
-                      className="rounded border border-gray-700 bg-gray-900/50 p-3 flex items-start gap-3"
+                      className={`rounded border ${isDarkMode ? 'border-gray-700 bg-gray-900/50' : 'border-gray-200 bg-gray-50'} p-3 flex items-start gap-3`}
                     >
                       <span className="font-mono text-xs text-red-400 flex-shrink-0 mt-0.5">
                         {cve.cve_id}
                       </span>
                       <div className="flex-1">
-                        <p className="text-xs text-gray-300">{cve.description}</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{cve.description}</p>
                         {cve.cvss && (
-                          <span className="text-[10px] text-gray-500 mt-1 block">
+                          <span className={`text-[10px] ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mt-1 block`}>
                             CVSS: {cve.cvss}
                           </span>
                         )}
@@ -1606,14 +1611,14 @@ export default function ICSOffensive() {
             <button
               onClick={fetchLog}
               disabled={fetching}
-              className="text-xs px-3 py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+              className={`text-xs px-3 py-1.5 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-colors`}
             >
               {fetching ? 'Loading...' : 'Refresh'}
             </button>
             <button
               onClick={exportCSV}
               disabled={entries.length === 0}
-              className="text-xs px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-700 disabled:bg-gray-700 disabled:text-gray-500 text-white transition-colors"
+              className={`text-xs px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-700 ${isDarkMode ? 'disabled:bg-gray-700 disabled:text-gray-500' : 'disabled:bg-gray-200 disabled:text-gray-400'} text-white transition-colors`}
             >
               Export CSV
             </button>
@@ -1621,12 +1626,12 @@ export default function ICSOffensive() {
         </div>
 
         {entries.length === 0 && !fetching ? (
-          <p className="text-gray-500 text-sm">No audit log entries yet.</p>
+          <p className={`${isDarkMode ? 'text-gray-500' : 'text-gray-400'} text-sm`}>No audit log entries yet.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-900 text-left text-gray-400 text-xs uppercase tracking-wider">
+                <tr className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'} text-left ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs uppercase tracking-wider`}>
                   <SortHeader field="timestamp" label="Timestamp" />
                   <SortHeader field="tool" label="Tool" />
                   <SortHeader field="operation" label="Operation" />
@@ -1638,14 +1643,14 @@ export default function ICSOffensive() {
               </thead>
               <tbody>
                 {sorted.map((e, i) => (
-                  <tr key={i} className="border-b border-gray-800 hover:bg-gray-800/40">
-                    <td className="px-3 py-2 font-mono text-xs text-gray-400">
+                  <tr key={i} className={`border-b ${isDarkMode ? 'border-gray-800 hover:bg-gray-800/40' : 'border-gray-200 hover:bg-gray-50'}`}>
+                    <td className={`px-3 py-2 font-mono text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                       {e.timestamp || '—'}
                     </td>
                     <td className="px-3 py-2 text-xs text-cyan-300">{e.tool || '—'}</td>
-                    <td className="px-3 py-2 text-xs text-gray-300">{e.operation || '—'}</td>
-                    <td className="px-3 py-2 text-xs text-gray-300">{e.user || '—'}</td>
-                    <td className="px-3 py-2 font-mono text-xs text-gray-300">{e.target || '—'}</td>
+                    <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{e.operation || '—'}</td>
+                    <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{e.user || '—'}</td>
+                    <td className={`px-3 py-2 font-mono text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{e.target || '—'}</td>
                     <td className="px-3 py-2 text-xs">
                       {e.mock_mode ? (
                         <span className="px-1.5 py-0.5 rounded bg-cyan-700/60 text-cyan-200">ON</span>
@@ -1653,7 +1658,7 @@ export default function ICSOffensive() {
                         <span className="px-1.5 py-0.5 rounded bg-red-700/60 text-red-200">OFF</span>
                       )}
                     </td>
-                    <td className="px-3 py-2 text-xs text-gray-400 max-w-xs truncate">
+                    <td className={`px-3 py-2 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} max-w-xs truncate`}>
                       {e.result_summary || '—'}
                     </td>
                   </tr>
@@ -1685,7 +1690,7 @@ export default function ICSOffensive() {
   // Render
   // -----------------------------------------------------------------------
   return (
-    <div className="p-6 space-y-6 text-white min-h-screen">
+    <div className={`p-6 space-y-6 ${isDarkMode ? 'text-white' : 'text-gray-900'} min-h-screen`}>
       {/* Notification toast */}
       {notif && (
         <div className="fixed top-4 right-4 z-50 bg-cyan-700 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-sm">
@@ -1696,8 +1701,8 @@ export default function ICSOffensive() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">ICS Offensive</h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <h1 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>ICS Offensive</h1>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm mt-1`}>
             Industrial Control System penetration testing and attack simulation — authorized use
             only
           </p>
@@ -1708,7 +1713,7 @@ export default function ICSOffensive() {
               status?.enabled ? 'bg-green-400' : 'bg-gray-600'
             }`}
           />
-          <span className="text-sm text-gray-300">
+          <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {status?.enabled ? 'Module Active' : 'Module Inactive'}
           </span>
           {status?.mock_mode && (
@@ -1718,7 +1723,7 @@ export default function ICSOffensive() {
           )}
           <button
             onClick={fetchStatus}
-            className="text-xs px-3 py-1.5 rounded bg-gray-700 hover:bg-gray-600 text-white transition-colors"
+            className={`text-xs px-3 py-1.5 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'} transition-colors`}
           >
             Refresh
           </button>
@@ -1735,7 +1740,7 @@ export default function ICSOffensive() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-0.5 overflow-x-auto border-b border-gray-700 pb-0">
+      <div className={`flex gap-0.5 overflow-x-auto border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} pb-0`}>
         {TABS.map((tab, i) => (
           <button
             key={tab}
@@ -1743,7 +1748,7 @@ export default function ICSOffensive() {
             className={`px-4 py-2 text-sm whitespace-nowrap transition-colors ${
               activeTab === i
                 ? 'border-b-2 border-cyan-500 text-cyan-300 font-medium'
-                : 'text-gray-400 hover:text-white hover:bg-gray-800 rounded-t'
+                : `${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'} rounded-t`
             }`}
           >
             {tab}
@@ -1767,16 +1772,16 @@ export default function ICSOffensive() {
 // Shared sub-components
 // -------------------------------------------------------------------------
 
-function StatCard({ label, value, color = 'text-white' }) {
+function StatCard({ label, value, color = 'text-white', isDarkMode }) {
   return (
-    <div className="rounded-lg border border-gray-700 bg-gray-800 p-4 text-center">
+    <div className={`rounded-lg border ${isDarkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'} p-4 text-center`}>
       <p className={`text-3xl font-bold ${color}`}>{value}</p>
-      <p className="text-xs text-gray-400 mt-1">{label}</p>
+      <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>{label}</p>
     </div>
   )
 }
 
-function Section({ title, children }) {
+function Section({ title, children, isDarkMode }) {
   return (
     <div>
       <h3 className="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-3">{title}</h3>

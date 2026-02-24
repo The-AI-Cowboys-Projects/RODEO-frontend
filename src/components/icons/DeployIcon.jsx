@@ -1,4 +1,4 @@
-export default function DeployIcon({ className = "w-6 h-6" }) {
+export default function DeployIcon({ className = "w-6 h-6", primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg
       className={className}

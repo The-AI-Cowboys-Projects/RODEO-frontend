@@ -259,7 +259,7 @@ export default function PipelineDashboard() {
 
         {/* Tabs */}
         <div className="mb-6">
-          <div className="flex gap-2 border-b border-slate-700">
+          <div className={`flex gap-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id

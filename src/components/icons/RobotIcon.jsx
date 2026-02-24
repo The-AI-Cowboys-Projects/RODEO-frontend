@@ -3,7 +3,7 @@
  * A stylized robot head with blinking eyes
  */
 
-export default function RobotIcon({ className = 'w-5 h-5', ...props }) {
+export default function RobotIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -32,11 +32,11 @@ export default function RobotIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Antenna */}
-      <circle className="antenna-glow" cx="12" cy="2" r="1.5" fill="#C38BBF" />
-      <rect x="11" y="3" width="2" height="3" fill="#C38BBF" />
+      <circle className="antenna-glow" cx="12" cy="2" r="1.5" fill={secondary} />
+      <rect x="11" y="3" width="2" height="3" fill={secondary} />
 
       {/* Robot Head */}
-      <rect x="4" y="6" width="16" height="14" rx="3" fill="#800080" />
+      <rect x="4" y="6" width="16" height="14" rx="3" fill={primary} />
 
       {/* Eyes */}
       <g className="robot-eye robot-eye-left">
@@ -50,8 +50,8 @@ export default function RobotIcon({ className = 'w-5 h-5', ...props }) {
       <rect x="7" y="16" width="10" height="2" rx="1" fill="white" />
 
       {/* Ear bolts */}
-      <circle cx="2" cy="13" r="1.5" fill="#C38BBF" />
-      <circle cx="22" cy="13" r="1.5" fill="#C38BBF" />
+      <circle cx="2" cy="13" r="1.5" fill={secondary} />
+      <circle cx="22" cy="13" r="1.5" fill={secondary} />
     </svg>
   )
 }

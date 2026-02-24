@@ -598,7 +598,7 @@ export default function ApprovalWorkflow() {
                     <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Reason</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-700/30">
+                <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700/30' : 'divide-gray-200'}`}>
                   {filteredRecentActions.length === 0 ? (
                     <tr>
                       <td colSpan="8" className="px-6 py-12 text-center">

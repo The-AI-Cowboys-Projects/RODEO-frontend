@@ -59,13 +59,13 @@ export default function SandboxDashboard() {
   const getStatusColor = (status) => {
     switch (status) {
       case 'completed':
-        return 'text-green-400 bg-green-900/20'
+        return isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-700 bg-green-100'
       case 'running':
-        return 'text-blue-400 bg-blue-900/20'
+        return isDarkMode ? 'text-blue-400 bg-blue-900/20' : 'text-blue-700 bg-blue-100'
       case 'failed':
-        return 'text-red-400 bg-red-900/20'
+        return isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-700 bg-red-100'
       default:
-        return 'text-gray-400 bg-slate-900/20'
+        return isDarkMode ? 'text-gray-400 bg-slate-900/20' : 'text-gray-600 bg-gray-100'
     }
   }
 
@@ -87,10 +87,10 @@ export default function SandboxDashboard() {
       {/* Header */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-brand-purple/10 via-pink-500/10 to-blue-500/10 rounded-2xl blur-xl"></div>
-        <div className={'relative bg-slate-800/40 backdrop-blur-sm rounded-2xl border ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200') + ' p-8'}>
+        <div className={'relative ' + (isDarkMode ? 'bg-slate-800/40' : 'bg-white/80 shadow-xl shadow-purple-100/30') + ' backdrop-blur-sm rounded-2xl border ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200') + ' p-8'}>
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-brand-purple via-pink-400 to-blue-400 bg-clip-text text-transparent">
+              <h1 className={isDarkMode ? "text-4xl font-bold bg-gradient-to-r from-brand-purple via-pink-400 to-blue-400 bg-clip-text text-transparent" : "text-4xl font-bold bg-gradient-to-r from-purple-700 via-pink-600 to-blue-600 bg-clip-text text-transparent"}>
                 R-O-D-E-O Sandbox
               </h1>
               <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' mt-2'}>
@@ -99,24 +99,24 @@ export default function SandboxDashboard() {
             </div>
 
             {/* Mode Selector */}
-            <div className={'flex bg-slate-900/50 rounded-lg p-1 border ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200')}>
+            <div className={'flex ' + (isDarkMode ? 'bg-slate-900/50' : 'bg-gray-100/80') + ' rounded-lg p-1 border ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200')}>
               <button
                 onClick={() => setViewMode('submit')}
-                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'submit' ? 'bg-brand-purple text-white shadow-lg' : 'text-gray-400 hover:text-white')}
+                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'submit' ? 'bg-brand-purple text-white shadow-lg' : (isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'))}
               >
                 Submit
               </button>
               <button
                 onClick={() => setViewMode('progress')}
                 disabled={!activeSessionId}
-                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'progress' ? 'bg-brand-purple text-white shadow-lg' : 'text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed')}
+                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'progress' ? 'bg-brand-purple text-white shadow-lg' : (isDarkMode ? 'text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed' : 'text-gray-500 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'))}
               >
                 Progress
               </button>
               <button
                 onClick={() => setViewMode('results')}
                 disabled={!completedResults}
-                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'results' ? 'bg-brand-purple text-white shadow-lg' : 'text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed')}
+                className={'px-4 py-2 rounded-md text-sm font-medium transition-all ' + (viewMode === 'results' ? 'bg-brand-purple text-white shadow-lg' : (isDarkMode ? 'text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed' : 'text-gray-500 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'))}
               >
                 Results
               </button>
@@ -129,8 +129,8 @@ export default function SandboxDashboard() {
               <div className="flex items-center space-x-2">
                 <BeakerIcon className="w-5 h-5 text-brand-purple-light" />
                 <div>
-                  <p className="text-xs text-gray-400">Total Sessions</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Total Sessions</p>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {recentSessions?.total || 0}
                   </p>
                 </div>
@@ -141,8 +141,8 @@ export default function SandboxDashboard() {
               <div className="flex items-center space-x-2">
                 <PlayIcon className="w-5 h-5 text-blue-400" />
                 <div>
-                  <p className="text-xs text-gray-400">Running</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Running</p>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {recentSessions?.sessions?.filter(s => s.status === 'running').length || 0}
                   </p>
                 </div>
@@ -153,8 +153,8 @@ export default function SandboxDashboard() {
               <div className="flex items-center space-x-2">
                 <CheckCircleIcon className="w-5 h-5 text-green-400" />
                 <div>
-                  <p className="text-xs text-gray-400">Completed</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Completed</p>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {recentSessions?.sessions?.filter(s => s.status === 'completed').length || 0}
                   </p>
                 </div>
@@ -165,8 +165,8 @@ export default function SandboxDashboard() {
               <div className="flex items-center space-x-2">
                 <XCircleIcon className="w-5 h-5 text-red-400" />
                 <div>
-                  <p className="text-xs text-gray-400">Failed</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Failed</p>
+                  <p className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                     {recentSessions?.sessions?.filter(s => s.status === 'failed').length || 0}
                   </p>
                 </div>
@@ -181,7 +181,7 @@ export default function SandboxDashboard() {
         {/* Left Column - Recent Sessions */}
         <div className="col-span-1">
           <div className={(isDarkMode ? 'bg-slate-800/40' : 'bg-white/40') + ' backdrop-blur-sm rounded-2xl border ' + (isDarkMode ? 'border-slate-700/50' : 'border-gray-200/50') + ' p-6'}>
-            <h2 className="text-xl font-bold text-white mb-4">Recent Sessions</h2>
+            <h2 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>Recent Sessions</h2>
 
             {sessionsLoading ? (
               <div className="text-center py-8 text-gray-400">Loading sessions...</div>
@@ -218,10 +218,10 @@ export default function SandboxDashboard() {
                         setViewMode('progress')
                       }
                     }}
-                    className={'w-full text-left p-3 rounded-lg border transition-all hover:bg-slate-900/50 ' + (
+                    className={'w-full text-left p-3 rounded-lg border transition-all ' + (isDarkMode ? 'hover:bg-slate-900/50' : 'hover:bg-purple-50') + ' ' + (
                       activeSessionId === session.session_id
                         ? 'bg-brand-purple/20 border-brand-purple/50'
-                        : 'bg-slate-900/20 ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200/50')
+                        : (isDarkMode ? 'bg-slate-900/20' : 'bg-gray-50') + ' ' + (isDarkMode ? 'border-slate-700' : 'border-gray-200/50')
                     )}
                   >
                     <div className="flex items-start justify-between">
@@ -298,36 +298,36 @@ export default function SandboxDashboard() {
 
       {/* Feature Highlights */}
       <div className="grid grid-cols-3 gap-6">
-        <div className="bg-gradient-to-br from-purple-900/20 to-purple-600/10 rounded-xl border border-brand-purple/30 p-6">
+        <div className={isDarkMode ? 'bg-gradient-to-br from-purple-900/20 to-purple-600/10 rounded-xl border border-brand-purple/30 p-6' : 'bg-gradient-to-br from-purple-50/80 to-white rounded-xl border border-purple-200/60 shadow-sm shadow-purple-100/40 p-6'}>
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-10 h-10 bg-brand-purple/20 rounded-lg flex items-center justify-center">
               <BeakerIcon className="w-6 h-6 text-brand-purple-light" />
             </div>
-            <h3 className="text-lg font-semibold text-white">Fast Analysis</h3>
+            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Fast Analysis</h3>
           </div>
           <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>
             Get results in under 40 seconds with our optimized parallel pipeline. Enable fast-track mode for 25s analysis.
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-900/20 to-blue-600/10 rounded-xl border border-blue-500/30 p-6">
+        <div className={isDarkMode ? 'bg-gradient-to-br from-blue-900/20 to-blue-600/10 rounded-xl border border-blue-500/30 p-6' : 'bg-gradient-to-br from-blue-50/80 to-white rounded-xl border border-blue-200/60 shadow-sm shadow-blue-100/40 p-6'}>
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
               <CheckCircleIcon className="w-6 h-6 text-blue-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white">AI-Powered</h3>
+            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>AI-Powered</h3>
           </div>
           <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>
             Advanced behavior analysis with automatic YARA rule generation and MITRE ATT&CK mapping.
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-pink-900/20 to-pink-600/10 rounded-xl border border-pink-500/30 p-6">
+        <div className={isDarkMode ? 'bg-gradient-to-br from-pink-900/20 to-pink-600/10 rounded-xl border border-pink-500/30 p-6' : 'bg-gradient-to-br from-pink-50/80 to-white rounded-xl border border-pink-200/60 shadow-sm shadow-pink-100/40 p-6'}>
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-10 h-10 bg-pink-600/20 rounded-lg flex items-center justify-center">
               <PlayIcon className="w-6 h-6 text-pink-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white">Real-Time Monitoring</h3>
+            <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Real-Time Monitoring</h3>
           </div>
           <p className={(isDarkMode ? 'text-gray-400' : 'text-gray-600') + ' text-sm'}>
             Watch your analysis progress in real-time with live updates on processes, network, and threats.

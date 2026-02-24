@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense, lazy } from 'react'
 import { PageErrorBoundary } from './components/ErrorBoundary'
 import { useInitializeToast } from './hooks/useInitializeToast'
 import { useAuth } from './context/AuthContext'
+import { useTheme } from './context/ThemeContext'
 import Login from './pages/Login'
 import Layout from './components/Layout'
 
@@ -77,6 +78,7 @@ function PermissionRoute({ children, permission }) {
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { isDarkMode } = useTheme()
 
   // Initialize global toast for API client
   useInitializeToast()
@@ -565,10 +567,10 @@ function App() {
       <Route
         path="*"
         element={
-          <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+          <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gray-50'} flex items-center justify-center`}>
             <div className="text-center">
               <h1 className="text-6xl font-bold text-brand-purple mb-4">404</h1>
-              <p className="text-gray-400 mb-6">Page not found</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mb-6`}>Page not found</p>
               <a
                 href="/"
                 className="px-6 py-2 bg-brand-purple hover:bg-purple-700 text-white rounded-lg transition-colors"

@@ -1,4 +1,4 @@
-export default function DashboardIcon({ className = 'w-5 h-5', ...props }) {
+export default function DashboardIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -13,10 +13,10 @@ export default function DashboardIcon({ className = 'w-5 h-5', ...props }) {
           .tile-4 { animation: tile-pulse 2s ease-in-out infinite 1.5s; }
         `}
       </style>
-      <rect className="tile-1" x="3" y="3" width="7" height="7" rx="1" fill="#800080" />
-      <rect className="tile-2" x="14" y="3" width="7" height="7" rx="1" fill="#C38BBF" />
-      <rect className="tile-3" x="3" y="14" width="7" height="7" rx="1" fill="#C38BBF" />
-      <rect className="tile-4" x="14" y="14" width="7" height="7" rx="1" fill="#800080" />
+      <rect className="tile-1" x="3" y="3" width="7" height="7" rx="1" fill={primary} />
+      <rect className="tile-2" x="14" y="3" width="7" height="7" rx="1" fill={secondary} />
+      <rect className="tile-3" x="3" y="14" width="7" height="7" rx="1" fill={secondary} />
+      <rect className="tile-4" x="14" y="14" width="7" height="7" rx="1" fill={primary} />
     </svg>
   )
 }

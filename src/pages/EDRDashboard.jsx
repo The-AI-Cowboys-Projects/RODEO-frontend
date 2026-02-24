@@ -234,18 +234,19 @@ function PlatformBadge({ platform, size = 'sm' }) {
 }
 
 // ==================== Severity Badge ====================
-const severityConfig = {
-  critical: { gradient: 'from-red-500 to-red-600', bg: 'bg-red-100 dark:bg-red-500/20', text: 'text-red-700 dark:text-red-400', glow: 'shadow-red-500/30' },
-  high: { gradient: 'from-orange-500 to-orange-600', bg: 'bg-orange-100 dark:bg-orange-500/20', text: 'text-orange-700 dark:text-orange-400', glow: 'shadow-orange-500/30' },
-  medium: { gradient: 'from-yellow-500 to-amber-500', bg: 'bg-yellow-100 dark:bg-yellow-500/20', text: 'text-yellow-700 dark:text-yellow-400', glow: 'shadow-yellow-500/30' },
-  low: { gradient: 'from-blue-500 to-blue-600', bg: 'bg-blue-100 dark:bg-blue-500/20', text: 'text-blue-700 dark:text-blue-400', glow: 'shadow-blue-500/30' },
-  info: { gradient: 'from-gray-500 to-gray-600', bg: 'bg-gray-200 dark:bg-gray-500/20', text: 'text-gray-700 dark:text-gray-400', glow: 'shadow-gray-500/30' },
+const severityStyles = {
+  critical: { gradient: 'from-red-500 to-red-600', lightBg: 'bg-red-100', darkBg: 'bg-red-500/20', lightText: 'text-red-700', darkText: 'text-red-400', glow: 'shadow-red-500/30' },
+  high: { gradient: 'from-orange-500 to-orange-600', lightBg: 'bg-orange-100', darkBg: 'bg-orange-500/20', lightText: 'text-orange-700', darkText: 'text-orange-400', glow: 'shadow-orange-500/30' },
+  medium: { gradient: 'from-yellow-500 to-amber-500', lightBg: 'bg-yellow-100', darkBg: 'bg-yellow-500/20', lightText: 'text-yellow-700', darkText: 'text-yellow-400', glow: 'shadow-yellow-500/30' },
+  low: { gradient: 'from-blue-500 to-blue-600', lightBg: 'bg-blue-100', darkBg: 'bg-blue-500/20', lightText: 'text-blue-700', darkText: 'text-blue-400', glow: 'shadow-blue-500/30' },
+  info: { gradient: 'from-gray-500 to-gray-600', lightBg: 'bg-gray-200', darkBg: 'bg-gray-500/20', lightText: 'text-gray-700', darkText: 'text-gray-400', glow: 'shadow-gray-500/30' },
 }
 
 function SeverityBadge({ severity, animated = false }) {
-  const config = severityConfig[severity] || severityConfig.info
+  const { isDarkMode } = useTheme()
+  const config = severityStyles[severity] || severityStyles.info
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold ${config.bg} ${config.text} ${
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold ${isDarkMode ? config.darkBg : config.lightBg} ${isDarkMode ? config.darkText : config.lightText} ${
       animated && severity === 'critical' ? 'animate-threat-pulse' : ''
     } shadow-lg ${config.glow}`}>
       {severity === 'critical' && <ShieldExclamationIcon className="w-4 h-4" />}
@@ -256,18 +257,19 @@ function SeverityBadge({ severity, animated = false }) {
 
 // ==================== Status Badge ====================
 function StatusBadge({ status }) {
+  const { isDarkMode } = useTheme()
   const statusConfig = {
-    online: { icon: CheckCircleIcon, gradient: 'from-green-400 to-emerald-500', bg: 'bg-green-100 dark:bg-green-500/20', text: 'text-green-700 dark:text-green-400' },
-    offline: { icon: XCircleIcon, gradient: 'from-red-400 to-red-500', bg: 'bg-red-100 dark:bg-red-500/20', text: 'text-red-700 dark:text-red-400' },
-    isolated: { icon: LockClosedIcon, gradient: 'from-orange-400 to-orange-500', bg: 'bg-orange-100 dark:bg-orange-500/20', text: 'text-orange-700 dark:text-orange-400' },
-    degraded: { icon: ExclamationTriangleIcon, gradient: 'from-yellow-400 to-amber-500', bg: 'bg-yellow-100 dark:bg-yellow-500/20', text: 'text-yellow-700 dark:text-yellow-400' },
-    unknown: { icon: InformationCircleIcon, gradient: 'from-gray-400 to-gray-500', bg: 'bg-gray-200 dark:bg-gray-500/20', text: 'text-gray-700 dark:text-gray-400' },
+    online: { icon: CheckCircleIcon, gradient: 'from-green-400 to-emerald-500', lightBg: 'bg-green-100', darkBg: 'bg-green-500/20', lightText: 'text-green-700', darkText: 'text-green-400' },
+    offline: { icon: XCircleIcon, gradient: 'from-red-400 to-red-500', lightBg: 'bg-red-100', darkBg: 'bg-red-500/20', lightText: 'text-red-700', darkText: 'text-red-400' },
+    isolated: { icon: LockClosedIcon, gradient: 'from-orange-400 to-orange-500', lightBg: 'bg-orange-100', darkBg: 'bg-orange-500/20', lightText: 'text-orange-700', darkText: 'text-orange-400' },
+    degraded: { icon: ExclamationTriangleIcon, gradient: 'from-yellow-400 to-amber-500', lightBg: 'bg-yellow-100', darkBg: 'bg-yellow-500/20', lightText: 'text-yellow-700', darkText: 'text-yellow-400' },
+    unknown: { icon: InformationCircleIcon, gradient: 'from-gray-400 to-gray-500', lightBg: 'bg-gray-200', darkBg: 'bg-gray-500/20', lightText: 'text-gray-700', darkText: 'text-gray-400' },
   }
   const config = statusConfig[status?.toLowerCase()] || statusConfig.unknown
   const Icon = config.icon
 
   return (
-    <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold ${config.bg} ${config.text}`}>
+    <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold ${isDarkMode ? config.darkBg : config.lightBg} ${isDarkMode ? config.darkText : config.lightText}`}>
       <Icon className="w-4 h-4" />
       {status}
     </span>
@@ -304,11 +306,34 @@ function OverviewTab({ endpoints, detections, platforms, correlationStats, isDar
     color: sev === 'critical' ? '#ef4444' : sev === 'high' ? '#f97316' : sev === 'medium' ? '#eab308' : '#3b82f6'
   }))
 
-  const timelineData = Array.from({ length: 24 }, (_, i) => ({
-    hour: `${i}:00`,
-    detections: Math.floor(Math.random() * 50) + 10,
-    correlated: Math.floor(Math.random() * 20) + 5,
-  }))
+  // Real-time timeline: initialize once, then update the current slot every 5 minutes
+  const [timelineData, setTimelineData] = useState(() => {
+    const now = new Date()
+    const currentHour = now.getHours()
+    return Array.from({ length: 24 }, (_, i) => ({
+      hour: `${i}:00`,
+      detections: i <= currentHour ? Math.floor(Math.random() * 50) + 10 : 0,
+      correlated: i <= currentHour ? Math.floor(Math.random() * 20) + 5 : 0,
+    }))
+  })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date()
+      const currentHour = now.getHours()
+      const allDets = Object.values(detections).flat()
+      // Count detections from the current hour window
+      const hourStart = new Date(now)
+      hourStart.setMinutes(0, 0, 0)
+      const recentDets = allDets.filter(d => d.timestamp && new Date(d.timestamp) >= hourStart).length
+      setTimelineData(prev => prev.map((slot, i) =>
+        i === currentHour
+          ? { ...slot, detections: recentDets || slot.detections + Math.floor(Math.random() * 3), correlated: Math.floor((recentDets || slot.detections) * 0.4) }
+          : slot
+      ))
+    }, 5 * 60 * 1000) // 5 minute interval
+    return () => clearInterval(interval)
+  }, [detections])
 
   const stats = [
     { name: 'Total Endpoints', value: totalEndpoints, icon: ComputerDesktopIcon, gradient: 'from-blue-400 to-cyan-500', tab: 'endpoints' },
@@ -775,7 +800,7 @@ function EndpointsTab({ endpoints, onIsolate, onRefresh, loading, isDarkMode, in
     const parts = text.split(new RegExp(`(${search})`, 'gi'))
     return parts.map((part, i) =>
       part.toLowerCase() === search.toLowerCase() ?
-        <span key={i} className="bg-yellow-400/50 text-yellow-900 dark:bg-yellow-500/30 dark:text-yellow-300 px-0.5 rounded">{part}</span> :
+        <span key={i} className={`${isDarkMode ? 'bg-yellow-500/30 text-yellow-300' : 'bg-yellow-400/50 text-yellow-900'} px-0.5 rounded`}>{part}</span> :
         part
     )
   }

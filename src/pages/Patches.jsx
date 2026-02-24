@@ -62,7 +62,7 @@ function AnimatedCounter({ value, duration = 1000, isDarkMode, color }) {
     purple: isDarkMode ? 'text-purple-400' : 'text-purple-600',
   }
 
-  return <span className={colorClasses[color] || 'text-white'}>{displayValue}</span>
+  return <span className={colorClasses[color] || (isDarkMode ? 'text-white' : 'text-gray-900')}>{displayValue}</span>
 }
 
 // ============================================================================
@@ -734,19 +734,25 @@ export default function Patches() {
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                     {selectedPatch.priority && (
                       <span className={`px-3 py-1 text-xs font-bold rounded-lg uppercase tracking-wide ${
-                        selectedPatch.priority?.toLowerCase() === 'critical' ? 'bg-red-500/20 text-red-400' :
-                        selectedPatch.priority?.toLowerCase() === 'high' ? 'bg-orange-500/20 text-orange-400' :
-                        selectedPatch.priority?.toLowerCase() === 'medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                        'bg-blue-500/20 text-blue-400'
+                        selectedPatch.priority?.toLowerCase() === 'critical'
+                          ? isDarkMode ? 'bg-red-500/20 text-red-400' : 'bg-red-100 text-red-700'
+                          : selectedPatch.priority?.toLowerCase() === 'high'
+                          ? isDarkMode ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-100 text-orange-700'
+                          : selectedPatch.priority?.toLowerCase() === 'medium'
+                          ? isDarkMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-100 text-yellow-700'
+                          : isDarkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-700'
                       }`}>
                         {selectedPatch.priority} Priority
                       </span>
                     )}
                     <span className={`px-3 py-1 text-xs font-semibold rounded-lg ${
-                      selectedPatch.status === 'validated' ? 'bg-green-500/20 text-green-400' :
-                      selectedPatch.status === 'applied' ? 'bg-blue-500/20 text-blue-400' :
-                      selectedPatch.status === 'draft' ? 'bg-amber-500/20 text-amber-400' :
-                      'bg-gray-500/20 text-gray-400'
+                      selectedPatch.status === 'validated'
+                        ? isDarkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-100 text-green-700'
+                        : selectedPatch.status === 'applied'
+                        ? isDarkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-700'
+                        : selectedPatch.status === 'draft'
+                        ? isDarkMode ? 'bg-amber-500/20 text-amber-400' : 'bg-amber-100 text-amber-700'
+                        : isDarkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600'
                     }`}>
                       {selectedPatch.status?.toUpperCase()}
                     </span>
@@ -855,8 +861,8 @@ export default function Patches() {
                     <CodeBracketIcon className="w-4 h-4" />
                     Patch Content
                   </h3>
-                  <div className={`p-4 rounded-xl border overflow-x-auto ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-gray-900 border-gray-800'}`}>
-                    <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
+                  <div className={`p-4 rounded-xl border overflow-x-auto ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-gray-50 border-gray-300'}`}>
+                    <pre className={`text-sm font-mono whitespace-pre-wrap ${isDarkMode ? 'text-green-400' : 'text-green-700'}`}>
                       {selectedPatch.patch_content}
                     </pre>
                   </div>

@@ -582,7 +582,7 @@ export default function RemoteAccessGraph({
           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${
             isDarkMode ? 'bg-pink-500/20 text-pink-400' : 'bg-pink-100 text-pink-700'
           }`}>
-            <Users className="w-4 h-4" />
+            <UsersIcon className="w-4 h-4" />
             {stats.users} Users
           </span>
           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium ${
@@ -690,7 +690,7 @@ export default function RemoteAccessGraph({
         ) : filteredData.nodes.length === 0 ? (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-              <Users className={`w-16 h-16 mx-auto mb-4 ${
+              <UsersIcon className={`w-16 h-16 mx-auto mb-4 ${
                 isDarkMode ? 'text-gray-600' : 'text-gray-400'
               }`} />
               <p className={`text-lg font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -788,7 +788,9 @@ export default function RemoteAccessGraph({
                   <div className="flex justify-between">
                     <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Status</span>
                     <span className={`font-medium ${
-                      hoveredNode.status === 'online' ? 'text-emerald-400' : 'text-gray-400'
+                      hoveredNode.status === 'online'
+                        ? isDarkMode ? 'text-emerald-400' : 'text-emerald-600'
+                        : isDarkMode ? 'text-gray-400' : 'text-gray-500'
                     }`}>
                       {hoveredNode.status}
                     </span>

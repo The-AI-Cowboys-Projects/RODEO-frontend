@@ -137,7 +137,7 @@ function MetricCard({ title, value, subtitle, icon: Icon, color, isDarkMode, pro
     <div className={`relative overflow-hidden rounded-2xl border p-6 transition-all hover:shadow-lg ${
       isDarkMode
         ? 'bg-slate-800/60 border-slate-700/50 hover:border-slate-600'
-        : 'bg-white border-gray-200 hover:border-gray-300'
+        : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm'
     }`}>
       <div className="flex items-center justify-between">
         <div className="flex-1">
@@ -154,7 +154,7 @@ function MetricCard({ title, value, subtitle, icon: Icon, color, isDarkMode, pro
                 cx="40" cy="40" r="36"
                 strokeWidth="6"
                 fill="none"
-                className={isDarkMode ? 'stroke-slate-700' : 'stroke-gray-200'}
+                stroke={isDarkMode ? '#334155' : '#e5e7eb'}
               />
               <circle
                 cx="40" cy="40" r="36"

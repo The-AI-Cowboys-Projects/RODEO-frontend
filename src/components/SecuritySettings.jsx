@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
+import { useTheme } from '../context/ThemeContext'
 
 const API_BASE = ''
 
@@ -20,6 +21,7 @@ api.interceptors.request.use((config) => {
 })
 
 export default function SecuritySettings() {
+  const { isDarkMode } = useTheme()
   const queryClient = useQueryClient()
   const [saveStatus, setSaveStatus] = useState(null)
 
@@ -96,11 +98,23 @@ export default function SecuritySettings() {
     )
   }
 
+  // Shared class helpers
+  const cardBg = isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'
+  const sectionBorder = isDarkMode ? 'border-slate-700' : 'border-gray-200'
+  const labelText = isDarkMode ? 'text-gray-300' : 'text-gray-700'
+  const subText = isDarkMode ? 'text-gray-500' : 'text-gray-400'
+  const inputBg = isDarkMode
+    ? 'bg-slate-800 border-slate-600 text-white focus:border-purple-500'
+    : 'bg-white border-gray-300 text-gray-900 focus:border-purple-500'
+  const checkboxBg = isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-white border-gray-300'
+  const strengthBarTrack = isDarkMode ? 'bg-slate-700' : 'bg-gray-200'
+  const strengthPanelBg = isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'
+
   return (
-    <div className="bg-slate-900 border border-slate-700 rounded-lg p-6">
+    <div className={`border rounded-lg p-6 ${cardBg}`}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-brand-purple-light mb-2">Security Settings</h2>
-        <p className="text-gray-400 text-sm">
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           Configure authentication, session management, and security policies
         </p>
       </div>
@@ -108,13 +122,13 @@ export default function SecuritySettings() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Session Management */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            🔐 Session Management
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Session Management
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Session Timeout (minutes)
               </label>
               <input
@@ -124,9 +138,9 @@ export default function SecuritySettings() {
                 onChange={handleChange}
                 min="5"
                 max="480"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Auto-logout after inactivity (5-480 min)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Auto-logout after inactivity (5-480 min)</p>
             </div>
 
             <div className="flex items-center">
@@ -136,11 +150,11 @@ export default function SecuritySettings() {
                   name="require_mfa"
                   checked={formData.require_mfa}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Require Multi-Factor Auth</div>
-                  <div className="text-xs text-gray-500">Force MFA for all users</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Require Multi-Factor Auth</div>
+                  <div className={`text-xs ${subText}`}>Force MFA for all users</div>
                 </div>
               </label>
             </div>
@@ -149,13 +163,13 @@ export default function SecuritySettings() {
 
         {/* Password Policy */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            🔑 Password Policy
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Password Policy
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Minimum Password Length
               </label>
               <input
@@ -165,13 +179,13 @@ export default function SecuritySettings() {
                 onChange={handleChange}
                 min="6"
                 max="32"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Minimum characters required (6-32)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Minimum characters required (6-32)</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Password Expiry (days)
               </label>
               <input
@@ -181,9 +195,9 @@ export default function SecuritySettings() {
                 onChange={handleChange}
                 min="0"
                 max="365"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Force change after N days (0 = never)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Force change after N days (0 = never)</p>
             </div>
           </div>
 
@@ -194,9 +208,9 @@ export default function SecuritySettings() {
                 name="password_require_uppercase"
                 checked={formData.password_require_uppercase}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
-              <div className="text-sm text-gray-300">
+              <div className={`text-sm ${labelText}`}>
                 Require uppercase letters (A-Z)
               </div>
             </label>
@@ -207,9 +221,9 @@ export default function SecuritySettings() {
                 name="password_require_lowercase"
                 checked={formData.password_require_lowercase}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
-              <div className="text-sm text-gray-300">
+              <div className={`text-sm ${labelText}`}>
                 Require lowercase letters (a-z)
               </div>
             </label>
@@ -220,9 +234,9 @@ export default function SecuritySettings() {
                 name="password_require_numbers"
                 checked={formData.password_require_numbers}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
-              <div className="text-sm text-gray-300">
+              <div className={`text-sm ${labelText}`}>
                 Require numbers (0-9)
               </div>
             </label>
@@ -233,17 +247,17 @@ export default function SecuritySettings() {
                 name="password_require_special"
                 checked={formData.password_require_special}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
-              <div className="text-sm text-gray-300">
-                Require special characters (!@#$%^&*)
+              <div className={`text-sm ${labelText}`}>
+                Require special characters (!@#$%^&amp;*)
               </div>
             </label>
           </div>
 
           {/* Password Strength Indicator */}
-          <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
-            <div className="text-sm font-medium text-gray-300 mb-2">
+          <div className={`p-4 border rounded-lg ${strengthPanelBg}`}>
+            <div className={`text-sm font-medium mb-2 ${labelText}`}>
               Current Password Policy Strength
             </div>
             <div className="flex items-center gap-2">
@@ -275,13 +289,13 @@ export default function SecuritySettings() {
 
                 return (
                   <>
-                    <div className="flex-1 bg-slate-700 rounded-full h-2">
+                    <div className={`flex-1 rounded-full h-2 ${strengthBarTrack}`}>
                       <div
                         className={`${color} h-2 rounded-full transition-all duration-300`}
                         style={{ width }}
                       />
                     </div>
-                    <span className="text-xs text-gray-400 font-medium w-24">{label}</span>
+                    <span className={`text-xs font-medium w-24 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{label}</span>
                   </>
                 )
               })()}
@@ -291,13 +305,13 @@ export default function SecuritySettings() {
 
         {/* Account Protection */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            🛡️ Account Protection
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Account Protection
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Max Login Attempts
               </label>
               <input
@@ -307,13 +321,13 @@ export default function SecuritySettings() {
                 onChange={handleChange}
                 min="3"
                 max="10"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Failed attempts before lockout (3-10)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Failed attempts before lockout (3-10)</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Lockout Duration (minutes)
               </label>
               <input
@@ -323,17 +337,17 @@ export default function SecuritySettings() {
                 onChange={handleChange}
                 min="5"
                 max="120"
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Account locked for N minutes (5-120)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Account locked for N minutes (5-120)</p>
             </div>
           </div>
         </div>
 
         {/* API Security */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            ⚡ API Security
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            API Security
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -344,17 +358,17 @@ export default function SecuritySettings() {
                   name="enable_api_rate_limiting"
                   checked={formData.enable_api_rate_limiting}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Enable Rate Limiting</div>
-                  <div className="text-xs text-gray-500">Protect against API abuse</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Enable Rate Limiting</div>
+                  <div className={`text-xs ${subText}`}>Protect against API abuse</div>
                 </div>
               </label>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Rate Limit (requests/minute)
               </label>
               <input
@@ -365,17 +379,17 @@ export default function SecuritySettings() {
                 min="10"
                 max="1000"
                 disabled={!formData.enable_api_rate_limiting}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500 disabled:opacity-50"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none disabled:opacity-50 ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Max requests per minute per user</p>
+              <p className={`text-xs mt-1 ${subText}`}>Max requests per minute per user</p>
             </div>
           </div>
         </div>
 
         {/* Audit Logging */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            📝 Audit Logging
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Audit Logging
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -386,17 +400,17 @@ export default function SecuritySettings() {
                   name="enable_audit_logging"
                   checked={formData.enable_audit_logging}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Enable Audit Logging</div>
-                  <div className="text-xs text-gray-500">Log all user actions</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Enable Audit Logging</div>
+                  <div className={`text-xs ${subText}`}>Log all user actions</div>
                 </div>
               </label>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Log Retention (days)
               </label>
               <input
@@ -407,9 +421,9 @@ export default function SecuritySettings() {
                 min="30"
                 max="730"
                 disabled={!formData.enable_audit_logging}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500 disabled:opacity-50"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none disabled:opacity-50 ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">Keep logs for N days (30-730)</p>
+              <p className={`text-xs mt-1 ${subText}`}>Keep logs for N days (30-730)</p>
             </div>
           </div>
         </div>
@@ -419,8 +433,8 @@ export default function SecuritySettings() {
           <div
             className={`p-4 rounded-lg border ${
               saveStatus.type === 'success'
-                ? 'bg-green-900/20 border-green-500/50 text-green-400'
-                : 'bg-red-900/20 border-red-500/50 text-red-400'
+                ? isDarkMode ? 'bg-green-900/20 border-green-500/50 text-green-400' : 'bg-green-50 border-green-200 text-green-700'
+                : isDarkMode ? 'bg-red-900/20 border-red-500/50 text-red-400' : 'bg-red-50 border-red-200 text-red-700'
             }`}
           >
             <div className="flex items-start gap-2">
@@ -436,10 +450,10 @@ export default function SecuritySettings() {
         )}
 
         {/* Security Warning */}
-        <div className="p-4 bg-yellow-900/10 border border-yellow-500/30 rounded-lg">
+        <div className={`p-4 border rounded-lg ${isDarkMode ? 'bg-yellow-900/10 border-yellow-500/30' : 'bg-yellow-50 border-yellow-200'}`}>
           <div className="flex items-start gap-2">
             <span className="text-lg">⚠️</span>
-            <div className="text-sm text-yellow-400">
+            <div className={`text-sm ${isDarkMode ? 'text-yellow-400' : 'text-yellow-700'}`}>
               <div className="font-medium mb-1">Security Best Practices</div>
               <ul className="list-disc list-inside space-y-1 text-xs">
                 <li>Enable MFA for all privileged accounts</li>
@@ -463,7 +477,7 @@ export default function SecuritySettings() {
           <button
             type="button"
             onClick={() => setFormData(settings)}
-            className="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+            className={`px-4 py-3 rounded-lg font-medium transition-colors ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-900'}`}
           >
             Reset
           </button>

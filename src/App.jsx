@@ -576,7 +576,7 @@ function App() {
           <PrivateRoute>
             <Layout>
               <PermissionRoute permission="read_scan_results">
-                <LazyPage pageName="Geo Threat Map">
+                <LazyPage pageName="Threat Map">
                   <DashboardWithMap />
                 </LazyPage>
               </PermissionRoute>

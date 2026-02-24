@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { knowledge } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -97,6 +98,8 @@ const DOCS_PER_PAGE = 50
 
 export default function KnowledgeBasePage() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState('search')
   const [loading, setLoading] = useState(true)
   const [notification, setNotification] = useState(null)
@@ -161,6 +164,24 @@ export default function KnowledgeBasePage() {
   useEffect(() => {
     fetchInitial()
   }, [])
+
+  // ── Live mode polling ─────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!isLiveMode) return
+    const intervalId = setInterval(async () => {
+      try {
+        const [statusRes, tagsRes] = await Promise.all([
+          knowledge.getStatus().catch(() => null),
+          knowledge.getTags().catch(() => null),
+        ])
+        if (statusRes !== null) setStatusData(statusRes)
+        if (tagsRes !== null) setTagsData(tagsRes?.tags || {})
+      } catch (err) {
+        console.error('KnowledgeBase live poll error:', err)
+      }
+    }, 20000)
+    return () => clearInterval(intervalId)
+  }, [isLiveMode])
 
   // ── Fetch documents ───────────────────────────────────────────────────────
   const fetchDocuments = async (offset = 0, filter = docFilter) => {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { threatIntel } from '../api/client'
 import {
   MagnifyingGlassIcon,
@@ -48,6 +49,8 @@ function formatTimestamp(ts) {
 
 export default function ThreatIntelPage() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState('lookup')
   const [notification, setNotification] = useState(null)
 
@@ -93,6 +96,30 @@ export default function ThreatIntelPage() {
     loadConfig()
     loadHistory()
   }, [])
+
+  // Live mode: poll config every 15 seconds to keep service status current
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(async () => {
+      try {
+        const data = await threatIntel.getConfig()
+        setConfig(data)
+        setConfigForm((prev) => ({
+          ...prev,
+          enable_virustotal: data.enable_virustotal ?? true,
+          enable_malwarebazaar: data.enable_malwarebazaar ?? true,
+          auto_lookup_on_upload: data.auto_lookup_on_upload ?? false,
+          cache_results: data.cache_results ?? true,
+          // Never overwrite key fields the user may be editing
+          virustotal_api_key: prev.virustotal_api_key,
+          malwarebazaar_api_key: prev.malwarebazaar_api_key,
+        }))
+      } catch (err) {
+        console.error('[ThreatIntelPage] Live poll error:', err)
+      }
+    }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const loadConfig = async () => {
     setConfigLoading(true)

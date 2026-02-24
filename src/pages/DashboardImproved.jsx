@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { stats, samples, vulnerabilities } from '../api/client'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts'
 import StatCard from '../components/ui/StatCard'
@@ -10,19 +11,25 @@ import { getRiskColor, getRiskLabel } from '../styles/theme'
 
 export default function DashboardImproved() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
+
   const { data: statsData, isLoading: statsLoading } = useQuery({
     queryKey: ['stats'],
     queryFn: stats.overview,
+    refetchInterval: isLiveMode ? 15000 : false,
   })
 
   const { data: highRiskSamples, isLoading: samplesLoading } = useQuery({
     queryKey: ['high-risk-samples'],
     queryFn: () => samples.getHighRisk(0.7),
+    refetchInterval: isLiveMode ? 15000 : false,
   })
 
   const { data: criticalVulns, isLoading: vulnsLoading } = useQuery({
     queryKey: ['critical-vulns'],
     queryFn: vulnerabilities.getCritical,
+    refetchInterval: isLiveMode ? 15000 : false,
   })
 
   const isLoading = statsLoading || samplesLoading || vulnsLoading

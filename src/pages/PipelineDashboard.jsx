@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { pipeline } from '../api/client'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -26,6 +27,7 @@ import {
  */
 export default function PipelineDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
   const [activeTab, setActiveTab] = useState('live-feed')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -35,6 +37,8 @@ export default function PipelineDashboard() {
   const [flowData, setFlowData] = useState([])
   const [statsData, setStatsData] = useState(null)
   const [timelineEvents, setTimelineEvents] = useState([])
+
+  const isLiveMode = !isDemoMode
 
   // Filters
   const [severityFilter, setSeverityFilter] = useState(null)
@@ -55,6 +59,15 @@ export default function PipelineDashboard() {
       return () => clearInterval(interval)
     }
   }, [activeTab, severityFilter, categoryFilter])
+
+  // Live mode: poll all data every 15 seconds
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => {
+      fetchAllData().catch((err) => console.error('Live mode poll error:', err))
+    }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   const fetchAllData = async () => {
     setLoading(true)
@@ -181,13 +194,15 @@ export default function PipelineDashboard() {
     <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            Autonomous Pipeline
-          </h1>
-          <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
-            Real-time event processing: Event → Decision → Action → Outcome
-          </p>
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <h1 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              Autonomous Pipeline
+            </h1>
+            <p className={isDarkMode ? 'text-gray-400' : 'text-gray-600'}>
+              Real-time event processing: Event → Decision → Action → Outcome
+            </p>
+          </div>
         </div>
 
         {/* Stats Header */}

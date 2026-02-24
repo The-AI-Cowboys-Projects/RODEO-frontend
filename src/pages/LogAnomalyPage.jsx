@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { logAnomaly } from '../api/client'
 import {
   MagnifyingGlassIcon,
@@ -53,6 +54,8 @@ const TRAINING_STATUS_STYLES = {
 
 export default function LogAnomalyPage() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState('analyze')
   const [notification, setNotification] = useState(null)
 
@@ -116,6 +119,20 @@ export default function LogAnomalyPage() {
     if (typesData && typeof typesData === 'object') setAnomalyTypes(typesData)
     if (trainingData) setTrainingStatus(trainingData)
   }
+
+  // Live mode: poll status and training state every 15 seconds
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(async () => {
+      const [statusData, trainingData] = await Promise.all([
+        logAnomaly.getStatus().catch(() => null),
+        logAnomaly.getTrainingStatus().catch(() => null),
+      ])
+      if (statusData) setStatus(statusData)
+      if (trainingData) setTrainingStatus(trainingData)
+    }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
 
   // Poll training status while active
   useEffect(() => {

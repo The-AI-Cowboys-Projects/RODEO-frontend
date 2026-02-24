@@ -850,12 +850,12 @@ export default function Dashboard() {
 
       {/* AI Triage Intelligence Panel */}
       <WidgetErrorBoundary widgetName="AI Triage Panel">
-        <AiTriagePanel />
+        <AiTriagePanel isLiveMode={isLiveMode} />
       </WidgetErrorBoundary>
 
       {/* Workflow Automation Visualization */}
       <WidgetErrorBoundary widgetName="Workflow Automation">
-        <WorkflowAutomation />
+        <WorkflowAutomation isLiveMode={isLiveMode} />
       </WidgetErrorBoundary>
 
       {/* ROI Calculator */}

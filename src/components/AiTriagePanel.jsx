@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ZAxis } from 'recharts'
 import { useTheme } from '../context/ThemeContext'
 import { useDemoMode } from '../context/DemoModeContext'
+import { vulnerabilities, edr, pipeline } from '../api/client'
 
-export default function AiTriagePanel() {
+export default function AiTriagePanel({ isLiveMode = false }) {
   const { isDarkMode } = useTheme()
   const { isDemoMode, seededRandom, seededInt } = useDemoMode()
   const [activeThreats, setActiveThreats] = useState([])
@@ -94,6 +95,167 @@ export default function AiTriagePanel() {
 
     return () => clearInterval(triageInterval)
   }, [isDemoMode, seededRandom, seededInt])
+
+  // Live API data fetching — only active when isLiveMode is true
+  useEffect(() => {
+    if (!isLiveMode) return
+
+    const severityToExploitability = (severity, cvss) => {
+      // Derive a 0-100 exploitability score from severity label + cvss
+      const base = {
+        critical: 85,
+        high: 65,
+        medium: 40,
+        low: 20,
+      }[String(severity).toLowerCase()] ?? 50
+      // Nudge by CVSS (0-10 scale adds up to ±10 points)
+      const cvssNudge = ((parseFloat(cvss) || 5) - 5) * 2
+      return Math.min(100, Math.max(0, base + cvssNudge))
+    }
+
+    const severityToImpact = (severity, cvss) => {
+      const base = {
+        critical: 90,
+        high: 70,
+        medium: 45,
+        low: 25,
+      }[String(severity).toLowerCase()] ?? 50
+      const cvssNudge = ((parseFloat(cvss) || 5) - 5) * 2
+      return Math.min(100, Math.max(0, base + cvssNudge))
+    }
+
+    const transformVulnToThreat = (vuln, index) => {
+      const cvssScore = parseFloat(vuln?.cvss_score) || 7.0
+      const exploitability = parseFloat(
+        severityToExploitability(vuln?.severity, cvssScore).toFixed(1)
+      )
+      const impact = parseFloat(
+        severityToImpact(vuln?.severity, cvssScore).toFixed(1)
+      )
+      const confidence = parseFloat(
+        Math.min(100, Math.max(70, 80 + (cvssScore - 5) * 2)).toFixed(1)
+      )
+      const riskScore = (
+        (cvssScore / 10) * 0.4 +
+        (exploitability / 100) * 0.4 +
+        (impact / 100) * 0.2
+      ) * 100
+
+      return {
+        id: vuln?.id ?? `live-${index}-${Date.now()}`,
+        cve: vuln?.cve_id ?? 'CVE-UNKNOWN',
+        service: vuln?.affected_service ?? 'Unknown Service',
+        category: vuln?.category ?? vuln?.vulnerability_type ?? 'Unknown',
+        cvssScore,
+        exploitability,
+        impact,
+        riskScore: riskScore.toFixed(1),
+        confidence,
+        priority: riskScore > 80 ? 'CRITICAL' : riskScore > 60 ? 'HIGH' : riskScore > 40 ? 'MEDIUM' : 'LOW',
+        mlPrediction: exploitability > 70 ? 'Highly Exploitable' : exploitability > 40 ? 'Moderately Exploitable' : 'Low Exploitability',
+        recommendedAction: riskScore > 80 ? 'Immediate patch required' : riskScore > 60 ? 'Patch within 24h' : riskScore > 40 ? 'Schedule patch' : 'Monitor',
+        timestamp: new Date().toLocaleTimeString(),
+      }
+    }
+
+    const transformDetectionToThreat = (det, index) => {
+      const severityMap = { critical: 9.5, high: 7.5, medium: 5.5, low: 3.5 }
+      const cvssScore = severityMap[String(det?.severity).toLowerCase()] ?? 7.0
+      const exploitability = parseFloat(
+        severityToExploitability(det?.severity, cvssScore).toFixed(1)
+      )
+      const impact = parseFloat(
+        severityToImpact(det?.severity, cvssScore).toFixed(1)
+      )
+      const confidence = parseFloat(
+        Math.min(100, Math.max(70, 80 + (cvssScore - 5) * 2)).toFixed(1)
+      )
+      const riskScore = (
+        (cvssScore / 10) * 0.4 +
+        (exploitability / 100) * 0.4 +
+        (impact / 100) * 0.2
+      ) * 100
+
+      return {
+        id: det?.id ?? `det-${index}-${Date.now()}`,
+        cve: det?.technique ?? det?.alert_type ?? 'EDR-DETECTION',
+        service: det?.host ?? det?.endpoint ?? 'Endpoint',
+        category: det?.tactic ?? det?.category ?? 'Behavioral',
+        cvssScore,
+        exploitability,
+        impact,
+        riskScore: riskScore.toFixed(1),
+        confidence,
+        priority: riskScore > 80 ? 'CRITICAL' : riskScore > 60 ? 'HIGH' : riskScore > 40 ? 'MEDIUM' : 'LOW',
+        mlPrediction: exploitability > 70 ? 'Highly Exploitable' : exploitability > 40 ? 'Moderately Exploitable' : 'Low Exploitability',
+        recommendedAction: riskScore > 80 ? 'Immediate patch required' : riskScore > 60 ? 'Patch within 24h' : riskScore > 40 ? 'Schedule patch' : 'Monitor',
+        timestamp: new Date().toLocaleTimeString(),
+      }
+    }
+
+    const fetchLiveData = async () => {
+      try {
+        const [vulnData, detectionData, pipelineStats] = await Promise.allSettled([
+          vulnerabilities.getCritical(),
+          edr.getDetections(),
+          pipeline.getStats(),
+        ])
+
+        // Build threat list from vulnerabilities + detections
+        const vulnThreats = (vulnData.status === 'fulfilled' && Array.isArray(vulnData.value))
+          ? vulnData.value.slice(0, 5).map(transformVulnToThreat)
+          : []
+
+        const detThreats = (detectionData.status === 'fulfilled' && Array.isArray(detectionData.value))
+          ? detectionData.value.slice(0, 3).map(transformDetectionToThreat)
+          : []
+
+        const combined = [...vulnThreats, ...detThreats]
+
+        if (combined.length > 0) {
+          const sorted = combined.sort((a, b) => parseFloat(b.riskScore) - parseFloat(a.riskScore))
+          setActiveThreats(sorted.slice(0, 8))
+          setTriageQueue(sorted.slice(0, 5))
+        }
+
+        // Update ML stats from pipeline data
+        if (pipelineStats.status === 'fulfilled' && pipelineStats.value) {
+          const ps = pipelineStats.value
+          const processed = ps?.events_processed ?? ps?.total_events ?? combined.length
+          const autoClassified = ps?.actions_taken ?? ps?.auto_classified ?? Math.floor(combined.length * 0.9)
+          const avgConfidence = combined.length > 0
+            ? combined.reduce((sum, t) => sum + t.confidence, 0) / combined.length
+            : 94.3
+
+          setMlStats(prev => ({
+            accuracy: prev.accuracy, // keep existing accuracy; no API provides this
+            processed,
+            autoClassified,
+            confidence: parseFloat(avgConfidence.toFixed(1)),
+          }))
+        } else if (combined.length > 0) {
+          // Derive stats from what we fetched when pipeline endpoint is unavailable
+          const avgConfidence = combined.reduce((sum, t) => sum + t.confidence, 0) / combined.length
+          setMlStats(prev => ({
+            ...prev,
+            processed: prev.processed + combined.length,
+            autoClassified: prev.autoClassified + Math.floor(combined.length * 0.9),
+            confidence: parseFloat(avgConfidence.toFixed(1)),
+          }))
+        }
+      } catch (err) {
+        // Silently fall back — simulated data remains in state from the other useEffect
+        console.error('[AiTriagePanel] Live data fetch failed, keeping simulated data:', err)
+      }
+    }
+
+    // Initial fetch
+    fetchLiveData()
+
+    // Poll every 15 seconds
+    const liveInterval = setInterval(fetchLiveData, 15000)
+    return () => clearInterval(liveInterval)
+  }, [isLiveMode])
 
   // Risk matrix data for scatter plot
   const riskMatrix = activeThreats.map(threat => ({

@@ -100,7 +100,7 @@ export default function Layout({ children }) {
     { path: '/knowledge', label: 'Knowledge Base', Icon: KnowledgeIcon, ariaLabel: 'Orchestrator knowledge base', permission: 'read_scan_results' },
     { path: '/threat-intel', label: 'Threat Intel', Icon: ThreatIntelIcon, ariaLabel: 'Threat intelligence lookups', permission: 'read_scan_results' },
     { path: '/log-anomaly', label: 'Log Anomaly', Icon: LogAnomalyIcon, ariaLabel: 'Log anomaly detection and ML training', permission: 'read_scan_results' },
-    { path: '/threat-map', label: 'Geo Threat Map', Icon: GlobeIcon, ariaLabel: 'Geographic threat visualization', permission: 'read_scan_results' },
+    { path: '/threat-map', label: 'Threat Map', Icon: GlobeIcon, ariaLabel: 'Geographic threat intelligence map', permission: 'read_scan_results' },
     { path: '/analytics', label: 'Advanced Analytics', Icon: DashboardIcon, ariaLabel: 'Advanced analytics dashboard', permission: 'read_scan_results' },
     { path: '/edr', label: 'EDR/XDR', Icon: EDRIcon, ariaLabel: 'Endpoint detection and response dashboard', permission: 'read_scan_results' },
     { path: '/security-arsenal', label: 'Security Arsenal', Icon: ArsenalIcon, ariaLabel: 'Security tools and scanners', permission: 'run_scans' },

@@ -11,6 +11,7 @@ import {
   ShieldCheckIcon
 } from '@heroicons/react/24/outline'
 import { useTheme } from '../context/ThemeContext'
+import { pipeline, feedback, autonomous } from '../api/client'
 
 // Stage icons as React components
 const StageIcons = {
@@ -24,10 +25,11 @@ const StageIcons = {
   Verification: ShieldCheckIcon
 }
 
-export default function WorkflowAutomation() {
+export default function WorkflowAutomation({ isLiveMode = false }) {
   const { isDarkMode } = useTheme()
   const [activeStage, setActiveStage] = useState(0)
   const [stageMetrics, setStageMetrics] = useState([])
+  const [liveStats, setLiveStats] = useState(null)
 
   // Workflow stages with detailed metrics
   const workflowStages = [
@@ -187,6 +189,134 @@ export default function WorkflowAutomation() {
     })))
   }, [])
 
+  // Live data fetch when isLiveMode is true
+  useEffect(() => {
+    if (!isLiveMode) return
+
+    const fetchLiveData = async () => {
+      try {
+        const [pipelineResult, actionEffResult, autoStatsResult] = await Promise.allSettled([
+          pipeline.getStats(),
+          feedback.getActionEffectiveness(),
+          autonomous.getStatistics(),
+        ])
+
+        const pipelineData = pipelineResult.status === 'fulfilled' ? pipelineResult.value : null
+        const actionEff = actionEffResult.status === 'fulfilled' ? actionEffResult.value : null
+        const autoStats = autoStatsResult.status === 'fulfilled' ? autoStatsResult.value : null
+
+        // Build per-stage automation overrides from action effectiveness data.
+        // The feedback API returns a dict keyed by action_type; we map each action
+        // type to the closest workflow stage by name similarity.
+        const stageNameMap = {
+          discovery:      'Discovery',
+          scan:           'Scanning',
+          scanning:       'Scanning',
+          triage:         'Triage',
+          prioriti:       'Prioritization',
+          report:         'Reporting',
+          ticket:         'Ticketing',
+          patch:          'Patching',
+          verif:          'Verification',
+          isolate:        'Triage',
+          block:          'Triage',
+          quarantine:     'Triage',
+          remediat:       'Patching',
+          apply_patch:    'Patching',
+          update_firewall:'Verification',
+          enforce:        'Verification',
+        }
+
+        const stageOverrides = {}
+        if (actionEff) {
+          const entries = Array.isArray(actionEff)
+            ? actionEff
+            : Object.entries(actionEff).map(([action_type, stats]) => ({ action_type, ...stats }))
+
+          entries.forEach(entry => {
+            const key = (entry.action_type || '').toLowerCase()
+            const stageName = Object.entries(stageNameMap).find(([prefix]) =>
+              key.startsWith(prefix) || key.includes(prefix)
+            )?.[1]
+            if (!stageName) return
+
+            const successRate = entry.success_rate ?? entry.effectiveness_rate ?? null
+            if (successRate !== null && !stageOverrides[stageName]) {
+              // Convert 0–1 float to 0–100 percentage; clamp between 50–99
+              const pct = typeof successRate === 'number' && successRate <= 1
+                ? Math.round(successRate * 100)
+                : Math.round(successRate)
+              stageOverrides[stageName] = Math.min(99, Math.max(50, pct))
+            }
+          })
+        }
+
+        // Compute overall automation from pipeline stats or fall back to average of overrides
+        let overallAutomation = null
+        let eventsProcessed = null
+        let decisionsTotal = null
+
+        if (pipelineData) {
+          eventsProcessed = pipelineData.events_processed ?? pipelineData.total_events ?? null
+          decisionsTotal  = pipelineData.decisions_made ?? pipelineData.total_decisions ?? null
+          // pipeline may expose a success_rate or automation_rate directly
+          const rawRate = pipelineData.automation_rate ?? pipelineData.success_rate ?? null
+          if (rawRate !== null) {
+            overallAutomation = typeof rawRate === 'number' && rawRate <= 1
+              ? Math.round(rawRate * 100)
+              : Math.round(rawRate)
+          }
+        }
+
+        // Fall back: average any stage overrides we collected
+        if (overallAutomation === null && Object.keys(stageOverrides).length > 0) {
+          const vals = Object.values(stageOverrides)
+          overallAutomation = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length)
+        }
+
+        // Pull total actions / success info from autonomous stats
+        let actionsTotal = null
+        let actionsSuccess = null
+        if (autoStats) {
+          actionsTotal   = autoStats.total_actions ?? autoStats.actions_total ?? null
+          actionsSuccess = autoStats.successful_actions ?? autoStats.actions_success ?? null
+        }
+
+        setLiveStats({
+          stageOverrides,
+          overallAutomation,
+          eventsProcessed,
+          decisionsTotal,
+          actionsTotal,
+          actionsSuccess,
+        })
+      } catch (err) {
+        console.error('[WorkflowAutomation] Live data fetch failed:', err)
+        // On error keep liveStats as-is (previous good data) or null (first load)
+      }
+    }
+
+    fetchLiveData()
+    const interval = setInterval(fetchLiveData, 30000)
+    return () => clearInterval(interval)
+  }, [isLiveMode])
+
+  // When live overrides arrive, recompute the chart data
+  useEffect(() => {
+    if (!isLiveMode || !liveStats) return
+    const { stageOverrides } = liveStats
+    if (!stageOverrides || Object.keys(stageOverrides).length === 0) return
+
+    setStageMetrics(workflowStages.map(stage => {
+      const liveAutomation = stageOverrides[stage.name] ?? stage.automation
+      return {
+        name: stage.name,
+        automation: liveAutomation,
+        manual: 100 - liveAutomation,
+      }
+    }))
+  }, [isLiveMode, liveStats])
+
   // Shared class helpers
   const cardBg = isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
   const metricsCardBg = isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'
@@ -234,23 +364,59 @@ export default function WorkflowAutomation() {
         <div className="grid grid-cols-4 gap-4">
           <div className={`p-4 rounded-lg border ${metricsCardBg}`}>
             <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>Overall Automation</p>
-            <p className={`text-2xl font-bold ${headingText}`}>91%</p>
+            <p className={`text-2xl font-bold ${headingText}`}>
+              {isLiveMode && liveStats?.overallAutomation != null
+                ? `${liveStats.overallAutomation}%`
+                : '91%'}
+            </p>
             <p className={`text-xs mt-1 ${mutedText}`}>Across all stages</p>
           </div>
           <div className={`p-4 rounded-lg border ${metricsCardBg}`}>
-            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>Total Time</p>
-            <p className={`text-2xl font-bold ${headingText}`}>35 min</p>
-            <p className={`text-xs mt-1 ${mutedText}`}>Discovery &rarr; Verification</p>
+            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>
+              {isLiveMode && liveStats?.eventsProcessed != null ? 'Events Processed' : 'Total Time'}
+            </p>
+            <p className={`text-2xl font-bold ${headingText}`}>
+              {isLiveMode && liveStats?.eventsProcessed != null
+                ? liveStats.eventsProcessed.toLocaleString()
+                : '35 min'}
+            </p>
+            <p className={`text-xs mt-1 ${mutedText}`}>
+              {isLiveMode && liveStats?.eventsProcessed != null
+                ? 'Pipeline events total'
+                : 'Discovery \u2192 Verification'}
+            </p>
           </div>
           <div className={`p-4 rounded-lg border ${metricsCardBg}`}>
-            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>Manual Process</p>
-            <p className="text-2xl font-bold text-red-400">15.5 hrs</p>
-            <p className={`text-xs mt-1 ${mutedText}`}>Traditional workflow</p>
+            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>
+              {isLiveMode && liveStats?.decisionsTotal != null ? 'Decisions Made' : 'Manual Process'}
+            </p>
+            <p className={`text-2xl font-bold ${isLiveMode && liveStats?.decisionsTotal != null ? headingText : 'text-red-400'}`}>
+              {isLiveMode && liveStats?.decisionsTotal != null
+                ? liveStats.decisionsTotal.toLocaleString()
+                : '15.5 hrs'}
+            </p>
+            <p className={`text-xs mt-1 ${mutedText}`}>
+              {isLiveMode && liveStats?.decisionsTotal != null
+                ? 'Autonomous decisions'
+                : 'Traditional workflow'}
+            </p>
           </div>
           <div className={`p-4 rounded-lg border ${metricsCardBg}`}>
-            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>Time Saved</p>
-            <p className="text-2xl font-bold text-green-400">96%</p>
-            <p className={`text-xs mt-1 ${mutedText}`}>Efficiency gain</p>
+            <p className={`text-xs uppercase tracking-wide mb-1 ${subText}`}>
+              {isLiveMode && liveStats?.actionsTotal != null ? 'Actions Executed' : 'Time Saved'}
+            </p>
+            <p className="text-2xl font-bold text-green-400">
+              {isLiveMode && liveStats?.actionsTotal != null
+                ? liveStats.actionsTotal.toLocaleString()
+                : '96%'}
+            </p>
+            <p className={`text-xs mt-1 ${mutedText}`}>
+              {isLiveMode && liveStats?.actionsTotal != null && liveStats?.actionsSuccess != null
+                ? `${liveStats.actionsSuccess.toLocaleString()} successful`
+                : isLiveMode && liveStats?.actionsTotal != null
+                  ? 'Automated actions'
+                  : 'Efficiency gain'}
+            </p>
           </div>
         </div>
       </div>
@@ -317,23 +483,30 @@ export default function WorkflowAutomation() {
                   </div>
 
                   {/* Automation Percentage */}
-                  <div className="mb-3">
-                    <div className="flex items-center justify-between text-xs mb-1">
-                      <span className={subText}>Automated</span>
-                      <span className="font-bold" style={{ color: stage.color }}>
-                        {stage.automation}%
-                      </span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 overflow-hidden ${progressBarTrack}`}>
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{
-                          width: `${stage.automation}%`,
-                          backgroundColor: stage.color
-                        }}
-                      />
-                    </div>
-                  </div>
+                  {(() => {
+                    const liveAutomation = isLiveMode
+                      ? liveStats?.stageOverrides?.[stage.name] ?? stage.automation
+                      : stage.automation
+                    return (
+                      <div className="mb-3">
+                        <div className="flex items-center justify-between text-xs mb-1">
+                          <span className={subText}>Automated</span>
+                          <span className="font-bold" style={{ color: stage.color }}>
+                            {liveAutomation}%
+                          </span>
+                        </div>
+                        <div className={`w-full rounded-full h-2 overflow-hidden ${progressBarTrack}`}>
+                          <div
+                            className="h-full rounded-full transition-all duration-700"
+                            style={{
+                              width: `${liveAutomation}%`,
+                              backgroundColor: stage.color
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )
+                  })()}
 
                   {/* Time Metrics */}
                   <div className="space-y-1 text-xs">
@@ -430,7 +603,9 @@ export default function WorkflowAutomation() {
               <div className={`p-3 rounded-lg ${innerPanelBg}`}>
                 <p className={`text-xs mb-1 ${subText}`}>Automation Level</p>
                 <p className="text-2xl font-bold" style={{ color: workflowStages[activeStage].color }}>
-                  {workflowStages[activeStage].automation}%
+                  {isLiveMode
+                    ? (liveStats?.stageOverrides?.[workflowStages[activeStage].name] ?? workflowStages[activeStage].automation)
+                    : workflowStages[activeStage].automation}%
                 </p>
               </div>
               <div className={`p-3 rounded-lg ${innerPanelBg}`}>

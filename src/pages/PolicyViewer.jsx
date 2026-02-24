@@ -137,7 +137,7 @@ export default function PolicyViewer() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-purple-900/50 via-slate-900 to-blue-900/50 rounded-2xl border border-purple-500/20 p-6">
+      <div className={`relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-r from-purple-900/50 via-slate-900 to-blue-900/50 border-purple-500/20' : 'bg-gradient-to-r from-purple-50 via-white to-blue-50 border-purple-200'} rounded-2xl border p-6`}>
         {/* Background effects */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
@@ -148,15 +148,15 @@ export default function PolicyViewer() {
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
                 <ShieldCheckIcon className="w-8 h-8 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-slate-900" />
+              <div className={`absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 ${isDarkMode ? 'border-slate-900' : 'border-white'}`} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+              <h1 className={`text-3xl font-bold bg-gradient-to-r bg-clip-text text-transparent ${isDarkMode ? 'from-white via-purple-200 to-pink-200' : 'from-purple-700 via-pink-600 to-purple-800'}`}>
                 Security Policy Viewer
               </h1>
-              <p className="text-gray-400 mt-1 flex items-center gap-2">
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1 flex items-center gap-2`}>
                 <span>Version</span>
-                <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold">
+                <span className={`px-2 py-0.5 rounded-full text-sm font-semibold ${isDarkMode ? 'bg-purple-500/20 text-purple-300' : 'bg-purple-100 text-purple-700 ring-1 ring-purple-200'}`}>
                   {policyData?.version || 'Unknown'}
                 </span>
               </p>
@@ -175,7 +175,7 @@ export default function PolicyViewer() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 p-1.5 bg-slate-800/50 rounded-xl border border-slate-700/50">
+      <div className={`flex gap-2 p-1.5 ${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} rounded-xl border`}>
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -186,7 +186,7 @@ export default function PolicyViewer() {
               className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
                 isActive
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-slate-700/50'
+                  : `${isDarkMode ? 'text-gray-400 hover:text-white hover:bg-slate-700/50' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'}`
               }`}
             >
               <Icon className="w-5 h-5" />
@@ -197,12 +197,12 @@ export default function PolicyViewer() {
       </div>
 
       {/* Content */}
-      <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
-        {activeTab === 'matrix' && <ActionMatrixTab data={policyData} />}
-        {activeTab === 'modifiers' && <ModifiersTab data={policyData} />}
-        {activeTab === 'approvals' && <ApprovalsTab data={policyData} />}
-        {activeTab === 'cooldowns' && <CooldownsTab data={policyData} />}
-        {activeTab === 'followups' && <FollowupsTab data={policyData} />}
+      <div className={`${isDarkMode ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border p-6`}>
+        {activeTab === 'matrix' && <ActionMatrixTab data={policyData} isDarkMode={isDarkMode} />}
+        {activeTab === 'modifiers' && <ModifiersTab data={policyData} isDarkMode={isDarkMode} />}
+        {activeTab === 'approvals' && <ApprovalsTab data={policyData} isDarkMode={isDarkMode} />}
+        {activeTab === 'cooldowns' && <CooldownsTab data={policyData} isDarkMode={isDarkMode} />}
+        {activeTab === 'followups' && <FollowupsTab data={policyData} isDarkMode={isDarkMode} />}
       </div>
     </div>
   )
@@ -227,31 +227,51 @@ const ACTION_ROUTES = {
   escalate:               '/approvals',
 }
 
-function ActionMatrixTab({ data }) {
+function ActionMatrixTab({ data, isDarkMode }) {
   const navigate = useNavigate()
   const actions = data?.actions || {}
   const baseMatrix = data?.base_matrix || {}
   const stages = ['data_exfil', 'exploit_attempt', 'persistence', 'benign']
   const severities = ['critical', 'high', 'medium', 'low']
 
-  const getSeverityStyle = (severity) => {
-    const styles = {
-      critical: 'from-red-500/20 to-red-600/10 border-red-500/40 text-red-400',
-      high: 'from-orange-500/20 to-orange-600/10 border-orange-500/40 text-orange-400',
-      medium: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/40 text-yellow-400',
-      low: 'from-blue-500/20 to-blue-600/10 border-blue-500/40 text-blue-400',
+  const getSeverityStyle = (severity, isDarkMode) => {
+    if (isDarkMode) {
+      const styles = {
+        critical: 'from-red-500/20 to-red-600/10 border-red-500/40 text-red-400',
+        high: 'from-orange-500/20 to-orange-600/10 border-orange-500/40 text-orange-400',
+        medium: 'from-yellow-500/20 to-yellow-600/10 border-yellow-500/40 text-yellow-400',
+        low: 'from-blue-500/20 to-blue-600/10 border-blue-500/40 text-blue-400',
+      }
+      return styles[severity] || 'from-gray-500/20 to-gray-600/10 border-gray-500/40 text-gray-400'
+    } else {
+      const styles = {
+        critical: 'from-red-50 to-red-100/80 border-red-300 text-red-700',
+        high: 'from-orange-50 to-orange-100/80 border-orange-300 text-orange-700',
+        medium: 'from-yellow-50 to-yellow-100/80 border-yellow-300 text-yellow-700',
+        low: 'from-blue-50 to-blue-100/80 border-blue-300 text-blue-700',
+      }
+      return styles[severity] || 'from-gray-50 to-gray-100/80 border-gray-300 text-gray-700'
     }
-    return styles[severity] || 'from-gray-500/20 to-gray-600/10 border-gray-500/40 text-gray-400'
   }
 
-  const getSeverityBadgeStyle = (severity) => {
-    const styles = {
-      critical: 'bg-red-500/20 text-red-400 ring-red-500/30',
-      high: 'bg-orange-500/20 text-orange-400 ring-orange-500/30',
-      medium: 'bg-yellow-500/20 text-yellow-400 ring-yellow-500/30',
-      low: 'bg-blue-500/20 text-blue-400 ring-blue-500/30',
+  const getSeverityBadgeStyle = (severity, isDarkMode) => {
+    if (isDarkMode) {
+      const styles = {
+        critical: 'bg-red-500/20 text-red-400 ring-red-500/30',
+        high: 'bg-orange-500/20 text-orange-400 ring-orange-500/30',
+        medium: 'bg-yellow-500/20 text-yellow-400 ring-yellow-500/30',
+        low: 'bg-blue-500/20 text-blue-400 ring-blue-500/30',
+      }
+      return styles[severity] || 'bg-gray-500/20 text-gray-400 ring-gray-500/30'
+    } else {
+      const styles = {
+        critical: 'bg-red-100 text-red-700 ring-red-300',
+        high: 'bg-orange-100 text-orange-700 ring-orange-300',
+        medium: 'bg-yellow-100 text-yellow-700 ring-yellow-300',
+        low: 'bg-blue-100 text-blue-700 ring-blue-300',
+      }
+      return styles[severity] || 'bg-gray-100 text-gray-700 ring-gray-300'
     }
-    return styles[severity] || 'bg-gray-500/20 text-gray-400 ring-gray-500/30'
   }
 
   return (
@@ -260,7 +280,7 @@ function ActionMatrixTab({ data }) {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <BoltIcon className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-semibold text-white">Available Actions</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Available Actions</h3>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {Object.entries(actions).map(([key, description]) => {
@@ -269,19 +289,19 @@ function ActionMatrixTab({ data }) {
               <div
                 key={key}
                 onClick={() => route && navigate(route)}
-                className={`group bg-gradient-to-br from-slate-700/50 to-slate-800/50 rounded-xl p-4 border border-slate-600/50 hover:border-purple-500/50 transition-all hover:scale-[1.02] ${
+                className={`group ${isDarkMode ? 'bg-gradient-to-br from-slate-700/50 to-slate-800/50 border-slate-600/50' : 'bg-white border-gray-200 shadow-sm shadow-purple-100/50'} rounded-xl p-4 border hover:border-purple-500/50 transition-all hover:scale-[1.02] ${
                   route ? 'cursor-pointer' : ''
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
                   <div className="font-mono text-sm font-bold text-purple-400">{key}</div>
                   {route && (
-                    <ArrowTopRightOnSquareIcon className="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors" />
+                    <ArrowTopRightOnSquareIcon className={`w-4 h-4 ${isDarkMode ? 'text-gray-600' : 'text-gray-400'} group-hover:text-purple-400 transition-colors`} />
                   )}
                 </div>
-                <div className="text-gray-400 text-xs">{description}</div>
+                <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs`}>{description}</div>
                 {route && (
-                  <div className="mt-2 text-xs text-gray-600 group-hover:text-purple-400/60 transition-colors">
+                  <div className={`mt-2 text-xs ${isDarkMode ? 'text-gray-600' : 'text-gray-400'} group-hover:text-purple-400/60 transition-colors`}>
                     Go to {route.replace('/', '')}
                   </div>
                 )}
@@ -295,16 +315,16 @@ function ActionMatrixTab({ data }) {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <TableCellsIcon className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-semibold text-white">Action Matrix</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Action Matrix</h3>
         </div>
-        <div className="overflow-x-auto rounded-xl border border-slate-700/50">
+        <div className={`overflow-x-auto rounded-xl border ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
           <table className="w-full">
             <thead>
-              <tr className="bg-slate-900/50">
-                <th className="text-left py-4 px-5 font-medium text-gray-400 border-b border-slate-700/50">Stage</th>
+              <tr className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'}`}>
+                <th className={`text-left py-4 px-5 font-medium ${isDarkMode ? 'text-gray-400 border-slate-700/50' : 'text-gray-600 border-gray-200'} border-b`}>Stage</th>
                 {severities.map((sev) => (
-                  <th key={sev} className="text-left py-4 px-5 font-medium border-b border-slate-700/50">
-                    <span className={`px-3 py-1 rounded-full text-sm capitalize ring-1 ${getSeverityBadgeStyle(sev)}`}>
+                  <th key={sev} className={`text-left py-4 px-5 font-medium border-b ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
+                    <span className={`px-3 py-1 rounded-full text-sm capitalize ring-1 ${getSeverityBadgeStyle(sev, isDarkMode)}`}>
                       {sev}
                     </span>
                   </th>
@@ -317,8 +337,8 @@ function ActionMatrixTab({ data }) {
                 return (
                   <tr
                     key={stage}
-                    className={`border-b border-slate-700/30 hover:bg-slate-700/20 transition-colors ${
-                      idx % 2 === 0 ? 'bg-slate-800/30' : ''
+                    className={`border-b ${isDarkMode ? 'border-slate-700/30 hover:bg-slate-700/20' : 'border-gray-100 hover:bg-gray-50'} transition-colors ${
+                      idx % 2 === 0 ? (isDarkMode ? 'bg-slate-800/30' : 'bg-gray-50/50') : ''
                     }`}
                   >
                     <td className="py-4 px-5">
@@ -326,7 +346,7 @@ function ActionMatrixTab({ data }) {
                         <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
                           <StageIcon className="w-5 h-5 text-purple-400" />
                         </div>
-                        <span className="text-white font-medium capitalize">{stage.replace(/_/g, ' ')}</span>
+                        <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-medium capitalize`}>{stage.replace(/_/g, ' ')}</span>
                       </div>
                     </td>
                     {severities.map((severity) => {
@@ -337,7 +357,7 @@ function ActionMatrixTab({ data }) {
                           {action ? (
                             <div
                               onClick={() => ACTION_ROUTES[action] && navigate(ACTION_ROUTES[action])}
-                              className={`inline-flex items-center px-3 py-1.5 rounded-lg border bg-gradient-to-r ${getSeverityStyle(severity)} font-mono text-sm ${
+                              className={`inline-flex items-center px-3 py-1.5 rounded-lg border bg-gradient-to-r ${getSeverityStyle(severity, isDarkMode)} font-mono text-sm ${
                                 ACTION_ROUTES[action] ? 'cursor-pointer hover:ring-2 hover:ring-purple-500/50 transition-all' : ''
                               }`}
                             >
@@ -361,13 +381,13 @@ function ActionMatrixTab({ data }) {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <ChartBarIcon className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-semibold text-white">Urgency by Severity</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Urgency by Severity</h3>
         </div>
         <div className="grid grid-cols-4 gap-4">
           {Object.entries(data?.urgency_by_severity || {}).map(([severity, urgency]) => (
             <div
               key={severity}
-              className={`rounded-xl p-5 border bg-gradient-to-br ${getSeverityStyle(severity)} text-center group hover:scale-105 transition-transform`}
+              className={`rounded-xl p-5 border bg-gradient-to-br ${getSeverityStyle(severity, isDarkMode)} text-center group hover:scale-105 transition-transform${isDarkMode ? '' : ' shadow-md shadow-purple-100/40'}`}
             >
               <div className="text-sm capitalize mb-2 opacity-80">{severity}</div>
               <div className="text-4xl font-bold">{urgency}</div>
@@ -379,21 +399,21 @@ function ActionMatrixTab({ data }) {
   )
 }
 
-function ModifiersTab({ data }) {
+function ModifiersTab({ data, isDarkMode }) {
   const modifiers = data?.modifiers || {}
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         <AdjustmentsHorizontalIcon className="w-5 h-5 text-purple-400" />
-        <h3 className="text-lg font-semibold text-white">Policy Modifiers</h3>
+        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Policy Modifiers</h3>
       </div>
 
       <div className="grid gap-4">
         {Object.entries(modifiers).map(([name, config]) => (
           <div
             key={name}
-            className="bg-gradient-to-r from-slate-800/80 to-slate-900/50 rounded-xl p-5 border border-slate-700/50 hover:border-purple-500/30 transition-colors"
+            className={`${isDarkMode ? 'bg-gradient-to-r from-slate-800/80 to-slate-900/50 border-slate-700/50' : 'bg-white border-gray-200'} rounded-xl p-5 border hover:border-purple-500/30 transition-colors`}
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -404,7 +424,7 @@ function ModifiersTab({ data }) {
                     <XCircleIcon className="w-5 h-5 text-gray-500" />
                   )}
                 </div>
-                <h4 className="text-white font-semibold text-lg capitalize">{name.replace(/_/g, ' ')}</h4>
+                <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold text-lg capitalize`}>{name.replace(/_/g, ' ')}</h4>
               </div>
               <span
                 className={`px-4 py-1.5 rounded-full text-sm font-medium ${
@@ -419,8 +439,8 @@ function ModifiersTab({ data }) {
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {config.escalate_to && (
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>
                     <ArrowUpCircleIcon className="w-4 h-4" />
                     Escalate to
                   </div>
@@ -428,8 +448,8 @@ function ModifiersTab({ data }) {
                 </div>
               )}
               {config.urgency && (
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>
                     <BoltIcon className="w-4 h-4" />
                     Urgency
                   </div>
@@ -437,8 +457,8 @@ function ModifiersTab({ data }) {
                 </div>
               )}
               {config.threshold && (
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>
                     <ChartBarIcon className="w-4 h-4" />
                     Threshold
                   </div>
@@ -446,8 +466,8 @@ function ModifiersTab({ data }) {
                 </div>
               )}
               {config.notify && config.notify.length > 0 && (
-                <div className="bg-slate-900/50 rounded-lg p-3 col-span-2 lg:col-span-1">
-                  <div className="flex items-center gap-2 text-gray-400 text-xs mb-2">
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3 col-span-2 lg:col-span-1`}>
+                  <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-2`}>
                     <BellAlertIcon className="w-4 h-4" />
                     Notify Teams
                   </div>
@@ -468,18 +488,18 @@ function ModifiersTab({ data }) {
   )
 }
 
-function ApprovalsTab({ data }) {
+function ApprovalsTab({ data, isDarkMode }) {
   const approvals = data?.approvals?.rules || []
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         <CheckBadgeIcon className="w-5 h-5 text-purple-400" />
-        <h3 className="text-lg font-semibold text-white">Approval Rules</h3>
+        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Approval Rules</h3>
       </div>
 
       {approvals.length === 0 ? (
-        <div className="text-center py-12 text-gray-400">
+        <div className={`text-center py-12 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           <CheckBadgeIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p>No approval rules configured</p>
         </div>
@@ -488,25 +508,25 @@ function ApprovalsTab({ data }) {
           {approvals.map((rule, index) => (
             <div
               key={index}
-              className="bg-gradient-to-r from-slate-800/80 to-slate-900/50 rounded-xl p-5 border border-slate-700/50 hover:border-green-500/30 transition-colors"
+              className={`${isDarkMode ? 'bg-gradient-to-r from-slate-800/80 to-slate-900/50 border-slate-700/50' : 'bg-white border-gray-200'} rounded-xl p-5 border hover:border-green-500/30 transition-colors`}
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
                   <LockClosedIcon className="w-5 h-5 text-green-400" />
                 </div>
-                <h4 className="text-white font-semibold text-lg">{rule.name}</h4>
+                <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold text-lg`}>{rule.name}</h4>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-4">
                 {rule.when?.urgency_at_least && (
-                  <div className="bg-slate-900/50 rounded-lg p-3">
-                    <div className="text-gray-400 text-xs mb-1">Minimum Urgency</div>
+                  <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                    <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>Minimum Urgency</div>
                     <div className="text-orange-400 font-bold text-lg">{rule.when.urgency_at_least}</div>
                   </div>
                 )}
                 {rule.require?.approver_group && (
-                  <div className="bg-slate-900/50 rounded-lg p-3">
-                    <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
+                  <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                    <div className={`flex items-center gap-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>
                       <UserGroupIcon className="w-4 h-4" />
                       Approver Group
                     </div>
@@ -516,12 +536,12 @@ function ApprovalsTab({ data }) {
               </div>
 
               {rule.require?.reason && (
-                <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                <div className={`rounded-lg p-4 ${isDarkMode ? 'bg-yellow-500/10 border border-yellow-500/30' : 'bg-yellow-50 border border-yellow-200'}`}>
                   <div className="flex items-center gap-2 text-yellow-400 text-sm font-medium mb-1">
                     <DocumentTextIcon className="w-4 h-4" />
                     Required Reason
                   </div>
-                  <div className="text-yellow-200 text-sm">{rule.require.reason}</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-yellow-200' : 'text-yellow-800'}`}>{rule.require.reason}</div>
                 </div>
               )}
             </div>
@@ -532,18 +552,18 @@ function ApprovalsTab({ data }) {
   )
 }
 
-function CooldownsTab({ data }) {
+function CooldownsTab({ data, isDarkMode }) {
   const cooldowns = data?.cooldowns || []
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
         <ClockIcon className="w-5 h-5 text-purple-400" />
-        <h3 className="text-lg font-semibold text-white">Cooldown Policies</h3>
+        <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Cooldown Policies</h3>
       </div>
 
       {cooldowns.length === 0 ? (
-        <div className="text-center py-12 text-gray-400">
+        <div className={`text-center py-12 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           <ClockIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p>No cooldown policies configured</p>
         </div>
@@ -552,38 +572,38 @@ function CooldownsTab({ data }) {
           {cooldowns.map((cooldown, index) => (
             <div
               key={index}
-              className="bg-gradient-to-r from-slate-800/80 to-slate-900/50 rounded-xl p-5 border border-slate-700/50 hover:border-blue-500/30 transition-colors"
+              className={`${isDarkMode ? 'bg-gradient-to-r from-slate-800/80 to-slate-900/50 border-slate-700/50' : 'bg-white border-gray-200'} rounded-xl p-5 border hover:border-blue-500/30 transition-colors`}
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
                   <ClockIcon className="w-5 h-5 text-blue-400" />
                 </div>
-                <h4 className="text-white font-semibold text-lg">{cooldown.name}</h4>
+                <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold text-lg`}>{cooldown.name}</h4>
               </div>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="text-gray-400 text-xs mb-1">Window</div>
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>Window</div>
                   <div className="text-blue-400 font-bold">{cooldown.window_seconds}s</div>
-                  <div className="text-gray-500 text-xs">({Math.floor(cooldown.window_seconds / 60)} min)</div>
+                  <div className={`${isDarkMode ? 'text-gray-500' : 'text-gray-400'} text-xs`}>({Math.floor(cooldown.window_seconds / 60)} min)</div>
                 </div>
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="text-gray-400 text-xs mb-1">On Violation</div>
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>On Violation</div>
                   <div className="text-orange-400 font-semibold">{cooldown.on_violation}</div>
                 </div>
-                <div className="bg-slate-900/50 rounded-lg p-3">
-                  <div className="text-gray-400 text-xs mb-1">Scope</div>
+                <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-lg p-3`}>
+                  <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-xs mb-1`}>Scope</div>
                   <div className="text-purple-400 font-semibold">{cooldown.match?.scope}</div>
                 </div>
               </div>
 
               {cooldown.reason && (
-                <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
+                <div className={`rounded-lg p-4 ${isDarkMode ? 'bg-orange-500/10 border border-orange-500/30' : 'bg-orange-50 border border-orange-200'}`}>
                   <div className="flex items-center gap-2 text-orange-400 text-sm font-medium mb-1">
                     <ExclamationTriangleIcon className="w-4 h-4" />
                     Reason
                   </div>
-                  <div className="text-orange-200 text-sm">{cooldown.reason}</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`}>{cooldown.reason}</div>
                 </div>
               )}
             </div>
@@ -594,7 +614,7 @@ function CooldownsTab({ data }) {
   )
 }
 
-function FollowupsTab({ data }) {
+function FollowupsTab({ data, isDarkMode }) {
   const followups = data?.followups_by_stage || {}
 
   // Load persisted data from localStorage
@@ -733,7 +753,7 @@ function FollowupsTab({ data }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <ClipboardDocumentListIcon className="w-5 h-5 text-purple-400" />
-          <h3 className="text-lg font-semibold text-white">Follow-up Actions</h3>
+          <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Follow-up Actions</h3>
         </div>
         <div className="flex gap-2">
           <button
@@ -761,12 +781,12 @@ function FollowupsTab({ data }) {
       </div>
 
       {/* Progress Bar */}
-      <div className="bg-slate-900/50 rounded-xl p-4">
+      <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-xl p-4`}>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-gray-400 text-sm">Shift Progress</span>
-          <span className="text-white font-bold">{completedCount}/{totalActions}</span>
+          <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>Shift Progress</span>
+          <span className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-bold`}>{completedCount}/{totalActions}</span>
         </div>
-        <div className="h-3 bg-slate-700/50 rounded-full overflow-hidden">
+        <div className={`h-3 ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-200'} rounded-full overflow-hidden`}>
           <div
             className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
@@ -777,21 +797,21 @@ function FollowupsTab({ data }) {
       {/* Summary Panel */}
       {showShiftReport && (
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-slate-900/50 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-white">{totalActions}</div>
-            <div className="text-gray-400 text-sm">Total</div>
+          <div className={`${isDarkMode ? 'bg-slate-900/50' : 'bg-gray-50'} rounded-xl p-4 text-center`}>
+            <div className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{totalActions}</div>
+            <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Total</div>
           </div>
           <div className="bg-green-500/10 rounded-xl p-4 text-center border border-green-500/20">
             <div className="text-3xl font-bold text-green-400">{completedCount}</div>
-            <div className="text-gray-400 text-sm">Completed</div>
+            <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Completed</div>
           </div>
           <div className="bg-yellow-500/10 rounded-xl p-4 text-center border border-yellow-500/20">
             <div className="text-3xl font-bold text-yellow-400">{totalActions - completedCount}</div>
-            <div className="text-gray-400 text-sm">Pending</div>
+            <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Pending</div>
           </div>
           <div className="bg-purple-500/10 rounded-xl p-4 text-center border border-purple-500/20">
             <div className="text-3xl font-bold text-purple-400">{Object.keys(assignedTo).length}</div>
-            <div className="text-gray-400 text-sm">Assigned</div>
+            <div className={`${isDarkMode ? 'text-gray-400' : 'text-gray-500'} text-sm`}>Assigned</div>
           </div>
         </div>
       )}
@@ -802,15 +822,15 @@ function FollowupsTab({ data }) {
         const stageCompleted = actions.filter((_, i) => actionStatus[`${stage}-${i}`]).length
 
         return (
-          <div key={stage} className="bg-slate-900/30 rounded-xl p-5 border border-slate-700/50">
+          <div key={stage} className={`${isDarkMode ? 'bg-slate-900/30 border-slate-700/50' : 'bg-gray-50 border-gray-200'} rounded-xl p-5 border`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
                   <StageIcon className="w-5 h-5 text-purple-400" />
                 </div>
-                <h4 className="text-white font-semibold capitalize text-lg">{stage.replace(/_/g, ' ')}</h4>
+                <h4 className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold capitalize text-lg`}>{stage.replace(/_/g, ' ')}</h4>
               </div>
-              <span className="text-sm text-gray-400">
+              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 {stageCompleted}/{actions.length} completed
               </span>
             </div>
@@ -827,7 +847,7 @@ function FollowupsTab({ data }) {
                     className={`rounded-lg p-4 border transition-all ${
                       isCompleted
                         ? 'bg-green-500/5 border-green-500/30'
-                        : 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/50'
+                        : `${isDarkMode ? 'bg-slate-800/30 border-slate-700/50 hover:border-slate-600/50' : 'bg-white border-gray-200 hover:border-gray-300'}`
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -844,7 +864,7 @@ function FollowupsTab({ data }) {
 
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <div className={`font-medium ${isCompleted ? 'text-gray-500 line-through' : 'text-white'}`}>
+                          <div className={`font-medium ${isCompleted ? 'text-gray-500 line-through' : (isDarkMode ? 'text-white' : 'text-gray-900')}`}>
                             {action}
                           </div>
                           <button
@@ -864,19 +884,19 @@ function FollowupsTab({ data }) {
                             placeholder="Assign to..."
                             value={assignedTo[key] || ''}
                             onChange={(e) => setAssignedTo(prev => ({ ...prev, [key]: e.target.value }))}
-                            className="px-3 py-2 bg-slate-900/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                            className={`px-3 py-2 ${isDarkMode ? 'bg-slate-900/50 border-slate-600/50 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'} border rounded-lg text-sm focus:outline-none focus:border-purple-500/50`}
                           />
                           <input
                             type="text"
                             placeholder="Add note..."
                             value={notes[key] || ''}
                             onChange={(e) => setNotes(prev => ({ ...prev, [key]: e.target.value }))}
-                            className="px-3 py-2 bg-slate-900/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                            className={`px-3 py-2 ${isDarkMode ? 'bg-slate-900/50 border-slate-600/50 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'} border rounded-lg text-sm focus:outline-none focus:border-purple-500/50`}
                           />
                         </div>
 
                         {(assignedTo[key] || notes[key]) && (
-                          <div className="mt-2 flex gap-4 text-xs text-gray-400">
+                          <div className={`mt-2 flex gap-4 text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                             {assignedTo[key] && (
                               <span className="flex items-center gap-1">
                                 <UserGroupIcon className="w-3 h-3" />
@@ -907,7 +927,7 @@ function FollowupsTab({ data }) {
           <SparklesIcon className="w-5 h-5" />
           Shift Turnover Tips
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-gray-400">
+        <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           <div className="flex items-center gap-2">
             <CheckIcon className="w-4 h-4 text-green-400" />
             Check boxes when done

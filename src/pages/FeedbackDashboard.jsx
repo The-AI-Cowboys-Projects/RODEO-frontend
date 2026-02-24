@@ -532,7 +532,7 @@ export default function FeedbackDashboard() {
                   </p>
                 </div>
               ) : (
-                <div className="divide-y divide-slate-700/50">
+                <div className={`divide-y ${isDarkMode ? 'divide-slate-700/50' : 'divide-gray-200'}`}>
                   {outcomes.map((outcome, idx) => {
                     const isPending = (outcome.verdict || '').toUpperCase() === 'PENDING'
                     const isAssessing = assessingAction === (outcome.action_id || idx)

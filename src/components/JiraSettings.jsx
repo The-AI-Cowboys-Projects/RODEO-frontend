@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
+import { useTheme } from '../context/ThemeContext'
 
 const API_BASE = ''
 
@@ -35,6 +36,7 @@ api.interceptors.request.use((config) => {
  * - Connection testing
  */
 export default function JiraSettings() {
+  const { isDarkMode } = useTheme()
   const queryClient = useQueryClient()
 
   const [authMethod, setAuthMethod] = useState('api_token') // 'api_token' or 'oauth'
@@ -159,20 +161,33 @@ export default function JiraSettings() {
     )
   }
 
+  // Shared class helpers
+  const cardBg = isDarkMode ? 'bg-gray-900 border-cyan-500/30' : 'bg-white border-gray-200'
+  const statusBg = isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+  const labelText = isDarkMode ? 'text-gray-300' : 'text-gray-700'
+  const subText = isDarkMode ? 'text-gray-500' : 'text-gray-400'
+  const inputBg = isDarkMode
+    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-cyan-500'
+    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-cyan-500'
+  const authInactiveBg = isDarkMode
+    ? 'border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-600'
+    : 'border-gray-300 bg-gray-50 text-gray-500 hover:border-gray-400'
+  const codeBg = isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
+
   return (
-    <div className="bg-gray-900 border border-cyan-500/30 rounded-lg p-6">
+    <div className={`border rounded-lg p-6 ${cardBg}`}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-cyan-400 mb-2">Jira Integration</h2>
-        <p className="text-gray-400 text-sm">
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           Configure Jira to automatically create tickets for vulnerabilities and malware incidents.
         </p>
       </div>
 
       {/* Current Status */}
-      <div className="mb-6 p-4 bg-gray-800 border border-gray-700 rounded-lg">
+      <div className={`mb-6 p-4 border rounded-lg ${statusBg}`}>
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm font-medium text-gray-300">Status</div>
+            <div className={`text-sm font-medium ${labelText}`}>Status</div>
             <div className="text-lg font-bold">
               {config?.configured ? (
                 <span className="text-green-400">Configured</span>
@@ -197,7 +212,7 @@ export default function JiraSettings() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Jira URL */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium mb-2 ${labelText}`}>
             Jira Instance URL
           </label>
           <input
@@ -207,16 +222,16 @@ export default function JiraSettings() {
             onChange={handleChange}
             placeholder="https://your-domain.atlassian.net"
             required
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+            className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className={`text-xs mt-1 ${subText}`}>
             Your Atlassian Jira Cloud URL (e.g., https://company.atlassian.net)
           </p>
         </div>
 
         {/* Authentication Method Selector */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium mb-2 ${labelText}`}>
             Authentication Method
           </label>
           <div className="flex gap-4">
@@ -226,7 +241,7 @@ export default function JiraSettings() {
               className={`flex-1 px-4 py-3 rounded-lg border-2 transition-colors ${
                 authMethod === 'api_token'
                   ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400'
-                  : 'border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-600'
+                  : authInactiveBg
               }`}
             >
               <div className="font-medium">API Token</div>
@@ -238,7 +253,7 @@ export default function JiraSettings() {
               className={`flex-1 px-4 py-3 rounded-lg border-2 transition-colors ${
                 authMethod === 'oauth'
                   ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400'
-                  : 'border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-600'
+                  : authInactiveBg
               }`}
             >
               <div className="font-medium">OAuth 2.0</div>
@@ -252,7 +267,7 @@ export default function JiraSettings() {
           <>
             {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Username (Email)
               </label>
               <input
@@ -262,16 +277,16 @@ export default function JiraSettings() {
                 onChange={handleChange}
                 placeholder="your-email@company.com"
                 required
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={`text-xs mt-1 ${subText}`}>
                 Your Jira account email address
               </p>
             </div>
 
             {/* API Token */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 API Token
               </label>
               <div className="relative">
@@ -282,17 +297,17 @@ export default function JiraSettings() {
                   onChange={handleChange}
                   placeholder="Your Jira API token"
                   required={!config?.configured}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 pr-12"
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none pr-12 ${inputBg}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowApiToken(!showApiToken)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400"
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDarkMode ? 'text-gray-400 hover:text-cyan-400' : 'text-gray-500 hover:text-cyan-600'}`}
                 >
                   {showApiToken ? '🙈' : '👁️'}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={`text-xs mt-1 ${subText}`}>
                 Generate at{' '}
                 <a
                   href="https://id.atlassian.com/manage-profile/security/api-tokens"
@@ -312,7 +327,7 @@ export default function JiraSettings() {
           <>
             {/* OAuth Access Token */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 OAuth Access Token
               </label>
               <div className="relative">
@@ -323,24 +338,24 @@ export default function JiraSettings() {
                   onChange={handleChange}
                   placeholder="Your OAuth 2.0 access token"
                   required={!config?.configured}
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 pr-12"
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none pr-12 ${inputBg}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowOAuthToken(!showOAuthToken)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400"
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDarkMode ? 'text-gray-400 hover:text-cyan-400' : 'text-gray-500 hover:text-cyan-600'}`}
                 >
                   {showOAuthToken ? '🙈' : '👁️'}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={`text-xs mt-1 ${subText}`}>
                 OAuth 2.0 access token from your Jira OAuth app
               </p>
             </div>
 
             {/* Client ID (Optional) */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Client ID (Optional)
               </label>
               <input
@@ -349,16 +364,16 @@ export default function JiraSettings() {
                 value={formData.client_id}
                 onChange={handleChange}
                 placeholder="OAuth client ID"
-                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={`text-xs mt-1 ${subText}`}>
                 Client ID from your Jira OAuth application
               </p>
             </div>
 
             {/* Client Secret (Optional) */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Client Secret (Optional)
               </label>
               <div className="relative">
@@ -368,17 +383,17 @@ export default function JiraSettings() {
                   value={formData.client_secret}
                   onChange={handleChange}
                   placeholder="OAuth client secret"
-                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 pr-12"
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none pr-12 ${inputBg}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowClientSecret(!showClientSecret)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-cyan-400"
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDarkMode ? 'text-gray-400 hover:text-cyan-400' : 'text-gray-500 hover:text-cyan-600'}`}
                 >
                   {showClientSecret ? '🙈' : '👁️'}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={`text-xs mt-1 ${subText}`}>
                 Client secret from your Jira OAuth application
               </p>
             </div>
@@ -387,7 +402,7 @@ export default function JiraSettings() {
 
         {/* Project Key */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium mb-2 ${labelText}`}>
             Project Key
           </label>
           <input
@@ -397,10 +412,10 @@ export default function JiraSettings() {
             onChange={handleChange}
             placeholder="SEC"
             required
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 uppercase"
+            className={`w-full px-3 py-2 border rounded-lg focus:outline-none uppercase ${inputBg}`}
             maxLength={10}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className={`text-xs mt-1 ${subText}`}>
             The Jira project key where tickets will be created (e.g., SEC, IT, CYBER)
           </p>
         </div>
@@ -410,8 +425,8 @@ export default function JiraSettings() {
           <div
             className={`p-4 rounded-lg border ${
               testResult.type === 'success'
-                ? 'bg-green-900/20 border-green-500/50 text-green-400'
-                : 'bg-red-900/20 border-red-500/50 text-red-400'
+                ? isDarkMode ? 'bg-green-900/20 border-green-500/50 text-green-400' : 'bg-green-50 border-green-200 text-green-700'
+                : isDarkMode ? 'bg-red-900/20 border-red-500/50 text-red-400' : 'bg-red-50 border-red-200 text-red-700'
             }`}
           >
             <div className="flex items-start gap-2">
@@ -440,35 +455,35 @@ export default function JiraSettings() {
 
       {/* Help Text */}
       <div className="mt-6 space-y-4">
-        <div className="p-4 bg-blue-900/10 border border-blue-500/30 rounded-lg">
+        <div className={`p-4 border rounded-lg ${isDarkMode ? 'bg-blue-900/10 border-blue-500/30' : 'bg-blue-50 border-blue-200'}`}>
           <h3 className="text-sm font-medium text-blue-400 mb-2">How to get your API Token:</h3>
-          <ol className="text-xs text-gray-400 space-y-1 list-decimal list-inside">
+          <ol className={`text-xs space-y-1 list-decimal list-inside ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             <li>Go to <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Atlassian Account Settings</a></li>
-            <li>Navigate to Security → API tokens</li>
-            <li>Click "Create API token"</li>
-            <li>Give it a label (e.g., "R-O-D-E-O Integration")</li>
+            <li>Navigate to Security &rarr; API tokens</li>
+            <li>Click &ldquo;Create API token&rdquo;</li>
+            <li>Give it a label (e.g., &ldquo;R-O-D-E-O Integration&rdquo;)</li>
             <li>Copy the token and paste it above</li>
           </ol>
         </div>
 
         {/* Troubleshooting for 401 errors */}
-        <div className="p-4 bg-yellow-900/10 border border-yellow-500/30 rounded-lg">
-          <h3 className="text-sm font-medium text-yellow-400 mb-2">❌ Getting 401 Authentication Error?</h3>
-          <div className="text-xs text-gray-400 space-y-2">
-            <p className="font-medium text-gray-300">Common issues and solutions:</p>
+        <div className={`p-4 border rounded-lg ${isDarkMode ? 'bg-yellow-900/10 border-yellow-500/30' : 'bg-yellow-50 border-yellow-200'}`}>
+          <h3 className="text-sm font-medium text-yellow-400 mb-2">Getting 401 Authentication Error?</h3>
+          <div className={`text-xs space-y-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Common issues and solutions:</p>
             <div className="space-y-2 ml-2">
               <div>
-                <span className="text-yellow-400">✓</span> <strong>URL Format:</strong> Must be exactly <code className="bg-gray-800 px-1 rounded">https://yourcompany.atlassian.net</code>
+                <span className="text-yellow-400">✓</span> <strong>URL Format:</strong> Must be exactly <code className={`px-1 rounded ${codeBg}`}>https://yourcompany.atlassian.net</code>
                 <div className="ml-4 text-red-400 text-xs mt-1">
-                  ✗ Don't include trailing slash: <code>https://yourcompany.atlassian.net/</code><br/>
-                  ✗ Don't include /rest/api: <code>https://yourcompany.atlassian.net/rest/api/3</code>
+                  ✗ Don&apos;t include trailing slash: <code>https://yourcompany.atlassian.net/</code><br/>
+                  ✗ Don&apos;t include /rest/api: <code>https://yourcompany.atlassian.net/rest/api/3</code>
                 </div>
               </div>
               <div>
-                <span className="text-yellow-400">✓</span> <strong>Email:</strong> Use the <strong>exact email</strong> from your Atlassian account (e.g., <code className="bg-gray-800 px-1 rounded">user@company.com</code>)
+                <span className="text-yellow-400">✓</span> <strong>Email:</strong> Use the <strong>exact email</strong> from your Atlassian account (e.g., <code className={`px-1 rounded ${codeBg}`}>user@company.com</code>)
               </div>
               <div>
-                <span className="text-yellow-400">✓</span> <strong>API Token:</strong> Make sure you copied the <strong>entire token</strong> when it was first displayed (you can't view it again - create a new one if unsure)
+                <span className="text-yellow-400">✓</span> <strong>API Token:</strong> Make sure you copied the <strong>entire token</strong> when it was first displayed (you can&apos;t view it again - create a new one if unsure)
               </div>
               <div>
                 <span className="text-yellow-400">✓</span> <strong>Token Owner:</strong> The email must match the account that created the API token
@@ -482,15 +497,15 @@ export default function JiraSettings() {
 
         {/* OAuth 2.0 Setup Guide */}
         {authMethod === 'oauth' && (
-          <div className="p-4 bg-purple-900/10 border border-brand-purple/30 rounded-lg">
-            <h3 className="text-sm font-medium text-brand-purple-light mb-2">🔐 OAuth 2.0 Setup Guide:</h3>
-            <div className="text-xs text-gray-400 space-y-2">
-              <p className="font-medium text-gray-300">Setting up OAuth 2.0 for Jira:</p>
+          <div className={`p-4 border rounded-lg ${isDarkMode ? 'bg-purple-900/10 border-brand-purple/30' : 'bg-purple-50 border-purple-200'}`}>
+            <h3 className="text-sm font-medium text-brand-purple-light mb-2">OAuth 2.0 Setup Guide:</h3>
+            <div className={`text-xs space-y-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              <p className={`font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>Setting up OAuth 2.0 for Jira:</p>
               <ol className="list-decimal list-inside space-y-2 ml-2">
                 <li>
                   <strong>Create an OAuth 2.0 app</strong> in Jira:
                   <div className="ml-4 mt-1">
-                    • Go to{' '}
+                    &bull; Go to{' '}
                     <a
                       href="https://developer.atlassian.com/console/myapps/"
                       target="_blank"
@@ -500,44 +515,44 @@ export default function JiraSettings() {
                       Atlassian Developer Console
                     </a>
                     <br />
-                    • Create a new app or select an existing one
+                    &bull; Create a new app or select an existing one
                     <br />
-                    • Enable OAuth 2.0 (3LO) authorization
-                    <br />• Add callback URL: <code className="bg-gray-800 px-1 rounded">http://localhost:3000/oauth/callback</code>
+                    &bull; Enable OAuth 2.0 (3LO) authorization
+                    <br />&bull; Add callback URL: <code className={`px-1 rounded ${codeBg}`}>http://localhost:3000/oauth/callback</code>
                   </div>
                 </li>
                 <li>
                   <strong>Configure permissions:</strong>
                   <div className="ml-4 mt-1">
-                    • Add Jira API scopes:
+                    &bull; Add Jira API scopes:
                     <br />
-                    &nbsp;&nbsp;- <code className="bg-gray-800 px-1 rounded">read:jira-work</code>
+                    &nbsp;&nbsp;- <code className={`px-1 rounded ${codeBg}`}>read:jira-work</code>
                     <br />
-                    &nbsp;&nbsp;- <code className="bg-gray-800 px-1 rounded">write:jira-work</code>
-                    <br />• Save your app configuration
+                    &nbsp;&nbsp;- <code className={`px-1 rounded ${codeBg}`}>write:jira-work</code>
+                    <br />&bull; Save your app configuration
                   </div>
                 </li>
                 <li>
                   <strong>Get your OAuth credentials:</strong>
                   <div className="ml-4 mt-1">
-                    • Copy the <strong>Client ID</strong> and <strong>Client Secret</strong>
-                    <br />• Use the OAuth authorization flow to get an <strong>Access Token</strong>
+                    &bull; Copy the <strong>Client ID</strong> and <strong>Client Secret</strong>
+                    <br />&bull; Use the OAuth authorization flow to get an <strong>Access Token</strong>
                   </div>
                 </li>
                 <li>
                   <strong>Enter credentials above:</strong>
                   <div className="ml-4 mt-1">
-                    • Paste the <strong>Access Token</strong> (required)
+                    &bull; Paste the <strong>Access Token</strong> (required)
                     <br />
-                    • Optionally add <strong>Client ID</strong> and <strong>Client Secret</strong>
-                    <br />• Test the connection
+                    &bull; Optionally add <strong>Client ID</strong> and <strong>Client Secret</strong>
+                    <br />&bull; Test the connection
                   </div>
                 </li>
               </ol>
-              <div className="mt-3 p-3 bg-blue-900/20 border border-blue-500/30 rounded">
-                <p className="text-blue-300 font-medium">💡 Why use OAuth?</p>
+              <div className={`mt-3 p-3 border rounded ${isDarkMode ? 'bg-blue-900/20 border-blue-500/30' : 'bg-blue-50 border-blue-200'}`}>
+                <p className="text-blue-300 font-medium">Why use OAuth?</p>
                 <p className="mt-1">
-                  OAuth 2.0 is more secure than API tokens and supports service accounts better. It's recommended for
+                  OAuth 2.0 is more secure than API tokens and supports service accounts better. It&apos;s recommended for
                   production deployments and automated workflows.
                 </p>
               </div>
@@ -546,22 +561,22 @@ export default function JiraSettings() {
         )}
 
         {/* Example Configuration */}
-        <div className="p-4 bg-green-900/10 border border-green-500/30 rounded-lg">
-          <h3 className="text-sm font-medium text-green-400 mb-2">✓ Example Configuration:</h3>
-          <div className="text-xs text-gray-400 space-y-1 font-mono">
+        <div className={`p-4 border rounded-lg ${isDarkMode ? 'bg-green-900/10 border-green-500/30' : 'bg-green-50 border-green-200'}`}>
+          <h3 className="text-sm font-medium text-green-400 mb-2">Example Configuration:</h3>
+          <div className={`text-xs space-y-1 font-mono ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             {authMethod === 'api_token' ? (
               <>
-                <div><strong>URL:</strong> <code className="bg-gray-800 px-1 rounded">https://mycompany.atlassian.net</code></div>
-                <div><strong>Username:</strong> <code className="bg-gray-800 px-1 rounded">john.doe@mycompany.com</code></div>
-                <div><strong>API Token:</strong> <code className="bg-gray-800 px-1 rounded">ATATT3xFfGF0...</code> (long random string)</div>
-                <div><strong>Project Key:</strong> <code className="bg-gray-800 px-1 rounded">SEC</code> (2-10 uppercase letters)</div>
+                <div><strong>URL:</strong> <code className={`px-1 rounded ${codeBg}`}>https://mycompany.atlassian.net</code></div>
+                <div><strong>Username:</strong> <code className={`px-1 rounded ${codeBg}`}>john.doe@mycompany.com</code></div>
+                <div><strong>API Token:</strong> <code className={`px-1 rounded ${codeBg}`}>ATATT3xFfGF0...</code> (long random string)</div>
+                <div><strong>Project Key:</strong> <code className={`px-1 rounded ${codeBg}`}>SEC</code> (2-10 uppercase letters)</div>
               </>
             ) : (
               <>
-                <div><strong>URL:</strong> <code className="bg-gray-800 px-1 rounded">https://mycompany.atlassian.net</code></div>
-                <div><strong>OAuth Token:</strong> <code className="bg-gray-800 px-1 rounded">eyJhbGciOiJIUzI1...</code> (JWT token)</div>
-                <div><strong>Client ID:</strong> <code className="bg-gray-800 px-1 rounded">abc123xyz</code> (optional)</div>
-                <div><strong>Project Key:</strong> <code className="bg-gray-800 px-1 rounded">SEC</code> (2-10 uppercase letters)</div>
+                <div><strong>URL:</strong> <code className={`px-1 rounded ${codeBg}`}>https://mycompany.atlassian.net</code></div>
+                <div><strong>OAuth Token:</strong> <code className={`px-1 rounded ${codeBg}`}>eyJhbGciOiJIUzI1...</code> (JWT token)</div>
+                <div><strong>Client ID:</strong> <code className={`px-1 rounded ${codeBg}`}>abc123xyz</code> (optional)</div>
+                <div><strong>Project Key:</strong> <code className={`px-1 rounded ${codeBg}`}>SEC</code> (2-10 uppercase letters)</div>
               </>
             )}
           </div>

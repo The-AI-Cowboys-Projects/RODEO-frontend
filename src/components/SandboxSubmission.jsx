@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
+import { useTheme } from '../context/ThemeContext'
 import {
   CloudArrowUpIcon,
   DocumentIcon,
@@ -12,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 export default function SandboxSubmission({ onSubmitSuccess }) {
+  const { isDarkMode } = useTheme()
   const [submissionMode, setSubmissionMode] = useState('file') // 'file' or 'url'
   const [dragActive, setDragActive] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
@@ -149,24 +151,24 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
   }
 
   return (
-    <div className="bg-slate-800/40 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+    <div className={`${isDarkMode ? 'bg-slate-800/40 border-slate-700/50' : 'bg-white border-gray-200'} backdrop-blur-sm rounded-2xl border p-6`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-white">Submit for Analysis</h2>
-          <p className="text-gray-400 text-sm mt-1">
+          <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Submit for Analysis</h2>
+          <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mt-1`}>
             One-click malware analysis with R-O-D-E-O sandbox
           </p>
         </div>
 
         {/* Submission Mode Toggle */}
-        <div className="flex bg-slate-900/50 rounded-lg p-1 border border-slate-700">
+        <div className={`flex ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-100 border-gray-200'} rounded-lg p-1 border`}>
           <button
             onClick={() => setSubmissionMode('file')}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               submissionMode === 'file'
                 ? 'bg-purple-600 text-white shadow-lg'
-                : 'text-gray-400 hover:text-white'
+                : isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
             }`}
           >
             <DocumentIcon className="w-4 h-4 inline mr-2" />
@@ -177,7 +179,7 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
               submissionMode === 'url'
                 ? 'bg-purple-600 text-white shadow-lg'
-                : 'text-gray-400 hover:text-white'
+                : isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'
             }`}
           >
             <LinkIcon className="w-4 h-4 inline mr-2" />
@@ -199,7 +201,9 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
             className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
               dragActive
                 ? 'border-purple-500 bg-purple-500/10'
-                : 'border-slate-600 hover:border-slate-500 bg-slate-900/30'
+                : isDarkMode
+                  ? 'border-slate-600 hover:border-slate-500 bg-slate-900/30'
+                  : 'border-gray-300 hover:border-gray-400 bg-gray-50'
             }`}
           >
             <input
@@ -215,13 +219,13 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
                 <div className="flex items-center justify-center">
                   <div className="relative">
                     <DocumentIcon className="w-16 h-16 text-purple-400" />
-                    <CheckCircleIcon className="w-6 h-6 text-green-400 absolute -top-1 -right-1 bg-slate-800 rounded-full" />
+                    <CheckCircleIcon className={`w-6 h-6 text-green-400 absolute -top-1 -right-1 ${isDarkMode ? 'bg-slate-800' : 'bg-white'} rounded-full`} />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-white font-semibold text-lg">{selectedFile.name}</p>
-                  <p className="text-gray-400 text-sm">{formatFileSize(selectedFile.size)}</p>
+                  <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold text-lg`}>{selectedFile.name}</p>
+                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>{formatFileSize(selectedFile.size)}</p>
                 </div>
 
                 <button
@@ -239,10 +243,10 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
               <div className="space-y-4">
                 <CloudArrowUpIcon className="w-16 h-16 text-gray-500 mx-auto" />
                 <div>
-                  <p className="text-white font-semibold">
+                  <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} font-semibold`}>
                     {dragActive ? 'Drop file here' : 'Click to upload or drag and drop'}
                   </p>
-                  <p className="text-gray-400 text-sm mt-1">
+                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mt-1`}>
                     Maximum file size: 100MB
                   </p>
                 </div>
@@ -265,7 +269,7 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
       {submissionMode === 'url' && (
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
               Enter URL to analyze
             </label>
             <input
@@ -273,7 +277,7 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://example.com/suspicious-page"
-              className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+              className={`w-full ${isDarkMode ? 'bg-slate-900/50 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg px-4 py-3 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors`}
             />
           </div>
 
@@ -290,20 +294,20 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
 
       {/* Analysis Options */}
       <div className="mt-6 space-y-4">
-        <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+        <h3 className={`text-sm font-semibold ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} uppercase tracking-wide`}>
           Analysis Options
         </h3>
 
         <div className="grid grid-cols-2 gap-4">
           {/* VM Template Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
+            <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
               VM Template
             </label>
             <select
               value={analysisOptions.vm_template}
               onChange={(e) => setAnalysisOptions({ ...analysisOptions, vm_template: e.target.value })}
-              className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 transition-colors"
+              className={`w-full ${isDarkMode ? 'bg-slate-900/50 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg px-3 py-2 focus:outline-none focus:border-purple-500 transition-colors`}
             >
               <option value="ubuntu_analysis">Ubuntu Analysis</option>
               <option value="windows_10_analysis">Windows 10 Analysis</option>
@@ -313,7 +317,7 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
 
           {/* Timeout */}
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
+            <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
               Timeout (seconds)
             </label>
             <input
@@ -322,36 +326,36 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
               onChange={(e) => setAnalysisOptions({ ...analysisOptions, timeout: parseInt(e.target.value) })}
               min="60"
               max="600"
-              className="w-full bg-slate-900/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 transition-colors"
+              className={`w-full ${isDarkMode ? 'bg-slate-900/50 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg px-3 py-2 focus:outline-none focus:border-purple-500 transition-colors`}
             />
           </div>
         </div>
 
         {/* Toggles */}
         <div className="grid grid-cols-2 gap-4">
-          <label className="flex items-center space-x-3 bg-slate-900/30 rounded-lg p-3 cursor-pointer hover:bg-slate-900/50 transition-colors">
+          <label className={`flex items-center space-x-3 ${isDarkMode ? 'bg-slate-900/30 hover:bg-slate-900/50' : 'bg-gray-50 hover:bg-gray-100'} rounded-lg p-3 cursor-pointer transition-colors`}>
             <input
               type="checkbox"
               checked={analysisOptions.fast_track}
               onChange={(e) => setAnalysisOptions({ ...analysisOptions, fast_track: e.target.checked })}
-              className="w-4 h-4 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+              className={`w-4 h-4 text-purple-600 ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-gray-100 border-gray-200'} rounded focus:ring-purple-500`}
             />
             <div>
-              <p className="text-white text-sm font-medium">Fast Track Mode</p>
-              <p className="text-gray-400 text-xs">Quick scan in &lt;25s</p>
+              <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} text-sm font-medium`}>Fast Track Mode</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs`}>Quick scan in &lt;25s</p>
             </div>
           </label>
 
-          <label className="flex items-center space-x-3 bg-slate-900/30 rounded-lg p-3 cursor-pointer hover:bg-slate-900/50 transition-colors">
+          <label className={`flex items-center space-x-3 ${isDarkMode ? 'bg-slate-900/30 hover:bg-slate-900/50' : 'bg-gray-50 hover:bg-gray-100'} rounded-lg p-3 cursor-pointer transition-colors`}>
             <input
               type="checkbox"
               checked={analysisOptions.enable_network}
               onChange={(e) => setAnalysisOptions({ ...analysisOptions, enable_network: e.target.checked })}
-              className="w-4 h-4 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+              className={`w-4 h-4 text-purple-600 ${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-gray-100 border-gray-200'} rounded focus:ring-purple-500`}
             />
             <div>
-              <p className="text-white text-sm font-medium">Enable Network</p>
-              <p className="text-gray-400 text-xs">Allow internet access</p>
+              <p className={`${isDarkMode ? 'text-white' : 'text-gray-900'} text-sm font-medium`}>Enable Network</p>
+              <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs`}>Allow internet access</p>
             </div>
           </label>
         </div>
@@ -402,13 +406,13 @@ export default function SandboxSubmission({ onSubmitSuccess }) {
       <div className="mt-6 flex items-center justify-center space-x-6 text-sm">
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-          <span className="text-gray-400">
+          <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
             {analysisOptions.fast_track ? 'Fast mode: ~25s' : 'Normal mode: ~40s'}
           </span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-          <span className="text-gray-400">Real-time monitoring</span>
+          <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>Real-time monitoring</span>
         </div>
       </div>
     </div>

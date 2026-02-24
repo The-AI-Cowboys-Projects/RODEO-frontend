@@ -442,7 +442,7 @@ export default function AutonomousDashboard() {
                   <th className={`px-6 py-4 text-left text-xs font-bold uppercase tracking-wider ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Approved By</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700/30">
+              <tbody className={`divide-y ${isDarkMode ? 'divide-slate-700/30' : 'divide-gray-200'}`}>
                 {actionHistory.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="px-6 py-12 text-center">

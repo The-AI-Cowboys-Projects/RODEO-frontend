@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTheme } from '../context/ThemeContext'
 import {
   CheckCircleIcon,
   XCircleIcon,
@@ -25,6 +26,7 @@ const categoryIcons = {
 }
 
 const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
+  const { isDarkMode } = useTheme()
   const [filter, setFilter] = useState('all')
   const [expandedTool, setExpandedTool] = useState(null)
 
@@ -61,35 +63,35 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
   const getStatusBadge = (tool) => {
     if (tool.is_installed) {
       return (
-        <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-success-100 text-success-800 dark:bg-success-900/30 dark:text-success-400">
+        <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${isDarkMode ? 'bg-success-900/30 text-success-400' : 'bg-success-100 text-success-800'}`}>
           Installed
         </span>
       )
     }
     return (
-      <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-danger-100 text-danger-800 dark:bg-danger-900/30 dark:text-danger-400">
+      <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${isDarkMode ? 'bg-danger-900/30 text-danger-400' : 'bg-danger-100 text-danger-800'}`}>
         Not Installed
       </span>
     )
   }
 
   return (
-    <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-sm rounded-xl shadow-xl border-2 border-slate-600/50">
+    <div className={`backdrop-blur-sm rounded-xl shadow-xl border-2 ${isDarkMode ? 'bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-slate-600/50' : 'bg-white border-gray-200'}`}>
       {/* Header */}
-      <div className="p-4 sm:p-6 border-b-2 border-slate-600/50">
+      <div className={`p-4 sm:p-6 border-b-2 ${isDarkMode ? 'border-slate-600/50' : 'border-gray-200'}`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-500/25 rounded-lg flex items-center justify-center border border-red-500/40">
               <CommandLineIcon className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-white">
+            <h3 className={`text-lg sm:text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
               Security Tools Arsenal
             </h3>
           </div>
           <button
             onClick={onRefresh}
             disabled={loading}
-            className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold text-cyan-300 hover:text-cyan-200 bg-slate-700/50 hover:bg-slate-600/50 rounded-lg border border-slate-500/50 disabled:opacity-50 transition-all"
+            className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-bold rounded-lg border disabled:opacity-50 transition-all ${isDarkMode ? 'text-cyan-300 hover:text-cyan-200 bg-slate-700/50 hover:bg-slate-600/50 border-slate-500/50' : 'text-cyan-700 hover:text-cyan-800 bg-gray-100 hover:bg-gray-200 border-gray-300'}`}
           >
             <ArrowPathIcon className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
@@ -98,9 +100,9 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-5">
-          <div className="text-center p-2 sm:p-4 bg-slate-700/50 rounded-xl border border-slate-600/50">
-            <div className="text-xl sm:text-3xl font-black text-white">{stats.total}</div>
-            <div className="text-xs sm:text-sm font-bold text-cyan-300 uppercase tracking-wider mt-1">Total</div>
+          <div className={`text-center p-2 sm:p-4 rounded-xl border ${isDarkMode ? 'bg-slate-700/50 border-slate-600/50' : 'bg-gray-100 border-gray-200'}`}>
+            <div className={`text-xl sm:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{stats.total}</div>
+            <div className={`text-xs sm:text-sm font-bold uppercase tracking-wider mt-1 ${isDarkMode ? 'text-cyan-300' : 'text-cyan-700'}`}>Total</div>
           </div>
           <div className="text-center p-2 sm:p-4 bg-green-900/20 rounded-xl border border-green-500/40">
             <div className="text-xl sm:text-3xl font-black text-green-400">{stats.installed}</div>
@@ -119,7 +121,7 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
             className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${
               filter === 'all'
                 ? 'bg-cyan-500/20 text-cyan-300 border-2 border-cyan-500/40'
-                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600'
+                : isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-300'
             }`}
           >
             All
@@ -129,7 +131,7 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
             className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${
               filter === 'installed'
                 ? 'bg-green-500/20 text-green-300 border-2 border-green-500/40'
-                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600'
+                : isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-300'
             }`}
           >
             Installed
@@ -139,7 +141,7 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
             className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${
               filter === 'missing'
                 ? 'bg-red-500/20 text-red-300 border-2 border-red-500/40'
-                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600'
+                : isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-300'
             }`}
           >
             Missing
@@ -151,7 +153,7 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
               className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg transition-all flex items-center gap-1.5 sm:gap-2 ${
                 filter === cat
                   ? 'bg-brand-purple/20 text-brand-purple-light border-2 border-brand-purple/40'
-                  : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600'
+                  : isDarkMode ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50 border border-slate-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-300'
               }`}
             >
               {getCategoryIcon(cat)}
@@ -163,11 +165,11 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
       </div>
 
       {/* Tool List */}
-      <div className="divide-y divide-slate-600/50 max-h-[600px] overflow-y-auto">
+      <div className={`divide-y max-h-[600px] overflow-y-auto ${isDarkMode ? 'divide-slate-600/50' : 'divide-gray-200'}`}>
         {filteredTools.map(tool => (
           <div
             key={tool.tool_id}
-            className="p-3 sm:p-5 hover:bg-slate-700/30 transition-colors"
+            className={`p-3 sm:p-5 transition-colors ${isDarkMode ? 'hover:bg-slate-700/30' : 'hover:bg-gray-50'}`}
           >
             <div
               className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
@@ -177,13 +179,13 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
                 {getStatusIcon(tool)}
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <span className="text-base sm:text-lg font-bold text-white truncate">
+                    <span className={`text-base sm:text-lg font-bold truncate ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                       {tool.tool_name}
                     </span>
                     {getStatusBadge(tool)}
                   </div>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <span className="text-sm sm:text-base font-medium text-slate-400 truncate">
+                    <span className={`text-sm sm:text-base font-medium truncate ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>
                       {tool.binary_name || tool.tool_id}
                     </span>
                     {tool.phases && tool.phases.length > 0 && (
@@ -210,18 +212,18 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
 
             {/* Expanded Details */}
             {expandedTool === tool.tool_id && (
-              <div className="mt-4 pt-4 border-t border-slate-600/50">
+              <div className={`mt-4 pt-4 border-t ${isDarkMode ? 'border-slate-600/50' : 'border-gray-200'}`}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base">
                   <div className="overflow-hidden">
-                    <span className="font-bold text-cyan-300">Plugin Path:</span>
-                    <span className="ml-2 text-white font-mono text-xs sm:text-sm break-all">
+                    <span className={`font-bold ${isDarkMode ? 'text-cyan-300' : 'text-cyan-700'}`}>Plugin Path:</span>
+                    <span className={`ml-2 font-mono text-xs sm:text-sm break-all ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                       {tool.plugin_path}
                     </span>
                   </div>
                   {tool.target_types && (
                     <div>
-                      <span className="font-bold text-cyan-300">Targets:</span>
-                      <span className="ml-2 text-white">
+                      <span className={`font-bold ${isDarkMode ? 'text-cyan-300' : 'text-cyan-700'}`}>Targets:</span>
+                      <span className={`ml-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                         {tool.target_types.join(', ')}
                       </span>
                     </div>
@@ -232,7 +234,7 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
                     {tool.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold bg-slate-700/50 text-slate-300 rounded-lg border border-slate-600"
+                        className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold rounded-lg border ${isDarkMode ? 'bg-slate-700/50 text-slate-300 border-slate-600' : 'bg-gray-100 text-gray-600 border-gray-300'}`}
                       >
                         {tag}
                       </span>
@@ -246,11 +248,11 @@ const ToolStatus = ({ tools = [], onRefresh, onExecute, loading = false }) => {
 
         {filteredTools.length === 0 && (
           <div className="p-8 sm:p-12 text-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-600">
-              <MagnifyingGlassIcon className="w-6 h-6 sm:w-8 sm:h-8 text-slate-500" />
+            <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4 border ${isDarkMode ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-100 border-gray-200'}`}>
+              <MagnifyingGlassIcon className={`w-6 h-6 sm:w-8 sm:h-8 ${isDarkMode ? 'text-slate-500' : 'text-gray-400'}`} />
             </div>
-            <p className="text-base sm:text-lg font-bold text-white">No tools found</p>
-            <p className="text-sm sm:text-base text-slate-400 mt-1">Try adjusting your filter criteria</p>
+            <p className={`text-base sm:text-lg font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>No tools found</p>
+            <p className={`text-sm sm:text-base mt-1 ${isDarkMode ? 'text-slate-400' : 'text-gray-500'}`}>Try adjusting your filter criteria</p>
           </div>
         )}
       </div>

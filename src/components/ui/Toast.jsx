@@ -7,6 +7,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { useTheme } from '../../context/ThemeContext'
 
 // Toast Context
 const ToastContext = createContext(null)
@@ -61,6 +62,7 @@ const TOAST_TYPES = {
 
 // Individual Toast Component
 function ToastItem({ toast, onDismiss }) {
+  const { isDarkMode } = useTheme()
   const config = TOAST_TYPES[toast.type] || TOAST_TYPES.info
   const [isExiting, setIsExiting] = useState(false)
 
@@ -100,7 +102,7 @@ function ToastItem({ toast, onDismiss }) {
             {toast.title}
           </p>
         )}
-        <p className="text-sm text-gray-300 mt-0.5">
+        <p className={`text-sm mt-0.5 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
           {toast.message}
         </p>
         {toast.action && (
@@ -119,7 +121,7 @@ function ToastItem({ toast, onDismiss }) {
       {/* Dismiss Button */}
       <button
         onClick={handleDismiss}
-        className="flex-shrink-0 text-gray-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 rounded"
+        className={`flex-shrink-0 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 rounded ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-900'}`}
         aria-label="Dismiss notification"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

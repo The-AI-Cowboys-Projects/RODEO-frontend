@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
+import { useTheme } from '../context/ThemeContext'
 
 const API_BASE = ''
 
@@ -21,6 +22,7 @@ api.interceptors.request.use((config) => {
 
 export default function ServiceNowSettings() {
   const queryClient = useQueryClient()
+  const { isDarkMode } = useTheme()
 
   const [formData, setFormData] = useState({
     instance_url: '',
@@ -120,19 +122,19 @@ export default function ServiceNowSettings() {
   }
 
   return (
-    <div className="bg-slate-900 border border-slate-700 rounded-lg p-6">
+    <div className={`${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'} border rounded-lg p-6`}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-purple-400 mb-2">ServiceNow Integration</h2>
-        <p className="text-gray-400 text-sm">
+        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
           Configure ServiceNow to automatically create incidents and change requests for security events.
         </p>
       </div>
 
       {/* Current Status */}
-      <div className="mb-6 p-4 bg-slate-800 border border-slate-600 rounded-lg">
+      <div className={`mb-6 p-4 ${isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'} border rounded-lg`}>
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm font-medium text-gray-300">Status</div>
+            <div className={`text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>Status</div>
             <div className="text-lg font-bold">
               {config?.configured ? (
                 <span className="text-green-400">✓ Configured</span>
@@ -141,7 +143,7 @@ export default function ServiceNowSettings() {
               )}
             </div>
             {config?.configured && config.instance_url && (
-              <div className="text-xs text-gray-500 mt-1">
+              <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-500'} mt-1`}>
                 Instance: {new URL(config.instance_url).hostname}
               </div>
             )}
@@ -162,7 +164,7 @@ export default function ServiceNowSettings() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Instance URL */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
             ServiceNow Instance URL
           </label>
           <input
@@ -172,7 +174,7 @@ export default function ServiceNowSettings() {
             onChange={handleChange}
             placeholder="https://dev12345.service-now.com"
             required
-            className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+            className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg placeholder-gray-500 focus:outline-none focus:border-purple-500`}
           />
           <p className="text-xs text-gray-500 mt-1">
             Your ServiceNow instance URL (e.g., https://dev12345.service-now.com)
@@ -181,7 +183,7 @@ export default function ServiceNowSettings() {
 
         {/* Username */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
             Username
           </label>
           <input
@@ -191,7 +193,7 @@ export default function ServiceNowSettings() {
             onChange={handleChange}
             placeholder="admin or integration.user"
             required
-            className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+            className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg placeholder-gray-500 focus:outline-none focus:border-purple-500`}
           />
           <p className="text-xs text-gray-500 mt-1">
             ServiceNow username with API access
@@ -200,7 +202,7 @@ export default function ServiceNowSettings() {
 
         {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className={`block text-sm font-medium ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}>
             Password
           </label>
           <div className="relative">
@@ -211,12 +213,12 @@ export default function ServiceNowSettings() {
               onChange={handleChange}
               placeholder="Your ServiceNow password"
               required={!config?.configured}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 pr-12"
+              className={`w-full px-3 py-2 ${isDarkMode ? 'bg-slate-800 border-slate-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'} border rounded-lg placeholder-gray-500 focus:outline-none focus:border-purple-500 pr-12`}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-400 transition-colors"
+              className={`absolute right-3 top-1/2 -translate-y-1/2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} hover:text-purple-400 transition-colors`}
             >
               {showPassword ? '🙈' : '👁️'}
             </button>
@@ -261,52 +263,52 @@ export default function ServiceNowSettings() {
 
       {/* Capabilities Info */}
       <div className="mt-6 space-y-4">
-        <div className="border-t border-slate-700 pt-6">
+        <div className={`border-t ${isDarkMode ? 'border-slate-700' : 'border-gray-200'} pt-6`}>
           <h3 className="text-lg font-semibold text-purple-300 mb-4">Integration Capabilities</h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+            <div className={`p-4 ${isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'} border rounded-lg`}>
               <div className="flex items-start gap-3">
                 <div className="text-2xl">🔒</div>
                 <div>
-                  <div className="font-medium text-gray-200">Security Incidents</div>
-                  <div className="text-sm text-gray-400 mt-1">
+                  <div className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>Security Incidents</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
                     Automatically create incidents for vulnerabilities and malware detections
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+            <div className={`p-4 ${isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'} border rounded-lg`}>
               <div className="flex items-start gap-3">
                 <div className="text-2xl">🔄</div>
                 <div>
-                  <div className="font-medium text-gray-200">Change Requests</div>
-                  <div className="text-sm text-gray-400 mt-1">
+                  <div className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>Change Requests</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
                     Create change requests for remediation and patching activities
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+            <div className={`p-4 ${isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'} border rounded-lg`}>
               <div className="flex items-start gap-3">
                 <div className="text-2xl">📝</div>
                 <div>
-                  <div className="font-medium text-gray-200">Work Notes</div>
-                  <div className="text-sm text-gray-400 mt-1">
+                  <div className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>Work Notes</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
                     Add automated updates and notes to existing incidents
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+            <div className={`p-4 ${isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'} border rounded-lg`}>
               <div className="flex items-start gap-3">
                 <div className="text-2xl">📊</div>
                 <div>
-                  <div className="font-medium text-gray-200">Priority Mapping</div>
-                  <div className="text-sm text-gray-400 mt-1">
+                  <div className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>Priority Mapping</div>
+                  <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
                     Automatic urgency and impact assignment based on threat severity
                   </div>
                 </div>
@@ -318,7 +320,7 @@ export default function ServiceNowSettings() {
         {/* Help Text */}
         <div className="p-4 bg-blue-900/10 border border-blue-500/30 rounded-lg">
           <h3 className="text-sm font-medium text-blue-400 mb-2">Setup Instructions:</h3>
-          <ol className="text-xs text-gray-400 space-y-1 list-decimal list-inside">
+          <ol className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} space-y-1 list-decimal list-inside`}>
             <li>Log in to your ServiceNow instance as an administrator</li>
             <li>Create a dedicated integration user with necessary permissions</li>
             <li>Grant permissions: incident.create, incident.read, incident.write, change_request.create</li>

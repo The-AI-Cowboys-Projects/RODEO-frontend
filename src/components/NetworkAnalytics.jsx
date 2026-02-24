@@ -688,7 +688,7 @@ const NetworkAnalytics = () => {
               </div>
               <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Total Metrics</p>
               {summary.metrics.sources.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-slate-700/50">
+                <div className={`mt-4 pt-4 border-t ${isDarkMode ? 'border-slate-700/50' : 'border-gray-200'}`}>
                   <p className={`text-xs font-medium mb-2 ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>Sources</p>
                   <div className="flex flex-wrap gap-1">
                     {summary.metrics.sources.map((s, i) => (

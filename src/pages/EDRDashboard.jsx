@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { edr } from '../api/client'
 
 // API base URL for WebSocket connections
@@ -289,6 +290,7 @@ const tabs = [
 
 // ==================== Overview Tab ====================
 function OverviewTab({ endpoints, detections, platforms, correlationStats, isDarkMode, setActiveTab, setPendingFilter }) {
+  const { isDemoMode, seededInt } = useDemoMode()
   const totalEndpoints = Object.values(endpoints).flat().length
   const onlineEndpoints = Object.values(endpoints).flat().filter(e => e.status === 'online').length
   const totalDetections = Object.values(detections).flat().length
@@ -312,8 +314,8 @@ function OverviewTab({ endpoints, detections, platforms, correlationStats, isDar
     const currentHour = now.getHours()
     return Array.from({ length: 24 }, (_, i) => ({
       hour: `${i}:00`,
-      detections: i <= currentHour ? Math.floor(Math.random() * 50) + 10 : 0,
-      correlated: i <= currentHour ? Math.floor(Math.random() * 20) + 5 : 0,
+      detections: i <= currentHour ? (isDemoMode ? seededInt(`edr_det_${i}`, 10, 60) : Math.floor(Math.random() * 50) + 10) : 0,
+      correlated: i <= currentHour ? (isDemoMode ? seededInt(`edr_cor_${i}`, 5, 25) : Math.floor(Math.random() * 20) + 5) : 0,
     }))
   })
 
@@ -328,12 +330,16 @@ function OverviewTab({ endpoints, detections, platforms, correlationStats, isDar
       const recentDets = allDets.filter(d => d.timestamp && new Date(d.timestamp) >= hourStart).length
       setTimelineData(prev => prev.map((slot, i) =>
         i === currentHour
-          ? { ...slot, detections: recentDets || slot.detections + Math.floor(Math.random() * 3), correlated: Math.floor((recentDets || slot.detections) * 0.4) }
+          ? {
+              ...slot,
+              detections: recentDets || slot.detections + (isDemoMode ? seededInt(`edr_tick_det_${currentHour}`, 0, 3) : Math.floor(Math.random() * 3)),
+              correlated: Math.floor((recentDets || slot.detections) * 0.4),
+            }
           : slot
       ))
     }, 5 * 60 * 1000) // 5 minute interval
     return () => clearInterval(interval)
-  }, [detections])
+  }, [detections, isDemoMode, seededInt])
 
   const stats = [
     { name: 'Total Endpoints', value: totalEndpoints, icon: ComputerDesktopIcon, gradient: 'from-blue-400 to-cyan-500', tab: 'endpoints' },

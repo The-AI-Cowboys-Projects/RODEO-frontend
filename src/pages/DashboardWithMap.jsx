@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { stats, samples, vulnerabilities } from '../api/client'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps'
@@ -23,6 +24,7 @@ const attackFlows = [
 
 export default function Dashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode, seededInt } = useDemoMode()
   const [threatData, setThreatData] = useState([])
   const [activeFlows, setActiveFlows] = useState([])
   const animationRef = useRef(null)
@@ -30,38 +32,38 @@ export default function Dashboard() {
   // Generate simulated threat heatmap data
   useEffect(() => {
     const regions = [
-      { name: 'North America', lat: 40, lng: -100, threats: Math.floor(Math.random() * 500) + 100 },
-      { name: 'South America', lat: -15, lng: -60, threats: Math.floor(Math.random() * 300) + 50 },
-      { name: 'Europe', lat: 50, lng: 10, threats: Math.floor(Math.random() * 600) + 200 },
-      { name: 'Africa', lat: 0, lng: 20, threats: Math.floor(Math.random() * 200) + 30 },
-      { name: 'Middle East', lat: 30, lng: 50, threats: Math.floor(Math.random() * 400) + 100 },
-      { name: 'Asia', lat: 35, lng: 105, threats: Math.floor(Math.random() * 800) + 300 },
-      { name: 'Oceania', lat: -25, lng: 135, threats: Math.floor(Math.random() * 150) + 20 },
+      { name: 'North America', lat: 40, lng: -100, threats: isDemoMode ? seededInt('geo_na', 100, 600) : Math.floor(Math.random() * 500) + 100 },
+      { name: 'South America', lat: -15, lng: -60, threats: isDemoMode ? seededInt('geo_sa', 50, 350) : Math.floor(Math.random() * 300) + 50 },
+      { name: 'Europe', lat: 50, lng: 10, threats: isDemoMode ? seededInt('geo_eu', 200, 800) : Math.floor(Math.random() * 600) + 200 },
+      { name: 'Africa', lat: 0, lng: 20, threats: isDemoMode ? seededInt('geo_af', 30, 230) : Math.floor(Math.random() * 200) + 30 },
+      { name: 'Middle East', lat: 30, lng: 50, threats: isDemoMode ? seededInt('geo_me', 100, 500) : Math.floor(Math.random() * 400) + 100 },
+      { name: 'Asia', lat: 35, lng: 105, threats: isDemoMode ? seededInt('geo_as', 300, 1100) : Math.floor(Math.random() * 800) + 300 },
+      { name: 'Oceania', lat: -25, lng: 135, threats: isDemoMode ? seededInt('geo_oc', 20, 170) : Math.floor(Math.random() * 150) + 20 },
     ]
 
     const threatTypes = [
-      { type: 'Malware', count: Math.floor(Math.random() * 1000) + 200, severity: 'critical' },
-      { type: 'Phishing', count: Math.floor(Math.random() * 800) + 150, severity: 'high' },
-      { type: 'DDoS', count: Math.floor(Math.random() * 500) + 100, severity: 'high' },
-      { type: 'Ransomware', count: Math.floor(Math.random() * 300) + 50, severity: 'critical' },
-      { type: 'Brute Force', count: Math.floor(Math.random() * 600) + 120, severity: 'medium' },
-      { type: 'SQL Injection', count: Math.floor(Math.random() * 400) + 80, severity: 'high' },
-      { type: 'XSS', count: Math.floor(Math.random() * 350) + 70, severity: 'medium' },
-      { type: 'Zero-Day', count: Math.floor(Math.random() * 50) + 5, severity: 'critical' },
+      { type: 'Malware', count: isDemoMode ? seededInt('tt_malware', 200, 1200) : Math.floor(Math.random() * 1000) + 200, severity: 'critical' },
+      { type: 'Phishing', count: isDemoMode ? seededInt('tt_phishing', 150, 950) : Math.floor(Math.random() * 800) + 150, severity: 'high' },
+      { type: 'DDoS', count: isDemoMode ? seededInt('tt_ddos', 100, 600) : Math.floor(Math.random() * 500) + 100, severity: 'high' },
+      { type: 'Ransomware', count: isDemoMode ? seededInt('tt_ransomware', 50, 350) : Math.floor(Math.random() * 300) + 50, severity: 'critical' },
+      { type: 'Brute Force', count: isDemoMode ? seededInt('tt_brute', 120, 720) : Math.floor(Math.random() * 600) + 120, severity: 'medium' },
+      { type: 'SQL Injection', count: isDemoMode ? seededInt('tt_sqli', 80, 480) : Math.floor(Math.random() * 400) + 80, severity: 'high' },
+      { type: 'XSS', count: isDemoMode ? seededInt('tt_xss', 70, 420) : Math.floor(Math.random() * 350) + 70, severity: 'medium' },
+      { type: 'Zero-Day', count: isDemoMode ? seededInt('tt_zeroday', 5, 55) : Math.floor(Math.random() * 50) + 5, severity: 'critical' },
     ]
 
     setThreatData({ regions, threatTypes })
 
     // Initialize all flows as active
     setActiveFlows(attackFlows.map((_, i) => i))
-  }, [])
+  }, [isDemoMode, seededInt])
 
   // Animate traffic flows - cycle through which ones are highlighted
   useEffect(() => {
     let flowIndex = 0
     const interval = setInterval(() => {
       // Randomly activate 3-5 flows
-      const numActive = Math.floor(Math.random() * 3) + 3
+      const numActive = isDemoMode ? seededInt(`flows_${Math.floor(Date.now() / 5000)}`, 3, 5) : Math.floor(Math.random() * 3) + 3
       const newActive = []
       for (let i = 0; i < numActive; i++) {
         newActive.push((flowIndex + i) % attackFlows.length)
@@ -71,7 +73,7 @@ export default function Dashboard() {
     }, 800)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isDemoMode, seededInt])
 
   const { data: statsData, isLoading: statsLoading } = useQuery({
     queryKey: ['stats'],

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ZAxis } from 'recharts'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 
 export default function AiTriagePanel() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode, seededRandom, seededInt } = useDemoMode()
   const [activeThreats, setActiveThreats] = useState([])
   const [triageQueue, setTriageQueue] = useState([])
   const [mlStats, setMlStats] = useState({
@@ -23,10 +25,19 @@ export default function AiTriagePanel() {
       const services = ['Apache HTTP Server', 'OpenSSH', 'nginx', 'PostgreSQL', 'Redis', 'MySQL', 'MongoDB', 'Docker']
       const categories = ['RCE', 'SQL Injection', 'XSS', 'Buffer Overflow', 'Auth Bypass', 'Path Traversal', 'CSRF', 'XXE']
 
-      const cvssScore = (Math.random() * 4 + 6).toFixed(1) // 6.0 - 10.0
-      const exploitability = (Math.random() * 100).toFixed(1)
-      const impact = (Math.random() * 100).toFixed(1)
-      const confidence = (Math.random() * 30 + 70).toFixed(1) // 70-100%
+      const tick = Math.floor(Date.now() / 3000)
+      const cvssScore = isDemoMode
+        ? (seededRandom(`triage_cvss_${tick}`) * 4 + 6).toFixed(1)
+        : (Math.random() * 4 + 6).toFixed(1) // 6.0 - 10.0
+      const exploitability = isDemoMode
+        ? (seededRandom(`triage_exp_${tick}`) * 100).toFixed(1)
+        : (Math.random() * 100).toFixed(1)
+      const impact = isDemoMode
+        ? (seededRandom(`triage_imp_${tick}`) * 100).toFixed(1)
+        : (Math.random() * 100).toFixed(1)
+      const confidence = isDemoMode
+        ? (seededRandom(`triage_conf_${tick}`) * 30 + 70).toFixed(1)
+        : (Math.random() * 30 + 70).toFixed(1) // 70-100%
 
       // Calculate risk score (combines CVSS, exploitability, and impact)
       const riskScore = (
@@ -36,10 +47,10 @@ export default function AiTriagePanel() {
       ) * 100
 
       return {
-        id: Date.now() + Math.random(),
-        cve: cves[Math.floor(Math.random() * cves.length)],
-        service: services[Math.floor(Math.random() * services.length)],
-        category: categories[Math.floor(Math.random() * categories.length)],
+        id: isDemoMode ? Date.now() + seededRandom(`triage_id_${tick}`) : Date.now() + Math.random(),
+        cve: cves[isDemoMode ? seededInt(`triage_cve_${tick}`, 0, cves.length - 1) : Math.floor(Math.random() * cves.length)],
+        service: services[isDemoMode ? seededInt(`triage_svc_${tick}`, 0, services.length - 1) : Math.floor(Math.random() * services.length)],
+        category: categories[isDemoMode ? seededInt(`triage_cat_${tick}`, 0, categories.length - 1) : Math.floor(Math.random() * categories.length)],
         cvssScore: parseFloat(cvssScore),
         exploitability: parseFloat(exploitability),
         impact: parseFloat(impact),
@@ -66,16 +77,23 @@ export default function AiTriagePanel() {
       setTriageQueue(prev => [newThreat, ...prev].slice(0, 5))
 
       // Update ML stats
+      const statTick = Math.floor(Date.now() / 3000)
       setMlStats(prev => ({
-        accuracy: 94.3 + (Math.random() - 0.5) * 0.5,
+        accuracy: isDemoMode
+          ? 94.3 + (seededRandom(`triage_acc_${statTick}`) - 0.5) * 0.5
+          : 94.3 + (Math.random() - 0.5) * 0.5,
         processed: prev.processed + 1,
-        autoClassified: prev.autoClassified + (Math.random() > 0.1 ? 1 : 0),
+        autoClassified: prev.autoClassified + (
+          isDemoMode
+            ? (seededRandom(`triage_auto_${statTick}`) > 0.1 ? 1 : 0)
+            : (Math.random() > 0.1 ? 1 : 0)
+        ),
         confidence: parseFloat(newThreat.confidence)
       }))
     }, 5000)
 
     return () => clearInterval(triageInterval)
-  }, [])
+  }, [isDemoMode, seededRandom, seededInt])
 
   // Risk matrix data for scatter plot
   const riskMatrix = activeThreats.map(threat => ({

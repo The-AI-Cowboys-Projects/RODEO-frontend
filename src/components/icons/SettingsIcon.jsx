@@ -1,4 +1,4 @@
-export default function SettingsIcon({ className }) {
+export default function SettingsIcon({ className, primary = '#800080', secondary = '#C38BBF' }) {
   return (
     <svg
       className={className}

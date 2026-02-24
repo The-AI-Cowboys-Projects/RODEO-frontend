@@ -29,7 +29,8 @@ import {
   KnowledgeIcon,
   ThreatIntelIcon,
   LogAnomalyIcon,
-  UserIcon
+  UserIcon,
+  BCDRIcon
 } from './icons'
 
 export default function Layout({ children }) {
@@ -38,6 +39,10 @@ export default function Layout({ children }) {
   const { isDarkMode, toggleTheme } = useTheme()
   const { permissions, loading: authLoading } = useAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  // Fixed icon color scheme: #800080, #C38BBF, #000000, white
+  const iconPrimary = '#800080'
+  const iconSecondary = '#C38BBF'
   const [isMobile, setIsMobile] = useState(false)
 
   // Check for mobile viewport
@@ -106,7 +111,7 @@ export default function Layout({ children }) {
     { path: '/network-analytics', label: 'Network Analytics', Icon: NetworkIcon, ariaLabel: 'Network analytics dashboard', permission: 'read_scan_results' },
     { path: '/privacy', label: 'Privacy & Data Protection', Icon: PrivacyIcon, ariaLabel: 'PII detection and data protection', permission: 'read_assets' },
     { path: '/compliance', label: 'Compliance', Icon: ClipboardIcon, ariaLabel: 'Compliance dashboard', permission: 'read_reports' },
-    { path: '/bcdr', label: 'BC/DR Testing', Icon: ShieldIcon, ariaLabel: 'Business continuity and disaster recovery', permission: 'manage_system' },
+    { path: '/bcdr', label: 'BC/DR Testing', Icon: BCDRIcon, ariaLabel: 'Business continuity and disaster recovery', permission: 'manage_system' },
     { path: '/bug-bounty', label: 'Bug Bounty', Icon: BugBountyIcon, ariaLabel: 'Bug bounty hunter dashboard', permission: 'run_scans' },
     { path: '/users', label: 'User Management', Icon: UserIcon, ariaLabel: 'User and role management', permission: 'read_users' },
   ]
@@ -203,7 +208,7 @@ export default function Layout({ children }) {
                           }`
                     }`}
                   >
-                    <item.Icon className="w-5 h-5 mr-3 flex-shrink-0" aria-hidden="true" />
+                    <item.Icon className="w-5 h-5 mr-3 flex-shrink-0" primary={iconPrimary} secondary={iconSecondary} aria-hidden="true" />
                     <span>{item.label}</span>
                   </Link>
                 </li>

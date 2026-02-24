@@ -1,4 +1,4 @@
-export default function NetworkIcon({ className = 'w-5 h-5', ...props }) {
+export default function NetworkIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -27,14 +27,14 @@ export default function NetworkIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Top-left monitor */}
-      <rect x="1" y="2" width="7" height="5" rx="0.5" fill="none" stroke="#C38BBF" strokeWidth="1.2" />
-      <rect x="3.5" y="7" width="2" height="1.5" fill="#C38BBF" />
-      <rect x="2.5" y="8.5" width="4" height="0.8" rx="0.3" fill="#C38BBF" />
+      <rect x="1" y="2" width="7" height="5" rx="0.5" fill="none" stroke={secondary} strokeWidth="1.2" />
+      <rect x="3.5" y="7" width="2" height="1.5" fill={secondary} />
+      <rect x="2.5" y="8.5" width="4" height="0.8" rx="0.3" fill={secondary} />
 
       {/* Bottom-right monitor */}
-      <rect x="16" y="14" width="7" height="5" rx="0.5" fill="none" stroke="#C38BBF" strokeWidth="1.2" />
-      <rect x="18.5" y="19" width="2" height="1.5" fill="#C38BBF" />
-      <rect x="17.5" y="20.5" width="4" height="0.8" rx="0.3" fill="#C38BBF" />
+      <rect x="16" y="14" width="7" height="5" rx="0.5" fill="none" stroke={secondary} strokeWidth="1.2" />
+      <rect x="18.5" y="19" width="2" height="1.5" fill={secondary} />
+      <rect x="17.5" y="20.5" width="4" height="0.8" rx="0.3" fill={secondary} />
 
       {/* Top-right small device */}
       <rect x="17" y="3" width="5" height="2.5" rx="0.5" fill="none" stroke="white" strokeWidth="1" />
@@ -49,15 +49,15 @@ export default function NetworkIcon({ className = 'w-5 h-5', ...props }) {
       <circle className="device-light-3" cx="5.8" cy="18.25" r="0.4" fill="white" />
 
       {/* Animated connection lines */}
-      <line className="data-line" x1="4.5" y1="9.3" x2="4.5" y2="12" stroke="#C38BBF" strokeWidth="1" />
-      <line className="data-line" x1="4.5" y1="12" x2="4.5" y2="17" stroke="#C38BBF" strokeWidth="1" />
-      <line className="data-line" x1="4.5" y1="12" x2="19.5" y2="12" stroke="#C38BBF" strokeWidth="1" />
-      <line className="data-line" x1="19.5" y1="12" x2="19.5" y2="14" stroke="#C38BBF" strokeWidth="1" />
+      <line className="data-line" x1="4.5" y1="9.3" x2="4.5" y2="12" stroke={secondary} strokeWidth="1" />
+      <line className="data-line" x1="4.5" y1="12" x2="4.5" y2="17" stroke={secondary} strokeWidth="1" />
+      <line className="data-line" x1="4.5" y1="12" x2="19.5" y2="12" stroke={secondary} strokeWidth="1" />
+      <line className="data-line" x1="19.5" y1="12" x2="19.5" y2="14" stroke={secondary} strokeWidth="1" />
       <line className="data-line" x1="19.5" y1="5.5" x2="19.5" y2="12" stroke="white" strokeWidth="1" />
 
       {/* Pulsing connection nodes */}
-      <circle className="node-1" cx="4.5" cy="12" r="1" fill="#C38BBF" />
-      <circle className="node-2" cx="19.5" cy="12" r="1" fill="#C38BBF" />
+      <circle className="node-1" cx="4.5" cy="12" r="1" fill={secondary} />
+      <circle className="node-2" cx="19.5" cy="12" r="1" fill={secondary} />
     </svg>
   )
 }

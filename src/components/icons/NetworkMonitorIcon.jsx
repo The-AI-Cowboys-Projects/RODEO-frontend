@@ -1,4 +1,4 @@
-export default function NetworkMonitorIcon({ className = 'w-5 h-5', ...props }) {
+export default function NetworkMonitorIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="none" {...props}>
       <style>
@@ -26,11 +26,11 @@ export default function NetworkMonitorIcon({ className = 'w-5 h-5', ...props }) 
         `}
       </style>
       {/* Antenna base */}
-      <rect x="10" y="18" width="4" height="4" rx="0.5" fill="#C38BBF" />
+      <rect x="10" y="18" width="4" height="4" rx="0.5" fill={secondary} />
       {/* Antenna pole */}
-      <line x1="12" y1="18" x2="12" y2="10" stroke="#C38BBF" strokeWidth="2" strokeLinecap="round" />
+      <line x1="12" y1="18" x2="12" y2="10" stroke={secondary} strokeWidth="2" strokeLinecap="round" />
       {/* Antenna top */}
-      <circle cx="12" cy="8" r="2" fill="#C38BBF" />
+      <circle cx="12" cy="8" r="2" fill={secondary} />
       {/* Animated signal waves - left */}
       <path className="wave-left-1" d="M6 10c-1.5-1.5-2.5-3.5-2.5-5.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" />
       <path className="wave-left-2" d="M8 11c-1-1-1.8-2.5-1.8-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" fill="none" />

@@ -1,4 +1,4 @@
-export default function UnlockIcon({ className = 'w-5 h-5', ...props }) {
+export default function UnlockIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -22,11 +22,11 @@ export default function UnlockIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Lock body */}
-      <rect x="5" y="11" width="14" height="10" rx="2" fill="#800080" />
+      <rect x="5" y="11" width="14" height="10" rx="2" fill={primary} />
       {/* Keyhole */}
       <circle className="keyhole-pulse" cx="12" cy="16" r="1.5" fill="white" />
       {/* Shackle (open, animated) */}
-      <path className="shackle-open" d="M8 11V7a4 4 0 018 0" fill="none" stroke="#C38BBF" strokeWidth="2.5" strokeLinecap="round" />
+      <path className="shackle-open" d="M8 11V7a4 4 0 018 0" fill="none" stroke={secondary} strokeWidth="2.5" strokeLinecap="round" />
     </svg>
   )
 }

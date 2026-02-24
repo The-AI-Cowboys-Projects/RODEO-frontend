@@ -1,4 +1,4 @@
-export default function SandboxIcon({ className = 'w-5 h-5', ...props }) {
+export default function SandboxIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       <style>
@@ -18,9 +18,9 @@ export default function SandboxIcon({ className = 'w-5 h-5', ...props }) {
         `}
       </style>
       {/* Flask/beaker shape */}
-      <path d="M9 3h6v2h-1v4l5 8v1a2 2 0 01-2 2H7a2 2 0 01-2-2v-1l5-8V5H9V3z" fill="#800080" />
+      <path d="M9 3h6v2h-1v4l5 8v1a2 2 0 01-2 2H7a2 2 0 01-2-2v-1l5-8V5H9V3z" fill={primary} />
       {/* Liquid inside */}
-      <path d="M7.5 15L10 11v3.5L7.5 18h9l-2.5-3.5V11l2.5 4H7.5z" fill="#C38BBF" fillOpacity="0.5" />
+      <path d="M7.5 15L10 11v3.5L7.5 18h9l-2.5-3.5V11l2.5 4H7.5z" fill={secondary} fillOpacity="0.5" />
       {/* Virus in flask - center body */}
       <circle cx="12" cy="15.5" r="2" fill="white" />
       {/* Animated virus spikes */}

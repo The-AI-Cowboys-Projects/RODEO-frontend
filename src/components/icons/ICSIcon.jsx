@@ -1,4 +1,4 @@
-export default function ICSIcon({ className = 'w-5 h-5', ...props }) {
+export default function ICSIcon({ className = 'w-5 h-5', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg viewBox="0 0 24 24" className={className} {...props}>
       {/* PLC body */}
@@ -6,7 +6,7 @@ export default function ICSIcon({ className = 'w-5 h-5', ...props }) {
       {/* Status lights */}
       <circle cx="7" cy="9" r="1.5" fill="#4ade80" />
       <circle cx="12" cy="9" r="1.5" fill="#facc15" />
-      <circle cx="17" cy="9" r="1.5" fill="#800080" />
+      <circle cx="17" cy="9" r="1.5" fill={primary} />
       {/* Register lines */}
       <line x1="6" y1="13" x2="18" y2="13" stroke="#E8B4E6" strokeWidth="1" />
       <line x1="6" y1="15.5" x2="18" y2="15.5" stroke="#E8B4E6" strokeWidth="1" />

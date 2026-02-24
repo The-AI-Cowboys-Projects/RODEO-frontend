@@ -1,4 +1,4 @@
-export default function BugBountyIcon({ className = '' }) {
+export default function BugBountyIcon({ className = '', primary = '#800080', secondary = '#C38BBF', ...props }) {
   return (
     <svg
       className={className}

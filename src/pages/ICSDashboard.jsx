@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { useDemoMode } from '../context/DemoModeContext'
 import { ics } from '../api/client'
 
 const TABS = ['Overview', 'Water Treatment', 'Power Grid', 'Manufacturing', 'Alerts', 'Attack Tools', 'MITRE ICS']
@@ -25,6 +26,8 @@ const statusColor = {
 
 export default function ICSDashboard() {
   const { isDarkMode } = useTheme()
+  const { isDemoMode } = useDemoMode()
+  const isLiveMode = !isDemoMode
   const [activeTab, setActiveTab] = useState(0)
   const [status, setStatus] = useState(null)
   const [devices, setDevices] = useState([])
@@ -51,9 +54,9 @@ export default function ICSDashboard() {
         ics.getAlerts().catch(() => []),
       ])
       setStatus(s)
-      setDevices(d)
-      setScenarios(sc)
-      setAlerts(al)
+      setDevices(Array.isArray(d) ? d : d?.devices || d?.data || [])
+      setScenarios(Array.isArray(sc) ? sc : sc?.scenarios || sc?.data || [])
+      setAlerts(Array.isArray(al) ? al : al?.alerts || al?.data || [])
     } catch {
       // fallback
     }
@@ -62,11 +65,18 @@ export default function ICSDashboard() {
 
   useEffect(() => { fetchAll() }, [fetchAll])
 
+  // Live mode polling
+  useEffect(() => {
+    if (!isLiveMode) return
+    const interval = setInterval(() => { fetchAll() }, 15000)
+    return () => clearInterval(interval)
+  }, [isLiveMode, fetchAll])
+
   useEffect(() => {
     if (activeTab === 4) {
-      ics.getAlerts().then(setAlerts).catch(() => {})
+      ics.getAlerts().then(a => setAlerts(Array.isArray(a) ? a : a?.alerts || a?.data || [])).catch(() => {})
     } else if (activeTab === 5) {
-      ics.getAttackHistory().then(setAttackHistory).catch(() => {})
+      ics.getAttackHistory().then(h => setAttackHistory(Array.isArray(h) ? h : h?.history || h?.data || [])).catch(() => {})
     } else if (activeTab === 6 && !mitre) {
       ics.getMitreICS().then(setMitre).catch(() => {})
     }
@@ -258,7 +268,7 @@ export default function ICSDashboard() {
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Recent Alerts</h3>
         <button
-          onClick={() => ics.getAlerts().then(setAlerts).catch(() => {})}
+          onClick={() => ics.getAlerts().then(a => setAlerts(Array.isArray(a) ? a : a?.alerts || a?.data || [])).catch(() => {})}
           className="text-xs px-3 py-1 rounded bg-pink-600 hover:bg-pink-500 text-white"
         >Refresh</button>
       </div>

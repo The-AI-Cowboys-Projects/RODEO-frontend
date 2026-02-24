@@ -150,7 +150,7 @@ const CertificationTierCard = ({ tier }) => {
   );
 };
 
-const ControlDomainCard = ({ domain, onClick }) => {
+const ControlDomainCard = ({ domain, onClick, isDarkMode }) => {
   const getScoreColor = (score) => {
     if (score >= 95) return 'text-green-600';
     if (score >= 85) return 'text-blue-600';
@@ -167,13 +167,13 @@ const ControlDomainCard = ({ domain, onClick }) => {
 
   return (
     <div
-      className="bg-slate-700 rounded-lg border border-slate-600 p-6 cursor-pointer hover:border-purple-500 hover:shadow-lg transition-all duration-200"
+      className={`${isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-white border-gray-200'} rounded-lg border p-6 cursor-pointer hover:border-purple-500 hover:shadow-lg transition-all duration-200`}
       onClick={onClick}
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h3 className="font-semibold text-white">{domain.name}</h3>
-          <p className="text-sm text-gray-400 mt-1">
+          <h3 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{domain.name}</h3>
+          <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>
             {domain.controls_met || 0} of {domain.controls_total || 0} controls met
           </p>
         </div>
@@ -186,7 +186,7 @@ const ControlDomainCard = ({ domain, onClick }) => {
         </div>
       </div>
 
-      <div className="w-full bg-slate-600 rounded-full h-2 mb-4">
+      <div className={`w-full ${isDarkMode ? 'bg-slate-600' : 'bg-gray-200'} rounded-full h-2 mb-4`}>
         <div
           className={`${getScoreBgColor(domain.score)} h-2 rounded-full transition-all duration-500`}
           style={{ width: `${domain.score}%` }}
@@ -198,7 +198,7 @@ const ControlDomainCard = ({ domain, onClick }) => {
         <div className="space-y-2 mb-4">
           {Object.entries(domain.controls).slice(0, 3).map(([key, control]) => (
             <div key={key} className="flex items-center justify-between text-sm">
-              <span className="text-gray-300">{control.name}</span>
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{control.name}</span>
               <span className={`font-medium ${
                 control.status === 'implemented' ? 'text-green-400' :
                 control.status === 'ready' ? 'text-blue-400' :
@@ -219,9 +219,9 @@ const ControlDomainCard = ({ domain, onClick }) => {
 
       <div className="flex items-center justify-between text-sm">
         <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
-          domain.status === 'compliant' ? 'bg-green-900 text-green-300' :
-          domain.status === 'partial' ? 'bg-yellow-900 text-yellow-300' :
-          'bg-red-900 text-red-300'
+          domain.status === 'compliant' ? (isDarkMode ? 'bg-green-900 text-green-300' : 'bg-green-50 text-green-800 border border-green-200') :
+          domain.status === 'partial' ? (isDarkMode ? 'bg-yellow-900 text-yellow-300' : 'bg-yellow-50 text-yellow-800 border border-yellow-200') :
+          (isDarkMode ? 'bg-red-900 text-red-300' : 'bg-red-50 text-red-800 border border-red-200')
         }`}>
           {domain.status}
         </span>
@@ -262,7 +262,7 @@ const GapAnalysisCard = ({ gap }) => {
   );
 };
 
-const DomainDetailModal = ({ domain, onClose }) => {
+const DomainDetailModal = ({ domain, onClose, isDarkMode }) => {
   if (!domain) return null;
 
   const getStatusIcon = (status) => {
@@ -312,7 +312,7 @@ const DomainDetailModal = ({ domain, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-800 rounded-2xl border border-slate-700 shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-2xl border shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col`}>
         {/* Header */}
         <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 flex items-start justify-between">
           <div className="flex-1">
@@ -334,7 +334,7 @@ const DomainDetailModal = ({ domain, onClose }) => {
 
         {/* Progress Bar */}
         <div className="px-6 pt-4">
-          <div className="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
+          <div className={`w-full ${isDarkMode ? 'bg-slate-700' : 'bg-gray-200'} rounded-full h-3 overflow-hidden`}>
             <div
               className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500"
               style={{ width: `${domain.score}%` }}
@@ -344,7 +344,7 @@ const DomainDetailModal = ({ domain, onClose }) => {
 
         {/* Controls List */}
         <div className="flex-1 overflow-y-auto p-6">
-          <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+          <h3 className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4 flex items-center`}>
             <ShieldCheckIcon className="w-6 h-6 mr-2 text-purple-400" />
             Control Details
           </h3>
@@ -368,7 +368,7 @@ const DomainDetailModal = ({ domain, onClose }) => {
                           <p className="text-sm text-gray-300 mt-1">{control.description}</p>
                         )}
                         {control.implementation_notes && (
-                          <div className="mt-2 text-xs bg-slate-900/50 rounded p-2 border border-slate-700">
+                          <div className={`mt-2 text-xs ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} rounded p-2 border`}>
                             <span className="font-semibold">Implementation: </span>
                             {control.implementation_notes}
                           </div>
@@ -391,7 +391,7 @@ const DomainDetailModal = ({ domain, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="bg-slate-900/50 border-t border-slate-700 p-4 flex justify-end">
+        <div className={`${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-gray-50 border-gray-200'} border-t p-4 flex justify-end`}>
           <button
             onClick={onClose}
             className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium"
@@ -545,39 +545,39 @@ const HITRUSTDashboard = () => {
                   </svg>
                 </button>
                 {/* Dropdown menu for format selection */}
-                <div className="absolute right-0 bottom-full mb-2 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                  <div className="px-3 py-2 border-b border-slate-700">
-                    <p className="text-xs text-gray-400 font-semibold uppercase">Select Format</p>
+                <div className={`absolute right-0 bottom-full mb-2 w-56 ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10`}>
+                  <div className={`px-3 py-2 border-b ${isDarkMode ? 'border-slate-700' : 'border-gray-200'}`}>
+                    <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} font-semibold uppercase`}>Select Format</p>
                   </div>
                   <button
                     onClick={() => downloadReport('html')}
-                    className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition flex items-center justify-between group/item"
+                    className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition flex items-center justify-between group/item`}
                   >
                     <span>
                       <span className="font-medium">HTML Report</span>
-                      <span className="block text-xs text-gray-400">Interactive web page</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Interactive web page</span>
                     </span>
-                    <span className="text-xs text-gray-500 group-hover/item:text-gray-300">.html</span>
+                    <span className={`text-xs ${isDarkMode ? 'text-gray-500 group-hover/item:text-gray-300' : 'text-gray-400 group-hover/item:text-gray-600'}`}>.html</span>
                   </button>
                   <button
                     onClick={() => downloadReport('json')}
-                    className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 transition flex items-center justify-between group/item"
+                    className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} transition flex items-center justify-between group/item`}
                   >
                     <span>
                       <span className="font-medium">JSON Data</span>
-                      <span className="block text-xs text-gray-400">Structured data export</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Structured data export</span>
                     </span>
-                    <span className="text-xs text-gray-500 group-hover/item:text-gray-300">.json</span>
+                    <span className={`text-xs ${isDarkMode ? 'text-gray-500 group-hover/item:text-gray-300' : 'text-gray-400 group-hover/item:text-gray-600'}`}>.json</span>
                   </button>
                   <button
                     onClick={() => downloadReport('csv')}
-                    className="w-full text-left px-4 py-3 text-white hover:bg-slate-700 rounded-b-lg transition flex items-center justify-between group/item"
+                    className={`w-full text-left px-4 py-3 ${isDarkMode ? 'text-white hover:bg-slate-700' : 'text-gray-900 hover:bg-gray-50'} rounded-b-lg transition flex items-center justify-between group/item`}
                   >
                     <span>
                       <span className="font-medium">CSV Spreadsheet</span>
-                      <span className="block text-xs text-gray-400">Excel compatible</span>
+                      <span className={`block text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Excel compatible</span>
                     </span>
-                    <span className="text-xs text-gray-500 group-hover/item:text-gray-300">.csv</span>
+                    <span className={`text-xs ${isDarkMode ? 'text-gray-500 group-hover/item:text-gray-300' : 'text-gray-400 group-hover/item:text-gray-600'}`}>.csv</span>
                   </button>
                 </div>
               </div>
@@ -592,7 +592,7 @@ const HITRUSTDashboard = () => {
         </div>
 
         {/* View Selector */}
-        <div className="mb-6 bg-slate-700 rounded-lg p-1 flex space-x-1">
+        <div className={`mb-6 ${isDarkMode ? 'bg-slate-700' : 'bg-gray-100'} rounded-lg p-1 flex space-x-1`}>
           {['overview', 'controls', 'evidence'].map((view) => (
             <button
               key={view}
@@ -600,7 +600,7 @@ const HITRUSTDashboard = () => {
               className={`flex-1 py-2 px-4 rounded-md font-medium transition ${
                 selectedView === view
                   ? 'bg-purple-600 text-white'
-                  : 'text-gray-300 hover:bg-slate-600'
+                  : `${isDarkMode ? 'text-gray-300 hover:bg-slate-600' : 'text-gray-600 hover:bg-gray-200'}`
               }`}
             >
               {view.charAt(0).toUpperCase() + view.slice(1)}
@@ -666,6 +666,7 @@ const HITRUSTDashboard = () => {
                     key={domain.name}
                     domain={domain}
                     onClick={() => setSelectedDomain(domain)}
+                    isDarkMode={isDarkMode}
                   />
                 ))}
               </div>
@@ -686,21 +687,21 @@ const HITRUSTDashboard = () => {
             )}
 
             {/* Next Steps */}
-            <div className="bg-slate-800 rounded-lg border border-slate-700 p-6">
-              <h2 className="text-2xl font-bold text-white mb-4">
+            <div className={`${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'} rounded-lg border p-6`}>
+              <h2 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-4`}>
                 Next Steps
               </h2>
               <div className="space-y-3">
                 {hitrustData.next_steps.map((step, index) => (
-                  <div key={step.step || index} className="flex items-start p-4 bg-slate-700/50 rounded-lg">
-                    <div className="px-3 py-1 rounded text-sm font-bold mr-4 bg-purple-900 text-purple-300 min-w-[40px] text-center">
+                  <div key={step.step || index} className={`flex items-start p-4 ${isDarkMode ? 'bg-slate-700/50' : 'bg-gray-50'} rounded-lg`}>
+                    <div className={`px-3 py-1 rounded text-sm font-bold mr-4 ${isDarkMode ? 'bg-purple-900 text-purple-300' : 'bg-purple-100 text-purple-700'} min-w-[40px] text-center`}>
                       {step.step}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-white">{step.action}</h4>
-                      <p className="text-sm text-gray-400 mt-1">Owner: {step.owner}</p>
+                      <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{step.action}</h4>
+                      <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Owner: {step.owner}</p>
                       {step.due_date && (
-                        <p className="text-xs text-gray-500 mt-1">Due: {new Date(step.due_date).toLocaleDateString()}</p>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} mt-1`}>Due: {new Date(step.due_date).toLocaleDateString()}</p>
                       )}
                     </div>
                   </div>
@@ -927,6 +928,7 @@ const HITRUSTDashboard = () => {
         <DomainDetailModal
           domain={selectedDomain}
           onClose={() => setSelectedDomain(null)}
+          isDarkMode={isDarkMode}
         />
       )}
     </div>

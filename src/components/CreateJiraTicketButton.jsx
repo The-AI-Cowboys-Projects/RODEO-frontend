@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { useTheme } from '../context/ThemeContext'
 
 const API_BASE = ''
 
@@ -38,6 +39,7 @@ api.interceptors.request.use((config) => {
  * - size: 'sm' | 'md' | 'lg' (default: 'md')
  */
 export default function CreateJiraTicketButton({ type, data, className = '', size = 'md' }) {
+  const { isDarkMode } = useTheme()
   const [showModal, setShowModal] = useState(false)
   const [ticketResult, setTicketResult] = useState(null)
 
@@ -132,23 +134,23 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
       {/* Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 border border-cyan-500/30 rounded-lg max-w-lg w-full p-6">
-            <h3 className="text-xl font-bold text-cyan-400 mb-4">
+          <div className={`border border-cyan-500/30 rounded-lg max-w-lg w-full p-6 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
+            <h3 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-cyan-400' : 'text-cyan-700'}`}>
               Create Jira Ticket
             </h3>
 
             {!ticketResult ? (
               <>
                 {/* Preview */}
-                <div className="mb-6 p-4 bg-gray-800 border border-gray-700 rounded-lg space-y-2 text-sm">
+                <div className={`mb-6 p-4 border rounded-lg space-y-2 text-sm ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
                   {type === 'vulnerability' && (
                     <>
                       <div>
-                        <span className="text-gray-400">CVE:</span>{' '}
-                        <span className="text-white font-medium">{data.cve_id}</span>
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>CVE:</span>{' '}
+                        <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{data.cve_id}</span>
                       </div>
                       <div>
-                        <span className="text-gray-400">Severity:</span>{' '}
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Severity:</span>{' '}
                         <span
                           className={`font-medium ${
                             data.severity?.toLowerCase() === 'critical'
@@ -164,12 +166,12 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                         </span>
                       </div>
                       <div>
-                        <span className="text-gray-400">CVSS Score:</span>{' '}
-                        <span className="text-white">{data.cvss_score}</span>
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>CVSS Score:</span>{' '}
+                        <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>{data.cvss_score}</span>
                       </div>
                       <div>
-                        <span className="text-gray-400">Affected Systems:</span>{' '}
-                        <span className="text-white">
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Affected Systems:</span>{' '}
+                        <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>
                           {data.affected_systems?.length || 0} system(s)
                         </span>
                       </div>
@@ -179,11 +181,11 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                   {type === 'incident' && (
                     <>
                       <div>
-                        <span className="text-gray-400">Sample:</span>{' '}
-                        <span className="text-white font-medium">{data.sample_name}</span>
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Sample:</span>{' '}
+                        <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{data.sample_name}</span>
                       </div>
                       <div>
-                        <span className="text-gray-400">Classification:</span>{' '}
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Classification:</span>{' '}
                         <span className="text-orange-400 font-medium">
                           {data.classification}
                         </span>
@@ -203,8 +205,8 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                         </span>
                       </div>
                       <div>
-                        <span className="text-gray-400">MITRE Techniques:</span>{' '}
-                        <span className="text-white">
+                        <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>MITRE Techniques:</span>{' '}
+                        <span className={isDarkMode ? 'text-white' : 'text-gray-900'}>
                           {data.mitre_techniques?.length || 0} technique(s)
                         </span>
                       </div>
@@ -212,9 +214,9 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                   )}
                 </div>
 
-                <p className="text-gray-400 text-sm mb-6">
+                <p className={`text-sm mb-6 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                   This will create a new ticket in Jira project{' '}
-                  <span className="text-cyan-400 font-medium">
+                  <span className={`font-medium ${isDarkMode ? 'text-cyan-400' : 'text-cyan-700'}`}>
                     {jiraConfig.project_key}
                   </span>
                   .
@@ -231,7 +233,7 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                   <button
                     onClick={() => setShowModal(false)}
                     disabled={isPending}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium disabled:opacity-50"
+                    className={`px-4 py-2 rounded-lg font-medium disabled:opacity-50 ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'}`}
                   >
                     Cancel
                   </button>
@@ -253,9 +255,9 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                         <span className="text-xl">✅</span>
                         Ticket Created Successfully
                       </div>
-                      <div className="text-sm text-gray-300 space-y-2">
+                      <div className={`text-sm space-y-2 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                         <div>
-                          <span className="text-gray-400">Ticket ID:</span>{' '}
+                          <span className={isDarkMode ? 'text-gray-400' : 'text-gray-500'}>Ticket ID:</span>{' '}
                           <span className="font-mono font-medium">{ticketResult.ticketId}</span>
                         </div>
                         <div>
@@ -289,7 +291,7 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                         <span className="text-xl">❌</span>
                         Failed to Create Ticket
                       </div>
-                      <div className="text-sm text-gray-300">{ticketResult.message}</div>
+                      <div className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>{ticketResult.message}</div>
                     </div>
                   )}
                 </div>
@@ -299,7 +301,7 @@ export default function CreateJiraTicketButton({ type, data, className = '', siz
                     setShowModal(false)
                     setTicketResult(null)
                   }}
-                  className="w-full px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium"
+                  className={`w-full px-4 py-2 rounded-lg font-medium ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-800'}`}
                 >
                   Close
                 </button>

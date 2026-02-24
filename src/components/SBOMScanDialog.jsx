@@ -301,7 +301,7 @@ export default function SBOMScanDialog({ isOpen, onClose, onScanComplete }) {
                 onClick={() => setScanType('upload')}
                 className={`px-4 py-3 rounded-lg border-2 transition-colors ${
                   scanType === 'upload'
-                    ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
+                    ? isDarkMode ? 'border-purple-600 bg-purple-900/20' : 'border-purple-600 bg-purple-50'
                     : isDarkMode
                       ? 'border-slate-600 bg-slate-700 hover:border-slate-500'
                       : 'border-gray-300 bg-white hover:border-gray-400'
@@ -318,7 +318,7 @@ export default function SBOMScanDialog({ isOpen, onClose, onScanComplete }) {
                 onClick={() => setScanType('path')}
                 className={`px-4 py-3 rounded-lg border-2 transition-colors ${
                   scanType === 'path'
-                    ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
+                    ? isDarkMode ? 'border-purple-600 bg-purple-900/20' : 'border-purple-600 bg-purple-50'
                     : isDarkMode
                       ? 'border-slate-600 bg-slate-700 hover:border-slate-500'
                       : 'border-gray-300 bg-white hover:border-gray-400'
@@ -335,7 +335,7 @@ export default function SBOMScanDialog({ isOpen, onClose, onScanComplete }) {
                 onClick={() => setScanType('import')}
                 className={`px-4 py-3 rounded-lg border-2 transition-colors ${
                   scanType === 'import'
-                    ? 'border-purple-600 bg-purple-50 dark:bg-purple-900/20'
+                    ? isDarkMode ? 'border-purple-600 bg-purple-900/20' : 'border-purple-600 bg-purple-50'
                     : isDarkMode
                       ? 'border-slate-600 bg-slate-700 hover:border-slate-500'
                       : 'border-gray-300 bg-white hover:border-gray-400'
@@ -587,7 +587,7 @@ export default function SBOMScanDialog({ isOpen, onClose, onScanComplete }) {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded">
+            <div className={`border px-4 py-3 rounded ${isDarkMode ? 'bg-red-900/20 border-red-800 text-red-400' : 'bg-red-100 border-red-400 text-red-700'}`}>
               <div className="flex items-center">
                 <span className="mr-2">⚠️</span>
                 <span>{error}</span>

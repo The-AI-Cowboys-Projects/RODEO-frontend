@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
+import { useTheme } from '../context/ThemeContext'
 
 const API_BASE = ''
 
@@ -20,6 +21,7 @@ api.interceptors.request.use((config) => {
 })
 
 export default function NotificationSettings() {
+  const { isDarkMode } = useTheme()
   const queryClient = useQueryClient()
   const [saveStatus, setSaveStatus] = useState(null)
   const [testStatus, setTestStatus] = useState(null)
@@ -124,11 +126,26 @@ export default function NotificationSettings() {
     )
   }
 
+  // Shared class helpers
+  const cardBg = isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-gray-200'
+  const sectionBorder = isDarkMode ? 'border-slate-700' : 'border-gray-200'
+  const rowBg = isDarkMode ? 'bg-slate-800 border-slate-600' : 'bg-gray-50 border-gray-200'
+  const rowHover = isDarkMode ? 'hover:bg-slate-750' : 'hover:bg-gray-100'
+  const labelText = isDarkMode ? 'text-gray-300' : 'text-gray-700'
+  const subText = isDarkMode ? 'text-gray-500' : 'text-gray-400'
+  const inputBg = isDarkMode
+    ? 'bg-slate-800 border-slate-600 text-white placeholder-gray-500 focus:border-purple-500'
+    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-purple-500'
+  const inputSmBg = isDarkMode
+    ? 'bg-slate-700 border-slate-600 text-white focus:border-purple-500'
+    : 'bg-white border-gray-300 text-gray-900 focus:border-purple-500'
+  const checkboxBg = isDarkMode ? 'bg-slate-700 border-slate-600' : 'bg-white border-gray-300'
+
   return (
-    <div className="bg-slate-900 border border-slate-700 rounded-lg p-6">
+    <div className={`border rounded-lg p-6 ${cardBg}`}>
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-brand-purple-light mb-2">Notification Settings</h2>
-        <p className="text-gray-400 text-sm">
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           Configure how and when you receive alerts about security events
         </p>
       </div>
@@ -136,22 +153,22 @@ export default function NotificationSettings() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Email Notifications */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            📧 Email Notifications
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Email Notifications
           </h3>
 
-          <div className="flex items-center justify-between p-4 bg-slate-800 border border-slate-600 rounded-lg">
+          <div className={`flex items-center justify-between p-4 border rounded-lg ${rowBg}`}>
             <label className="flex items-center space-x-3 cursor-pointer">
               <input
                 type="checkbox"
                 name="email_notifications_enabled"
                 checked={formData.email_notifications_enabled}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
               <div>
-                <div className="text-sm font-medium text-gray-300">Enable Email Notifications</div>
-                <div className="text-xs text-gray-500">Receive alerts via email</div>
+                <div className={`text-sm font-medium ${labelText}`}>Enable Email Notifications</div>
+                <div className={`text-xs ${subText}`}>Receive alerts via email</div>
               </div>
             </label>
             {formData.email_notifications_enabled && (
@@ -168,7 +185,7 @@ export default function NotificationSettings() {
 
           {formData.email_notifications_enabled && (
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className={`block text-sm font-medium mb-2 ${labelText}`}>
                 Email Address
               </label>
               <input
@@ -178,7 +195,7 @@ export default function NotificationSettings() {
                 onChange={handleChange}
                 placeholder="security@company.com"
                 required
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
               />
             </div>
           )}
@@ -186,175 +203,175 @@ export default function NotificationSettings() {
 
         {/* Alert Types */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            🚨 Alert Types
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Alert Types
           </h3>
 
           <div className="space-y-3">
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_critical_vulnerabilities"
                   checked={formData.notify_critical_vulnerabilities}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Critical Vulnerabilities</div>
-                  <div className="text-xs text-gray-500">CVSS 9.0+ vulnerabilities detected</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Critical Vulnerabilities</div>
+                  <div className={`text-xs ${subText}`}>CVSS 9.0+ vulnerabilities detected</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Critical</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-red-500/20 text-red-400' : 'bg-red-50 text-red-800 border border-red-200'}`}>Critical</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_high_risk_samples"
                   checked={formData.notify_high_risk_samples}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">High-Risk Malware</div>
-                  <div className="text-xs text-gray-500">Dangerous malware samples detected</div>
+                  <div className={`text-sm font-medium ${labelText}`}>High-Risk Malware</div>
+                  <div className={`text-xs ${subText}`}>Dangerous malware samples detected</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">High</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-50 text-orange-800 border border-orange-200'}`}>High</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_policy_violations"
                   checked={formData.notify_policy_violations}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Policy Violations</div>
-                  <div className="text-xs text-gray-500">Security policy breaches</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Policy Violations</div>
+                  <div className={`text-xs ${subText}`}>Security policy breaches</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Medium</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-yellow-50 text-yellow-800 border border-yellow-200'}`}>Medium</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_system_alerts"
                   checked={formData.notify_system_alerts}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">System Alerts</div>
-                  <div className="text-xs text-gray-500">System health and performance</div>
+                  <div className={`text-sm font-medium ${labelText}`}>System Alerts</div>
+                  <div className={`text-xs ${subText}`}>System health and performance</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Info</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-800 border border-blue-200'}`}>Info</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_failed_login"
                   checked={formData.notify_failed_login}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Failed Login Attempts</div>
-                  <div className="text-xs text-gray-500">Suspicious login activity</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Failed Login Attempts</div>
+                  <div className={`text-xs ${subText}`}>Suspicious login activity</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Security</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-red-500/20 text-red-400' : 'bg-red-50 text-red-800 border border-red-200'}`}>Security</span>
             </label>
 
-            <label className="flex items-center justify-between p-3 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-750 transition-colors">
+            <label className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-colors ${rowBg} ${rowHover}`}>
               <div className="flex items-center space-x-3">
                 <input
                   type="checkbox"
                   name="notify_scheduled_reports"
                   checked={formData.notify_scheduled_reports}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Scheduled Reports</div>
-                  <div className="text-xs text-gray-500">Daily/weekly summary reports</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Scheduled Reports</div>
+                  <div className={`text-xs ${subText}`}>Daily/weekly summary reports</div>
                 </div>
               </div>
-              <span className="px-2 py-1 bg-gray-500/20 text-gray-400 text-xs rounded">Report</span>
+              <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-gray-500/20 text-gray-400' : 'bg-gray-100 text-gray-600 border border-gray-200'}`}>Report</span>
             </label>
           </div>
         </div>
 
         {/* Alert Frequency */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-purple-300 border-b border-slate-700 pb-2">
-            ⏰ Alert Frequency
+          <h3 className={`text-lg font-semibold text-purple-300 border-b pb-2 ${sectionBorder}`}>
+            Alert Frequency
           </h3>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium mb-2 ${labelText}`}>
               Notification Frequency
             </label>
             <select
               name="alert_frequency"
               value={formData.alert_frequency}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500"
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none ${inputBg}`}
             >
               <option value="realtime">Real-time (Immediate)</option>
               <option value="hourly">Hourly Digest</option>
               <option value="daily">Daily Summary</option>
             </select>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className={`text-xs mt-1 ${subText}`}>
               How frequently to send notifications
             </p>
           </div>
 
-          <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+          <div className={`p-4 border rounded-lg ${rowBg}`}>
             <label className="flex items-center space-x-3 cursor-pointer mb-3">
               <input
                 type="checkbox"
                 name="quiet_hours_enabled"
                 checked={formData.quiet_hours_enabled}
                 onChange={handleChange}
-                className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
               />
               <div>
-                <div className="text-sm font-medium text-gray-300">Enable Quiet Hours</div>
-                <div className="text-xs text-gray-500">Suppress non-critical alerts during specified hours</div>
+                <div className={`text-sm font-medium ${labelText}`}>Enable Quiet Hours</div>
+                <div className={`text-xs ${subText}`}>Suppress non-critical alerts during specified hours</div>
               </div>
             </label>
 
             {formData.quiet_hours_enabled && (
               <div className="grid grid-cols-2 gap-3 mt-3">
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">Start Time</label>
+                  <label className={`block text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Start Time</label>
                   <input
                     type="time"
                     name="quiet_hours_start"
                     value={formData.quiet_hours_start}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                    className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${inputSmBg}`}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">End Time</label>
+                  <label className={`block text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>End Time</label>
                   <input
                     type="time"
                     name="quiet_hours_end"
                     value={formData.quiet_hours_end}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                    className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${inputSmBg}`}
                   />
                 </div>
               </div>
@@ -364,9 +381,9 @@ export default function NotificationSettings() {
 
         {/* External Integrations */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-700 pb-2">
+          <div className={`flex items-center justify-between border-b pb-2 ${sectionBorder}`}>
             <h3 className="text-lg font-semibold text-purple-300">
-              🔗 External Integrations
+              External Integrations
             </h3>
             <button
               type="button"
@@ -378,7 +395,7 @@ export default function NotificationSettings() {
           </div>
 
           {/* Slack Integration */}
-          <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+          <div className={`p-4 border rounded-lg ${rowBg}`}>
             <div className="flex items-center justify-between mb-3">
               <label className="flex items-center space-x-3 cursor-pointer">
                 <input
@@ -386,11 +403,11 @@ export default function NotificationSettings() {
                   name="slack_enabled"
                   checked={formData.slack_enabled}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Slack Integration</div>
-                  <div className="text-xs text-gray-500">Send alerts to Slack workspace</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Slack Integration</div>
+                  <div className={`text-xs ${subText}`}>Send alerts to Slack workspace</div>
                 </div>
               </label>
               {formData.slack_enabled && (
@@ -408,25 +425,25 @@ export default function NotificationSettings() {
             {formData.slack_enabled && showWebhooks && (
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">Webhook URL</label>
+                  <label className={`block text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Webhook URL</label>
                   <input
                     type="url"
                     name="slack_webhook_url"
                     value={formData.slack_webhook_url}
                     onChange={handleChange}
                     placeholder="https://hooks.slack.com/services/..."
-                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                    className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${inputSmBg}`}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-400 mb-1">Channel</label>
+                  <label className={`block text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Channel</label>
                   <input
                     type="text"
                     name="slack_channel"
                     value={formData.slack_channel}
                     onChange={handleChange}
                     placeholder="#security-alerts"
-                    className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                    className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${inputSmBg}`}
                   />
                 </div>
               </div>
@@ -434,7 +451,7 @@ export default function NotificationSettings() {
           </div>
 
           {/* Microsoft Teams Integration */}
-          <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg">
+          <div className={`p-4 border rounded-lg ${rowBg}`}>
             <div className="flex items-center justify-between mb-3">
               <label className="flex items-center space-x-3 cursor-pointer">
                 <input
@@ -442,11 +459,11 @@ export default function NotificationSettings() {
                   name="teams_enabled"
                   checked={formData.teams_enabled}
                   onChange={handleChange}
-                  className="w-5 h-5 text-purple-600 bg-slate-700 border-slate-600 rounded focus:ring-purple-500"
+                  className={`w-5 h-5 text-purple-600 border rounded focus:ring-purple-500 ${checkboxBg}`}
                 />
                 <div>
-                  <div className="text-sm font-medium text-gray-300">Microsoft Teams Integration</div>
-                  <div className="text-xs text-gray-500">Send alerts to Teams channel</div>
+                  <div className={`text-sm font-medium ${labelText}`}>Microsoft Teams Integration</div>
+                  <div className={`text-xs ${subText}`}>Send alerts to Teams channel</div>
                 </div>
               </label>
               {formData.teams_enabled && (
@@ -463,14 +480,14 @@ export default function NotificationSettings() {
 
             {formData.teams_enabled && showWebhooks && (
               <div>
-                <label className="block text-xs text-gray-400 mb-1">Webhook URL</label>
+                <label className={`block text-xs mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Webhook URL</label>
                 <input
                   type="url"
                   name="teams_webhook_url"
                   value={formData.teams_webhook_url}
                   onChange={handleChange}
                   placeholder="https://outlook.office.com/webhook/..."
-                  className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white text-sm focus:outline-none focus:border-purple-500"
+                  className={`w-full px-3 py-2 border rounded text-sm focus:outline-none ${inputSmBg}`}
                 />
               </div>
             )}
@@ -482,8 +499,8 @@ export default function NotificationSettings() {
           <div
             className={`p-4 rounded-lg border ${
               testStatus.type === 'success'
-                ? 'bg-green-900/20 border-green-500/50 text-green-400'
-                : 'bg-red-900/20 border-red-500/50 text-red-400'
+                ? isDarkMode ? 'bg-green-900/20 border-green-500/50 text-green-400' : 'bg-green-50 border-green-200 text-green-700'
+                : isDarkMode ? 'bg-red-900/20 border-red-500/50 text-red-400' : 'bg-red-50 border-red-200 text-red-700'
             }`}
           >
             <div className="flex items-start gap-2">
@@ -503,8 +520,8 @@ export default function NotificationSettings() {
           <div
             className={`p-4 rounded-lg border ${
               saveStatus.type === 'success'
-                ? 'bg-green-900/20 border-green-500/50 text-green-400'
-                : 'bg-red-900/20 border-red-500/50 text-red-400'
+                ? isDarkMode ? 'bg-green-900/20 border-green-500/50 text-green-400' : 'bg-green-50 border-green-200 text-green-700'
+                : isDarkMode ? 'bg-red-900/20 border-red-500/50 text-red-400' : 'bg-red-50 border-red-200 text-red-700'
             }`}
           >
             <div className="flex items-start gap-2">
@@ -531,7 +548,7 @@ export default function NotificationSettings() {
           <button
             type="button"
             onClick={() => setFormData(settings)}
-            className="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+            className={`px-4 py-3 rounded-lg font-medium transition-colors text-white ${isDarkMode ? 'bg-slate-700 hover:bg-slate-600' : 'bg-gray-200 hover:bg-gray-300 text-gray-900'}`}
           >
             Reset
           </button>

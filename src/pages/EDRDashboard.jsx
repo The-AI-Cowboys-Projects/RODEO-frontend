@@ -286,7 +286,7 @@ const tabs = [
 ]
 
 // ==================== Overview Tab ====================
-function OverviewTab({ endpoints, detections, platforms, correlationStats, isDarkMode, setActiveTab }) {
+function OverviewTab({ endpoints, detections, platforms, correlationStats, isDarkMode, setActiveTab, setPendingFilter }) {
   const totalEndpoints = Object.values(endpoints).flat().length
   const onlineEndpoints = Object.values(endpoints).flat().filter(e => e.status === 'online').length
   const totalDetections = Object.values(detections).flat().length
@@ -337,6 +337,7 @@ function OverviewTab({ endpoints, detections, platforms, correlationStats, isDar
                 // Scroll to element
                 document.getElementById(stat.scrollTo)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
               } else if (stat.tab) {
+                setPendingFilter(stat.filter || null)
                 setActiveTab(stat.tab)
               }
             }}
@@ -683,11 +684,16 @@ function OverviewTab({ endpoints, detections, platforms, correlationStats, isDar
 }
 
 // ==================== Endpoints Tab ====================
-function EndpointsTab({ endpoints, onIsolate, onRefresh, loading, isDarkMode }) {
+function EndpointsTab({ endpoints, onIsolate, onRefresh, loading, isDarkMode, initialFilter, clearInitialFilter }) {
   const [filter, setFilter] = useState('')
-  const [statusFilter, setStatusFilter] = useState('all')
+  const [statusFilter, setStatusFilter] = useState(initialFilter || 'all')
   const [platformFilter, setPlatformFilter] = useState('all')
   const [osFilter, setOsFilter] = useState('all')
+
+  // Consume the initial filter on mount so it doesn't persist across tab switches
+  useEffect(() => {
+    if (initialFilter) clearInitialFilter()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
   const [selectedEndpoint, setSelectedEndpoint] = useState(null)
   const [viewMode, setViewMode] = useState('cards') // 'cards' or 'table'
   const [sortBy, setSortBy] = useState('hostname')
@@ -1508,10 +1514,15 @@ function EndpointsTab({ endpoints, onIsolate, onRefresh, loading, isDarkMode }) 
 }
 
 // ==================== Detections Tab ====================
-function DetectionsTab({ detections, onRefresh, loading, isDarkMode }) {
+function DetectionsTab({ detections, onRefresh, loading, isDarkMode, initialFilter, clearInitialFilter }) {
   const [filter, setFilter] = useState('')
-  const [severityFilter, setSeverityFilter] = useState('all')
+  const [severityFilter, setSeverityFilter] = useState(initialFilter || 'all')
   const [platformFilter, setPlatformFilter] = useState('all')
+
+  // Consume the initial filter on mount so it doesn't persist across tab switches
+  useEffect(() => {
+    if (initialFilter) clearInitialFilter()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const allDetections = Object.entries(detections).flatMap(([platform, dets]) =>
     dets.map(d => ({ ...d, platform }))
@@ -3350,6 +3361,7 @@ function IdentityTab({ isDarkMode }) {
 export default function EDRDashboard() {
   const { isDarkMode } = useTheme()
   const [activeTab, setActiveTab] = useState('overview')
+  const [pendingFilter, setPendingFilter] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -3789,6 +3801,7 @@ export default function EDRDashboard() {
               correlationStats={correlationStats}
               isDarkMode={isDarkMode}
               setActiveTab={setActiveTab}
+              setPendingFilter={setPendingFilter}
             />
           )}
           {activeTab === 'endpoints' && (
@@ -3798,6 +3811,8 @@ export default function EDRDashboard() {
               onRefresh={loadData}
               loading={loading}
               isDarkMode={isDarkMode}
+              initialFilter={pendingFilter}
+              clearInitialFilter={() => setPendingFilter(null)}
             />
           )}
           {activeTab === 'detections' && (
@@ -3806,6 +3821,8 @@ export default function EDRDashboard() {
               onRefresh={loadData}
               loading={loading}
               isDarkMode={isDarkMode}
+              initialFilter={pendingFilter}
+              clearInitialFilter={() => setPendingFilter(null)}
             />
           )}
           {activeTab === 'correlation' && (

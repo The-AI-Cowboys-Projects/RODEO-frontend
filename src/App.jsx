@@ -42,6 +42,13 @@ const FeedbackDashboard = lazy(() => import('./pages/FeedbackDashboard'))
 const KnowledgeBasePage = lazy(() => import('./pages/KnowledgeBasePage'))
 const ThreatIntelPage = lazy(() => import('./pages/ThreatIntelPage'))
 const LogAnomalyPage = lazy(() => import('./pages/LogAnomalyPage'))
+const DashboardWithMap = lazy(() => import('./pages/DashboardWithMap'))
+const DashboardImproved = lazy(() => import('./pages/DashboardImproved'))
+const ICSDashboard = lazy(() => import('./pages/ICSDashboard'))
+const ICSOffensive = lazy(() => import('./pages/ICSOffensive'))
+const SCADAOverview = lazy(() => import('./pages/SCADAOverview'))
+const SCADADeviceDetail = lazy(() => import('./pages/SCADADeviceDetail'))
+const SCADAComplianceReport = lazy(() => import('./pages/SCADAComplianceReport'))
 
 // Loading fallback component
 function PageLoader() {
@@ -557,6 +564,104 @@ function App() {
               <PermissionRoute permission="apply_patches">
                 <LazyPage pageName="Patch Deployment">
                   <PatchDeployment />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/threat-map"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_scan_results">
+                <LazyPage pageName="Geo Threat Map">
+                  <DashboardWithMap />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/analytics"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_scan_results">
+                <LazyPage pageName="Advanced Analytics">
+                  <DashboardImproved />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/ics"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_assets">
+                <LazyPage pageName="ICS Dashboard">
+                  <ICSDashboard />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/ics-offensive"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="create_exploits">
+                <LazyPage pageName="ICS Offensive">
+                  <ICSOffensive />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/scada"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_assets">
+                <LazyPage pageName="SCADA Overview">
+                  <SCADAOverview />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/scada/:deviceId"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_assets">
+                <LazyPage pageName="SCADA Device Detail">
+                  <SCADADeviceDetail />
+                </LazyPage>
+              </PermissionRoute>
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/scada-compliance"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <PermissionRoute permission="read_reports">
+                <LazyPage pageName="SCADA Compliance">
+                  <SCADAComplianceReport />
                 </LazyPage>
               </PermissionRoute>
             </Layout>
